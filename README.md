@@ -1,5 +1,4 @@
-mNet
-
+MediNetServices
 
 ## Quick start
 

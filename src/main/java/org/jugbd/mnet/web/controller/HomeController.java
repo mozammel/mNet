@@ -10,16 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-
-
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String firstPage(ModelMap model) {
         log.debug("at first page");
 
-        model.addAttribute("msg", "Welcomes MediNet Services!");
-        return "index";
+        model.addAttribute("msg", "Greetings!");
+        return "home";
     }
 
 }

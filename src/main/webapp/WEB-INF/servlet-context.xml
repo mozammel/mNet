@@ -10,11 +10,12 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="org.jugbd.mnet.web.controller"/>
+    <context:component-scan base-package="org.jugbd.mnet.web"/>
 
     <mvc:annotation-driven/>
 
-    <mvc:view-controller path="/" view-name="index"/>
+    <!-- Maps '/' requests to the 'home' view -->
+    <mvc:view-controller path="/" view-name="home"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
@@ -22,7 +23,7 @@
         <property name="contentType" value="text/html;charset=utf-8"/>
     </bean>
 
-    <!-- Resources e.g. test.png will be access-able directly by http://localhost:8080/images/test.png URL -->
+    <!-- Efficiently serving static resources; e.g. test.png will be access-able directly by <SERVER>/images/test.png URL -->
     <mvc:resources mapping="/images/**" location="/img/"/>
     <mvc:resources mapping="/css/**" location="/css/"/>
 

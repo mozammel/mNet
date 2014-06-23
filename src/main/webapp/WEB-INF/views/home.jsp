@@ -1,12 +1,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>First Page of skeleton project</title>
+    <title>Home Page :: MediNetServices</title>
 </head>
 
 <body>
+
+<p>
+    <img src="/images/logo.jpg"/>
+</p>
+
 <h2>
-    Home pages!
+    Welcome to MediNetServices!
 </h2>
 
 <p>
