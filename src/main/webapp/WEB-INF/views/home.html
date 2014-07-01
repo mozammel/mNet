@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+
+<p>
+    <img src="../../img/logo.jpg" th:attr="src=@{/images/logo.jpg}"/>
+</p>
+
+<h1>
+    Welcome to MediNetServices!
+</h1>
+
+<h3 th:text="${msg}">Message from Controller</h3>
+</body>
+
+</html>
