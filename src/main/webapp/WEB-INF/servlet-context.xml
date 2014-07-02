@@ -38,7 +38,6 @@
     </bean>
 
     <!-- Efficiently serving static resources; e.g. test.png will be access-able directly by <SERVER>/images/test.png URL -->
-    <mvc:resources mapping="/images/**" location="/img/"/>
-    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
 </beans>
