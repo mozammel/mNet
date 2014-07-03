@@ -7,3 +7,5 @@ target
 build
 out
 s
+classes/
+rebel.xml
