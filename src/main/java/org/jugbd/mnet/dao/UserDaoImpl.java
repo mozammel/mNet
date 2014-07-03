@@ -6,14 +6,12 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by Bazlur Rahman Rokon on 7/3/14.
  */
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -33,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List findAllUsers() {
-        return em.createNamedQuery("findAllUsers").getResultList();
+    public List<User> findAllUsers() {
+        return em.createNamedQuery("findAllUsers", User.class).getResultList();
     }
 }

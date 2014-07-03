@@ -118,7 +118,7 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return accountNonExpired;
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -127,7 +127,7 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return accountNonLocked;
     }
 
     public void setAccountNonLocked(boolean accountNonLocked) {
@@ -136,7 +136,7 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return credentialsNonExpired;
     }
 
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
@@ -145,7 +145,7 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 
     public void setEnabled(boolean enabled) {

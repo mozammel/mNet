@@ -14,5 +14,5 @@ public interface UserDao {
 
     public void createNewUser(User user);
 
-    public List findAllUsers();
+    public List<User> findAllUsers();
 }

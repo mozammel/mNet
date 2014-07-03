@@ -16,6 +16,8 @@
 
     <!-- Maps '/' requests to the 'home' view -->
     <mvc:view-controller path="/" view-name="home"/>
+    <mvc:view-controller path="/resourceNotFound" view-name="resourceNotFound"/>
+    <mvc:view-controller path="/uncaughtException" view-name="uncaughtException"/>
 
     <!-- **************************************************************** -->
     <!--  THYMELEAF-SPECIFIC ARTIFACTS                                    -->
