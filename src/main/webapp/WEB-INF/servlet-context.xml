@@ -30,9 +30,13 @@
         <property name="templateMode" value="HTML5" />
     </bean>
 
-    <bean id="templateEngine"
-          class="org.thymeleaf.spring4.SpringTemplateEngine">
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
         <property name="templateResolver" ref="templateResolver" />
+        <property name="additionalDialects">
+            <set>
+                <bean class="org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect" />
+            </set>
+        </property>
     </bean>
 
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
