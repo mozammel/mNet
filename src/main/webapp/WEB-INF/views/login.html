@@ -24,6 +24,9 @@
                 <div th:if="${loginError}" class="alert alert-danger">
                     <p>Invalid user or password, try again! </p>
                 </div>
+                <div th:if="${logout}" class="alert alert-info">
+                    <p>You have been logged out</p>
+                </div>
             </div>
 
             <div class="form-group">

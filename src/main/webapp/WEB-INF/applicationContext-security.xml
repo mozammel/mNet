@@ -18,9 +18,15 @@
                              password-parameter="password"
                              authentication-success-handler-ref="authenticationSuccessHandler"
                              login-page="/login"/>
+        <security:logout logout-url="/j_spring_security_logout"
+                         logout-success-url="/login-logout"
+                         delete-cookies="JSESSIONID"/>
+        <security:csrf />
+
         <security:intercept-url pattern="/" access="isAuthenticated()"/>
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/login-error" access="permitAll"/>
+        <security:intercept-url pattern="/login-logout" access="permitAll"/>
         <security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/home/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/intake" access="hasRole('ROLE_ADMIN')"/>
