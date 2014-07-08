@@ -2,6 +2,8 @@ package org.jugbd.mnet.security;
 
 import org.jugbd.mnet.domain.Role;
 import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.service.UserService;
+import org.jugbd.mnet.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +12,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by bazlur on 7/3/14.
@@ -31,7 +30,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
     private String adminPassword;
 
     @Autowired
-    private SecurityUserService securityUserService;
+    private UserService userService;
 
     @Autowired
     private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
@@ -49,8 +48,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!StringUtils.hasText(password)) {
             throw new BadCredentialsException("Please enter password");
         }
-        String encryptedPassword = messageDigestPasswordEncoder.encodePassword(
-                password, null);
+        String encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, null);
 
         String expectedPassword;
         User targetUser;
@@ -67,7 +65,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
             targetUser.setAuthorities(Arrays.asList(Role.ROLE_ADMIN));
         } else {
             try {
-                targetUser = (User) securityUserService.loadUserByUsername(username);
+                targetUser = (User) userService.loadUserByUsername(username);
 
                 // authenticate the person
                 expectedPassword = targetUser.getPassword();

@@ -9,10 +9,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "findByUseranme", query = "select u from User u where u.username=:username"),
+        @NamedQuery(name = "findByUsername", query = "select u from User u join fetch u.authorities where u.username = (:username)"),
         @NamedQuery(name = "findAllUsers", query = "select  u from  User u")
 })
 public class User extends Persistence implements UserDetails, Serializable {
@@ -30,6 +31,7 @@ public class User extends Persistence implements UserDetails, Serializable {
     private String passwordConfirmed;
     private String email;
     private String phoneNumber;
+    @Basic(fetch = FetchType.LAZY)
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING) // Possibly optional (I'm not sure) but defaults to ORDINAL.
     @CollectionTable(name = "user_role")
@@ -55,7 +57,7 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : this.authorities) {
             authorities.add(new SimpleGrantedAuthority(role.name()));
         }
