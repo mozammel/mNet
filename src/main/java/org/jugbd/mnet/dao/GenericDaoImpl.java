@@ -37,8 +37,10 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
         log.debug("save() -{}", entity.toString());
 
         if (isNew(entity)) {
+            log.debug("New entity found. so persisting it");
             this.entityManager.persist(entity);
         } else {
+            log.debug("Entity is existing. so merging it");
             this.entityManager.merge(entity);
         }
         return entity;
@@ -87,6 +89,7 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
     }
 
     private boolean isNew(T entity) {
+        log.debug("isNew()");
         return Utils.isNew(entity);
     }
 }

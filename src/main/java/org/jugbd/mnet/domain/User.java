@@ -12,11 +12,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "findByUsername", query = "select u from User u join fetch u.authorities where u.username = (:username)"),
+        @NamedQuery(name = "findByUsername", query = "select u from User u left join fetch u.authorities where u.username = (:username)"),
         @NamedQuery(name = "findAllUsers", query = "select  u from  User u")
 })
 public class User extends Persistence implements UserDetails, Serializable {

@@ -1,5 +1,6 @@
 package org.jugbd.mnet.dao;
 
+import junit.framework.TestCase;
 import org.jugbd.mnet.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,6 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
         "classpath:applicationContext-jpa.xml",
         "file:src/main/webapp/WEB-INF/applicationContext-service.xml"})
 @Transactional
-@TransactionConfiguration(defaultRollback = true)
 public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTests {
     private static final Logger log = LoggerFactory.getLogger(UserDaoImplTest.class);
 
@@ -44,9 +44,11 @@ public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTes
 
     @Test
     public void test_findByUsername_shouldNotNull() throws Exception {
-        User user = createUser(USER_NAME, PASSWORD);
+        User user = new User(USER_NAME,PASSWORD);
         userDao.save(user);
-        assertNotNull(userDao.findByUsername(USER_NAME));
+        User userFound =  userDao.findByUsername(USER_NAME);
+        assertNotNull(userFound);
+        assertEquals(userFound.getUsername(), USER_NAME);
     }
 
     @Test

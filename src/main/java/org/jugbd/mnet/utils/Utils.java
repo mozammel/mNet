@@ -53,6 +53,7 @@ public class Utils {
      * @return true if entity is a new or return false if entity is not new
      */
     public static <T> boolean isNew(T entity) {
+        log.debug("isNew");
         for (Field field : entity.getClass().getDeclaredFields()) {
             if (field.getName().equalsIgnoreCase("id")) {
                 field.setAccessible(true);
