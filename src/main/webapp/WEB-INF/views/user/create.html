@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>New User :: MediNetServices</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
+          rel="stylesheet"/>
+    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container-narrow">
+    <div th:replace="fragments/header :: header"></div>
+    <hr/>
+
+    <div class="row">
+        <form class="form-horizontal" role="form" th:object="${newUser}" th:action="@{/user/create}" method="POST">
+
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">Username</label>
+
+                <div class="col-sm-6">
+                    <input type="text" th:field="*{username}"
+                           th:class="${#fields.hasErrors('username')}? has-error"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password</label>
+
+                <div class="col-sm-6">
+                    <input type="password" th:field="*{password}" class="form-control"
+                           th:class="${#fields.hasErrors('password')}? fieldError"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Email</label>
+
+                <div class="col-sm-6">
+                    <input type="password" th:field="*{email}" class="form-control"
+                           th:class="${#fields.hasErrors('email')}? fieldError"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber" class="col-sm-2 control-label">Phone Number </label>
+
+                <div class="col-sm-6">
+                    <input type="password" th:field="*{phoneNumber}" class="form-control"
+                           th:class="${#fields.hasErrors('phoneNumber')}? fieldError"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <hr/>
+    <div class="row">
+        <div th:replace="fragments/footer :: footer"/>
+    </div>
+</div>
+</body>
+</html>
