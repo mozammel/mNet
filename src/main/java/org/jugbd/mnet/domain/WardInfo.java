@@ -2,15 +2,15 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * @author raqibul
- * @since 7/1/14 2:27 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
 @Table(name = "ward_info")
-public class WardInfo {
+public class WardInfo extends Persistence {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class WardInfo {
     private String name;
 
     @OneToMany(mappedBy = "wardInfo")
-    private List<AdmissionInfo> admissionInfoList;
+    private Set<AdmissionInfo> admissionInfoSet = new HashSet<AdmissionInfo>();
 
     public WardInfo() {
     }
@@ -44,11 +44,11 @@ public class WardInfo {
         this.name = name;
     }
 
-    public List<AdmissionInfo> getAdmissionInfoList() {
-        return admissionInfoList;
+    public Set<AdmissionInfo> getAdmissionInfoSet() {
+        return admissionInfoSet;
     }
 
-    public void setAdmissionInfoList(List<AdmissionInfo> admissionInfoList) {
-        this.admissionInfoList = admissionInfoList;
+    public void setAdmissionInfoSet(Set<AdmissionInfo> admissionInfoSet) {
+        this.admissionInfoSet = admissionInfoSet;
     }
 }

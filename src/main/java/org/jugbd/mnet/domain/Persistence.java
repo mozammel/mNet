@@ -1,13 +1,14 @@
 package org.jugbd.mnet.domain;
 
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Bazlur Rahman Rokon on 7/3/14.
  */
 @MappedSuperclass
-public abstract class Persistence {
+public abstract class Persistence implements Serializable {
     private Date dateCreated;
     private Date dateLastUpdated;
     private User createdBy;

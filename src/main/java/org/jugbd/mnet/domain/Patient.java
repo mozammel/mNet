@@ -2,15 +2,15 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * @author raqibul
- * @since 7/1/14 1:44 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
 @Table(name = "patient")
-public class Patient {
+public class Patient extends Persistence {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,17 +22,17 @@ public class Patient {
     @Column(length = 32)
     private String healthId;
 
-    @Size(max = 32)
-    @Column(length = 32)
+    @Size(max = 64)
+    @Column(length = 64)
     private String name;
 
-    @Size(max = 32)
-    @Column(length = 32)
+    @Size(max = 64)
+    @Column(length = 64)
     private String careOfAddress;
 
     private Integer age;
 
-    @Column(length = 1)
+    @Column(length = 6)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -43,11 +43,11 @@ public class Patient {
     @Column(length = 32)
     private String contactNumber;
 
-    @Size(max = 32)
-    @Column(length = 32)
+    @Size(max = 64)
+    @Column(length = 64)
     private String contactPerson;
 
-    @Column(length = 2)
+    @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Relationship relationship;
 
@@ -55,11 +55,11 @@ public class Patient {
     @Column(length = 32)
     private String emergencyContactNumber;
 
-    @OneToOne
+    @Embedded
     private Address address;
 
     @OneToMany(mappedBy = "patient")
-    private List<AdmissionInfo> admissionInfoList;
+    private Set<AdmissionInfo> admissionInfoSet = new HashSet<AdmissionInfo>();
 
     public Patient() {
     }
@@ -168,11 +168,11 @@ public class Patient {
         this.address = address;
     }
 
-    public List<AdmissionInfo> getAdmissionInfoList() {
-        return admissionInfoList;
+    public Set<AdmissionInfo> getAdmissionInfoSet() {
+        return admissionInfoSet;
     }
 
-    public void setAdmissionInfoList(List<AdmissionInfo> admissionInfoList) {
-        this.admissionInfoList = admissionInfoList;
+    public void setAdmissionInfoSet(Set<AdmissionInfo> admissionInfoSet) {
+        this.admissionInfoSet = admissionInfoSet;
     }
 }

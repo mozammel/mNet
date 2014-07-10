@@ -3,15 +3,15 @@ package org.jugbd.mnet.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * @author raqibul
- * @since 7/1/14 1:45 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
 @Table(name = "admission_info")
-public class AdmissionInfo {
+public class AdmissionInfo extends Persistence {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,14 +30,14 @@ public class AdmissionInfo {
     private String bedNumber;
 
     @OneToMany(mappedBy = "admissionInfo")
-    private List<Diagnosis> diagnosisList;
+    private Set<Diagnosis> diagnosisSet = new HashSet<Diagnosis>();
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name="ward_info_id")
+    @JoinColumn(name = "ward_info_id")
     private WardInfo wardInfo;
 
     public AdmissionInfo() {
@@ -75,12 +75,12 @@ public class AdmissionInfo {
         this.bedNumber = bedNumber;
     }
 
-    public List<Diagnosis> getDiagnosisList() {
-        return diagnosisList;
+    public Set<Diagnosis> getDiagnosisSet() {
+        return diagnosisSet;
     }
 
-    public void setDiagnosisList(List<Diagnosis> diagnosisList) {
-        this.diagnosisList = diagnosisList;
+    public void setDiagnosisSet(Set<Diagnosis> diagnosisSet) {
+        this.diagnosisSet = diagnosisSet;
     }
 
     public Patient getPatient() {

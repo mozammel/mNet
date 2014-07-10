@@ -1,25 +1,25 @@
 package org.jugbd.mnet.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
- * @author raqibul
- * @since 7/1/14 2:10 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
-@Entity
-@Table(name = "address")
-public class Address {
+@Embeddable
+public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Size(max = 64)
+    @Column(length = 64)
+    private String houseNameOrNumber;
 
     @Size(max = 32)
     @Column(length = 32)
-    private String houseNumber;
+    private String road;
 
     @Size(max = 32)
     @Column(length = 32)
@@ -36,14 +36,6 @@ public class Address {
     public Address() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getCity() {
         return city;
     }
@@ -52,12 +44,20 @@ public class Address {
         this.city = city;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
+    public String getHouseNameOrNumber() {
+        return houseNameOrNumber;
     }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setHouseNameOrNumber(String houseNameOrNumber) {
+        this.houseNameOrNumber = houseNameOrNumber;
+    }
+
+    public String getRoad() {
+        return road;
+    }
+
+    public void setRoad(String road) {
+        this.road = road;
     }
 
     public String getPoliceStation() {

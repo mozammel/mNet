@@ -1,14 +1,13 @@
 package org.jugbd.mnet.domain;
 
 /**
- * @author raqibul
- * @since 7/1/14 2:13 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
 public enum Gender {
 
-    M("Male"),
-    F("Female"),
-    O("Other");
+    MALE("Male"),
+    FEMALE("Female"),
+    OTHER("Other");
 
     private String label;
 

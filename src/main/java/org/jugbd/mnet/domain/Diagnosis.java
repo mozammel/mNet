@@ -4,12 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 /**
- * @author raqibul
- * @since 7/1/14 1:46 PM
+ * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
 @Table(name = "diagnosis")
-public class Diagnosis {
+public class Diagnosis extends Persistence {
 
     private static final long serialVersionUID = 1L;
 
