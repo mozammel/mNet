@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +12,9 @@ import java.util.Date;
 public abstract class Persistence implements Serializable {
     private Date dateCreated;
     private Date dateLastUpdated;
+    @ManyToOne
     private User createdBy;
+    @ManyToOne
     private User lastUpdatedBy;
 
     public Date getDateCreated() {

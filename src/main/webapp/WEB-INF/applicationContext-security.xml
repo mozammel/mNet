@@ -18,9 +18,19 @@
                              password-parameter="password"
                              authentication-success-handler-ref="authenticationSuccessHandler"
                              login-page="/login"/>
+        <security:logout logout-url="/j_spring_security_logout"
+                         logout-success-url="/login-logout"
+                         delete-cookies="JSESSIONID"/>
+        <security:csrf />
+        <!-- 3 days = 259200 seconds-->
+        <security:remember-me token-validity-seconds="259200"
+                              remember-me-parameter="remember-me"
+                              token-repository-ref="rememberMeTokenRepository"/>
+
         <security:intercept-url pattern="/" access="isAuthenticated()"/>
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/login-error" access="permitAll"/>
+        <security:intercept-url pattern="/login-logout" access="permitAll"/>
         <security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/home/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/intake" access="hasRole('ROLE_ADMIN')"/>
@@ -37,12 +47,12 @@
         <property name="adminPassword" value="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"/>
     </bean>
 
-    <bean id="securityUserService" class="org.jugbd.mnet.security.SecurityUserService"/>
-
     <bean class="org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder"
           id="messageDigestPasswordEncoder">
         <constructor-arg value="sha-256"/>
     </bean>
 
     <bean id="authenticationSuccessHandler" class="org.jugbd.mnet.security.SecurityAuthenticationSuccessHandler"/>
+
+    <bean id="rememberMeTokenRepository" class="org.jugbd.mnet.security.RememberMeTokenRepository"/>
 </beans>

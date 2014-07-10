@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByUsername(String username) {
 
-        Query query = em.createNamedQuery("findByUseranme");
+        Query query = em.createNamedQuery("findByUsername");
         query.setParameter("username", username);
         return (User) query.getSingleResult();
     }

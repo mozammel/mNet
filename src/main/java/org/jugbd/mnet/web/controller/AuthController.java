@@ -29,4 +29,12 @@ public class AuthController {
         model.addAttribute("loginError", true);
         return "login";
     }
+
+    @RequestMapping("/login-logout")
+    public String logoutSuccess(Model model) {
+        log.debug("logoutSuccess()");
+
+        model.addAttribute("logout", true);
+        return "login";
+    }
 }
