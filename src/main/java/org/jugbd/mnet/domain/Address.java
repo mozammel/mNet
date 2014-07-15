@@ -13,17 +13,9 @@ public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 64)
-    @Column(length = 64)
-    private String houseNameOrNumber;
-
-    @Size(max = 32)
-    @Column(length = 32)
-    private String road;
-
-    @Size(max = 32)
-    @Column(length = 32)
-    private String city;
+    @Size(max = 128)
+    @Column(length = 128)
+    private String homeAddress;
 
     @Size(max = 32)
     @Column(length = 32)
@@ -33,31 +25,19 @@ public class Address implements Serializable {
     @Column(length = 32)
     private String postOffice;
 
+    @Size(max = 32)
+    @Column(length = 32)
+    private String division;
+
     public Address() {
     }
 
-    public String getCity() {
-        return city;
+    public String getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getHouseNameOrNumber() {
-        return houseNameOrNumber;
-    }
-
-    public void setHouseNameOrNumber(String houseNameOrNumber) {
-        this.houseNameOrNumber = houseNameOrNumber;
-    }
-
-    public String getRoad() {
-        return road;
-    }
-
-    public void setRoad(String road) {
-        this.road = road;
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
     }
 
     public String getPoliceStation() {
@@ -74,5 +54,13 @@ public class Address implements Serializable {
 
     public void setPostOffice(String postOffice) {
         this.postOffice = postOffice;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
     }
 }

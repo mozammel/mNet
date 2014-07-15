@@ -1,6 +1,6 @@
 package org.jugbd.mnet.security;
 
-import org.jugbd.mnet.domain.Role;
+import org.jugbd.mnet.domain.enums.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

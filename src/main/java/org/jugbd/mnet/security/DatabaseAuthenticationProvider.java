@@ -1,9 +1,8 @@
 package org.jugbd.mnet.security;
 
-import org.jugbd.mnet.domain.Role;
+import org.jugbd.mnet.domain.enums.Role;
 import org.jugbd.mnet.domain.User;
 import org.jugbd.mnet.service.UserService;
-import org.jugbd.mnet.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

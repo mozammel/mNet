@@ -2,6 +2,7 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by Raqibul Islam on 7/1/14.
@@ -15,6 +16,9 @@ public class Diagnosis extends Persistence {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Temporal(TemporalType.DATE)
+    private Date entryDate;
 
     @Size(max = 256)
     @Column(length = 256)
@@ -61,6 +65,14 @@ public class Diagnosis extends Persistence {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
     }
 
     public String getChiefComplain() {
