@@ -2,6 +2,8 @@ package org.jugbd.mnet.dao;
 
 import junit.framework.TestCase;
 import org.jugbd.mnet.domain.User;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import static junit.framework.Assert.assertEquals;
@@ -34,12 +38,20 @@ public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTes
     protected static String USER_NAME = "bazlur";
     protected static String PASSWORD = "1234";
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     private UserDao userDao;
 
     @Test
     public void test_userDaoNotNull() {
         assertNotNull(userDao);
+    }
+
+    @Before
+    public void before(){
+        entityManager.clear();
     }
 
     @Test
@@ -58,8 +70,6 @@ public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTes
 
         assertNotNull(user.getId());
         assertTrue(user.getId() > 0);
-
-        deleteUser(user);
     }
 
     @Test
@@ -68,10 +78,9 @@ public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTes
         createUser(randomAlphabetic(6), randomAlphabetic(6));
         createUser(randomAlphabetic(6), randomAlphabetic(6));
         assertEquals(3, userDao.findAll().size());
-
-        deleteAll();
     }
 
+    @Test
     public void test_whenUserIsDeleted_thenNoException() {
         User user = new User(USER_NAME, PASSWORD);
         userDao.save(user);
@@ -88,15 +97,12 @@ public class UserDaoImplTest extends AbstractTransactionalJUnit4SpringContextTes
 
     private User createUser(String username, String password) {
         User user = new User(username, password);
-        userDao.getEntityManager().persist(user);
+        userDao.save(user);
         return user;
     }
 
-    private void deleteUser(User user) {
-        userDao.getEntityManager().detach(user);
-    }
-
-    private void deleteAll() {
-        userDao.getEntityManager().createQuery("DELETE FROM User").executeUpdate();
+    @After
+    public void after(){
+        entityManager.clear();
     }
 }

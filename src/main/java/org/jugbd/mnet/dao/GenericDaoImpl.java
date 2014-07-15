@@ -82,12 +82,6 @@ public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T,
         return entityManager.createQuery("from " + entityClass.getName()).getResultList();
     }
 
-    @Override
-    public EntityManager getEntityManager() {
-        log.debug("getEntityManager()");
-        return entityManager;
-    }
-
     private boolean isNew(T entity) {
         log.debug("isNew()");
         return Utils.isNew(entity);

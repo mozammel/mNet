@@ -47,10 +47,4 @@ public interface GenericDao<T, PK extends Serializable> {
      */
     List<T> findAll();
 
-    /**
-     * Returns instance of EntityManager for further use
-     *
-     * @return  entityManager
-     */
-    public EntityManager getEntityManager();
 }
