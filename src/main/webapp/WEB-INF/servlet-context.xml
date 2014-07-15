@@ -3,6 +3,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
@@ -28,6 +29,7 @@
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML5" />
+        <property name="cacheable" value="false"/> <!-- Just for hot-deployment purpose; shouldn't be in production -->
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
@@ -39,6 +41,14 @@
         </property>
     </bean>
 
+
+    <!-- Resolves localized messages*.properties and application.properties
+		files in the application to allow for internationalization.-->
+    <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+            id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
+            p:fallbackToSystemLocale="false" />
+
+
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
     </bean>
@@ -47,6 +57,8 @@
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <mvc:interceptors>
+        <!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
         <!--Interceptor for redirecting home page if user is already logged in-->
         <mvc:interceptor>
             <mvc:mapping path="/login"/>
