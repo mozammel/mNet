@@ -6,6 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +16,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "findByUsername", query = "select u from User u join fetch u.authorities where u.username = (:username)"),
+        @NamedQuery(name = "findByUsername", query = "select u from User u left join fetch u.authorities where u.username = (:username)"),
         @NamedQuery(name = "findAllUsers", query = "select  u from  User u")
 })
 public class User extends Persistence implements UserDetails, Serializable {
@@ -21,10 +24,15 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+    private Long id;
+    @Version
+    private Long version;
+    @Size(min = 4, max = 30)
+    @NotNull
     @Column(nullable = false)
     private String username;
+    @NotNull
+    @Min(8)
     @Column(nullable = false)
     private String password;
     @Transient
@@ -68,11 +76,11 @@ public class User extends Persistence implements UserDetails, Serializable {
         this.authorities = authorities;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -179,12 +187,10 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + (authorities != null ? authorities.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (accountNonExpired ? 1 : 0);
         result = 31 * result + (accountNonLocked ? 1 : 0);
         result = 31 * result + (credentialsNonExpired ? 1 : 0);
@@ -199,5 +205,13 @@ public class User extends Persistence implements UserDetails, Serializable {
                 ", username='" + username + '\'' +
                 ", enabled=" + enabled +
                 '}';
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

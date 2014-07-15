@@ -10,4 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserService extends UserDetailsService {
     public void create(User user);
+
+    public User findByUserName(String username);
+
+    public User findById(Long id);
 }
