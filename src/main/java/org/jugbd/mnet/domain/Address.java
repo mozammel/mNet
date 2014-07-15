@@ -13,8 +13,8 @@ public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 128)
-    @Column(length = 128)
+    @Size(max = 256)
+    @Column(length = 256)
     private String homeAddress;
 
     @Size(max = 32)

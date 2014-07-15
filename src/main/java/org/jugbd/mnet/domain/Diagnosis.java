@@ -20,32 +20,32 @@ public class Diagnosis extends Persistence {
     @Temporal(TemporalType.DATE)
     private Date entryDate;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String chiefComplain;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String presentIllness;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String associatedSymptoms;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String physicalExamination;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String systemicExamination;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String pictureInformation;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String plan;
 
     @ManyToOne

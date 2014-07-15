@@ -26,12 +26,12 @@ public class Patient extends Persistence {
     @Column(length = 32)
     private String healthId;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 100)
+    @Column(length = 100)
     private String name;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 128)
+    @Column(length = 128)
     private String careOfAddress;
 
     private Integer age;
@@ -40,7 +40,7 @@ public class Patient extends Persistence {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(length = 8)
+    @Column(length = 16)
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
 
@@ -52,8 +52,8 @@ public class Patient extends Persistence {
     @Column(length = 32)
     private String contactNumber;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 100)
+    @Column(length = 100)
     private String contactPerson;
 
     @Column(length = 10)
