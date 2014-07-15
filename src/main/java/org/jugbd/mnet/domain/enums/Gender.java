@@ -1,4 +1,4 @@
-package org.jugbd.mnet.domain;
+package org.jugbd.mnet.domain.enums;
 
 /**
  * Created by Raqibul Islam on 7/1/14.

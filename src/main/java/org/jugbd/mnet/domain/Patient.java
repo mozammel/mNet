@@ -1,5 +1,9 @@
 package org.jugbd.mnet.domain;
 
+import org.jugbd.mnet.domain.enums.BloodType;
+import org.jugbd.mnet.domain.enums.Gender;
+import org.jugbd.mnet.domain.enums.Relationship;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -22,12 +26,12 @@ public class Patient extends Persistence {
     @Column(length = 32)
     private String healthId;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 100)
+    @Column(length = 100)
     private String name;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 128)
+    @Column(length = 128)
     private String careOfAddress;
 
     private Integer age;
@@ -36,15 +40,20 @@ public class Patient extends Persistence {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(length = 16)
+    @Enumerated(EnumType.STRING)
+    private BloodType bloodType;
+
     private Double height;
+
     private Double weight;
 
     @Size(max = 32)
     @Column(length = 32)
     private String contactNumber;
 
-    @Size(max = 64)
-    @Column(length = 64)
+    @Size(max = 100)
+    @Column(length = 100)
     private String contactPerson;
 
     @Column(length = 10)
@@ -110,6 +119,14 @@ public class Patient extends Persistence {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public BloodType getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
     }
 
     public Double getHeight() {

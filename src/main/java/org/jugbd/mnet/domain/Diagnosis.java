@@ -2,6 +2,7 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by Raqibul Islam on 7/1/14.
@@ -16,32 +17,35 @@ public class Diagnosis extends Persistence {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Temporal(TemporalType.DATE)
+    private Date entryDate;
+
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String chiefComplain;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String presentIllness;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String associatedSymptoms;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String physicalExamination;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String systemicExamination;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String pictureInformation;
 
-    @Size(max = 256)
-    @Column(length = 256)
+    @Size(max = 3000)
+    @Column(length = 3000)
     private String plan;
 
     @ManyToOne
@@ -61,6 +65,14 @@ public class Diagnosis extends Persistence {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
     }
 
     public String getChiefComplain() {

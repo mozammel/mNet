@@ -18,8 +18,8 @@ public class WardInfo extends Persistence {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Size(max = 32)
-    @Column(length = 32)
+    @Size(max = 100)
+    @Column(length = 100)
     private String name;
 
     @OneToMany(mappedBy = "wardInfo")
