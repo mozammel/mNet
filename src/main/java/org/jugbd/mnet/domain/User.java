@@ -1,13 +1,15 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,14 +31,17 @@ public class User extends Persistence implements UserDetails, Serializable {
     private Long version;
     @Size(min = 4, max = 30)
     @NotNull
-    @Column(nullable = false)
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String username;
     @NotNull
-    @Min(8)
+    @NotEmpty
+    @Size(min = 8)
     @Column(nullable = false)
+//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+//            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
     private String password;
-    @Transient
-    private String passwordConfirmed;
+    @Email
     private String email;
     private String phoneNumber;
     @Basic(fetch = FetchType.LAZY)
@@ -82,14 +87,6 @@ public class User extends Persistence implements UserDetails, Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPasswordConfirmed() {
-        return passwordConfirmed;
-    }
-
-    public void setPasswordConfirmed(String passwordConfirmed) {
-        this.passwordConfirmed = passwordConfirmed;
     }
 
     public String getEmail() {
@@ -177,8 +174,6 @@ public class User extends Persistence implements UserDetails, Serializable {
         if (authorities != null ? !authorities.equals(user.authorities) : user.authorities != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (!password.equals(user.password)) return false;
-        if (passwordConfirmed != null ? !passwordConfirmed.equals(user.passwordConfirmed) : user.passwordConfirmed != null)
-            return false;
         if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
         if (!username.equals(user.username)) return false;
 

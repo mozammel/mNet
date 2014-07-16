@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Created by Bazlur Rahman Rokon on 7/5/14.
  */
+@SuppressWarnings("ALL")
 public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
     private static final Logger log = LoggerFactory.getLogger(GenericDaoImpl.class);
 
