@@ -21,4 +21,8 @@ public enum Relationship {
     Relationship(String label) {
         this.label = label;
     }
+
+    public String getLabel() {
+        return label;
+    }
 }

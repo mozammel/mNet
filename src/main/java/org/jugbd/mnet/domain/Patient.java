@@ -5,7 +5,11 @@ import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +24,14 @@ public class Patient extends Persistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
+    @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
     private String healthId;
 
+    @NotEmpty
     @Size(max = 100)
     @Column(length = 100)
     private String name;
@@ -34,6 +40,10 @@ public class Patient extends Persistence {
     @Column(length = 128)
     private String careOfAddress;
 
+    @Past
+    private Date dateOfBirth;
+
+    @Max(150)
     private Integer age;
 
     @Column(length = 6)
@@ -48,6 +58,7 @@ public class Patient extends Persistence {
 
     private Double weight;
 
+    @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
     private String contactNumber;
@@ -73,11 +84,11 @@ public class Patient extends Persistence {
     public Patient() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -192,4 +203,13 @@ public class Patient extends Persistence {
     public void setAdmissionInfoSet(Set<AdmissionInfo> admissionInfoSet) {
         this.admissionInfoSet = admissionInfoSet;
     }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
 }

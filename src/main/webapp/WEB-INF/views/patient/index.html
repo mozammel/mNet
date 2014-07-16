@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
+          rel="stylesheet"/>
+    <link href="../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <script src="../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
+
+</head>
+
+<body>
+<div class="container-narrow">
+    <div th:replace="fragments/header :: header"></div>
+    <hr/>
+
+    <div th:if="${message}" class="alert alert-info">
+        <p th:text="${message}"></p>
+    </div>
+
+    <h3>Patient List</h3>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Patient ID</th>
+            <th>Patient Name</th>
+            <th>Created On</th>
+            <th>Edit</th>
+        </tr>
+
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.healthId}">Patient ID</td>
+            <td th:text="${patient.name}">Patient Name</td>
+            <td th:text="${patient.contactNumber}">Contact Number</td>
+            <td><a th:href="@{/patient/edit/__${patient.id}__}">Edit</a></td>
+        </tr>
+    </table>
+    <div class="row">
+        <div th:replace="fragments/footer :: footer"/>
+    </div>
+</div>
+</body>
+</html>
