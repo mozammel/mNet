@@ -3,7 +3,8 @@ package org.jugbd.mnet.dao;
 import org.jugbd.mnet.domain.User;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  * Created by Bazlur Rahman Rokon on 7/3/14.
@@ -12,10 +13,10 @@ import javax.persistence.Query;
 public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
     @Override
-    public User findByUsername(String username)  {
+    public User findByUsername(String username) throws NoResultException{
 
-        Query query = entityManager.createNamedQuery("findByUsername");
+        TypedQuery<User> query = entityManager.createNamedQuery("findByUsername", User.class);
         query.setParameter("username", username);
-        return (User) query.getSingleResult();
+        return query.getSingleResult();
     }
 }

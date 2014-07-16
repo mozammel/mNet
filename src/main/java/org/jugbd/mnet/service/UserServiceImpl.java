@@ -2,12 +2,17 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.UserDao;
 import org.jugbd.mnet.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by bazlur on 7/3/14.
@@ -15,12 +20,21 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+     private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private MessageDigestPasswordEncoder messageDigestPasswordEncoder;
+
     @Override
-    public void create(User user) {
+    public void save(User user) {
+        user.setPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), null));
+        user.setEnabled(true);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
         userDao.save(user);
     }
 
@@ -37,11 +51,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUserName(String username) {
-        return userDao.findByUsername(username);
+        try {
+            return userDao.findByUsername(username);
+        } catch (NoResultException e) {
+            log.error("user not found by ={}", username, e);
+        }
+        return null;
     }
 
     @Override
     public User findById(Long id) {
         return userDao.findOne(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 }

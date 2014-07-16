@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>New User :: MediNetServices</title>
+    <title>Edit User :: MediNetServices</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
@@ -16,13 +16,16 @@
     <hr/>
 
     <div class="row">
-        <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/save}" method="POST">
+        <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/update}" method="POST">
+
+            <input type="text" th:field="*{id}" hidden="true"/>
+            <input type="text" th:field="*{version}" hidden="true"/>
 
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label" th:text="#{label.user.username}">Username</label>
 
                 <div class="col-sm-6">
-                    <input type="text" th:field="*{username}" class="form-control" />
+                    <input type="text" th:field="*{username}" class="form-control" readonly="true"/>
                     <p class="text-danger" th:if="${#fields.hasErrors('username')}"><span th:errors="*{username}">Username required!</span> </p>
                 </div>
             </div>
