@@ -35,7 +35,7 @@
             <td th:text="${patient.healthId}">Patient ID</td>
             <td th:text="${patient.name}">Patient Name</td>
             <td th:text="${patient.contactNumber}">Contact Number</td>
-            <td><a th:href="@{/patient/edit/__${patient.id}__}">Edit</a></td>
+            <td><a th:href="@{/patient/edit/__${patient.id}__}">Edit</a> | <a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
         </tr>
     </table>
     <div class="row">

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Users :: MediNetServices</title>
+    <title>New User :: MediNetServices</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
@@ -16,30 +16,28 @@
     <hr/>
 
     <div class="row">
+
         <fieldset>
-            <legend><span th:text="#{label.user.list}">User List</span></legend>
+            <legend><span th:text="#{label.patient.list}">Patient List</span></legend>
 
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Health Id</th>
+                        <th>Name</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${users}">
-                    <td><a href="#" class="btn btn-info" th:href="'/user/show/' + ${item.id}"> Show </a></td>
-                    <td th:text="${item.username}"></td>
-                    <td th:text="${item.email}"></td>
-                    <td th:text="${item.phoneNumber}"></td>
-                </tr>
+                    <tr th:each="item : ${patients}">
+                        <td th:text="${item.healthId}"></td>
+                        <td th:text="${item.name}"></td>
+                    </tr>
                 </tbody>
             </table>
         </fieldset>
-    </div>
 
+    </div>
     <hr/>
     <div class="row">
         <div th:replace="fragments/footer :: footer"/>
