@@ -40,7 +40,7 @@
                 <label for="email" class="col-sm-2 control-label">Email</label>
 
                 <div class="col-sm-6">
-                    <input type="password" th:field="*{email}" class="form-control"
+                    <input type="email" th:field="*{email}" class="form-control"
                            th:class="${#fields.hasErrors('email')}? fieldError"/>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <label for="phoneNumber" class="col-sm-2 control-label">Phone Number </label>
 
                 <div class="col-sm-6">
-                    <input type="password" th:field="*{phoneNumber}" class="form-control"
+                    <input type="text" th:field="*{phoneNumber}" class="form-control"
                            th:class="${#fields.hasErrors('phoneNumber')}? fieldError"/>
                 </div>
             </div>

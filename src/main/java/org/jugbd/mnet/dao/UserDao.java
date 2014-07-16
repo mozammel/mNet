@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface UserDao extends GenericDao<User, Long> {
-    public User findByUsername(String username);
+    User findByUsername(String username);
 }

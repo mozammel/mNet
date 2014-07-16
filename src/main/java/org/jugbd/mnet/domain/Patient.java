@@ -20,7 +20,7 @@ public class Patient extends Persistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Size(max = 32)
     @Column(length = 32)
@@ -73,11 +73,11 @@ public class Patient extends Persistence {
     public Patient() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
