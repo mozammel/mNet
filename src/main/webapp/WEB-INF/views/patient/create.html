@@ -73,6 +73,7 @@
 
                 <div class="col-sm-6">
                     <select th:field="*{gender}">
+                        <option value="" th:text="#{common.select.prompt}"></option>
                         <option th:each="gender : ${T(org.jugbd.mnet.domain.enums.Gender).values()}"
                                 th:value="${gender}"
                                 th:text="${gender.label}"
@@ -160,6 +161,7 @@
 
                 <div class="col-sm-6">
                     <select id="patient-division" th:field="*{address.division}">
+                        <option value="" th:text="#{common.select.prompt}"></option>
                         <option value="Barisal">Barisal</option>
                         <option value="Chittagong">Chittagong</option>
                         <option value="Dhaka">Dhaka</option>
@@ -203,11 +205,13 @@
 
                 <div class="col-sm-6">
                     <select id="patient-relationship" th:field="*{relationship}">
+                        <option value="" th:text="#{common.select.prompt}"></option>
                         <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
                                 th:value="${relationship}"
                                 th:text="${relationship.label}"
                                 th:selected="${relationship == patient.relationship}">
                         </option>
+
                     </select>
                 </div>
 

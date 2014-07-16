@@ -2,6 +2,7 @@ package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.User;
 import org.jugbd.mnet.service.UserService;
+import org.jugbd.mnet.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by Bazlur Rahman Rokon on 7/15/14.
  */
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -46,7 +47,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttrs) {
+    public String save(@Valid @ModelAttribute("user") User user,
+                       BindingResult result,
+                       RedirectAttributes redirectAttrs,
+                       Principal principal) {
         log.debug("save() user ={}", user);
 
         if (result.hasErrors()) {
@@ -59,6 +63,8 @@ public class UserController {
             return "user/create";
         }
 
+        User currentUser = userService.findByUserName(principal.getName());
+        Utils.updatePersistentProperties(user, currentUser);
 
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user created");
@@ -98,12 +104,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttrs) {
+    public String update(@Valid @ModelAttribute("user") User user,
+                         BindingResult result,
+                         RedirectAttributes redirectAttrs,
+                         Principal principal) {
         log.debug("update() user ={}", user);
 
         if (result.hasErrors()) {
             return "user/edit";
         }
+
+        User currentUser = userService.findByUserName(principal.getName());
+        Utils.updatePersistentProperties(user, currentUser);
 
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
