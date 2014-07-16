@@ -89,10 +89,20 @@ public class PatientController {
     }
 
     @RequestMapping(value = {"/", "/index", "/list"}, method = RequestMethod.GET)
-    public String index(Model map) {
+    public String index(@RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "size", required = false) Integer size,
+                        Model uiModel) {
+        log.debug("index() page={}, size={}", page, size);
 
-        List<Patient> patients = patientService.findAll();
-        map.addAttribute("patients", patients);
+        if (page != null || size != null) {
+            int sizeNo = size == null ? 10 : size;
+            final int firstResult = page == null ? 0 : (page - 1) * sizeNo;
+            uiModel.addAttribute("patients", patientService.findAll(firstResult, sizeNo));
+            float nrOfPages = (float) patientService.count() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+        } else {
+            uiModel.addAttribute("patients", patientService.findAll());
+        }
 
         return "patient/index";
     }
@@ -111,5 +121,40 @@ public class PatientController {
         log.debug("cancel()");
 
         return "redirect:/patient/list";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String search(Model uiModel) {
+        log.debug("search()");
+
+        uiModel.addAttribute("patientSearchCmd", new PatientSearchCmd());
+
+        return "patient/search";
+    }
+
+    @RequestMapping(value = "/display", method = RequestMethod.POST)
+    public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd, Model uiModel) {
+        log.debug("display()");
+
+        if ((patientSearchCmd.getHealthId().isEmpty() && patientSearchCmd.getPhoneNumber().isEmpty())) {
+
+            uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
+            uiModel.addAttribute("error", "Please enter Health Id or Phone Number");
+
+            return "patient/search";
+        }
+
+        List<Patient> patientList = patientService.findByHealthIdOrPhoneNumber(patientSearchCmd.getHealthId(), patientSearchCmd.getPhoneNumber());
+        if (patientList == null || patientList.size() == 0) {
+
+            uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
+            uiModel.addAttribute("notFound", "The patient Information you are looking for, doesn't exist!");
+
+            return "patient/search";
+        }
+
+        uiModel.addAttribute("patients", patientList);
+
+        return "patient/index";
     }
 }

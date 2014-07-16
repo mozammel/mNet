@@ -37,4 +37,18 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> findAll() {
         return patientDao.findAll();
     }
+
+    public List<Patient> findByHealthIdOrPhoneNumber(String healthId, String phoneNumber) {
+        return patientDao.findByHealthIdOrPhoneNumber(healthId, phoneNumber);
+    }
+
+    @Override
+    public List<Patient> findAll(int firstResult, int sizeNo) {
+        return patientDao.findAll(firstResult,sizeNo);
+    }
+
+    @Override
+    public long count() {
+        return patientDao.count();
+    }
 }
