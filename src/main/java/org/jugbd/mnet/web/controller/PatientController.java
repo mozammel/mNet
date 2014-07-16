@@ -42,15 +42,18 @@ public class PatientController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
+
         binder.registerCustomEditor(Gender.class, new GenderEditor());
         binder.registerCustomEditor(Relationship.class, new RelationshipEditor());
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true));
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(Model map) {
+    public String create(Model uiModel) {
+
         Patient patient = new Patient();
-        map.addAttribute("patient", patient);
+        uiModel.addAttribute("patient", patient);
+
         return "patient/create";
     }
 
@@ -61,34 +64,36 @@ public class PatientController {
                        RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            log.info("Binding Error: " + patient);
+            log.info("Binding Error ={}", patient);
             return "patient/create";
         }
 
         boolean isNew = Utils.isNew(patient);
 
         User currentUser = userService.findByUserName(principal.getName());
-
         Utils.updatePersistentProperties(patient, currentUser);
 
         patientService.create(patient);
+        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully %s", isNew ? "created" : "updated"));
 
-        redirectAttributes.addFlashAttribute("message",
-                String.format("Patient successfully %s", isNew ? "created" : "updated"));
         return "redirect:/patient/list";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable Long id, Model map) {
+    public String edit(@PathVariable Long id, Model uiModel) {
+
         Patient selectedPatient = patientService.findOne(id);
-        map.addAttribute("patient", selectedPatient);
+        uiModel.addAttribute("patient", selectedPatient);
+
         return "patient/create";
     }
 
     @RequestMapping(value = {"/", "/index", "/list"}, method = RequestMethod.GET)
     public String index(Model map) {
+
         List<Patient> patients = patientService.findAll();
         map.addAttribute("patients", patients);
+
         return "patient/index";
     }
 }

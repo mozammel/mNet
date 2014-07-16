@@ -62,7 +62,7 @@
         <!--Interceptor for redirecting home page if user is already logged in-->
         <mvc:interceptor>
             <mvc:mapping path="/login"/>
-            <bean class="org.jugbd.mnet.security.LoginPageRedirectInterceptor"/>
+            <bean class="org.jugbd.mnet.interceptor.LoginPageRedirectInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class UserController {
 
     @ModelAttribute("user")
     private User getUser() {
+        log.debug("getUser()");
+
         return new User();
     }
 
@@ -44,50 +47,59 @@ public class UserController {
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttrs) {
-        log.debug("save()");
+        log.debug("save() user ={}", user);
 
         if (result.hasErrors()) {
             return "user/create";
         }
 
         User userFound = userService.findByUserName(user.getUsername());
-
         if (userFound != null) {
             result.rejectValue("username", "error.user.username.already.available", "Its look like someone already has that username. Try another");
             return "user/create";
         }
 
+
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user created");
+
         return "redirect:/user/show/" + user.getId().toString();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model uiModel) {
         log.debug("index()");
+
         List<User> users = userService.findAll();
         uiModel.addAttribute("users", users);
+
         return "user/index";
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") Long id, Model uiModel) {
+        log.debug("show() id ={}", id);
+
         User user = userService.findById(id);
         uiModel.addAttribute("user", user);
+
         return "user/show";
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable("id") Long id, Model uiModel) {
+        log.debug("edit() id ={}", id);
+
         User user = userService.findById(id);
         user.setPassword(null);
         uiModel.addAttribute("user", user);
+
         return "user/edit";
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(@Valid @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirectAttrs) {
-        log.debug("save()");
+        log.debug("update() user ={}", user);
 
         if (result.hasErrors()) {
             return "user/edit";
@@ -95,6 +107,7 @@ public class UserController {
 
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
+
         return "redirect:/user/show/" + user.getId().toString();
     }
 }

@@ -1,4 +1,4 @@
-package org.jugbd.mnet.security;
+package org.jugbd.mnet.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
