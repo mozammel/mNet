@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="item : ${users}">
-                    <td><a href="#" class="btn btn-info" th:href="'/user/show/' + ${item.id}"> Edit </a></td>
+                    <td><a href="#" class="btn btn-info" th:href="'/user/show/' + ${item.id}"> Show </a></td>
                     <td th:text="${item.username}"></td>
                     <td th:text="${item.email}"></td>
                     <td th:text="${item.phoneNumber}"></td>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Show Patient</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
+          rel="stylesheet"/>
+    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-narrow">
+    <div th:replace="fragments/header :: header"></div>
+    <hr/>
+
+    <div class="row">
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <fieldset>
+            <legend th:text="#{heading.patient.personal.info}">Show Patient Personal Info</legend>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.health.id}">Health Id</dt>
+                <dd th:text="${patient.healthId}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.patient.name}">Name</dt>
+                <dd th:text="${patient.name}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.contact.no}">Contact Number</dt>
+                <dd th:text="${patient.contactNumber}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.sex}">Gender</dt>
+                <div th:if="${patient.gender}">
+                    <dd th:text="${patient.gender.label}"></dd>
+                </div>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.date.birth}">Date Of Birth</dt>
+                <dd th:text="${patient.dateOfBirth}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.age.year}">Age</dt>
+                <dd th:text="${patient.age}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.height.inches}">Height</dt>
+                <dd th:text="${patient.height}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.patient.name}">Weight</dt>
+                <dd th:text="${patient.weight}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.address}">Address</dt>
+                <dd th:text="${patient.address.homeAddress}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.address.post.office}">Post Office</dt>
+                <dd th:text="${patient.address.postOffice}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.address.police.station}">Police Station</dt>
+                <dd th:text="${patient.address.policeStation}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.division}">Division</dt>
+                <dd th:text="${patient.address.division}"></dd>
+            </dl>
+
+        </fieldset>
+
+        <fieldset>
+            <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.contact.name}">Contact Person</dt>
+                <dd th:text="${patient.contactPerson}"></dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
+                <dd th:text="${patient.emergencyContactNumber}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.relationship}">Relationship</dt>
+                <div th:if="${patient.relationship}">
+                    <dd th:text="${patient.relationship.label}"></dd>
+                </div>
+            </dl>
+
+        </fieldset>
+        <hr/>
+
+        <div>
+            <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>
+            <a href="#" class="btn btn-info" th:href="'/patient/edit/' + ${patient.id}"> Edit </a>
+        </div>
+    </div>
+
+    <hr/>
+    <div class="row">
+        <div th:replace="fragments/footer :: footer"/>
+    </div>
+</div>
+</body>
+</html>
