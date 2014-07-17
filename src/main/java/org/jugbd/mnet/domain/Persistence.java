@@ -10,12 +10,13 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class Persistence implements Serializable {
     private Date dateCreated;
+
     private Date dateLastUpdated;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private User createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User lastUpdatedBy;
 
     public Date getDateCreated() {

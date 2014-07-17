@@ -11,12 +11,11 @@ import java.util.List;
  */
 @Component
 public interface UserService extends UserDetailsService {
-    public void save(User user);
+    void save(User user);
 
-    public User findByUserName(String username);
+    User findByUserName(String username);
 
-    public User findById(Long id);
+    List<User> findAll();
 
-    public List<User> findAll();
-
+    User findById(Long id);
 }

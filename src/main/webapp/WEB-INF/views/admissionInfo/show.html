@@ -30,7 +30,7 @@
                 </dl>
 
                 <dl class="dl-horizontal">
-                    <dt th:text="#{label.admissionInfo.injuryDate}">Injury Daye</dt>
+                    <dt th:text="#{label.admissionInfo.injuryDate}">Injury Date</dt>
                     <dd th:text="${admissionInfo.injuryDate}"></dd>
                 </dl>
 
@@ -41,8 +41,9 @@
             </fieldset>
 
             <div>
-                <a href="#" class="btn btn-info" th:href="'/patient/show/' +${admissionInfo.patient.id} "> Back To Patient Info</a>
+                <a href="#" class="btn btn-info" th:href="'/patient/show/' +${admissionInfo.patient.id}"> Back To Patient Info</a>
                 <a href="#" class="btn btn-info" th:href="'/admissionInfo/edit/' + ${admissionInfo.id}"> Edit </a>
+                <a href="#" class="btn btn-info" th:href="'/diagnosis/create/' + ${admissionInfo.id}"> Create Diagnosis </a>
             </div>
         </div>
     </div>

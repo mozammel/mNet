@@ -2,6 +2,8 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 /**
@@ -20,30 +22,37 @@ public class Diagnosis extends Persistence {
     @Temporal(TemporalType.DATE)
     private Date entryDate;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String chiefComplain;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String presentIllness;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String associatedSymptoms;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String physicalExamination;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String systemicExamination;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String pictureInformation;
 
+    @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String plan;
@@ -145,5 +154,19 @@ public class Diagnosis extends Persistence {
 
     public void setAdmissionInfo(AdmissionInfo admissionInfo) {
         this.admissionInfo = admissionInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "Diagnosis{" +
+                "plan='" + plan + '\'' +
+                ", pictureInformation='" + pictureInformation + '\'' +
+                ", systemicExamination='" + systemicExamination + '\'' +
+                ", physicalExamination='" + physicalExamination + '\'' +
+                ", associatedSymptoms='" + associatedSymptoms + '\'' +
+                ", presentIllness='" + presentIllness + '\'' +
+                ", chiefComplain='" + chiefComplain + '\'' +
+                ", entryDate=" + entryDate +
+                '}';
     }
 }

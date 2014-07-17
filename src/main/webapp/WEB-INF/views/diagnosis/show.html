@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Show Patient</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
+          rel="stylesheet"/>
+    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container-narrow">
+    <div th:replace="fragments/header :: header"></div>
+    <hr/>
+
+    <div class="row">
+        <div th:if="${alertMessage}" class="alert alert-info">
+            <p th:text="${alertMessage}"></p>
+        </div>
+
+        <fieldset>
+            <legend th:text="#{heading.diagnosis.diagnosis.details}">Diagnosis Details</legend>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.entry.date}">Created On</dt>
+                <dd th:text="${diagnosis.entryDate}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.chief.complains}">Chief Complain(s)</dt>
+                <dd th:text="${diagnosis.chiefComplain}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.present.illness}">Present Illness</dt>
+                <dd th:text="${diagnosis.presentIllness}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.associated.symptoms}">Associated Symptom(s)</dt>
+                <dd th:text="${diagnosis.associatedSymptoms}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.physical.exams}">Physical Examination(s)</dt>
+                <dd th:text="${diagnosis.physicalExamination}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.systemic.exams}">Systemic Examination(s)</dt>
+                <dd th:text="${diagnosis.systemicExamination}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.picture.info}">Picture Information</dt>
+                <dd th:text="${diagnosis.pictureInformation}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.plan}">Plan</dt>
+                <dd th:text="${diagnosis.plan}"></dd>
+            </dl>
+        </fieldset>
+        <hr/>
+
+        <div>
+            <a href="#" class="btn btn-info" th:href="'/diagnosis/patients/' + ${patientId} + '/admissions/' + ${admissionId} + '/list'">Diagnosis List</a>
+            <a href="#" class="btn btn-info" th:href="'/diagnosis/edit/' + ${diagnosis.id}"> Edit </a>
+        </div>
+    </div>
+
+    <hr/>
+    <div class="row">
+        <div th:replace="fragments/footer :: footer"/>
+    </div>
+</div>
+</body>
+</html>

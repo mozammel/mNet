@@ -10,5 +10,5 @@ import javax.persistence.NoResultException;
  */
 @Component
 public interface UserDao extends GenericDao<User, Long> {
-    public User findByUsername(String username) throws NoResultException;
+    User findByUsername(String username);
 }
