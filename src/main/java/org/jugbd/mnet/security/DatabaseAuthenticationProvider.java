@@ -61,7 +61,7 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
             }
             // authorize admin
             targetUser = new User(adminUser, adminPassword);
-            targetUser.setAuthorities(Arrays.asList(Role.ROLE_ADMIN));
+            targetUser.setRoles(Arrays.asList(Role.ROLE_ADMIN));
         } else {
             try {
                 targetUser = (User) userService.loadUserByUsername(username);
