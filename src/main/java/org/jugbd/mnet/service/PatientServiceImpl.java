@@ -51,4 +51,9 @@ public class PatientServiceImpl implements PatientService {
     public long count() {
         return patientDao.count();
     }
+
+    @Override
+    public void update(Patient patient) {
+         patientDao.save(patient);
+    }
 }

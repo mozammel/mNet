@@ -16,7 +16,7 @@ public class WardInfo extends Persistence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Size(max = 100)
     @Column(length = 100)
@@ -28,11 +28,11 @@ public class WardInfo extends Persistence {
     public WardInfo() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,5 +50,25 @@ public class WardInfo extends Persistence {
 
     public void setAdmissionInfoSet(Set<AdmissionInfo> admissionInfoSet) {
         this.admissionInfoSet = admissionInfoSet;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WardInfo wardInfo = (WardInfo) o;
+
+        if (id != null ? !id.equals(wardInfo.id) : wardInfo.id != null) return false;
+        if (name != null ? !name.equals(wardInfo.name) : wardInfo.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }
