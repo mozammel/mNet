@@ -1,12 +1,12 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.BloodType;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
-import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -78,8 +78,8 @@ public class Patient extends Persistence {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "patient")
-    private Set<AdmissionInfo> admissionInfoSet = new HashSet<AdmissionInfo>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
+    private Set<AdmissionInfo> admissionInfos = new HashSet<>();
 
     public Patient() {
     }
@@ -196,12 +196,12 @@ public class Patient extends Persistence {
         this.address = address;
     }
 
-    public Set<AdmissionInfo> getAdmissionInfoSet() {
-        return admissionInfoSet;
+    public Set<AdmissionInfo> getAdmissionInfos() {
+        return admissionInfos;
     }
 
-    public void setAdmissionInfoSet(Set<AdmissionInfo> admissionInfoSet) {
-        this.admissionInfoSet = admissionInfoSet;
+    public void setAdmissionInfos(Set<AdmissionInfo> admissionInfos) {
+        this.admissionInfos = admissionInfos;
     }
 
     public Date getDateOfBirth() {
@@ -212,4 +212,53 @@ public class Patient extends Persistence {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Patient patient = (Patient) o;
+
+        if (address != null ? !address.equals(patient.address) : patient.address != null) return false;
+        if (age != null ? !age.equals(patient.age) : patient.age != null) return false;
+        if (bloodType != patient.bloodType) return false;
+        if (careOfAddress != null ? !careOfAddress.equals(patient.careOfAddress) : patient.careOfAddress != null)
+            return false;
+        if (contactNumber != null ? !contactNumber.equals(patient.contactNumber) : patient.contactNumber != null)
+            return false;
+        if (contactPerson != null ? !contactPerson.equals(patient.contactPerson) : patient.contactPerson != null)
+            return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(patient.dateOfBirth) : patient.dateOfBirth != null) return false;
+        if (emergencyContactNumber != null ? !emergencyContactNumber.equals(patient.emergencyContactNumber) : patient.emergencyContactNumber != null)
+            return false;
+        if (gender != patient.gender) return false;
+        if (healthId != null ? !healthId.equals(patient.healthId) : patient.healthId != null) return false;
+        if (height != null ? !height.equals(patient.height) : patient.height != null) return false;
+        if (id != null ? !id.equals(patient.id) : patient.id != null) return false;
+        if (name != null ? !name.equals(patient.name) : patient.name != null) return false;
+        if (relationship != patient.relationship) return false;
+        if (weight != null ? !weight.equals(patient.weight) : patient.weight != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (healthId != null ? healthId.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (careOfAddress != null ? careOfAddress.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (bloodType != null ? bloodType.hashCode() : 0);
+        result = 31 * result + (height != null ? height.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (contactNumber != null ? contactNumber.hashCode() : 0);
+        result = 31 * result + (contactPerson != null ? contactPerson.hashCode() : 0);
+        result = 31 * result + (relationship != null ? relationship.hashCode() : 0);
+        result = 31 * result + (emergencyContactNumber != null ? emergencyContactNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        return result;
+    }
 }

@@ -106,9 +106,33 @@
         </fieldset>
         <hr/>
 
+        <fieldset>
+            <legend> Admission Info</legend>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Admission Date</th>
+                    <th>Injury Date</th>
+                    <th>Bed Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${patient.admissionInfos}">
+                    <td><a href="#" th:href="'/admissionInfo/show/' + ${item.id}"> Show </a></td>
+                    <td th:text="${item.admissionDate}"></td>
+                    <td th:text="${item.injuryDate}"></td>
+                    <td th:text="${item.bedNumber}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
         <div>
             <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>
             <a href="#" class="btn btn-info" th:href="'/patient/edit/' + ${patient.id}"> Edit </a>
+            <a href="#" class="btn btn-info" th:href="'/admissionInfo/create?patientId=' + ${patient.id}">New Admission</a>
         </div>
     </div>
 

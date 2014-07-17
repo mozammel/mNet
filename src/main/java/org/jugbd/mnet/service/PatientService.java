@@ -20,4 +20,6 @@ public interface PatientService {
     public List<Patient> findAll(int firstResult, int sizeNo);
 
     public long count();
+
+    public void update(Patient patient);
 }
