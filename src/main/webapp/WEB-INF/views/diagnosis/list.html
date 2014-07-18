@@ -25,13 +25,13 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>Created On</th>
+            <th>Entry On</th>
             <th>Chief Complain(s)</th>
             <th>Edit</th>
         </tr>
 
         <tr th:each="diagnosis : ${diagnosisList}">
-            <td th:text="${diagnosis.dateCreated}">Created On</td>
+            <td th:text="${diagnosis.entryDate} ? ${#dates.format(diagnosis.entryDate,'dd-MMM-yyyy')}">Created On</td>
             <td th:text="${diagnosis.chiefComplain}">Chief Complain(s)</td>
             <td><a th:href="@{/diagnosis/edit/__${diagnosis.id}__}">Edit</a></td>
         </tr>

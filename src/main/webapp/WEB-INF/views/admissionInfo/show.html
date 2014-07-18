@@ -26,12 +26,12 @@
                 <legend>Show Admission Information</legend>
                 <dl class="dl-horizontal">
                     <dt th:text="#{label.admissionInfo.admissionDate}">Admission Date</dt>
-                    <dd th:text="${admissionInfo.admissionDate}"></dd>
+                    <dd th:text="${admissionInfo.admissionDate} ? ${#dates.format(admissionInfo.admissionDate,'dd-MMM-yyyy')}"></dd>
                 </dl>
 
                 <dl class="dl-horizontal">
                     <dt th:text="#{label.admissionInfo.injuryDate}">Injury Date</dt>
-                    <dd th:text="${admissionInfo.injuryDate}"></dd>
+                    <dd th:text="${admissionInfo.injuryDate} ? ${#dates.format(admissionInfo.injuryDate,'dd-MMM-yyyy')}"></dd>
                 </dl>
 
                 <dl class="dl-horizontal">
@@ -51,7 +51,7 @@
 
                 <tr th:each="diagnosis : ${admissionInfo.diagnoses}">
                     <td><a th:href="@{/diagnosis/show/__${diagnosis.id}__}">Show</a></td>
-                    <td th:text="${diagnosis.entryDate}">Entry Date</td>
+                    <td th:text="${diagnosis.entryDate} ? ${#dates.format(diagnosis.entryDate,'dd-MMM-yyyy')}">Entry Date</td>
                     <td th:text="${diagnosis.chiefComplain}">Chief Complain(s)</td>
                 </tr>
             </table>

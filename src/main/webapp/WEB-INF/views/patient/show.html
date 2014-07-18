@@ -45,7 +45,7 @@
 
             <dl class="dl-horizontal">
                 <dt th:text="#{label.date.birth}">Date Of Birth</dt>
-                <dd th:text="${patient.dateOfBirth}"></dd>
+                <dd th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></dd>
             </dl>
 
             <dl class="dl-horizontal">
@@ -121,8 +121,8 @@
                 <tbody>
                 <tr th:each="item : ${patient.admissionInfos}">
                     <td><a href="#" th:href="'/admissionInfo/show/' + ${item.id}"> Show </a></td>
-                    <td th:text="${item.admissionDate}"></td>
-                    <td th:text="${item.injuryDate}"></td>
+                    <td th:text="${item.admissionDate} ? ${#dates.format(item.admissionDate,'dd-MMM-yyyy')}"></td>
+                    <td th:text="${item.injuryDate} ? ${#dates.format(item.injuryDate,'dd-MMM-yyyy')}"></td>
                     <td th:text="${item.bedNumber}"></td>
                 </tr>
                 </tbody>
