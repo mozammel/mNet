@@ -8,6 +8,8 @@
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
           rel="stylesheet"/>
     <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
+
 </head>
 <body>
 
@@ -16,6 +18,11 @@
     <hr/>
 
     <div class="row">
+        <div>
+            <a href="#" class="btn btn-info" th:href="@{/user/create}"> Intake New Patient </a>
+        </div>
+        <hr/>
+
         <fieldset>
             <legend><span th:text="#{label.user.list}">User List</span></legend>
 
@@ -26,6 +33,7 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Phone Number</th>
+                    <th>Role(s)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +42,7 @@
                     <td th:text="${item.username}"></td>
                     <td th:text="${item.email}"></td>
                     <td th:text="${item.phoneNumber}"></td>
+                    <td th:text="${item.roles}"></td>
                 </tr>
                 </tbody>
             </table>

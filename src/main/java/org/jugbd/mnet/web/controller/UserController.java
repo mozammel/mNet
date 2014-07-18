@@ -1,19 +1,18 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.domain.enums.Role;
 import org.jugbd.mnet.service.UserService;
 import org.jugbd.mnet.utils.Utils;
+import org.jugbd.mnet.web.editor.AuthorityEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -37,6 +36,12 @@ public class UserController {
         log.debug("getUser()");
 
         return new User();
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+
+        binder.registerCustomEditor(Role.class, new AuthorityEditor());
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
@@ -121,5 +126,12 @@ public class UserController {
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
 
         return "redirect:/user/show/" + user.getId().toString();
+    }
+
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public String cancel() {
+        log.debug("cancel()");
+
+        return "redirect:/user";
     }
 }

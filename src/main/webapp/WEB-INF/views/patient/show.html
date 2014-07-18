@@ -130,9 +130,9 @@
         </fieldset>
 
         <div>
-            <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>
-            <a href="#" class="btn btn-info" th:href="'/patient/edit/' + ${patient.id}"> Edit </a>
-            <a href="#" class="btn btn-info" th:href="'/admissionInfo/create?patientId=' + ${patient.id}">New Admission</a>
+            <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>&nbsp;&nbsp;
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info" th:href="@{/patient/edit/__${patient.id}__}">Edit</a>&nbsp;&nbsp;
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/admissionInfo/create?patientId=__${patient.id}__}">New Admission</a>
         </div>
     </div>
 

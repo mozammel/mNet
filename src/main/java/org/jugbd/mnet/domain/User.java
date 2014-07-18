@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "findByUsername", query = "select u from User u left join fetch u.authorities where u.username = (:username)"),
+        @NamedQuery(name = "findByUsername", query = "select u from User u left join fetch u.roles where u.username = (:username)"),
         @NamedQuery(name = "findAllUsers", query = "select  u from  User u")
 })
 public class User extends Persistence implements UserDetails, Serializable {
@@ -44,11 +43,11 @@ public class User extends Persistence implements UserDetails, Serializable {
     @Email
     private String email;
     private String phoneNumber;
-    @Basic(fetch = FetchType.LAZY)
-    @ElementCollection(targetClass = Role.class)
-    @Enumerated(EnumType.STRING) // Possibly optional (I'm not sure) but defaults to ORDINAL.
-    @CollectionTable(name = "user_role")
-    private List<Role> authorities;
+    @NotEmpty(message = "You must select one role")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id") )
+    private List<Role> roles = new ArrayList<>();
 
     //spring security default properties
     private boolean accountNonExpired;
@@ -71,14 +70,19 @@ public class User extends Persistence implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : this.authorities) {
+
+        for (Role role : this.roles) {
             authorities.add(new SimpleGrantedAuthority(role.name()));
         }
         return authorities;
     }
 
-    public void setAuthorities(List<Role> authorities) {
-        this.authorities = authorities;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
     public Long getId() {
@@ -171,7 +175,7 @@ public class User extends Persistence implements UserDetails, Serializable {
         if (credentialsNonExpired != user.credentialsNonExpired) return false;
         if (enabled != user.enabled) return false;
         if (id != user.id) return false;
-        if (authorities != null ? !authorities.equals(user.authorities) : user.authorities != null) return false;
+        if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (!password.equals(user.password)) return false;
         if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;

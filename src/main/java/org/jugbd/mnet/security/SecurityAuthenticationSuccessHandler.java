@@ -30,7 +30,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
             response.sendRedirect("/admin/index");
         } else if (roles.contains(Role.ROLE_USER.name())) {
             log.debug("role user found, redirecting to intake page");
-            response.sendRedirect("/home");
+            response.sendRedirect("/patient/search");
         }
     }
 }

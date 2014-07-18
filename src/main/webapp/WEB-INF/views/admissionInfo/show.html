@@ -41,8 +41,9 @@
             </fieldset>
 
             <div>
-                <a href="#" class="btn btn-info" th:href="'/patient/show/' +${admissionInfo.patient.id} "> Back To Patient Info</a>
-                <a href="#" class="btn btn-info" th:href="'/admissionInfo/edit/' + ${admissionInfo.id}"> Edit </a>
+                <a href="#" class="btn btn-info" th:href="@{/patient/show/__${admissionInfo.patient.id}__} "> Back To Patient Info</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/admissionInfo/edit/__${admissionInfo.id}__}">Edit</a>
+
             </div>
         </div>
     </div>

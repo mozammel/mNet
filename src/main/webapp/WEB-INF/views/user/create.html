@@ -8,6 +8,8 @@
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
           rel="stylesheet"/>
     <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
+
 </head>
 <body>
 
@@ -52,7 +54,19 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label" th:text="#{label.user.role}">Role(s) </label>
+
+                <div class="col-sm-6">
+                    <div th:each="role : ${T(org.jugbd.mnet.domain.enums.Role).values()}">
+                        <input type="checkbox" th:field="*{roles}" th:value="${role}"/>
+                        <label th:text="${role}">example</label>
+                    </div>
+                    <p class="text-danger" th:if="${#fields.hasErrors('roles')}"><span th:errors="*{roles}">Role required!</span> </p>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                    <a href="#" class="btn btn-danger" th:href="@{/user/cancel}" > <span th:text="#{label.cancel}">Cancel</span> </a>
                     <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save Changes</button>
                 </div>
             </div>
