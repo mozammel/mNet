@@ -24,12 +24,12 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public void saveDiagnosis(Diagnosis diagnosis) {
-        diagnosisDao.saveDiagnosis(diagnosis);
+        diagnosisDao.save(diagnosis);
     }
 
     @Override
     public Diagnosis getDiagnosis(Long diagnosisId) {
-        return diagnosisDao.getDiagnosis(diagnosisId);
+        return diagnosisDao.findOne(diagnosisId);
     }
 
     @Override

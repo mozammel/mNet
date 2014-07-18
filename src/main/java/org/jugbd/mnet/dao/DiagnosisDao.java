@@ -10,9 +10,6 @@ import java.util.List;
  */
 @Component
 public interface DiagnosisDao extends GenericDao<Diagnosis, Long> {
-    void saveDiagnosis(Diagnosis diagnosis);
-
-    Diagnosis getDiagnosis(Long diagnosisId);
 
     List<Diagnosis> getDiagnosisList(Long patientId, Long admissionId);
 }

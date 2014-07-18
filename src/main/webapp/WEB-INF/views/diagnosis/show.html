@@ -16,15 +16,15 @@
     <hr/>
 
     <div class="row">
-        <div th:if="${alertMessage}" class="alert alert-info">
-            <p th:text="${alertMessage}"></p>
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
         </div>
 
         <fieldset>
             <legend th:text="#{heading.diagnosis.diagnosis.details}">Diagnosis Details</legend>
 
             <dl class="dl-horizontal">
-                <dt th:text="#{label.entry.date}">Created On</dt>
+                <dt th:text="#{label.entry.date}">Entry On</dt>
                 <dd th:text="${diagnosis.entryDate}"></dd>
             </dl>
 
@@ -66,8 +66,8 @@
         <hr/>
 
         <div>
-            <a href="#" class="btn btn-info" th:href="'/diagnosis/patients/' + ${patientId} + '/admissions/' + ${admissionId} + '/list'">Diagnosis List</a>
-            <a href="#" class="btn btn-info" th:href="'/diagnosis/edit/' + ${diagnosis.id}"> Edit </a>
+            <a href="#" class="btn btn-info" th:href="@{/admissionInfo/show/__${admissionId}__}">Back To Admission Info</a>
+            <a href="#" class="btn btn-info" th:href="@{/diagnosis/edit/__${diagnosis.id}__}"> Edit </a>
         </div>
     </div>
 

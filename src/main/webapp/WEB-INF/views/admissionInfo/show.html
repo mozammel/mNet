@@ -40,10 +40,26 @@
                 </dl>
             </fieldset>
 
+            <h3>Diagnosis List</h3>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th>Created On</th>
+                    <th>Chief Complain(s)</th>
+                </tr>
+
+                <tr th:each="diagnosis : ${admissionInfo.diagnoses}">
+                    <td><a th:href="@{/diagnosis/show/__${diagnosis.id}__}">Show</a></td>
+                    <td th:text="${diagnosis.entryDate}">Entry Date</td>
+                    <td th:text="${diagnosis.chiefComplain}">Chief Complain(s)</td>
+                </tr>
+            </table>
+
             <div>
                 <a href="#" class="btn btn-info" th:href="@{/patient/show/__${admissionInfo.patient.id}__} "> Back To Patient Info</a>
                 <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/admissionInfo/edit/__${admissionInfo.id}__}">Edit</a>
-                <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{diagnosis/create/__${admissionInfo.id}__}"> Create Diagnosis </a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/diagnosis/create/__${admissionInfo.id}__}"> Create Diagnosis </a>
             </div>
         </div>
     </div>

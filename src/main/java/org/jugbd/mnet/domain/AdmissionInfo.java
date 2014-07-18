@@ -36,10 +36,11 @@ public class AdmissionInfo extends Persistence {
     @Column(length = 32)
     private String bedNumber;
 
-    @OneToMany(mappedBy = "admissionInfo")
-    private Set<Diagnosis> diagnosisSet = new HashSet<Diagnosis>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "admissionInfo", cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private Set<Diagnosis> diagnoses = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
@@ -82,12 +83,12 @@ public class AdmissionInfo extends Persistence {
         this.bedNumber = bedNumber;
     }
 
-    public Set<Diagnosis> getDiagnosisSet() {
-        return diagnosisSet;
+    public Set<Diagnosis> getDiagnoses() {
+        return diagnoses;
     }
 
-    public void setDiagnosisSet(Set<Diagnosis> diagnosisSet) {
-        this.diagnosisSet = diagnosisSet;
+    public void setDiagnoses(Set<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
     }
 
     public Patient getPatient() {
@@ -118,6 +119,7 @@ public class AdmissionInfo extends Persistence {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         AdmissionInfo that = (AdmissionInfo) o;
 
@@ -135,7 +137,8 @@ public class AdmissionInfo extends Persistence {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (admissionDate != null ? admissionDate.hashCode() : 0);
         result = 31 * result + (injuryDate != null ? injuryDate.hashCode() : 0);

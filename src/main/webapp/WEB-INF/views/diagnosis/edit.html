@@ -20,7 +20,9 @@
 
             <form class="form-horizontal" role="form" action="#" th:action="@{/diagnosis/update}" th:object="${diagnosis}" method="post">
 
+                <input type="hidden" th:field="*{admissionInfo.id}"/>
                 <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{version}" />
 
                 <div class="form-group">
                     <label for="chiefComplain" class="col-sm-3 control-label" th:text="#{label.chief.complains}">Chief Complain(s)</label>
@@ -73,9 +75,8 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-10">
-                        <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
-                        &nbsp; &nbsp; &nbsp; &nbsp;
                         <button type="submit" class="btn btn-danger" th:text="#{label.cancel}">Cancel</button>
+                        <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                     </div>
                 </div>
 

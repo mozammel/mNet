@@ -13,10 +13,10 @@ public abstract class Persistence implements Serializable {
 
     private Date dateLastUpdated;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne
     private User createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne
     private User lastUpdatedBy;
 
     public Date getDateCreated() {
@@ -49,5 +49,31 @@ public abstract class Persistence implements Serializable {
 
     public void setLastUpdatedBy(User lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Persistence that = (Persistence) o;
+
+        if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
+        if (dateCreated != null ? !dateCreated.equals(that.dateCreated) : that.dateCreated != null) return false;
+        if (dateLastUpdated != null ? !dateLastUpdated.equals(that.dateLastUpdated) : that.dateLastUpdated != null)
+            return false;
+        if (lastUpdatedBy != null ? !lastUpdatedBy.equals(that.lastUpdatedBy) : that.lastUpdatedBy != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dateCreated != null ? dateCreated.hashCode() : 0;
+        result = 31 * result + (dateLastUpdated != null ? dateLastUpdated.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (lastUpdatedBy != null ? lastUpdatedBy.hashCode() : 0);
+        return result;
     }
 }

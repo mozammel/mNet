@@ -68,8 +68,9 @@ public class UserController {
             return "user/create";
         }
 
-        User currentUser = userService.findByUserName(principal.getName());
-        Utils.updatePersistentProperties(user, currentUser);
+        //TODO revisit
+        //User currentUser = userService.findByUserName(principal.getName());
+        //Utils.updatePersistentProperties(user, currentUser);
 
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user created");
@@ -119,8 +120,9 @@ public class UserController {
             return "user/edit";
         }
 
-        User currentUser = userService.findByUserName(principal.getName());
-        Utils.updatePersistentProperties(user, currentUser);
+        //TODO revisit
+        //User currentUser = userService.findByUserName(principal.getName());
+        //Utils.updatePersistentProperties(user, currentUser);
 
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");

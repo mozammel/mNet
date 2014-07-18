@@ -19,7 +19,7 @@
 
     <div class="row">
         <div>
-            <a href="#" class="btn btn-info" th:href="@{/user/create}"> Intake New Patient </a>
+            <a href="#" class="btn btn-info" th:href="@{/user/create}"> Create New User </a>
         </div>
         <hr/>
 
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="item : ${users}">
-                    <td><a href="#" class="btn btn-info" th:href="'/user/show/' + ${item.id}"> Show </a></td>
+                    <td><a href="#" th:href="'/user/show/' + ${item.id}"> Show </a></td>
                     <td th:text="${item.username}"></td>
                     <td th:text="${item.email}"></td>
                     <td th:text="${item.phoneNumber}"></td>

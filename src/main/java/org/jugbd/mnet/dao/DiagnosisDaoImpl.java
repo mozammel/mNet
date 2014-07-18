@@ -19,20 +19,6 @@ public class DiagnosisDaoImpl extends GenericDaoImpl<Diagnosis, Long> implements
     private static final Logger log = LoggerFactory.getLogger(DiagnosisDaoImpl.class);
 
     @Override
-    public void saveDiagnosis(Diagnosis diagnosis) {
-        log.info("diagnosis={}", diagnosis);
-
-        save(diagnosis);
-    }
-
-    @Override
-    public Diagnosis getDiagnosis(Long diagnosisId) {
-        log.info("diagnosisId={}", diagnosisId);
-
-        return findOne(diagnosisId);
-    }
-
-    @Override
     public List<Diagnosis> getDiagnosisList(Long patientId, Long admissionId) {
         log.info("patientId={} admissionId={}", patientId, admissionId);
 

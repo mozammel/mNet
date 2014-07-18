@@ -2,12 +2,12 @@ package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.AdmissionInfo;
 import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.service.AdmissionInfoService;
 import org.jugbd.mnet.service.DiagnosisService;
+import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.UserService;
 import org.jugbd.mnet.utils.DateUtils;
-import org.jugbd.mnet.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,9 @@ public class DiagnosisController {
     @Autowired
     private AdmissionInfoService admissionInfoService;
 
+    @Autowired
+    private PatientService patientService;
+
 //    @ModelAttribute("diagnosis")
 //    private Diagnosis getDiagnosis() {
 //        return new Diagnosis();
@@ -59,10 +62,11 @@ public class DiagnosisController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute Diagnosis diagnosis,
+    public String save(@Valid @ModelAttribute("diagnosis") Diagnosis diagnosis,
                        BindingResult result,
                        Principal principal,
-                       Model map) throws ParseException {
+                       Model uiModel,
+                       RedirectAttributes redirectAttrs) throws ParseException {
 
         if (result.hasErrors()) {
             return "diagnosis/create";
@@ -71,13 +75,15 @@ public class DiagnosisController {
         Date currentDate = DateUtils.getCurrentDate();
         diagnosis.setEntryDate(currentDate);
 
-        String username = principal.getName();
-        User user = userService.findByUserName(username);
-        Utils.updatePersistentProperties(diagnosis, user);
-
+        //TODO revisit
+        //String username = principal.getName();
+        //User user = userService.findByUserName(username);
+        //Utils.updatePersistentProperties(diagnosis, user);
+        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
+        diagnosis.setAdmissionInfo(admissionInfo);
         diagnosisService.saveDiagnosis(diagnosis);
 
-        map.addAttribute("alertMessage", "Diagnosis information entry created!");
+        redirectAttrs.addFlashAttribute("message", "Diagnosis information entry created!");
 
         return "redirect:/diagnosis/show/" + diagnosis.getId();
     }
@@ -98,6 +104,8 @@ public class DiagnosisController {
 
         Diagnosis diagnosis = diagnosisService.getDiagnosis(diagnosisId);
         map.addAttribute("diagnosis", diagnosis);
+        map.addAttribute("patientId", diagnosis.getAdmissionInfo().getPatient().getId());
+        map.addAttribute("admissionId", diagnosis.getAdmissionInfo().getId());
 
         return "diagnosis/show";
     }
@@ -111,9 +119,12 @@ public class DiagnosisController {
             return "diagnosis/create";
         }
 
+        //TODO revisit later
+        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
+        diagnosis.setAdmissionInfo(admissionInfo);
         diagnosisService.saveDiagnosis(diagnosis);
 
-        redirectAttributes.addFlashAttribute("alertMessage", "Diagnosis information updated!");
+        redirectAttributes.addFlashAttribute("message", "Diagnosis information updated!");
 
         return "redirect:/diagnosis/show/" + diagnosis.getId();
     }

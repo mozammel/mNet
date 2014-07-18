@@ -71,8 +71,9 @@ public class PatientController {
 
         boolean isNew = Utils.isNew(patient);
 
-        User currentUser = userService.findByUserName(principal.getName());
-        Utils.updatePersistentProperties(patient, currentUser);
+        //TODO revisit
+        //User currentUser = userService.findByUserName(principal.getName());
+        //Utils.updatePersistentProperties(patient, currentUser);
 
         patientService.create(patient);
         redirectAttributes.addFlashAttribute("message", String.format("Patient successfully %s", isNew ? "created" : "updated"));

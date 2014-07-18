@@ -1,9 +1,9 @@
 package org.jugbd.mnet.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -18,6 +18,9 @@ public class Diagnosis extends Persistence {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Version
+    private Long version;
 
     @Temporal(TemporalType.DATE)
     private Date entryDate;
@@ -57,12 +60,7 @@ public class Diagnosis extends Persistence {
     @Column(length = 3000)
     private String plan;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-
-    @ManyToOne
-    @JoinColumn(name = "admission_info_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private AdmissionInfo admissionInfo;
 
     public Diagnosis() {
@@ -140,20 +138,20 @@ public class Diagnosis extends Persistence {
         this.plan = plan;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
     public AdmissionInfo getAdmissionInfo() {
         return admissionInfo;
     }
 
     public void setAdmissionInfo(AdmissionInfo admissionInfo) {
         this.admissionInfo = admissionInfo;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     @Override
@@ -168,5 +166,52 @@ public class Diagnosis extends Persistence {
                 ", chiefComplain='" + chiefComplain + '\'' +
                 ", entryDate=" + entryDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Diagnosis diagnosis = (Diagnosis) o;
+
+        if (admissionInfo != null ? !admissionInfo.equals(diagnosis.admissionInfo) : diagnosis.admissionInfo != null)
+            return false;
+        if (associatedSymptoms != null ? !associatedSymptoms.equals(diagnosis.associatedSymptoms) : diagnosis.associatedSymptoms != null)
+            return false;
+        if (chiefComplain != null ? !chiefComplain.equals(diagnosis.chiefComplain) : diagnosis.chiefComplain != null)
+            return false;
+        if (entryDate != null ? !entryDate.equals(diagnosis.entryDate) : diagnosis.entryDate != null) return false;
+        if (id != null ? !id.equals(diagnosis.id) : diagnosis.id != null) return false;
+        if (physicalExamination != null ? !physicalExamination.equals(diagnosis.physicalExamination) : diagnosis.physicalExamination != null)
+            return false;
+        if (pictureInformation != null ? !pictureInformation.equals(diagnosis.pictureInformation) : diagnosis.pictureInformation != null)
+            return false;
+        if (plan != null ? !plan.equals(diagnosis.plan) : diagnosis.plan != null) return false;
+        if (presentIllness != null ? !presentIllness.equals(diagnosis.presentIllness) : diagnosis.presentIllness != null)
+            return false;
+        if (systemicExamination != null ? !systemicExamination.equals(diagnosis.systemicExamination) : diagnosis.systemicExamination != null)
+            return false;
+        if (version != null ? !version.equals(diagnosis.version) : diagnosis.version != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (entryDate != null ? entryDate.hashCode() : 0);
+        result = 31 * result + (chiefComplain != null ? chiefComplain.hashCode() : 0);
+        result = 31 * result + (presentIllness != null ? presentIllness.hashCode() : 0);
+        result = 31 * result + (associatedSymptoms != null ? associatedSymptoms.hashCode() : 0);
+        result = 31 * result + (physicalExamination != null ? physicalExamination.hashCode() : 0);
+        result = 31 * result + (systemicExamination != null ? systemicExamination.hashCode() : 0);
+        result = 31 * result + (pictureInformation != null ? pictureInformation.hashCode() : 0);
+        result = 31 * result + (plan != null ? plan.hashCode() : 0);
+        result = 31 * result + (admissionInfo != null ? admissionInfo.hashCode() : 0);
+        return result;
     }
 }
