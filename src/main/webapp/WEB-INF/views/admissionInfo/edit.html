@@ -26,7 +26,7 @@
                 <label for="admissionDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.admissionDate}">Admission Date</label>
 
                 <div class="col-sm-6">
-                    <input type="text" th:field="*{admissionDate}" class="form-control" />
+                    <input type="text" id="admissionDate" th:field="*{admissionDate}" class="form-control" />
                     <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}"><span
                             th:errors="*{admissionDate}">Admission Date required!</span></p>
                 </div>
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label for="injuryDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.injuryDate}">Injury Date</label>
                 <div class="col-sm-6">
-                    <input type="text" th:field="*{injuryDate}" class="form-control"/>
+                    <input type="text" id="injuryDate" th:field="*{injuryDate}" class="form-control"/>
                     <p class="text-danger" th:if="${#fields.hasErrors('injuryDate')}"><span
                             th:errors="*{injuryDate}">Injury Date required!</span></p>
                 </div>

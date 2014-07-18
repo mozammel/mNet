@@ -30,7 +30,7 @@
                 </dl>
 
                 <dl class="dl-horizontal">
-                    <dt th:text="#{label.admissionInfo.injuryDate}">Injury Daye</dt>
+                    <dt th:text="#{label.admissionInfo.injuryDate}">Injury Date</dt>
                     <dd th:text="${admissionInfo.injuryDate}"></dd>
                 </dl>
 
@@ -43,7 +43,7 @@
             <div>
                 <a href="#" class="btn btn-info" th:href="@{/patient/show/__${admissionInfo.patient.id}__} "> Back To Patient Info</a>
                 <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/admissionInfo/edit/__${admissionInfo.id}__}">Edit</a>
-
+                <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{diagnosis/create/__${admissionInfo.id}__}"> Create Diagnosis </a>
             </div>
         </div>
     </div>
