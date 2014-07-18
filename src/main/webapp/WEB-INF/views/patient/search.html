@@ -25,7 +25,7 @@
             <div th:if="${notFound}" class="alert alert-danger">
                 <p th:text="${notFound}"></p>
 
-                <p style="text-decoration: underline;"><a th:href="@{/patient/create}">Create New Patient</a></p>
+                <p sec:authorize="hasRole('ROLE_ADMIN')" style="text-decoration: underline;"><a th:href="@{/patient/create}">Create New Patient</a></p>
             </div>
 
             <form class="form-horizontal" role="form" th:object="${patientSearchCmd}" th:action="@{display}" method='POST'>

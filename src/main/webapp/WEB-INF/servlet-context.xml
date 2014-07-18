@@ -19,6 +19,7 @@
     <mvc:view-controller path="/" view-name="home"/>
     <mvc:view-controller path="/resourceNotFound" view-name="resourceNotFound"/>
     <mvc:view-controller path="/uncaughtException" view-name="uncaughtException"/>
+    <mvc:view-controller path="/accessDenied" view-name="accessDenied"/>
 
     <!-- **************************************************************** -->
     <!--  THYMELEAF-SPECIFIC ARTIFACTS                                    -->

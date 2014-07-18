@@ -127,4 +127,11 @@ public class UserController {
 
         return "redirect:/user/show/" + user.getId().toString();
     }
+
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public String cancel() {
+        log.debug("cancel()");
+
+        return "redirect:/user";
+    }
 }

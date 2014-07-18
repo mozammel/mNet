@@ -17,7 +17,7 @@
 <!-- Navbar -->
 <div class="masthead" th:fragment="header">
     <ul class="nav nav-pills pull-right">
-        <li><a href="/">Home</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/admin/index}">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
         <li sec:authorize="isAuthenticated()"> <a href="/j_spring_security_logout"  th:href="@{#}" onclick="$('#form').submit();">Logout [<span sec:authentication="name"></span>] </a> </li>

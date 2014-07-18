@@ -17,25 +17,30 @@
     <div th:replace="fragments/header :: header"></div>
     <hr/>
 
+    <div>
+        <a href="#" class="btn btn-info" th:href="@{/patient/create}"> Intake New Patient </a>
+    </div>
+    <hr/>
+
     <div th:if="${message}" class="alert alert-info">
         <p th:text="${message}"></p>
     </div>
 
     <h3>Patient List</h3>
 
-    <table class="table table-bordered">
+    <table class="table table-hover">
         <tr>
+            <th>#</th>
             <th>Patient ID</th>
             <th>Patient Name</th>
-            <th>Created On</th>
-            <th>Edit</th>
+            <th>Contact Number</th>
         </tr>
 
         <tr th:each="patient : ${patients}">
+            <td><a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
             <td th:text="${patient.healthId}">Patient ID</td>
             <td th:text="${patient.name}">Patient Name</td>
             <td th:text="${patient.contactNumber}">Contact Number</td>
-            <td><a th:href="@{/patient/edit/__${patient.id}__}">Edit</a> | <a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
         </tr>
     </table>
     <div class="row">
