@@ -9,3 +9,5 @@ out
 s
 classes/
 rebel.xml
+.classpath
+.project

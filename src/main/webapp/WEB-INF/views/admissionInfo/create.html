@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>New Admission Information :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
     <link href="../../../resources/css/datepicker.css" th:href="@{/resources/css/datepicker.css}" rel="stylesheet"/>
 
-    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
-    <script src="../../../resources/js/bootstrap-datepicker.js"  th:scr="@{/resources/js/bootstrap-datepicker.js}" ></script>
-
     <script>
-        jQuery(document).ready(function(){
+        jQuery(document).ready(function () {
             jQuery('#admissionDate, #injuryDate').datepicker({
                 todayBtn: true,
                 keyboardNavigation: false,
@@ -25,58 +19,58 @@
         });
     </script>
 </head>
+
 <body>
+<section layout:fragment="content">
+    <form class="form-horizontal" role="form" th:object="${admissionInfo}" th:action="@{/admissionInfo/save}"
+          method="POST">
 
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+        <input type="hidden" th:field="*{patient.id}"/>
 
-    <div class="row">
-        <form class="form-horizontal" role="form" th:object="${admissionInfo}" th:action="@{/admissionInfo/save}" method="POST">
+        <div class="form-group">
+            <label for="admissionDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.admissionDate}">Admission
+                Date</label>
 
-            <input type="hidden" th:field="*{patient.id}"/>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{admissionDate}" class="form-control input-sm"/>
 
-            <div class="form-group">
-                <label for="admissionDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.admissionDate}">Admission Date</label>
-
-                <div class="col-sm-6">
-                    <input type="text" th:field="*{admissionDate}" class="form-control" />
-                    <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}"><span
-                            th:errors="*{admissionDate}">Admission Date required!</span></p>
-                </div>
+                <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}"><span
+                        th:errors="*{admissionDate}">Admission Date required!</span></p>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="injuryDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.injuryDate}">Injury Date</label>
-                <div class="col-sm-6">
-                    <input type="text" th:field="*{injuryDate}" class="form-control"/>
-                    <p class="text-danger" th:if="${#fields.hasErrors('injuryDate')}"><span
-                            th:errors="*{injuryDate}">Injury Date required!</span></p>
-                </div>
+        <div class="form-group">
+            <label for="injuryDate" class="col-sm-2 control-label" th:text="#{label.admissionInfo.injuryDate}">Injury
+                Date</label>
+
+            <div class="col-sm-3">
+                <input type="text" th:field="*{injuryDate}" class="form-control input-sm"/>
+
+                <p class="text-danger" th:if="${#fields.hasErrors('injuryDate')}"><span
+                        th:errors="*{injuryDate}">Injury Date required!</span></p>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="bedNumber" class="col-sm-2 control-label" th:text="#{label.admissionInfo.bedNumber}">Bed Number</label>
+        <div class="form-group">
+            <label for="bedNumber" class="col-sm-2 control-label" th:text="#{label.admissionInfo.bedNumber}">Bed
+                Number</label>
 
-                <div class="col-sm-6">
-                    <input type="text" th:field="*{bedNumber}" class="form-control"/>
-                    <p class="text-danger" th:if="${#fields.hasErrors('bedNumber')}"><span
-                            th:errors="*{bedNumber}">Bed Number required!</span></p>
-                </div>
+            <div class="col-sm-3">
+                <input type="text" th:field="*{bedNumber}" class="form-control input-sm"/>
+
+                <p class="text-danger" th:if="${#fields.hasErrors('bedNumber')}"><span
+                        th:errors="*{bedNumber}">Bed Number required!</span></p>
             </div>
+        </div>
 
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save Changes</button>
-                </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save Changes</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</section>
+<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
 
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
 </body>
 </html>

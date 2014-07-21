@@ -1,75 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>Add Diagnosis :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <link href="../../../resources/css/datepicker.css" th:scr="@{/resources/css/datepicker.css}" rel="stylesheet"/>
 </head>
 <body>
-
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
-
+<section layout:fragment="content">
     <fieldset>
         <legend>Diagnosis</legend>
         <div class="row">
 
-            <form class="form-horizontal" role="form" action="#" th:action="@{/diagnosis/update}" th:object="${diagnosis}" method="post">
+            <form class="form-horizontal" role="form" action="#" th:action="@{/diagnosis/update}"
+                  th:object="${diagnosis}" method="post">
 
                 <input type="hidden" th:field="*{admissionInfo.id}"/>
-                <input type="hidden" th:field="*{id}" />
-                <input type="hidden" th:field="*{version}" />
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{version}"/>
 
                 <div class="form-group">
-                    <label for="chiefComplain" class="col-sm-3 control-label" th:text="#{label.chief.complains}">Chief Complain(s)</label>
+                    <label for="chiefComplain" class="col-sm-3 control-label" th:text="#{label.chief.complains}">Chief
+                        Complain(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="chiefComplain" th:field="*{chiefComplain}"/>
+                        <textarea class="form-control" id="chiefComplain" th:field="*{chiefComplain}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="presentIllness" class="col-sm-3 control-label" th:text="#{label.present.illness}">Present Illness</label>
+                    <label for="presentIllness" class="col-sm-3 control-label" th:text="#{label.present.illness}">Present
+                        Illness</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="presentIllness" th:field="*{presentIllness}"/>
+                        <textarea class="form-control" id="presentIllness" th:field="*{presentIllness}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="associatedSymptoms" class="col-sm-3 control-label" th:text="#{label.associated.symptoms}">Associated Symptom(s)</label>
+                    <label for="associatedSymptoms" class="col-sm-3 control-label"
+                           th:text="#{label.associated.symptoms}">Associated Symptom(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="associatedSymptoms" th:field="*{associatedSymptoms}"/>
+                        <textarea class="form-control" id="associatedSymptoms"
+                                  th:field="*{associatedSymptoms}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="physicalExamination" class="col-sm-3 control-label" th:text="#{label.physical.exams}">Physical Examination(s)</label>
+                    <label for="physicalExamination" class="col-sm-3 control-label" th:text="#{label.physical.exams}">Physical
+                        Examination(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="physicalExamination" th:field="*{physicalExamination}"/>
+                        <textarea class="form-control" id="physicalExamination"
+                                  th:field="*{physicalExamination}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="systemicExamination" class="col-sm-3 control-label" th:text="#{label.systemic.exams}">Systemic Examination(s)</label>
+                    <label for="systemicExamination" class="col-sm-3 control-label" th:text="#{label.systemic.exams}">Systemic
+                        Examination(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="systemicExamination" th:field="*{systemicExamination}"/>
+                        <textarea class="form-control" id="systemicExamination"
+                                  th:field="*{systemicExamination}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="pictureInformation" class="col-sm-3 control-label" th:text="#{label.picture.info}">Picture Information</label>
+                    <label for="pictureInformation" class="col-sm-3 control-label" th:text="#{label.picture.info}">Picture
+                        Information</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="pictureInformation" th:field="*{pictureInformation}"/>
+                        <textarea class="form-control" id="pictureInformation"
+                                  th:field="*{pictureInformation}"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="plan" class="col-sm-3 control-label" th:text="#{label.plan}">Plan</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="plan" th:field="*{plan}"/>
+                        <textarea class="form-control" id="plan" th:field="*{plan}"></textarea>
                     </div>
                 </div>
 
@@ -79,16 +91,11 @@
                         <button type="submit" class="btn btn-primary" th:text="#{label.submit}">Submit</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </fieldset>
-
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+</section>
+<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
 
 </body>
 </html>

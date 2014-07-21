@@ -1,66 +1,57 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>New User :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
 </head>
+
 <body>
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+<section layout:fragment="content">
+    <fieldset>
+        <legend><span th:text="#{label.search.patient.info}">Search for a Patient Information</span></legend>
 
-    <div class="row">
-        <fieldset>
-            <legend><span th:text="#{label.search.patient.info}">Search for a Patient Information</span></legend>
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
 
-            <div th:if="${error}" class="alert alert-danger">
-                <p th:text="${error}"></p>
+        <div th:if="${notFound}" class="alert alert-danger">
+            <p th:text="${notFound}"></p>
+
+            <p sec:authorize="hasRole('ROLE_ADMIN')" style="text-decoration: underline;"><a
+                    th:href="@{/patient/create}">Create New Patient</a></p>
+        </div>
+
+        <form class="form-horizontal" role="form" th:object="${patientSearchCmd}" th:action="@{display}" method='POST'>
+
+            <div class="form-group">
+                <label for="healthId" class="col-sm-2 control-label" th:text="#{label.patient.health.id}">Health
+                    Id: </label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" id="healthId" th:field="*{healthId}"
+                           placeholder="Health ID"/>
+                </div>
             </div>
 
-            <div th:if="${notFound}" class="alert alert-danger">
-                <p th:text="${notFound}"></p>
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label" th:text="#{label.patient.phone.number}">Phone Number</label>
 
-                <p sec:authorize="hasRole('ROLE_ADMIN')" style="text-decoration: underline;"><a th:href="@{/patient/create}">Create New Patient</a></p>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" id="phoneNumber" th:field="*{phoneNumber}"
+                           placeholder="Phone Number"/>
+                </div>
             </div>
 
-            <form class="form-horizontal" role="form" th:object="${patientSearchCmd}" th:action="@{display}" method='POST'>
-
-                <div class="form-group">
-                    <label for="healthId" class="col-sm-2 control-label" th:text="#{label.patient.health.id}">Health Id: </label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="healthId" th:field="*{healthId}" placeholder="Health ID"/>
-                    </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="reset" class="btn btn-danger" th:text="#{button.reset}">Reset</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{button.search}">Search</button>
                 </div>
+            </div>
+        </form>
 
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label" th:text="#{label.patient.name}">Name</label>
-
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" placeholder="Phone Number"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="reset" class="btn btn-danger" th:text="#{button.reset}">Reset</button>
-                        <button type="submit" class="btn btn-primary" th:text="#{button.search}">Search</button>
-                    </div>
-                </div>
-            </form>
-
-        </fieldset>
-    </div>
-
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+    </fieldset>
+</section>
 </body>
 </html>

@@ -52,6 +52,7 @@ dependencies {
 
     compile 'org.thymeleaf:thymeleaf:2.1.3.RELEASE'
     compile 'org.thymeleaf:thymeleaf-spring4:2.1.3.RELEASE'
+    compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.2.5'
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE'
 
     compile 'org.hibernate:hibernate-entitymanager:4.3.5.Final'

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MediNetServices :: Index</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'/>
+    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
+          rel="stylesheet"/>
+    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <link href="../../../resources/css/bootstrap-theme.min.css" th:scr="@{/resources/css/bootstrap-theme.min.css}"
+          rel="stylesheet"/>
+    <script src="../../../resources/js/jquery-1.11.1.min.js" th:scr="@{/resources/js/jquery-1.11.1.min.js}"></script>
+
+    <style>
+        .navbar-custom {
+            background-color: #229922;
+            color: #b1d3d6;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body data-spy="scroll">
+
+<!-- Navbar -->
+
+<div class="navbar navbar-default navbar-custom navbar-fixed-top navbar" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+
+            </button>
+            <a class="navbar-brand" th:href="@{/}">MediNetServices</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav nav-pills pull-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/admin/index}">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/j_spring_security_logout" th:href="@{#}" onclick="$('#form').submit();">
+                        Logout [<span sec:authentication="name"></span>]
+                    </a>
+                </li>
+                <form style="visibility: hidden" id="form" method="post" action="#"
+                      th:action="@{/j_spring_security_logout}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--End of Navbar -->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" th:fragment="sidebar">
+            <ul class="nav nav-list bs-docs-sidenav affix" sec:authorize="isAuthenticated()">
+                <li><a th:href="@{/patient/search}">Search Patient</a></li>
+                <li><a th:href="@{/patient/list}">Patient List</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/user}">User List</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <section layout:fragment="content">
+                <!--Body content-->
+            </section>
+        </div>
+
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<div class="footer">
+    <div class="container">
+        <p class="text-muted"> &copy; 2014 MediNetServices, All Rights Reserved. </p>
+    </div>
+</div>
+
+</body>
+</html>

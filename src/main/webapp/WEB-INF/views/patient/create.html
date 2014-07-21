@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>Home Page :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
     <link href="../../../resources/css/datepicker.css" th:href="@{/resources/css/datepicker.css}" rel="stylesheet"/>
 
-    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
-    <script src="../../../resources/js/bootstrap-datepicker.js"  th:scr="@{/resources/js/bootstrap-datepicker.js}" ></script>
-
     <script>
-        jQuery(document).ready(function(){
+        jQuery(document).ready(function () {
             jQuery('#patient-dob').datepicker({
                 todayBtn: true,
                 keyboardNavigation: false,
@@ -26,229 +19,222 @@
     </script>
 </head>
 <body>
+<section layout:fragment="content">
 
-<div class="container-narrow">
-<div th:replace="fragments/header :: header"></div>
-<hr/>
+<h3 th:text="#{heading.patient.new.entry}">New Patient Entry</h3>
 
-<div class="row">
+<form class="form-horizontal" method='POST' th:object="${patient}" th:action="@{/patient/save}">
 
-    <h3 th:text="#{heading.patient.new.entry}">New Patient Entry</h3>
+<fieldset>
+    <legend th:text="#{heading.patient.personal.info}">Patient Personal Info</legend>
 
-    <form class="form-horizontal" method='POST' th:object="${patient}" th:action="@{/patient/save}">
+    <input type="hidden" th:field="*{id}"/>
 
-        <fieldset>
-            <legend th:text="#{heading.patient.personal.info}">Patient Personal Info</legend>
+    <div class="form-group">
+        <label for="healthId" class="col-sm-2 control-label required-field" th:text="#{label.health.id}">
+            Health Id
+        </label>
 
-            <input type="hidden" th:field="*{id}" />
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="healthId" th:field="*{healthId}"/>
 
-            <div class="form-group">
-                <label for="healthId" class="col-sm-2 control-label required-field" th:text="#{label.health.id}">
-                    Health Id
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="healthId" th:field="*{healthId}"/>
-                    <p class="text-danger" th:if="${#fields.hasErrors('healthId')}">
-                        <span th:errors="*{healthId}">Required</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-name" class="col-sm-2 control-label required-field"
-                       th:text="#{label.patient.name}">
-                    Patient Name
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-name" th:field="*{name}"/>
-                    <p class="text-danger" th:if="${#fields.hasErrors('name')}">
-                        <span th:errors="*{name}">Required</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-contact-no" class="col-sm-2 control-label required-field" th:text="#{label.contact.no}">
-                    Contact Number
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-contact-no" th:field="*{contactNumber}"/>
-                    <p class="text-danger" th:if="${#fields.hasErrors('contactNumber')}">
-                        <span th:errors="*{contactNumber}">Required</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label" th:text="#{label.sex}">
-                    Sex
-                </label>
-
-                <div class="col-sm-6">
-                    <select th:field="*{gender}">
-                        <option value="" th:text="#{common.select.prompt}"></option>
-                        <option th:each="gender : ${T(org.jugbd.mnet.domain.enums.Gender).values()}"
-                                th:value="${gender}"
-                                th:text="${gender.label}"
-                                th:selected="${gender == patient.gender}">
-                        </option>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <label for="patient-dob" class="col-sm-2 control-label date" th:text="#{label.date.birth}">
-                    Date of Birth
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-dob" th:field="*{dateOfBirth}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
-                    Age (Years)
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-age" th:field="*{age}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-height" class="col-sm-2 control-label" th:text="#{label.height.inches}">
-                    Height (Inches)
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-height" th:field="*{height}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-weight" class="col-sm-2 control-label" th:text="#{label.weight.kg}">
-                    Weight (Kg)
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-weight" th:field="*{weight}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
-                    Address
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-address" th:field="*{address.homeAddress}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-po" class="col-sm-2 control-label" th:text="#{label.address.post.office}">
-                    Post Office
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-po" th:field="*{address.postOffice}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-ps" class="col-sm-2 control-label" th:text="#{label.address.police.station}">
-                    Police Station
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-ps" th:field="*{address.policeStation}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-division" class="col-sm-2 control-label" th:text="#{label.division}">
-                    Division
-                </label>
-
-                <div class="col-sm-6">
-                    <select id="patient-division" th:field="*{address.division}">
-                        <option value="" th:text="#{common.select.prompt}"></option>
-                        <option value="Barisal">Barisal</option>
-                        <option value="Chittagong">Chittagong</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Khulna">Khulna</option>
-                        <option value="Rajshahi">Rajshahi</option>
-                        <option value="Rangpur">Rangpur</option>
-                        <option value="Sylhet">Sylhet</option>
-                    </select>
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
-
-            <div class="form-group">
-                <label for="patient-contact-name" class="col-sm-2 control-label">
-                    Contact Name
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="patient-contact-name" th:field="*{contactPerson}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="emergency-contact-name" class="col-sm-2 control-label" th:text="#{label.contact.no}">
-                    Emergency Contact Number
-                </label>
-
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" id="emergency-contact-name"
-                           th:field="*{emergencyContactNumber}"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="patient-relationship" class="col-sm-2 control-label" th:text="#{label.relationship}">
-                    Relationship
-                </label>
-
-                <div class="col-sm-6">
-                    <select id="patient-relationship" th:field="*{relationship}">
-                        <option value="" th:text="#{common.select.prompt}"></option>
-                        <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
-                                th:value="${relationship}"
-                                th:text="${relationship.label}"
-                                th:selected="${relationship == patient.relationship}">
-                        </option>
-
-                    </select>
-                </div>
-
-            </div>
-        </fieldset>
-
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary" th:text="#{label.add.patient}">Add Patient</button>
-                <a href="#" class="btn btn-danger" th:href="@{/patient/cancel}" > <span th:text="#{label.cancel}">Cancel</span> </a>
-            </div>
+            <p class="text-danger" th:if="${#fields.hasErrors('healthId')}">
+                <span th:errors="*{healthId}">Required</span>
+            </p>
         </div>
-    </form>
-</div>
+    </div>
 
-<hr/>
-<div class="row">
-    <div th:replace="fragments/footer :: footer"/>
-</div>
-</div>
+    <div class="form-group">
+        <label for="patient-name" class="col-sm-2 control-label required-field"
+               th:text="#{label.patient.name}">
+            Patient Name
+        </label>
 
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-name" th:field="*{name}"/>
+
+            <p class="text-danger" th:if="${#fields.hasErrors('name')}">
+                <span th:errors="*{name}">Required</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-contact-no" class="col-sm-2 control-label required-field" th:text="#{label.contact.no}">
+            Contact Number
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-contact-no" th:field="*{contactNumber}"/>
+
+            <p class="text-danger" th:if="${#fields.hasErrors('contactNumber')}">
+                <span th:errors="*{contactNumber}">Required</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" th:text="#{label.sex}">
+            Sex
+        </label>
+
+        <div class="col-sm-3">
+            <select th:field="*{gender}">
+                <option value="" th:text="#{common.select.prompt}"></option>
+                <option th:each="gender : ${T(org.jugbd.mnet.domain.enums.Gender).values()}"
+                        th:value="${gender}"
+                        th:text="${gender.label}"
+                        th:selected="${gender == patient.gender}">
+                </option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label for="patient-dob" class="col-sm-2 control-label date" th:text="#{label.date.birth}">
+            Date of Birth
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-dob" th:field="*{dateOfBirth}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
+            Age (Years)
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-age" th:field="*{age}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-height" class="col-sm-2 control-label" th:text="#{label.height.inches}">
+            Height (Inches)
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-height" th:field="*{height}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-weight" class="col-sm-2 control-label" th:text="#{label.weight.kg}">
+            Weight (Kg)
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-weight" th:field="*{weight}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
+            Address
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-address" th:field="*{address.homeAddress}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-po" class="col-sm-2 control-label" th:text="#{label.address.post.office}">
+            Post Office
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-po" th:field="*{address.postOffice}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-ps" class="col-sm-2 control-label" th:text="#{label.address.police.station}">
+            Police Station
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-ps" th:field="*{address.policeStation}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-division" class="col-sm-2 control-label" th:text="#{label.division}">
+            Division
+        </label>
+
+        <div class="col-sm-3">
+            <select id="patient-division" th:field="*{address.division}">
+                <option value="" th:text="#{common.select.prompt}"></option>
+                <option value="Barisal">Barisal</option>
+                <option value="Chittagong">Chittagong</option>
+                <option value="Dhaka">Dhaka</option>
+                <option value="Khulna">Khulna</option>
+                <option value="Rajshahi">Rajshahi</option>
+                <option value="Rangpur">Rangpur</option>
+                <option value="Sylhet">Sylhet</option>
+            </select>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
+
+    <div class="form-group">
+        <label for="patient-contact-name" class="col-sm-2 control-label">
+            Contact Name
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-contact-name" th:field="*{contactPerson}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="emergency-contact-name" class="col-sm-2 control-label" th:text="#{label.contact.no}">
+            Emergency Contact Number
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="emergency-contact-name"
+                   th:field="*{emergencyContactNumber}"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-relationship" class="col-sm-2 control-label" th:text="#{label.relationship}">
+            Relationship
+        </label>
+
+        <div class="col-sm-3">
+            <select id="patient-relationship" th:field="*{relationship}">
+                <option value="" th:text="#{common.select.prompt}"></option>
+                <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
+                        th:value="${relationship}"
+                        th:text="${relationship.label}"
+                        th:selected="${relationship == patient.relationship}">
+                </option>
+
+            </select>
+        </div>
+
+    </div>
+</fieldset>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" th:text="#{label.add.patient}">Add Patient</button>
+        <a href="#" class="btn btn-danger" th:href="@{/patient/cancel}"> <span th:text="#{label.cancel}">Cancel</span>
+        </a>
+    </div>
+</div>
+</form>
+</section>
+<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
 </body>
 </html>

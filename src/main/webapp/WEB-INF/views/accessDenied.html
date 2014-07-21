@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 
 <head>
-    <title>Access Denied</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
-    <script src="../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
+    <title>Access Denied :: MedinetServices</title>
 
     <style>
         h2 {
@@ -20,23 +16,13 @@
     </style>
 </head>
 <body>
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+<section layout:fragment="content">
 
-    <div class="row">
-        <h2>
-            Opps!!
-        </h2>
+    <h2>
+        Opps!!
+    </h2>
 
-        <h3> It's looking like you don't have access of that page you are looking.</h3>
-
-    </div>
-
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+    <h3> It's looking like you don't have access of that page.</h3>
+</section>
 </body>
 </html>

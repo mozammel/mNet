@@ -1,145 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 
 <head>
     <title>Show Patient</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+<section layout:fragment="content">
 
-    <div class="row">
-        <div th:if="${message}" class="alert alert-info">
-            <p th:text="${message}"></p>
-        </div>
-
-        <fieldset>
-            <legend th:text="#{heading.patient.personal.info}">Show Patient Personal Info</legend>
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.health.id}">Health Id</dt>
-                <dd th:text="${patient.healthId}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.patient.name}">Name</dt>
-                <dd th:text="${patient.name}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.contact.no}">Contact Number</dt>
-                <dd th:text="${patient.contactNumber}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.sex}">Gender</dt>
-                <div th:if="${patient.gender}">
-                    <dd th:text="${patient.gender.label}"></dd>
-                </div>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.date.birth}">Date Of Birth</dt>
-                <dd th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.age.year}">Age</dt>
-                <dd th:text="${patient.age}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.height.inches}">Height</dt>
-                <dd th:text="${patient.height}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.patient.name}">Weight</dt>
-                <dd th:text="${patient.weight}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.address}">Address</dt>
-                <dd th:text="${patient.address.homeAddress}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.address.post.office}">Post Office</dt>
-                <dd th:text="${patient.address.postOffice}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.address.police.station}">Police Station</dt>
-                <dd th:text="${patient.address.policeStation}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.division}">Division</dt>
-                <dd th:text="${patient.address.division}"></dd>
-            </dl>
-
-        </fieldset>
-
-        <fieldset>
-            <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.contact.name}">Contact Person</dt>
-                <dd th:text="${patient.contactPerson}"></dd>
-            </dl>
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
-                <dd th:text="${patient.emergencyContactNumber}"></dd>
-            </dl>
-
-            <dl class="dl-horizontal">
-                <dt th:text="#{label.relationship}">Relationship</dt>
-                <div th:if="${patient.relationship}">
-                    <dd th:text="${patient.relationship.label}"></dd>
-                </div>
-            </dl>
-
-        </fieldset>
-        <hr/>
-
-        <fieldset>
-            <legend> Admission Info</legend>
-
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Admission Date</th>
-                    <th>Injury Date</th>
-                    <th>Bed Number</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item : ${patient.admissionInfos}">
-                    <td><a href="#" th:href="'/admissionInfo/show/' + ${item.id}"> Show </a></td>
-                    <td th:text="${item.admissionDate} ? ${#dates.format(item.admissionDate,'dd-MMM-yyyy')}"></td>
-                    <td th:text="${item.injuryDate} ? ${#dates.format(item.injuryDate,'dd-MMM-yyyy')}"></td>
-                    <td th:text="${item.bedNumber}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-
-        <div>
-            <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>&nbsp;&nbsp;
-            <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info" th:href="@{/patient/edit/__${patient.id}__}">Edit</a>&nbsp;&nbsp;
-            <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info" th:href="@{/admissionInfo/create?patientId=__${patient.id}__}">New Admission</a>
-        </div>
+    <div th:if="${message}" class="alert alert-info">
+        <p th:text="${message}"></p>
     </div>
 
+    <fieldset>
+        <legend th:text="#{heading.patient.personal.info}">Show Patient Personal Info</legend>
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.health.id}">Health Id</dt>
+            <dd th:text="${patient.healthId}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.patient.name}">Name</dt>
+            <dd th:text="${patient.name}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.contact.no}">Contact Number</dt>
+            <dd th:text="${patient.contactNumber}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.sex}">Gender</dt>
+            <div th:if="${patient.gender}">
+                <dd th:text="${patient.gender.label}"></dd>
+            </div>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.date.birth}">Date Of Birth</dt>
+            <dd th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.age.year}">Age</dt>
+            <dd th:text="${patient.age}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.height.inches}">Height</dt>
+            <dd th:text="${patient.height}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.patient.name}">Weight</dt>
+            <dd th:text="${patient.weight}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.address}">Address</dt>
+            <dd th:text="${patient.address.homeAddress}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.address.post.office}">Post Office</dt>
+            <dd th:text="${patient.address.postOffice}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.address.police.station}">Police Station</dt>
+            <dd th:text="${patient.address.policeStation}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.division}">Division</dt>
+            <dd th:text="${patient.address.division}"></dd>
+        </dl>
+
+    </fieldset>
+
+    <fieldset>
+        <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.contact.name}">Contact Person</dt>
+            <dd th:text="${patient.contactPerson}"></dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
+            <dd th:text="${patient.emergencyContactNumber}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.relationship}">Relationship</dt>
+            <div th:if="${patient.relationship}">
+                <dd th:text="${patient.relationship.label}"></dd>
+            </div>
+        </dl>
+
+    </fieldset>
     <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
+
+    <fieldset>
+        <legend> Admission Info</legend>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Admission Date</th>
+                <th>Injury Date</th>
+                <th>Bed Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${patient.admissionInfos}">
+                <td><a href="#" th:href="'/admissionInfo/show/' + ${item.id}"> Show </a></td>
+                <td th:text="${item.admissionDate} ? ${#dates.format(item.admissionDate,'dd-MMM-yyyy')}"></td>
+                <td th:text="${item.injuryDate} ? ${#dates.format(item.injuryDate,'dd-MMM-yyyy')}"></td>
+                <td th:text="${item.bedNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <div>
+        <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>&nbsp;&nbsp;
+        <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info"
+           th:href="@{/patient/edit/__${patient.id}__}">Edit</a>&nbsp;&nbsp;
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info"
+           th:href="@{/admissionInfo/create?patientId=__${patient.id}__}">New Admission</a>
     </div>
-</div>
+</section>
+
 </body>
 </html>

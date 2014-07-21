@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>Add Diagnosis :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
+    <link href="../../../resources/css/datepicker.css" th:scr="@{/resources/css/datepicker.css}" rel="stylesheet"/>
 </head>
 <body>
 
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+<section layout:fragment="content">
 
     <fieldset>
         <legend>Diagnosis</legend>
 
         <div class="row">
-            <form class="form-horizontal" role="form" action="#" th:action="@{/diagnosis/save}" th:object="${diagnosis}" method="post">
+            <form class="form-horizontal" role="form" action="#" th:action="@{/diagnosis/save}" th:object="${diagnosis}"
+                  method="post">
                 <input type="hidden" th:field="*{admissionInfo.id}"/>
 
                 <div class="form-group">
-                    <label for="chiefComplain" class="col-sm-3 control-label" th:text="#{label.chief.complains}">Chief Complain(s)</label>
+                    <label for="chiefComplain" class="col-sm-3 control-label" th:text="#{label.chief.complains}">Chief
+                        Complain(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="chiefComplain" th:field="*{chiefComplain}"></textarea>
+                        <textarea class="form-control input-sm" id="chiefComplain"
+                                  th:field="*{chiefComplain}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('chiefComplain')}">
                             <span th:errors="*{chiefComplain}">Chief Complain(s) cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -32,9 +33,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="presentIllness" class="col-sm-3 control-label" th:text="#{label.present.illness}">Present Illness</label>
+                    <label for="presentIllness" class="col-sm-3 control-label" th:text="#{label.present.illness}">Present
+                        Illness</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="presentIllness" th:field="*{presentIllness}"></textarea>
+                        <textarea class="form-control input-sm" id="presentIllness"
+                                  th:field="*{presentIllness}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('presentIllness')}">
                             <span th:errors="*{presentIllness}">Present Illness cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -42,9 +47,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="associatedSymptoms" class="col-sm-3 control-label" th:text="#{label.associated.symptoms}">Associated Symptom(s)</label>
+                    <label for="associatedSymptoms" class="col-sm-3 control-label"
+                           th:text="#{label.associated.symptoms}">Associated Symptom(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="associatedSymptoms" th:field="*{associatedSymptoms}"></textarea>
+                        <textarea class="form-control input-sm" id="associatedSymptoms"
+                                  th:field="*{associatedSymptoms}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('associatedSymptoms')}">
                             <span th:errors="*{associatedSymptoms}">Associated Symptom(s) cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -52,9 +61,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="physicalExamination" class="col-sm-3 control-label" th:text="#{label.physical.exams}">Physical Examination(s)</label>
+                    <label for="physicalExamination" class="col-sm-3 control-label" th:text="#{label.physical.exams}">Physical
+                        Examination(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="physicalExamination" th:field="*{physicalExamination}"></textarea>
+                        <textarea class="form-control input-sm" id="physicalExamination"
+                                  th:field="*{physicalExamination}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('physicalExamination')}">
                             <span th:errors="*{physicalExamination}">Physical Examination(s) cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -62,9 +75,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="systemicExamination" class="col-sm-3 control-label" th:text="#{label.systemic.exams}">Systemic Examination(s)</label>
+                    <label for="systemicExamination" class="col-sm-3 control-label" th:text="#{label.systemic.exams}">Systemic
+                        Examination(s)</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="systemicExamination" th:field="*{systemicExamination}"></textarea>
+                        <textarea class="form-control input-sm" id="systemicExamination"
+                                  th:field="*{systemicExamination}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('systemicExamination')}">
                             <span th:errors="*{systemicExamination}">Systemic Examination(s) cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -72,9 +89,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="pictureInformation" class="col-sm-3 control-label" th:text="#{label.picture.info}">Picture Information</label>
+                    <label for="pictureInformation" class="col-sm-3 control-label" th:text="#{label.picture.info}">Picture
+                        Information</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="pictureInformation" th:field="*{pictureInformation}"></textarea>
+                        <textarea class="form-control input-sm" id="pictureInformation"
+                                  th:field="*{pictureInformation}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('pictureInformation')}">
                             <span th:errors="*{pictureInformation}">Picture Information cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -83,8 +104,10 @@
 
                 <div class="form-group">
                     <label for="plan" class="col-sm-3 control-label" th:text="#{label.plan}">Plan</label>
+
                     <div class="col-sm-5">
-                        <textarea class="form-control" id="plan" th:field="*{plan}"></textarea>
+                        <textarea class="form-control input-sm" id="plan" th:field="*{plan}"></textarea>
+
                         <p class="text-danger" th:if="${#fields.hasErrors('plan')}">
                             <span th:errors="*{plan}">Plan cannot be either null or contain more than 3000 characters!</span>
                         </p>
@@ -101,12 +124,9 @@
             </form>
         </div>
     </fieldset>
+</section>
 
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
 
 </body>
 </html>

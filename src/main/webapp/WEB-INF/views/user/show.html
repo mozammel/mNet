@@ -1,72 +1,55 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>Show User</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
-    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
 </head>
 <body>
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
-
-    <div class="row">
-        <div class="row">
-
-            <div th:if="${message}"
-                 th:text="${message}"
-                 id="message" class="alert alert-info">
-            </div>
-
-            <fieldset>
-                <legend>Show User</legend>
-                <dl class="dl-horizontal">
-                    <dt th:text="#{label.user.username}">Username</dt>
-                    <dd th:text="${user.username}"></dd>
-                </dl>
-
-                <dl class="dl-horizontal">
-                    <dt th:text="#{label.user.email}">Email</dt>
-                    <dd th:text="${user.email}"></dd>
-                </dl>
-
-                <dl class="dl-horizontal">
-                    <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
-                    <dd th:text="${user.phoneNumber}"></dd>
-                </dl>
-
-                <dl class="dl-horizontal">
-                    <dt th:text="#{label.user.role}">Role(s)</dt>
-                    <dd th:text="${user.roles}"></dd>
-                </dl>
-
-                <dl class="dl-horizontal">
-                    <dt th:text="#{label.user.enabled}">Enable</dt>
-                    <dd>
-                        <div th:switch="${user.enabled}">
-                            <p th:case="${true}">Yes</p>
-                            <p th:case="${false}">No</p>
-                        </div>
-                    </dd>
-                </dl>
-            </fieldset>
-
-            <div>
-                <a href="#" class="btn btn-info" th:href="'/user'"> Back To the List </a>
-                <a href="#" class="btn btn-info" th:href="'/user/edit/' + ${user.id}"> Edit </a>
-            </div>
-        </div>
+<section layout:fragment="content">
+    <div th:if="${message}"
+         th:text="${message}"
+         id="message" class="alert alert-info">
     </div>
 
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
+    <fieldset>
+        <legend>Show User</legend>
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.username}">Username</dt>
+            <dd th:text="${user.username}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.email}">Email</dt>
+            <dd th:text="${user.email}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
+            <dd th:text="${user.phoneNumber}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.role}">Role(s)</dt>
+            <dd th:text="${user.roles}"></dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt th:text="#{label.user.enabled}">Enable</dt>
+            <dd>
+                <div th:switch="${user.enabled}">
+                    <p th:case="${true}">Yes</p>
+
+                    <p th:case="${false}">No</p>
+                </div>
+            </dd>
+        </dl>
+    </fieldset>
+
+    <div>
+        <a href="#" class="btn btn-info" th:href="'/user'"> Back To the List </a>
+        <a href="#" class="btn btn-info" th:href="'/user/edit/' + ${user.id}"> Edit </a>
     </div>
-</div>
+</section>
 </body>
 </html>

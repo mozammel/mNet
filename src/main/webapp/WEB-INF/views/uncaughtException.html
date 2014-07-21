@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
-    <script src="../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
-
+    <title> Error :: Medinet Services</title>
     <style>
         h2 {
             font-size: 65px;
@@ -20,29 +14,16 @@
     </style>
 </head>
 <body>
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
-    <hr/>
+<section layout:fragment="content">
 
-    <div class="row">
+    <h2>
+        Opps!!
+    </h2>
 
-        <div class="row">
-            <h2>
-                Opps!!
-            </h2>
+    <h3> It's looking like something terribly went wrong.
+        Don't worry... We'll get back to you with a solution as soon as possible!</h3>
 
-            <h3> It's looking like something terribly went wrong.
-                Don't worry... We'll get back to you with a solution as soon as possible!</h3>
-
-            <h3>Meanwhile, click on <a th:href="@{/}"> home</a> and try other stuff, or just try later.
-            </h3>
-        </div>
-    </div>
-
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+    <h3>Go back to <a th:href="@{/}"> home</a> or just try later. </h3>
+</section>
 </body>
 </html>

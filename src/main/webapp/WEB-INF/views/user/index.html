@@ -1,58 +1,43 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
 <head>
     <title>Users :: MediNetServices</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-    <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
-          rel="stylesheet"/>
-    <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
-    <script src="../../../resources/js/jquery-1.11.1.min.js"  th:scr="@{/resources/js/jquery-1.11.1.min.js}" ></script>
-
 </head>
 <body>
 
-<div class="container-narrow">
-    <div th:replace="fragments/header :: header"></div>
+<section layout:fragment="content">
+
+    <div>
+        <a href="#" class="btn btn-info" th:href="@{/user/create}"> Create New User </a>
+    </div>
     <hr/>
 
-    <div class="row">
-        <div>
-            <a href="#" class="btn btn-info" th:href="@{/user/create}"> Create New User </a>
-        </div>
-        <hr/>
+    <fieldset>
+        <legend><span th:text="#{label.user.list}">User List</span></legend>
 
-        <fieldset>
-            <legend><span th:text="#{label.user.list}">User List</span></legend>
-
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Role(s)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item : ${users}">
-                    <td><a href="#" th:href="'/user/show/' + ${item.id}"> Show </a></td>
-                    <td th:text="${item.username}"></td>
-                    <td th:text="${item.email}"></td>
-                    <td th:text="${item.phoneNumber}"></td>
-                    <td th:text="${item.roles}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </fieldset>
-    </div>
-
-    <hr/>
-    <div class="row">
-        <div th:replace="fragments/footer :: footer"/>
-    </div>
-</div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Role(s)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${users}">
+                <td><a href="#" th:href="'/user/show/' + ${item.id}"> Show </a></td>
+                <td th:text="${item.username}"></td>
+                <td th:text="${item.email}"></td>
+                <td th:text="${item.phoneNumber}"></td>
+                <td th:text="${item.roles}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</section>
 </body>
 </html>
