@@ -23,3 +23,16 @@ Well, building project and deploying manually in app container sometimes become 
 your life easier, here embedded tomcat container has been integrated. Just type `gradle tomcatRunWar` in your command line 
 and your project will build and run automatically on a tomcat container within a minute. You just have to go **http://localhost:8080/** from 
 your browser to see it running. Cool...right? ;)
+
+
+## Use of JRebel & App deployment in local Tomcat7
+A Gradle task has been added to build war with JRebel support and deploy it to local tomcat container. It works only in Unix environment if you follow
+below instructions:
+
+1. Install [tomcat7](http://tomcat.apache.org/download-70.cgi) at **/usr/local/tomcat7** path.
+2. Install jrebel at **/usr/local/JRebel** path.
+3. Copy the script file from **config/catalina-jrebel.sh** in your **/usr/local/tomcat7/bin** directory
+4. Run `gradle deployWar` in your source code which will copy the war file to tomcat's webapps folder
+5. From /usr/local/tomcat7/bin, start tomcat server with command `./catalina-jrebel.sh run`
+6. Browse application at [http://localhost:8080/MediNetServices/](http://localhost:8080/MediNetServices/)
+

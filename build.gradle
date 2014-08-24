@@ -7,6 +7,7 @@ apply plugin: 'propdeps-idea'
 apply plugin: 'propdeps-eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
+apply plugin: 'rebel'
 
 println "PROJECT=" + project.name
 
@@ -22,6 +23,7 @@ buildscript {
     dependencies {
         classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
         classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.5'
+        classpath 'org.zeroturnaround:gradle-jrebel-plugin:1.1.2'
     }
 }
 
@@ -80,6 +82,21 @@ test {
         events 'started', 'passed'
     }
 }
+
+task deployWar() {
+    def tomcatHome = '/usr/local/tomcat7/webapps'
+    doLast {
+        logger.lifecycle("Going to deploy MediNetServices into ${tomcatHome} from ${libsDir.getPath()}")
+
+        copy {
+            from libsDir
+            into "${tomcatHome}"
+            include 'MediNetServices.war'
+        }
+    }
+}
+war.dependsOn(generateRebel)
+deployWar.dependsOn(war)
 
 task wrapper(type: Wrapper) { gradleVersion = '1.11' }
 
