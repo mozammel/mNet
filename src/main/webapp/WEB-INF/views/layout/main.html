@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>MediNetServices :: Index</title>
@@ -12,9 +13,10 @@
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" media="screen"
           rel="stylesheet"/>
     <link href="../../../resources/css/main.css" th:href="@{/resources/css/main.css}" rel="stylesheet"/>
-    <link href="../../../resources/css/bootstrap-theme.min.css" th:scr="@{/resources/css/bootstrap-theme.min.css}"
+    <link href="../../../resources/css/bootstrap-theme.min.css" th:href="@{/resources/css/bootstrap-theme.min.css}"
           rel="stylesheet"/>
-    <script src="../../../resources/js/jquery-1.11.1.min.js" th:scr="@{/resources/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript" src="../../../resources/js/jquery-1.11.1.min.js"
+            th:src="@{/resources/js/jquery-1.11.1.min.js}"></script>
 
     <style>
         .navbar-custom {
@@ -30,16 +32,18 @@
 
 <div class="navbar navbar-default navbar-custom navbar-fixed-top navbar" role="navigation">
     <div class="container-fluid">
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
 
             </button>
             <a class="navbar-brand" th:href="@{/}">MediNetServices</a>
         </div>
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav nav-pills pull-right">
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/admin/index}">Home</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/index}">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
                 <li sec:authorize="isAuthenticated()">

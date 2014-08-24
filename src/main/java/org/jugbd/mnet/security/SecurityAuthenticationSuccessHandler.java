@@ -27,10 +27,10 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 
         if (roles.contains(Role.ROLE_ADMIN.name())) {
             log.debug("role admin found, redirecting to intake page");
-            response.sendRedirect("/admin/index");
+            response.sendRedirect("admin/index");
         } else if (roles.contains(Role.ROLE_USER.name())) {
             log.debug("role user found, redirecting to intake page");
-            response.sendRedirect("/patient/search");
+            response.sendRedirect("patient/search");
         }
     }
 }

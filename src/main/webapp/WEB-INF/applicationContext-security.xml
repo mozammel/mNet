@@ -35,6 +35,7 @@
         <security:intercept-url pattern="/admin/*" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
         <security:intercept-url pattern="/home/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/intake" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/user" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/user/*" access="hasRole('ROLE_ADMIN')"/>
 
         <security:intercept-url pattern="/patient/create" access="hasRole('ROLE_ADMIN')"/>
@@ -43,6 +44,7 @@
         <security:intercept-url pattern="/patient/search" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/display" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/patient/list" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/show/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/cancel" access="hasRole('ROLE_ADMIN')"/>
 

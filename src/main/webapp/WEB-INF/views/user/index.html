@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
@@ -29,7 +30,7 @@
             </thead>
             <tbody>
             <tr th:each="item : ${users}">
-                <td><a href="#" th:href="'/user/show/' + ${item.id}"> Show </a></td>
+                <td><a href="#" th:href="@{'/user/show/' + ${item.id}}"> Show </a></td>
                 <td th:text="${item.username}"></td>
                 <td th:text="${item.email}"></td>
                 <td th:text="${item.phoneNumber}"></td>
