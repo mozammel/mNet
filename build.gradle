@@ -59,6 +59,7 @@ dependencies {
 
     compile 'org.hibernate:hibernate-entitymanager:4.3.5.Final'
     compile 'mysql:mysql-connector-java:5.1.30'
+    compile 'c3p0:c3p0:0.9.1.2'
     compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'org.hibernate:hibernate-validator:5.0.1.Final'
     compile 'com.h2database:h2:1.4.179'
