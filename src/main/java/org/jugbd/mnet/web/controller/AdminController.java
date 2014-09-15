@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "admin")
 public class AdminController {
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = {"index", "/"}, method = RequestMethod.GET)
     public String index() {
         return "admin/index";
     }

@@ -6,7 +6,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/security
-       http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/security/spring-security.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="org.jugbd.mnet.security"/>
 
@@ -21,7 +23,7 @@
         <security:logout logout-url="/j_spring_security_logout"
                          logout-success-url="/login-logout"
                          delete-cookies="JSESSIONID"/>
-        <security:csrf />
+        <security:csrf/>
         <!-- 3 days = 259200 seconds-->
         <security:remember-me token-validity-seconds="259200"
                               remember-me-parameter="remember-me"
@@ -32,11 +34,10 @@
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/login-error" access="permitAll"/>
         <security:intercept-url pattern="/login-logout" access="permitAll"/>
-        <security:intercept-url pattern="/admin/*" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
-        <security:intercept-url pattern="/home/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/home/**" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/intake" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/user" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/user/*" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/user/**" access="hasRole('ROLE_ADMIN')"/>
 
         <security:intercept-url pattern="/patient/create" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/save" access="hasRole('ROLE_ADMIN')"/>
