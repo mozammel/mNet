@@ -34,6 +34,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public List<Diagnosis> getDiagnosisList(Long patientId, Long admissionId) {
-        return diagnosisDao.getDiagnosisList(patientId, admissionId);
+        //return diagnosisDao.getDiagnosisList(patientId, admissionId);
+        return null;
     }
 }

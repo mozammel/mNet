@@ -5,6 +5,7 @@ import org.jugbd.mnet.domain.Patient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,7 +45,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> findAll(int firstResult, int sizeNo) {
-        return patientDao.findAll(firstResult,sizeNo);
+        return patientDao.findAll(new PageRequest(firstResult, sizeNo)).getContent();
     }
 
     @Override
@@ -54,6 +55,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) {
-         patientDao.save(patient);
+        patientDao.save(patient);
     }
 }
