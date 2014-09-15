@@ -1,6 +1,5 @@
 package org.jugbd.mnet.dao;
 
-import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,14 +28,14 @@ public interface GenericDao<T, PK extends Serializable> {
      * Deletes the entity with the given id.
      *
      * @param id must not be null
-     * @throws java.lang.IllegalArgumentException  in case the given {@code id} is {@literal null}
+     * @throws java.lang.IllegalArgumentException in case the given {@code id} is {@literal null}
      */
     void delete(PK id);
 
     /**
      * Returns the number of entities available.
      *
-     * @return  the number of entities
+     * @return the number of entities
      */
     long count();
 

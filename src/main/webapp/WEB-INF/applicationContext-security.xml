@@ -57,6 +57,8 @@
 
         <security:intercept-url pattern="/patient/*" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/diagnosis/*" access="hasRole('ROLE_ADMIN')"/>
+
+        <security:intercept-url pattern="/register/*" access="hasRole('ROLE_ADMIN')"/>
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">
