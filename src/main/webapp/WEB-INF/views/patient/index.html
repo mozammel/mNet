@@ -17,23 +17,29 @@
         <p th:text="${message}"></p>
     </div>
 
-    <h3>Patient List</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">Patient List</div>
+        <div class="panel-body">
 
-    <table class="table table-hover">
-        <tr>
-            <th>#</th>
-            <th>Health ID</th>
-            <th>Patient Name</th>
-            <th>Contact Number</th>
-        </tr>
+            <table class="table table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Health ID</th>
+                    <th>Patient Name</th>
+                    <th>Gender</th>
+                </tr>
 
-        <tr th:each="patient : ${patients}">
-            <td><a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
-            <td th:text="${patient.healthId}">>Health ID</td>
-            <td th:text="${patient.name}">Patient Name</td>
-            <td th:text="${patient.contactNumber}">Contact Number</td>
-        </tr>
-    </table>
+                <tr th:each="patient : ${patients}">
+                    <td><a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
+                    <td th:text="${patient.healthId}">>Health ID</td>
+                    <td th:text="${patient.name}">Patient Name</td>
+                    <div th:if="${patient.gender}">
+                        <td th:text="${patient.gender.label}"></td>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
 </section>
 </body>
 </html>

@@ -1,10 +1,13 @@
 package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Raqibul Islam on 7/1/14.
@@ -62,6 +65,16 @@ public class Diagnosis extends Persistence {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private AdmissionInfo admissionInfo;
+
+    @OneToMany
+    private Set<Outcome> outcomes = new HashSet<>();
+
+    @Column(length = 6)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @ManyToOne
+    private Register register;
 
     public Diagnosis() {
     }
@@ -154,6 +167,22 @@ public class Diagnosis extends Persistence {
         this.version = version;
     }
 
+    public Set<Outcome> getOutcomes() {
+        return outcomes;
+    }
+
+    public void setOutcomes(Set<Outcome> outcomes) {
+        this.outcomes = outcomes;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Diagnosis{" +
@@ -213,5 +242,13 @@ public class Diagnosis extends Persistence {
         result = 31 * result + (plan != null ? plan.hashCode() : 0);
         result = 31 * result + (admissionInfo != null ? admissionInfo.hashCode() : 0);
         return result;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
     }
 }

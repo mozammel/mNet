@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/datepicker.css" th:href="@{/resources/css/datepicker.css}" rel="stylesheet"/>
+    <script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#patient-dob').datepicker({
+                todayBtn: true,
+                keyboardNavigation: false,
+                calendarWeeks: true,
+                autoclose: true,
+                startView: 2,
+                todayHighlight: true
+            });
+        });
+    </script>
+</head>
+<body>
+<section layout:fragment="content">
+
+<div class="panel panel-default">
+<div class="panel-heading">New Register Entry</div>
+<div class="panel-body">
+
+
+<form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/save}">
+
+
+<fieldset>
+    <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
+
+    <input type="hidden" th:field="*{patient.id}"/>
+
+    <div class="form-group">
+        <label for="patient-contact-name" class="col-sm-2 control-label">
+            Contact Name
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="patient-contact-name" th:field="*{contactPerson}"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('contactPerson')}">
+                <span th:errors="*{contactPerson}">Required</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="emergency-contact-name" class="col-sm-2 control-label" th:text="#{label.emergy.contact.no}">
+            Emergency Contact Number
+        </label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control input-sm" id="emergency-contact-name"
+                   th:field="*{emergencyContactNumber}"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('emergencyContactNumber')}">
+                <span th:errors="*{emergencyContactNumber}">Required</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="patient-relationship" class="col-sm-2 control-label" th:text="#{label.relationship}">
+            Relationship
+        </label>
+
+        <div class="col-sm-3">
+            <select id="patient-relationship" th:field="*{relationship}">
+                <option value="" th:text="#{common.select.prompt}"></option>
+                <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
+                        th:value="${relationship}"
+                        th:text="${relationship.label}"
+                        th:selected="${relationship == register.relationship}">
+                </option>
+            </select>
+            <p class="text-danger" th:if="${#fields.hasErrors('relationship')}">
+                <span th:errors="*{relationship}">Required</span>
+            </p>
+        </div>
+    </div>
+</fieldset>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" th:text="#{label.add.register}">Save Changes</button>
+        <a href="#" class="btn btn-danger" th:href="@{/register/cancel}"> <span th:text="#{label.cancel}">Cancel</span>
+        </a>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</section>
+</body>
+</html>

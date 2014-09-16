@@ -1,10 +1,12 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
+import org.jugbd.mnet.domain.enums.Status;
 import org.jugbd.mnet.service.PatientService;
+import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.UserService;
 import org.jugbd.mnet.utils.Utils;
 import org.jugbd.mnet.web.editor.GenderEditor;
@@ -13,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author ronygomes
@@ -37,6 +39,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private RegisterService registerService;
 
     @Autowired
     private UserService userService;
@@ -64,6 +69,11 @@ public class PatientController {
                        Principal principal,
                        RedirectAttributes redirectAttributes) {
 
+        if (patient.getAgeEstimated() != null) {
+            patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
+        }
+
+        validatePatient(patient, result);
         if (result.hasErrors()) {
             log.info("Binding Error ={}", patient);
             return "patient/create";
@@ -113,6 +123,20 @@ public class PatientController {
     public String show(@PathVariable("id") Long id, Model uiModel) {
         log.debug("show()");
 
+        Patient patient = patientService.findOne(id);
+        Set<Register> registers = patient.getRegisters();
+        boolean found = false;
+
+        for (Register register : registers) {
+            if (register.getPatient().equals(patient) && register.getStatus().equals(Status.ACTIVE)) {
+                uiModel.addAttribute("register", register);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            uiModel.addAttribute("register", null);
+        }
         uiModel.addAttribute("patient", patientService.findOne(id));
 
         return "patient/show";
@@ -158,5 +182,18 @@ public class PatientController {
         uiModel.addAttribute("patients", patientList);
 
         return "patient/index";
+    }
+
+    private void validatePatient(Patient patient, BindingResult result) {
+        if (patient.getAge() == null) {
+            result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
+        }
+
+        if (patient.getAddress().getDivision() == null || patient.getAddress().getDivision().length() == 0) {
+
+            result.pushNestedPath("address");
+            result.rejectValue("division", "error.patient.address.division", "Division is required");
+            result.popNestedPath();
+        }
     }
 }

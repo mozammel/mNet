@@ -2,9 +2,11 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.utils.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +27,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient create(Patient patient) {
+        patient.setHealthId(IdGenerator.generate(patient.getAddress().getDivision()));
+        if (patient.getDateOfBirth() == null) {
+            patient.setBirthdateFromAge(patient.getAge(), null);
+        }
         return patientDao.save(patient);
     }
 
@@ -54,6 +60,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) {
-         patientDao.save(patient);
+        patientDao.save(patient);
     }
 }
