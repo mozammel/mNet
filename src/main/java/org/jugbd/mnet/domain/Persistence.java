@@ -5,13 +5,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by Bazlur Rahman Rokon on 7/3/14.
+ * @author Bazlur Rahman Rokon
+ * @author Abdullah Al Mamun Oronno (mr.oronno@gmail.com)
  */
 @MappedSuperclass
 public abstract class Persistence implements Serializable {
-    private Date dateCreated;
 
-    private Date dateLastUpdated;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 
     @ManyToOne
     private User createdBy;
@@ -19,20 +23,20 @@ public abstract class Persistence implements Serializable {
     @ManyToOne
     private User lastUpdatedBy;
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
-    public Date getDateLastUpdated() {
-        return dateLastUpdated;
+    public Date getUpdated() {
+        return updated;
     }
 
-    public void setDateLastUpdated(Date dateLastUpdated) {
-        this.dateLastUpdated = dateLastUpdated;
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public User getCreatedBy() {
@@ -51,6 +55,16 @@ public abstract class Persistence implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        updated = created = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = new Date();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,8 +73,8 @@ public abstract class Persistence implements Serializable {
         Persistence that = (Persistence) o;
 
         if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
-        if (dateCreated != null ? !dateCreated.equals(that.dateCreated) : that.dateCreated != null) return false;
-        if (dateLastUpdated != null ? !dateLastUpdated.equals(that.dateLastUpdated) : that.dateLastUpdated != null)
+        if (created != null ? !created.equals(that.created) : that.created != null) return false;
+        if (updated != null ? !updated.equals(that.updated) : that.updated != null)
             return false;
         if (lastUpdatedBy != null ? !lastUpdatedBy.equals(that.lastUpdatedBy) : that.lastUpdatedBy != null)
             return false;
@@ -70,8 +84,8 @@ public abstract class Persistence implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = dateCreated != null ? dateCreated.hashCode() : 0;
-        result = 31 * result + (dateLastUpdated != null ? dateLastUpdated.hashCode() : 0);
+        int result = created != null ? created.hashCode() : 0;
+        result = 31 * result + (updated != null ? updated.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         result = 31 * result + (lastUpdatedBy != null ? lastUpdatedBy.hashCode() : 0);
         return result;

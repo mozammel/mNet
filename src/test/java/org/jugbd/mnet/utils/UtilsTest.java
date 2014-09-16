@@ -2,8 +2,6 @@ package org.jugbd.mnet.utils;
 
 import org.jugbd.mnet.domain.User;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertNotNull;
@@ -21,8 +19,8 @@ public class UtilsTest {
 
         assertNotNull(user.getCreatedBy());
         assertNotNull(user.getLastUpdatedBy());
-        assertNotNull(user.getDateCreated());
-        assertNotNull(user.getDateLastUpdated());
+        assertNotNull(user.getCreated());
+        assertNotNull(user.getUpdated());
     }
 
     @Test

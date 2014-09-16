@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.BloodType;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -36,11 +37,13 @@ public class Patient extends Persistence {
     @Column(length = 100)
     private String name;
 
-    @Size(max = 128)
-    @Column(length = 128)
+    @Size(max = 256)
+    @Column(length = 256)
     private String careOfAddress;
 
     @Past
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfBirth;
 
     @Max(150)
@@ -58,7 +61,6 @@ public class Patient extends Persistence {
 
     private Double weight;
 
-    @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
     private String contactNumber;

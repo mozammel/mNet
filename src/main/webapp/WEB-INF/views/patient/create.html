@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
     <title>Home Page :: MediNetServices</title>
-    <link href="../../../resources/css/datepicker.css" th:href="@{/resources/css/datepicker.css}" rel="stylesheet"/>
-
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('#patient-dob').datepicker({
-                todayBtn: true,
-                keyboardNavigation: false,
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-    </script>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 </head>
 <body>
 <section layout:fragment="content">
@@ -235,6 +224,19 @@
 </div>
 </form>
 </section>
-<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+        $('#patient-dob').datepicker({
+            format: "dd/mm/yyyy",
+            startView: 2,
+            autoclose: true
+        });
+    </script>
+</div>
+
 </body>
 </html>
