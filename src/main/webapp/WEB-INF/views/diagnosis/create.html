@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
     <title>Add Diagnosis :: MediNetServices</title>
-    <link href="../../../resources/css/datepicker.css" th:scr="@{/resources/css/datepicker.css}" rel="stylesheet"/>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 </head>
 <body>
 
@@ -126,7 +127,9 @@
     </fieldset>
 </section>
 
-<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
+<div layout:fragment="custom-scripts">
+    <div layout:include="layout/common-fragment :: date-picker-scripts"/>
+</div>
 
 </body>
 </html>

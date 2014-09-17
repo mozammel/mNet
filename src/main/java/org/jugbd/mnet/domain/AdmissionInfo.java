@@ -1,6 +1,7 @@
 package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Raqibul Islam on 7/1/14.
+ * @author Raqibul Islam
+ * @author Abdullah Al Mamun Oronno (mr.oronno@gmail.com)
  */
 @Entity
 @Table(name = "admission_info")
@@ -26,9 +28,12 @@ public class AdmissionInfo extends Persistence {
     private Long version;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date admissionDate;
 
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date injuryDate;
 
     @NotEmpty

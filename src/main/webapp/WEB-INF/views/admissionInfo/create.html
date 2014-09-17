@@ -6,19 +6,8 @@
 <head>
     <title>New Admission Information :: MediNetServices</title>
 
-    <link href="../../../resources/css/datepicker.css" th:href="@{/resources/css/datepicker.css}" rel="stylesheet"/>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('#admissionDate, #injuryDate').datepicker({
-                todayBtn: true,
-                keyboardNavigation: false,
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -33,7 +22,7 @@
                 Date</label>
 
             <div class="col-sm-3">
-                <input type="text" th:field="*{admissionDate}" class="form-control input-sm"/>
+                <input type="text" th:field="*{admissionDate}" class="form-control input-sm show-date-picker"/>
 
                 <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}"><span
                         th:errors="*{admissionDate}">Admission Date required!</span></p>
@@ -45,7 +34,7 @@
                 Date</label>
 
             <div class="col-sm-3">
-                <input type="text" th:field="*{injuryDate}" class="form-control input-sm"/>
+                <input type="text" th:field="*{injuryDate}" class="form-control input-sm show-date-picker"/>
 
                 <p class="text-danger" th:if="${#fields.hasErrors('injuryDate')}"><span
                         th:errors="*{injuryDate}">Injury Date required!</span></p>
@@ -71,7 +60,9 @@
         </div>
     </form>
 </section>
-<script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
+<div layout:fragment="custom-scripts">
+    <div layout:include="layout/common-fragment :: date-picker-scripts"/>
+</div>
 
 </body>
 </html>
