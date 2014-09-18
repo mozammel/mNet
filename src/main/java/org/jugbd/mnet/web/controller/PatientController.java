@@ -1,11 +1,11 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.User;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.UserService;
+import org.jugbd.mnet.utils.PageWrapper;
 import org.jugbd.mnet.utils.Utils;
 import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -91,21 +91,11 @@ public class PatientController {
     }
 
     @RequestMapping(value = {"/", "/index", "/list"}, method = RequestMethod.GET)
-    public String index(@RequestParam(value = "page", required = false) Integer page,
-                        @RequestParam(value = "size", required = false) Integer size,
-                        Model uiModel) {
-        log.debug("index() page={}, size={}", page, size);
+    public String index(Model uiModel, Pageable pageable) {
 
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size;
-            final int firstResult = page == null ? 0 : (page - 1) * sizeNo;
-            uiModel.addAttribute("patients", patientService.findAll(firstResult, sizeNo));
-            float nrOfPages = (float) patientService.count() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("patients", patientService.findAll());
-        }
+        PageWrapper<Patient> page = new PageWrapper<>(patientService.findAll(pageable), "/patient/list");
 
+        uiModel.addAttribute("page", page);
         return "patient/index";
     }
 
