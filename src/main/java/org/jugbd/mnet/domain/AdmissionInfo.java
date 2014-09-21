@@ -1,15 +1,12 @@
 package org.jugbd.mnet.domain;
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 /**
  * @author Raqibul Islam
  * @author Abdullah Al Mamun Oronno (mr.oronno@gmail.com)

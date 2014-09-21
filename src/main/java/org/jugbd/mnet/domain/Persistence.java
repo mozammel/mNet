@@ -1,42 +1,37 @@
 package org.jugbd.mnet.domain;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * @author Bazlur Rahman Rokon
  * @author Abdullah Al Mamun Oronno (mr.oronno@gmail.com)
  */
 @MappedSuperclass
 public abstract class Persistence implements Serializable {
+    private Date dateCreated;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date dateLastUpdated;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User createdBy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User lastUpdatedBy;
 
-    public Date getCreated() {
-        return created;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getDateLastUpdated() {
+        return dateLastUpdated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setDateLastUpdated(Date dateLastUpdated) {
+        this.dateLastUpdated = dateLastUpdated;
     }
 
     public User getCreatedBy() {
@@ -55,16 +50,6 @@ public abstract class Persistence implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    @PrePersist
-    protected void onCreate() {
-        updated = created = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updated = new Date();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,8 +58,8 @@ public abstract class Persistence implements Serializable {
         Persistence that = (Persistence) o;
 
         if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
-        if (created != null ? !created.equals(that.created) : that.created != null) return false;
-        if (updated != null ? !updated.equals(that.updated) : that.updated != null)
+        if (dateCreated != null ? !dateCreated.equals(that.dateCreated) : that.dateCreated != null) return false;
+        if (dateLastUpdated != null ? !dateLastUpdated.equals(that.dateLastUpdated) : that.dateLastUpdated != null)
             return false;
         if (lastUpdatedBy != null ? !lastUpdatedBy.equals(that.lastUpdatedBy) : that.lastUpdatedBy != null)
             return false;
@@ -84,8 +69,8 @@ public abstract class Persistence implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = created != null ? created.hashCode() : 0;
-        result = 31 * result + (updated != null ? updated.hashCode() : 0);
+        int result = dateCreated != null ? dateCreated.hashCode() : 0;
+        result = 31 * result + (dateLastUpdated != null ? dateLastUpdated.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         result = 31 * result + (lastUpdatedBy != null ? lastUpdatedBy.hashCode() : 0);
         return result;

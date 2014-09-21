@@ -1,11 +1,14 @@
 package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.Status;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Raqibul Islam on 7/1/14.
@@ -23,8 +26,8 @@ public class Diagnosis extends Persistence {
     @Version
     private Long version;
 
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date entryDate;
 
     @NotEmpty
@@ -52,18 +55,23 @@ public class Diagnosis extends Persistence {
     @Column(length = 3000)
     private String systemicExamination;
 
-    @NotEmpty
-    @Size(max = 3000)
-    @Column(length = 3000)
-    private String pictureInformation;
+    @OneToMany
+    private Set<Attachment> attachments = new HashSet<>();
 
     @NotEmpty
     @Size(max = 3000)
     @Column(length = 3000)
     private String plan;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private AdmissionInfo admissionInfo;
+    @OneToMany
+    private Set<Outcome> outcomes = new HashSet<>();
+
+    @Column(length = 6)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @ManyToOne
+    private Register register;
 
     public Diagnosis() {
     }
@@ -124,28 +132,12 @@ public class Diagnosis extends Persistence {
         this.systemicExamination = systemicExamination;
     }
 
-    public String getPictureInformation() {
-        return pictureInformation;
-    }
-
-    public void setPictureInformation(String pictureInformation) {
-        this.pictureInformation = pictureInformation;
-    }
-
     public String getPlan() {
         return plan;
     }
 
     public void setPlan(String plan) {
         this.plan = plan;
-    }
-
-    public AdmissionInfo getAdmissionInfo() {
-        return admissionInfo;
-    }
-
-    public void setAdmissionInfo(AdmissionInfo admissionInfo) {
-        this.admissionInfo = admissionInfo;
     }
 
     public Long getVersion() {
@@ -156,11 +148,42 @@ public class Diagnosis extends Persistence {
         this.version = version;
     }
 
+    public Set<Outcome> getOutcomes() {
+        return outcomes;
+    }
+
+    public void setOutcomes(Set<Outcome> outcomes) {
+        this.outcomes = outcomes;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
+    }
+
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
     @Override
     public String toString() {
         return "Diagnosis{" +
                 "plan='" + plan + '\'' +
-                ", pictureInformation='" + pictureInformation + '\'' +
                 ", systemicExamination='" + systemicExamination + '\'' +
                 ", physicalExamination='" + physicalExamination + '\'' +
                 ", associatedSymptoms='" + associatedSymptoms + '\'' +
@@ -178,8 +201,6 @@ public class Diagnosis extends Persistence {
 
         Diagnosis diagnosis = (Diagnosis) o;
 
-        if (admissionInfo != null ? !admissionInfo.equals(diagnosis.admissionInfo) : diagnosis.admissionInfo != null)
-            return false;
         if (associatedSymptoms != null ? !associatedSymptoms.equals(diagnosis.associatedSymptoms) : diagnosis.associatedSymptoms != null)
             return false;
         if (chiefComplain != null ? !chiefComplain.equals(diagnosis.chiefComplain) : diagnosis.chiefComplain != null)
@@ -187,8 +208,6 @@ public class Diagnosis extends Persistence {
         if (entryDate != null ? !entryDate.equals(diagnosis.entryDate) : diagnosis.entryDate != null) return false;
         if (id != null ? !id.equals(diagnosis.id) : diagnosis.id != null) return false;
         if (physicalExamination != null ? !physicalExamination.equals(diagnosis.physicalExamination) : diagnosis.physicalExamination != null)
-            return false;
-        if (pictureInformation != null ? !pictureInformation.equals(diagnosis.pictureInformation) : diagnosis.pictureInformation != null)
             return false;
         if (plan != null ? !plan.equals(diagnosis.plan) : diagnosis.plan != null) return false;
         if (presentIllness != null ? !presentIllness.equals(diagnosis.presentIllness) : diagnosis.presentIllness != null)
@@ -211,9 +230,8 @@ public class Diagnosis extends Persistence {
         result = 31 * result + (associatedSymptoms != null ? associatedSymptoms.hashCode() : 0);
         result = 31 * result + (physicalExamination != null ? physicalExamination.hashCode() : 0);
         result = 31 * result + (systemicExamination != null ? systemicExamination.hashCode() : 0);
-        result = 31 * result + (pictureInformation != null ? pictureInformation.hashCode() : 0);
         result = 31 * result + (plan != null ? plan.hashCode() : 0);
-        result = 31 * result + (admissionInfo != null ? admissionInfo.hashCode() : 0);
         return result;
     }
+
 }

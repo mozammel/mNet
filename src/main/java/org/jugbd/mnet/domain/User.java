@@ -46,7 +46,7 @@ public class User extends Persistence implements UserDetails, Serializable {
     @NotEmpty(message = "You must select one role")
     @ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id") )
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     private List<Role> roles = new ArrayList<>();
 
     //spring security default properties
