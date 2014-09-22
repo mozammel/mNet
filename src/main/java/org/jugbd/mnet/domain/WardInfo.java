@@ -1,5 +1,8 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -10,6 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ward_info")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class WardInfo extends Persistence {
 
     private static final long serialVersionUID = 1L;

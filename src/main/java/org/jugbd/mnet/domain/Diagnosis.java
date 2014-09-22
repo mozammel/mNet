@@ -1,5 +1,7 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "diagnosis")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Diagnosis extends Persistence {
 
     private static final long serialVersionUID = 1L;
@@ -154,20 +157,6 @@ public class Diagnosis extends Persistence {
 
     public void setVersion(Long version) {
         this.version = version;
-    }
-
-    @Override
-    public String toString() {
-        return "Diagnosis{" +
-                "plan='" + plan + '\'' +
-                ", pictureInformation='" + pictureInformation + '\'' +
-                ", systemicExamination='" + systemicExamination + '\'' +
-                ", physicalExamination='" + physicalExamination + '\'' +
-                ", associatedSymptoms='" + associatedSymptoms + '\'' +
-                ", presentIllness='" + presentIllness + '\'' +
-                ", chiefComplain='" + chiefComplain + '\'' +
-                ", entryDate=" + entryDate +
-                '}';
     }
 
     @Override

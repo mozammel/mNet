@@ -1,9 +1,14 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -16,6 +21,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "admission_info")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class AdmissionInfo extends Persistence {
 
     private static final long serialVersionUID = 1L;
