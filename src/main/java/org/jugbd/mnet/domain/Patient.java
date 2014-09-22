@@ -1,5 +1,7 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.BloodType;
 import org.jugbd.mnet.domain.enums.Gender;
@@ -19,6 +21,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "patient")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Patient extends Persistence {
 
     private static final long serialVersionUID = 1L;

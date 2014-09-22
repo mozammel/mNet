@@ -58,6 +58,7 @@ dependencies {
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE'
 
     compile 'org.hibernate:hibernate-entitymanager:4.3.5.Final'
+    compile 'org.hibernate:hibernate-ehcache:4.3.5.Final'
     compile 'mysql:mysql-connector-java:5.1.30'
     compile 'c3p0:c3p0:0.9.1.2'
     compile 'javax.validation:validation-api:1.1.0.Final'
