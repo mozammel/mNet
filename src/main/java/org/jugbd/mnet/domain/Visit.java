@@ -8,14 +8,21 @@ import java.util.Date;
  */
 @Entity
 public class Visit extends Persistence {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     @Version
     private Long version;
+    
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date visitTime;
+    
     @OneToOne(mappedBy = "visit")
     private User visitedBy;
+    
     @Column(length = 3000)
     private String comment;
 
