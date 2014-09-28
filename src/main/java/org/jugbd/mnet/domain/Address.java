@@ -2,6 +2,7 @@ package org.jugbd.mnet.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -27,6 +28,7 @@ public class Address implements Serializable {
 
     @Size(max = 32)
     @Column(length = 32)
+    @NotNull
     private String division;
 
     public Address() {
