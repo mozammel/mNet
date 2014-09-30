@@ -8,129 +8,102 @@
 <head>
     <title>Show Patient</title>
 </head>
+
 <body>
 <section layout:fragment="content">
 
     <div th:if="${message}" class="alert alert-info">
         <p th:text="${message}"></p>
     </div>
-
-    <fieldset>
-        <legend th:text="#{heading.patient.personal.info}">Show Patient Personal Info</legend>
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.health.id}">Health Id</dt>
-            <dd th:text="${patient.healthId}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.patient.name}">Name</dt>
-            <dd th:text="${patient.name}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.contact.no}">Contact Number</dt>
-            <dd th:text="${patient.contactNumber}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.sex}">Gender</dt>
-            <div th:if="${patient.gender}">
-                <dd th:text="${patient.gender.label}"></dd>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-8 col-md-8">
+                        <h3 class="text-primary"><a th:href="@{/patient/details/__${patient.id}__}"> <span
+                                th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
+                            <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
+                            <small th:text="${patient.age}"></small><small> year(s) </small>
+                            <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></small>
+                            <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
+                            <small><a sec:authorize="hasRole('ROLE_ADMIN')"
+                                      th:href="@{/patient/edit/__${patient.id}__}">Edit</a>
+                            </small>
+                        </h3>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <p class="text-right">
+                            <i>Patient ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong> <br/>
+                            <i>Registration No</i>: <span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
+                        </p>
+                    </div>
+                </div>
             </div>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.date.birth}">Date Of Birth</dt>
-            <dd th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.age.year}">Age</dt>
-            <dd th:text="${patient.age}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.height.inches}">Height</dt>
-            <dd th:text="${patient.height}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.patient.name}">Weight</dt>
-            <dd th:text="${patient.weight}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.address}">Address</dt>
-            <dd th:text="${patient.address.homeAddress}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.address.post.office}">Post Office</dt>
-            <dd th:text="${patient.address.postOffice}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.address.police.station}">Police Station</dt>
-            <dd th:text="${patient.address.policeStation}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.division}">Division</dt>
-            <dd th:text="${patient.address.division}"></dd>
-        </dl>
-
-    </fieldset>
-
-    <fieldset>
-        <legend th:text="#{heading.patient.emergency.contact}">Patient Emergency Contact Info</legend>
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.contact.name}">Contact Person</dt>
-            <dd th:text="${patient.contactPerson}"></dd>
-        </dl>
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
-            <dd th:text="${patient.emergencyContactNumber}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.relationship}">Relationship</dt>
-            <div th:if="${patient.relationship}">
-                <dd th:text="${patient.relationship.label}"></dd>
+        </div>
+    </div>
+    <div th:if="${register}">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Registration Info</div>
+                    <div class="panel-body">
+                        Active since <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd-MMM-yyyy hh:mm:ss')}"></span><br/>
+                        <strong>Emergency Contact -</strong><br/>
+                        <ul>
+                            <li>Contact Person :<span th:text="${register.contactPerson !=null } ? ${register.contactPerson}"> </span> </li>
+                            <li>Relationship: <span th:text="${register.relationship} ? ${register.relationship.label}"> </span></li>
+                            <li>Contact Number: <span th:text="${register.emergencyContactNumber} ? ${register.emergencyContactNumber}"></span> </li>
+                        </ul>
+                        <a th:href="@{/register/admitPatient/}" class="btn btn-info"> Admit Patient</a>
+                        <a th:href="@{/register/close/__${register.id}__}" class="btn btn-info" onclick="if (!confirm('Are you sure?')) return false;"> Close Patient</a>
+                    </div>
+                </div>
             </div>
-        </dl>
-
-    </fieldset>
-    <hr/>
-
-    <fieldset>
-        <legend> Admission Info</legend>
-
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Admission Date</th>
-                <th>Injury Date</th>
-                <th>Bed Number</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${patient.admissionInfos}">
-                <td><a href="#" th:href="@{'/admissionInfo/show/' + ${item.id}}"> Show </a></td>
-                <td th:text="${item.admissionDate} ? ${#dates.format(item.admissionDate,'dd-MMM-yyyy')}"></td>
-                <td th:text="${item.injuryDate} ? ${#dates.format(item.injuryDate,'dd-MMM-yyyy')}"></td>
-                <td th:text="${item.bedNumber}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>
-
-    <div>
-        <a href="#" class="btn btn-info" th:href="@{/patient/}"> Back To the List </a>&nbsp;&nbsp;
-        <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info"
-           th:href="@{/patient/edit/__${patient.id}__}">Edit</a>&nbsp;&nbsp;
-        <a sec:authorize="hasRole('ROLE_ADMIN')" href="#" class="btn btn-info"
-           th:href="@{/admissionInfo/create?patientId=__${patient.id}__}">New Admission</a>
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Diagnosis</div>
+                    <div class="panel-body">
+                        <div th:if="${register.diagnosises.size()==0}">
+                            <h3 class="text-primary">No active diagnosis found</h3>
+                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Vital(s)</div>
+                    <div class="panel-body">
+                        <div th:if="${register.diagnosises.size()==0}">
+                            <h3 class="text-primary">No active vital found</h3>
+                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Outcome(s)</div>
+                    <div class="panel-body">
+                        <h3 class="text-primary">No active outcome found</h3>
+                        <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:unless="${register}" class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Register</div>
+                <div class="panel-body">
+                    <h3 class="text-primary">This patient has not any active register</h3>
+                    <a class="btn btn-info" th:href="@{/register/patient/__${patient.id}__}">Register</a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

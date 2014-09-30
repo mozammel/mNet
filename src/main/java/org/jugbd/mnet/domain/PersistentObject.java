@@ -32,13 +32,11 @@ public abstract class PersistentObject implements Serializable {
     @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    @NotNull
     private User createdBy;
 
     @LastModifiedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
-    @NotNull
     private User lastModifiedBy;
 
     public DateTime getCreatedDate() {

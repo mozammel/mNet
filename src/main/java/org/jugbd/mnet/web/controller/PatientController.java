@@ -1,19 +1,16 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.User;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.UserService;
-import org.jugbd.mnet.utils.Utils;
 import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -50,35 +46,52 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(Model uiModel) {
-
-        Patient patient = new Patient();
-        uiModel.addAttribute("patient", patient);
+    public String create(Patient patient, Model uiModel) {
 
         return "patient/create";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute Patient patient,
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String save(@Valid Patient patient,
                        BindingResult result,
-                       Principal principal,
                        RedirectAttributes redirectAttributes) {
 
+        if (patient.getAgeEstimated() != null) {
+            patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
+        }
+
+        validatePatient(patient, result);
+
         if (result.hasErrors()) {
-            log.info("Binding Error ={}", patient);
+            log.debug("save() result.getAllErrors() ={}", result.getAllErrors());
+
             return "patient/create";
         }
 
-        boolean isNew = Utils.isNew(patient);
-
-        //TODO revisit
-        //User currentUser = userService.findByUserName(principal.getName());
-        //Utils.updatePersistentProperties(patient, currentUser);
-
         patientService.create(patient);
-        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully %s", isNew ? "created" : "updated"));
+
+        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully created"));
 
         return "redirect:/patient/show/" + patient.getId().toString();
+    }
+
+    // quick and dirty solution, have to revisit later
+    private void validatePatient(Patient patient, BindingResult result) {
+        if (patient.getAge() == null) {
+            result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
+        }
+
+        if (patient.getAddress().getDivision() == null || patient.getAddress().getDivision().length() == 0) {
+            result.pushNestedPath("address");
+            result.rejectValue("division", "error.patient.address.division", "Division is required");
+            result.popNestedPath();
+        }
+
+        if (patient.getAddress().getPoliceStation() == null || patient.getAddress().getPoliceStation().length() == 0) {
+            result.pushNestedPath("address");
+            result.rejectValue("policeStation", "error.patient.address.policeStation", "Police Station is required");
+            result.popNestedPath();
+        }
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

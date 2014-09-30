@@ -2,6 +2,7 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.utils.PatientIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,35 +27,58 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient create(Patient patient) {
+        patient.setHealthId(PatientIdGenerator.generate(patient.getAddress()));
+
+        if (patient.getDateOfBirth() == null) {
+            patient.setBirthdateFromAge(patient.getAge(), null);
+        }
+
         return patientDao.save(patient);
     }
 
     @Override
     public Patient findOne(Long id) {
+
         return patientDao.findOne(id);
     }
 
     @Override
     public List<Patient> findAll() {
+
         return patientDao.findAll();
     }
 
     public List<Patient> findByHealthIdOrPhoneNumber(String healthId, String phoneNumber) {
+
         return patientDao.findByHealthIdOrPhoneNumber(healthId, phoneNumber);
     }
 
     @Override
     public List<Patient> findAll(int firstResult, int sizeNo) {
+
         return patientDao.findAll(new PageRequest(firstResult, sizeNo)).getContent();
     }
 
     @Override
     public long count() {
+
         return patientDao.count();
     }
 
     @Override
     public void update(Patient patient) {
+        Patient patientFromDb = findOne(patient.getId());
+        patientFromDb.setName(patient.getName());
+        patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
+        patientFromDb.setHealthId(patient.getHealthId());
+        patientFromDb.setDateOfBirth(patient.getDateOfBirth());
+        patientFromDb.setAddress(patient.getAddress());
+        patientFromDb.setContactNumber(patient.getContactNumber());
+        patientFromDb.setGender(patient.getGender());
+        patientFromDb.setDead(patient.getDead());
+        patientFromDb.setDeathDate(patient.getDeathDate());
+        patientFromDb.setAge(patient.getAge());
+
         patientDao.save(patient);
     }
 }

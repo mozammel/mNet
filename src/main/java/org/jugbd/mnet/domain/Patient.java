@@ -6,6 +6,7 @@ import org.jugbd.mnet.domain.enums.Gender;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -27,6 +28,7 @@ public class Patient extends PersistentObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Version
     private Long version;
 
@@ -39,18 +41,16 @@ public class Patient extends PersistentObject {
     @Column(length = 100)
     private String name;
 
-    @Size(max = 128)
-    @Column(length = 128)
-    private String careOfAddress;
-
     @Past
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfBirth;
 
     @Max(150)
+    @Transient
     private Integer age;
 
+    @NotNull
     @Column(length = 6)
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -64,8 +64,8 @@ public class Patient extends PersistentObject {
     @Column(length = 32)
     private String contactNumber;
 
+    @Valid
     @Embedded
-    @NotNull
     private Address address;
 
     private Boolean dead = false;
@@ -105,14 +105,6 @@ public class Patient extends PersistentObject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCareOfAddress() {
-        return careOfAddress;
-    }
-
-    public void setCareOfAddress(String careOfAddress) {
-        this.careOfAddress = careOfAddress;
     }
 
     public Integer getAge() {
