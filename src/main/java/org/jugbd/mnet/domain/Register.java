@@ -11,29 +11,36 @@ import java.util.Set;
  * Created by Bazlur Rahman Rokon on 8/4/14.
  */
 @Entity
-public class Register extends Persistence {
+public class Register extends PersistentObject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Version
     private Long version;
 
     private String registrationId;
 
-    @OneToMany(mappedBy = "register")
-    private Set<Diagnosis> diagnosises = new HashSet<>();
+    @OneToMany
+    private Set<Diagnosis> diagnoses = new HashSet<>();
 
     @ManyToOne
     private Patient patient;
 
     @ManyToOne
     private AdmissionInfo admissionInfo;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDatetime;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date stopDatetime;
 
-    @OneToMany(mappedBy = "register")
+    @OneToMany
     private Set<Vital> vitals;
-    @OneToMany(mappedBy = "register")
+
+    @OneToMany
     private Set<Visit> visits;
 
     @Column(length = 6)
@@ -67,12 +74,12 @@ public class Register extends Persistence {
         this.registrationId = registrationId;
     }
 
-    public Set<Diagnosis> getDiagnosises() {
-        return diagnosises;
+    public Set<Diagnosis> getDiagnoses() {
+        return diagnoses;
     }
 
-    public void setDiagnosises(Set<Diagnosis> diagnosises) {
-        this.diagnosises = diagnosises;
+    public void setDiagnoses(Set<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
     }
 
     public Patient getPatient() {

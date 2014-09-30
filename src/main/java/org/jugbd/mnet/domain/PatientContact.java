@@ -13,10 +13,8 @@ import java.io.Serializable;
  *
  * @since 9/21/14.
  */
+@Embeddable
 public class PatientContact implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     @NotEmpty
     @Size(max = 100)
@@ -32,14 +30,6 @@ public class PatientContact implements Serializable {
     @Size(max = 32)
     @Column(length = 32)
     private String emergencyContactNumber;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getContactPerson() {
         return contactPerson;

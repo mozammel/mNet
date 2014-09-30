@@ -8,7 +8,9 @@ import javax.validation.constraints.NotNull;
  *
  * @since 9/21/14.
  */
-public class Attachment extends Persistence {
+@Entity
+public class Attachment extends PersistentObject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService {
     List<User> findAll();
 
     User findById(Long id);
+
+    User getCurrentLoggedInUser();
 }

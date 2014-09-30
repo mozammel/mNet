@@ -6,12 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-     private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
@@ -52,20 +54,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserName(String username) {
         try {
+
             return userDao.findByUsername(username);
         } catch (NoResultException e) {
             log.error("user not found by ={}", username, e);
         }
+
         return null;
     }
 
     @Override
     public User findById(Long id) {
+
         return userDao.findOne(id);
     }
 
     @Override
+    public User getCurrentLoggedInUser() {
+
+        Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return findByUserName(principal.getName());
+    }
+
+    @Override
     public List<User> findAll() {
+
         return userDao.findAll();
     }
 }

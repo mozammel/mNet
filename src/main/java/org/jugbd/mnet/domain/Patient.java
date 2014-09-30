@@ -1,8 +1,6 @@
 package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.jugbd.mnet.domain.enums.BloodType;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +20,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "patient")
-public class Patient extends Persistence {
+public class Patient extends PersistentObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -69,6 +67,7 @@ public class Patient extends Persistence {
     @Embedded
     @NotNull
     private Address address;
+
     private Boolean dead = false;
 
     @Temporal(TemporalType.DATE)

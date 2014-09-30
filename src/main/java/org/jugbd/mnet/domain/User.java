@@ -16,23 +16,26 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "findByUsername", query = "select u from User u left join fetch u.roles where u.username = (:username)"),
-        @NamedQuery(name = "findAllUsers", query = "select  u from  User u")
-})
-public class User extends Persistence implements UserDetails, Serializable {
+@NamedQuery(
+        name = "User.findByUsername",
+        query = "from User u where u.username = ?"
+)
+public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Version
     private Long version;
+
     @Size(min = 4, max = 30)
     @NotNull
     @NotEmpty
     @Column(nullable = false, unique = true)
     private String username;
+
     @NotNull
     @NotEmpty
     @Size(min = 8)
@@ -43,6 +46,7 @@ public class User extends Persistence implements UserDetails, Serializable {
     @Email
     private String email;
     private String phoneNumber;
+
     @NotEmpty(message = "You must select one role")
     @ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
     @Enumerated(EnumType.STRING)
@@ -77,12 +81,12 @@ public class User extends Persistence implements UserDetails, Serializable {
         return authorities;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {

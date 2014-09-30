@@ -7,15 +7,17 @@ import java.util.Date;
  * Created by Bazlur Rahman Rokon on 8/8/14.
  */
 @Entity
-public class Visit extends Persistence {
+public class Visit extends PersistentObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Version
     private Long version;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date visitTime;
-    @OneToOne(mappedBy = "visit")
-    private User visitedBy;
+
     @Column(length = 3000)
     private String comment;
 
@@ -41,14 +43,6 @@ public class Visit extends Persistence {
 
     public void setVisitTime(Date visitTime) {
         this.visitTime = visitTime;
-    }
-
-    public User getVisitedBy() {
-        return visitedBy;
-    }
-
-    public void setVisitedBy(User visitedBy) {
-        this.visitedBy = visitedBy;
     }
 
     public String getComment() {

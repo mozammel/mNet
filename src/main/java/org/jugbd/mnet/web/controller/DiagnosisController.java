@@ -2,7 +2,6 @@ package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.AdmissionInfo;
 import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.service.AdmissionInfoService;
 import org.jugbd.mnet.service.DiagnosisService;
 import org.jugbd.mnet.service.PatientService;
@@ -14,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -54,7 +56,7 @@ public class DiagnosisController {
         AdmissionInfo admissionInfo = admissionInfoService.findOne(admissionId);
 
         Diagnosis diagnosis = new Diagnosis();
-        diagnosis.setAdmissionInfo(admissionInfo);
+        //diagnosis.setAdmissionInfo(admissionInfo);
 
         map.addAttribute("diagnosis", diagnosis);
 
@@ -79,8 +81,8 @@ public class DiagnosisController {
         //String username = principal.getName();
         //User user = userService.findByUserName(username);
         //Utils.updatePersistentProperties(diagnosis, user);
-        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
-        diagnosis.setAdmissionInfo(admissionInfo);
+        //AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
+        //diagnosis.setAdmissionInfo(admissionInfo);
         diagnosisService.saveDiagnosis(diagnosis);
 
         redirectAttrs.addFlashAttribute("message", "Diagnosis information entry created!");
@@ -104,8 +106,8 @@ public class DiagnosisController {
 
         Diagnosis diagnosis = diagnosisService.getDiagnosis(diagnosisId);
         map.addAttribute("diagnosis", diagnosis);
-        map.addAttribute("patientId", diagnosis.getAdmissionInfo().getPatient().getId());
-        map.addAttribute("admissionId", diagnosis.getAdmissionInfo().getId());
+        //map.addAttribute("patientId", diagnosis.getAdmissionInfo().getPatient().getId());
+        //map.addAttribute("admissionId", diagnosis.getAdmissionInfo().getId());
 
         return "diagnosis/show";
     }
@@ -120,8 +122,8 @@ public class DiagnosisController {
         }
 
         //TODO revisit later
-        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
-        diagnosis.setAdmissionInfo(admissionInfo);
+        //AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
+       // diagnosis.setAdmissionInfo(admissionInfo);
         diagnosisService.saveDiagnosis(diagnosis);
 
         redirectAttributes.addFlashAttribute("message", "Diagnosis information updated!");

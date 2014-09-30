@@ -47,6 +47,7 @@ dependencies {
     compile 'org.springframework:spring-core:4.0.5.RELEASE'
     compile 'org.springframework:spring-webmvc:4.0.5.RELEASE'
     compile 'org.springframework:spring-orm:4.0.5.RELEASE'
+    compile 'org.springframework:spring-aspects:4.0.5.RELEASE'
 
     compile 'org.springframework.security:spring-security-web:3.2.4.RELEASE'
     compile 'org.springframework.security:spring-security-config:3.2.4.RELEASE'
@@ -67,6 +68,8 @@ dependencies {
 
     compile 'org.slf4j:slf4j-api:1.7.5'
     runtime 'org.slf4j:slf4j-log4j12:1.7.5'
+    compile 'joda-time:joda-time:2.4'
+    compile 'org.jadira.usertype:usertype.core:3.2.0.GA'
 
     testCompile 'org.springframework:spring-test:4.0.5.RELEASE'
     testCompile 'junit:junit:4.11'

@@ -14,8 +14,7 @@ import java.util.Set;
  * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
-@Table(name = "diagnosis")
-public class Diagnosis extends Persistence {
+public class Diagnosis extends PersistentObject {
 
     private static final long serialVersionUID = 1L;
 

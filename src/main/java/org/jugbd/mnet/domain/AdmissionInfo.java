@@ -1,19 +1,21 @@
 package org.jugbd.mnet.domain;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 /**
  * @author Raqibul Islam
  * @author Abdullah Al Mamun Oronno (mr.oronno@gmail.com)
  */
 @Entity
-@Table(name = "admission_info")
-public class AdmissionInfo extends Persistence {
+public class AdmissionInfo extends PersistentObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,8 +40,7 @@ public class AdmissionInfo extends Persistence {
     @Column(length = 32)
     private String bedNumber;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "admissionInfo", cascade = CascadeType.ALL)
-    @Column(nullable = false)
+    @OneToMany
     private Set<Diagnosis> diagnoses = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)

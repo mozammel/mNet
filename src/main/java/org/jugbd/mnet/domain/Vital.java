@@ -8,7 +8,8 @@ import javax.persistence.*;
  * Created by Bazlur Rahman Rokon on 8/4/14.
  */
 @Entity
-public class Vital extends Persistence {
+public class Vital extends PersistentObject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
