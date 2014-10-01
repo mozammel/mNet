@@ -68,17 +68,17 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void update(Patient patient) {
         Patient patientFromDb = findOne(patient.getId());
+
         patientFromDb.setName(patient.getName());
-        patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
-        patientFromDb.setHealthId(patient.getHealthId());
         patientFromDb.setDateOfBirth(patient.getDateOfBirth());
-        patientFromDb.setAddress(patient.getAddress());
-        patientFromDb.setContactNumber(patient.getContactNumber());
         patientFromDb.setGender(patient.getGender());
+        patientFromDb.setBloodType(patient.getBloodType());
+        patientFromDb.setContactNumber(patient.getContactNumber());
+        patientFromDb.setAddress(patient.getAddress());
         patientFromDb.setDead(patient.getDead());
         patientFromDb.setDeathDate(patient.getDeathDate());
-        patientFromDb.setAge(patient.getAge());
+        patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
 
-        patientDao.save(patient);
+        patientDao.save(patientFromDb);
     }
 }

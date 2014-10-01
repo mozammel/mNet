@@ -12,13 +12,14 @@
 <section layout:fragment="content">
 
     <div class="panel panel-default">
-        <div class="panel-heading">New Patient Entry</div>
+        <div class="panel-heading">Edit Patient</div>
         <div class="panel-body">
 
-            <form class="form-horizontal" method='POST' th:object="${patient}" th:action="@{/patient/create}">
+            <form class="form-horizontal" method='POST' th:object="${patient}" th:action="@{/patient/edit}">
 
                 <fieldset>
                     <legend th:text="#{heading.patient.personal.info}">Patient Personal Info</legend>
+                    <input type="hidden" th:field="*{id}"/>
 
                     <div class="form-group">
                         <label for="patient-name" class="col-sm-2 control-label required-field"
@@ -64,6 +65,7 @@
                                         th:selected="${gender == patient.gender}">
                                 </option>
                             </select>
+
                             <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
                                 <span th:errors="*{gender}">Required</span>
                             </p>
@@ -101,7 +103,7 @@
 
                         <div class="col-sm-3">
                             <textarea type="text" class="form-control input-sm" id="patient-address"
-                                   th:field="*{address.homeAddress}"></textarea>
+                                      th:field="*{address.homeAddress}"></textarea>
                         </div>
 
                         <p class="text-danger" th:if="${#fields.hasErrors('address.homeAddress')}">

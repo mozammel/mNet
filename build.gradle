@@ -63,6 +63,7 @@ dependencies {
     compile 'c3p0:c3p0:0.9.1.2'
     compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'org.springframework.data:spring-data-jpa:1.7.0.RELEASE'
+    compile 'org.springframework.data:spring-data-commons:1.7.0.RELEASE'
     compile 'org.hibernate:hibernate-validator:5.0.1.Final'
     compile 'com.h2database:h2:1.4.179'
 

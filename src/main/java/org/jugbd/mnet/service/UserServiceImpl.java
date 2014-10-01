@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -72,12 +70,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentLoggedInUser() {
-        log.debug("getCurrentLoggedInUser()");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("authentication.getName() ={}", authentication.getName());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.debug("getCurrentLoggedInUser() => user.getUsername() ={}, id={}", user.getUsername(), user.getId());
 
-        return findByUserName(authentication.getName());
+        return findById(user.getId());
     }
 
     @Override

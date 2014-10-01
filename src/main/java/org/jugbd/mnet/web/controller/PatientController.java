@@ -63,7 +63,6 @@ public class PatientController {
         validatePatient(patient, result);
 
         if (result.hasErrors()) {
-            log.debug("save() result.getAllErrors() ={}", result.getAllErrors());
 
             return "patient/create";
         }
@@ -87,7 +86,26 @@ public class PatientController {
         Patient selectedPatient = patientService.findOne(id);
         uiModel.addAttribute("patient", selectedPatient);
 
-        return "patient/create";
+        return "patient/edit";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String update(Patient patient,
+                         BindingResult result,
+                         RedirectAttributes redirectAttributes) {
+
+        validatePatient(patient, result);
+
+        if (result.hasErrors()) {
+
+            return "patient/edit";
+        }
+
+        patientService.update(patient);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully updated"));
+
+        return "redirect:/patient/show/" + patient.getId().toString();
     }
 
     @RequestMapping(value = {"/", "/index", "/list"}, method = RequestMethod.GET)

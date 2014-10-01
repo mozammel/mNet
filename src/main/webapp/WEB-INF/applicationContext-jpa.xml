@@ -31,7 +31,7 @@
     <!-- auditing -->
     <jpa:auditing auditor-aware-ref="auditorAware"/>
 
-    <bean id="auditorAware" class="org.jugbd.mnet.security.SpringSecurityAuditorAware"/>
+    <bean id="auditorAware" class="org.jugbd.mnet.audit.SpringSecurityAuditorAware"/>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
