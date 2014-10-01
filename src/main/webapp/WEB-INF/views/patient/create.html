@@ -69,6 +69,7 @@
                             </p>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="patient-dob" class="col-sm-2 control-label date" th:text="#{label.date.birth}">
                             Date of Birth
@@ -79,6 +80,24 @@
                                    th:field="*{dateOfBirth}"/>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.bloodGroup}">
+                            Blood Group
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{bloodType}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="bloodType : ${T(org.jugbd.mnet.domain.enums.BloodType).values()}"
+                                        th:value="${bloodType}"
+                                        th:text="${bloodType.label}"
+                                        th:selected="${bloodType == patient.bloodType}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
                             Age (Years)

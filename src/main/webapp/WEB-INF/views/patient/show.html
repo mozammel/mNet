@@ -34,7 +34,7 @@
                     <div class="col-sm-6 col-md-4">
                         <p class="text-right">
                             <i>Patient ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong> <br/>
-                            <i>Registration No</i>: <span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
+                            <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
                         </p>
                     </div>
                 </div>
