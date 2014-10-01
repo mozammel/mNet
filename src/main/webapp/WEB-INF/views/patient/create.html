@@ -108,7 +108,7 @@
                                    th:field="*{address.homeAddress}"></textarea>
                         </div>
 
-                        <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
+                        <p class="text-danger" th:if="${#fields.hasErrors('address.homeAddress')}">
                             <span th:errors="*{address.homeAddress}">Required</span>
                         </p>
 
@@ -136,10 +136,34 @@
                             <input type="text" class="form-control input-sm" id="patient-ps"
                                    th:field="*{address.policeStation}"/>
                         </div>
-                        <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
+                        <p class="text-danger" th:if="${#fields.hasErrors('address.policeStation')}">
                             <span th:errors="*{address.policeStation}">Required</span>
                         </p>
                     </div>
+
+                    <div class="form-group">
+                        <label for="patient-district" class="col-sm-2 control-label required-field"
+                               th:text="#{label.district}">
+                            Division
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select id="patient-district" th:field="*{address.district}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="district : ${T(org.jugbd.mnet.domain.enums.District).values()}"
+                                        th:value="${district}"
+                                        th:text="${district.name}"
+                                        th:selected="${district == patient.address.district}">
+                                </option>
+
+                            </select>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('address.district')}">
+                                <span th:errors="*{address.district}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="patient-division" class="col-sm-2 control-label required-field"
                                th:text="#{label.division}">

@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Bazlur Rahman Rokon on 8/4/14.
+ * @author Bazlur Rahman Rokon
+ *
+ * @since 8/4/14.
  */
 @Entity
 public class Register extends PersistentObject {

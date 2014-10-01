@@ -139,14 +139,6 @@ public class Patient extends PersistentObject {
         this.contactNumber = contactNumber;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -193,6 +185,23 @@ public class Patient extends PersistentObject {
 
     public void setRegisters(Set<Register> registers) {
         this.registers = registers;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    @Valid
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     /**
@@ -255,13 +264,5 @@ public class Patient extends PersistentObject {
         c.add(Calendar.YEAR, -1 * age);
         setDateOfBirth(c.getTime());
         setBirthdateEstimated(true);
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 }

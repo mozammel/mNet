@@ -75,22 +75,9 @@ public class PatientController {
         return "redirect:/patient/show/" + patient.getId().toString();
     }
 
-    // quick and dirty solution, have to revisit later
     private void validatePatient(Patient patient, BindingResult result) {
         if (patient.getAge() == null) {
             result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
-        }
-
-        if (patient.getAddress().getDivision() == null || patient.getAddress().getDivision().length() == 0) {
-            result.pushNestedPath("address");
-            result.rejectValue("division", "error.patient.address.division", "Division is required");
-            result.popNestedPath();
-        }
-
-        if (patient.getAddress().getPoliceStation() == null || patient.getAddress().getPoliceStation().length() == 0) {
-            result.pushNestedPath("address");
-            result.rejectValue("policeStation", "error.patient.address.policeStation", "Police Station is required");
-            result.popNestedPath();
         }
     }
 
