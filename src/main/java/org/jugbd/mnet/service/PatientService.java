@@ -1,6 +1,7 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.web.controller.PatientSearchCmd;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,7 +18,7 @@ public interface PatientService {
 
     public List<Patient> findAll();
 
-    public List<Patient> findByHealthIdOrPhoneNumber(String healthId, String phoneNumber);
+    public Page<Patient> findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable);
 
     Page<Patient> findAll(Pageable pageable);
 

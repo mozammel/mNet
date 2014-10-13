@@ -29,7 +29,7 @@
         </tr>
 
         <tr th:each="patient : ${page.content}">
-            <td><a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
+            <td><a th:href="@{/patient/show/__${patient.id}__}">View</a></td>
             <td th:text="${patient.healthId}">>Health ID</td>
             <td th:text="${patient.name}">Patient Name</td>
             <td th:text="${patient.contactNumber}">Contact Number</td>
