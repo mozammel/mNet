@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,19 +30,18 @@ public class User implements UserDetails, Serializable {
     @Version
     private Long version;
 
-    @Size(min = 4, max = 30)
-    @NotNull
     @NotEmpty
+    @Size(min = 4, max = 30)
     @Column(nullable = false, unique = true)
     private String username;
 
-    @NotNull
     @NotEmpty
-    @Size(min = 8)
+    @Size(min = 8, max = 32)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
     @Column(nullable = false)
-//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
-//            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
     private String password;
+
     @Email
     private String email;
     private String phoneNumber;

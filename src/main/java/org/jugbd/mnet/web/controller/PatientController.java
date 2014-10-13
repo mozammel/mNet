@@ -130,6 +130,14 @@ public class PatientController {
         return "patient/show";
     }
 
+    @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
+    public String details(@PathVariable("id") Long id, Model uiModel) {
+
+        uiModel.addAttribute("patient", patientService.findOne(id));
+
+        return "patient/details";
+    }
+
     @RequestMapping(value = "cancel", method = RequestMethod.GET)
     public String cancel() {
         log.debug("cancel()");

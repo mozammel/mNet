@@ -5,6 +5,7 @@ import org.jugbd.mnet.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Created by bazlur on 7/3/14.
@@ -78,8 +79,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public Page<User> findAll(Pageable pageable) {
 
-        return userDao.findAll();
+        return userDao.findAll(pageable);
     }
 }

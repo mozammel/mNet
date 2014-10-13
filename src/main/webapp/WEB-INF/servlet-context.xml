@@ -13,18 +13,14 @@
 
     <context:component-scan base-package="org.jugbd.mnet.web"/>
 
-    <bean id="requestMappingHandlerAdapter"
-          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="customArgumentResolvers">
-            <list>
-                <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
-                    <property name="fallbackPageable" ref="fallbackPageable"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean id="pageagleArgumentResolver"
+                  class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+                <property name="fallbackPageable" ref="fallbackPageable"/>
+            </bean>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
 
     <bean id="fallbackPageable" class="org.springframework.data.domain.PageRequest">
         <constructor-arg type="int" value="0"/>

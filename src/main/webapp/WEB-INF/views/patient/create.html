@@ -81,6 +81,23 @@
                         </div>
                     </div>
 
+
+
+                    <div class="form-group">
+                        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
+                            Age (Years)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-age"
+                                   th:field="*{ageEstimated}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
+                                <span th:errors="*{ageEstimated}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" th:text="#{label.bloodGroup}">
                             Blood Group
@@ -95,21 +112,6 @@
                                         th:selected="${bloodType == patient.bloodType}">
                                 </option>
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
-                            Age (Years)
-                        </label>
-
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" id="patient-age"
-                                   th:field="*{ageEstimated}"/>
-
-                            <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
-                                <span th:errors="*{ageEstimated}">Required</span>
-                            </p>
                         </div>
                     </div>
 
@@ -137,7 +139,7 @@
                             <input type="text" class="form-control input-sm" id="patient-po"
                                    th:field="*{address.postOffice}"/>
                         </div>
-                        <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
+                        <p class="text-danger" th:if="${#fields.hasErrors('address.postOffice')}">
                             <span th:errors="*{address.postOffice}">Required</span>
                         </p>
                     </div>
@@ -159,7 +161,7 @@
                     <div class="form-group">
                         <label for="patient-district" class="col-sm-2 control-label required-field"
                                th:text="#{label.district}">
-                            Division
+                            District
                         </label>
 
                         <div class="col-sm-3">
@@ -206,11 +208,11 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" th:text="#{label.add.patient}">Save Patient
-                        </button>
                         <a href="#" class="btn btn-danger" th:href="@{/patient/cancel}"> <span
                                 th:text="#{label.cancel}">Cancel</span>
                         </a>
+                        <button type="submit" class="btn btn-primary" th:text="#{label.add.patient}">Save Patient
+                        </button>
                     </div>
                 </div>
             </form>
