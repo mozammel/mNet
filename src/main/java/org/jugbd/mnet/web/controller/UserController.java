@@ -31,13 +31,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ModelAttribute("user")
-    private User getUser() {
-        log.debug("getUser()");
-
-        return new User();
-    }
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
 
@@ -45,18 +38,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create() {
-        log.debug("create()");
+    public String create(User user) {
 
         return "user/create";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("user") User user,
+    public String save(@Valid User user,
                        BindingResult result,
-                       RedirectAttributes redirectAttrs,
-                       Principal principal) {
-        log.debug("save() user ={}", user);
+                       RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
             return "user/create";
@@ -68,10 +58,6 @@ public class UserController {
             return "user/create";
         }
 
-        //TODO revisit
-        //User currentUser = userService.findByUserName(principal.getName());
-        //Utils.updatePersistentProperties(user, currentUser);
-
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user created");
 
@@ -80,7 +66,6 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model uiModel) {
-        log.debug("index()");
 
         List<User> users = userService.findAll();
         uiModel.addAttribute("users", users);
@@ -112,19 +97,13 @@ public class UserController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(@Valid @ModelAttribute("user") User user,
                          BindingResult result,
-                         RedirectAttributes redirectAttrs,
-                         Principal principal) {
+                         RedirectAttributes redirectAttrs) {
         log.debug("update() user ={}", user);
 
         if (result.hasErrors()) {
             return "user/edit";
         }
 
-        //TODO revisit
-        //User currentUser = userService.findByUserName(principal.getName());
-        //Utils.updatePersistentProperties(user, currentUser);
-
-        userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
 
         return "redirect:/user/show/" + user.getId().toString();
