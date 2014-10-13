@@ -6,7 +6,8 @@ import org.jugbd.mnet.utils.PatientIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -54,9 +55,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Patient> findAll(int firstResult, int sizeNo) {
+    public Page<Patient> findAll(Pageable pageable) {
 
-        return patientDao.findAll(new PageRequest(firstResult, sizeNo)).getContent();
+        return patientDao.findAll(pageable);
     }
 
     @Override
