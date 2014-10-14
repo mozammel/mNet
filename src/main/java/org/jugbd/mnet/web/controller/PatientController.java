@@ -4,6 +4,7 @@ import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
+import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.UserService;
 import org.jugbd.mnet.utils.PageWrapper;
 import org.jugbd.mnet.utils.StringUtils;
@@ -37,6 +38,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private RegisterService registerService;
 
     @Autowired
     private UserService userService;
@@ -125,7 +129,9 @@ public class PatientController {
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") Long id, Model uiModel) {
 
-        uiModel.addAttribute("patient", patientService.findOne(id));
+        Patient patient = patientService.findOne(id);
+        uiModel.addAttribute("register", registerService.findActiveRegisterByPatientId(id));
+        uiModel.addAttribute("patient", patient);
 
         return "patient/show";
     }

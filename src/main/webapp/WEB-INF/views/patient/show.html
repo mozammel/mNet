@@ -50,9 +50,9 @@
                         Active since <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd-MMM-yyyy hh:mm:ss')}"></span><br/>
                         <strong>Emergency Contact -</strong><br/>
                         <ul>
-                            <li>Contact Person :<span th:text="${register.contactPerson !=null } ? ${register.contactPerson}"> </span> </li>
-                            <li>Relationship: <span th:text="${register.relationship} ? ${register.relationship.label}"> </span></li>
-                            <li>Contact Number: <span th:text="${register.emergencyContactNumber} ? ${register.emergencyContactNumber}"></span> </li>
+                            <li>Contact Person :<span th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"> </span> </li>
+                            <li>Relationship: <span th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"> </span></li>
+                            <li>Contact Number: <span th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span> </li>
                         </ul>
                         <a th:href="@{/register/admitPatient/}" class="btn btn-info"> Admit Patient</a>
                         <a th:href="@{/register/close/__${register.id}__}" class="btn btn-info" onclick="if (!confirm('Are you sure?')) return false;"> Close Patient</a>
@@ -63,7 +63,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Diagnosis</div>
                     <div class="panel-body">
-                        <div th:if="${register.diagnosises.size()==0}">
+                        <div th:if="${register.diagnoses.size()==0}">
                             <h3 class="text-primary">No active diagnosis found</h3>
                             <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>
@@ -76,7 +76,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Vital(s)</div>
                     <div class="panel-body">
-                        <div th:if="${register.diagnosises.size()==0}">
+                        <div th:if="${register.vitals.size()==0}">
                             <h3 class="text-primary">No active vital found</h3>
                             <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>

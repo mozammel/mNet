@@ -3,13 +3,13 @@ package org.jugbd.mnet.domain;
 import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Bazlur Rahman Rokon
- *
  * @since 8/4/14.
  */
 @Entity
@@ -24,7 +24,7 @@ public class Register extends PersistentObject {
 
     private String registrationId;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Diagnosis> diagnoses = new HashSet<>();
 
     @ManyToOne
@@ -40,7 +40,7 @@ public class Register extends PersistentObject {
     private Date stopDatetime;
 
     @OneToMany
-    private Set<Vital> vitals;
+    private Set<Vital> vitals = new HashSet<>();
 
     @OneToMany
     private Set<Visit> visits;
@@ -49,6 +49,7 @@ public class Register extends PersistentObject {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Valid
     @Embedded
     private PatientContact patientContact;
 
