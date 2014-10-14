@@ -45,7 +45,7 @@ public class User implements UserDetails, Serializable {
     @Size(max = 280)
     private String hashedPassword;
 
-    @Size(max = 8)
+    @Size(max = 16)
     private String salt;
 
     @Email
