@@ -1,7 +1,7 @@
 package org.jugbd.mnet.security;
 
-import org.jugbd.mnet.domain.enums.Role;
 import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.domain.enums.Role;
 import org.jugbd.mnet.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,9 +65,9 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         } else {
             try {
                 targetUser = (User) userService.loadUserByUsername(username);
-
+                encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, targetUser.getSalt());
                 // authenticate the person
-                expectedPassword = targetUser.getPassword();
+                expectedPassword = targetUser.getHashedPassword();
                 if (!StringUtils.hasText(expectedPassword)) {
                     throw new BadCredentialsException("No password for "
                             + username

@@ -39,8 +39,14 @@ public class User implements UserDetails, Serializable {
     @Size(min = 8, max = 32)
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
             message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
-    @Column(nullable = false)
+    @Transient
     private String password;
+
+    @Size(max = 280)
+    private String hashedPassword;
+
+    @Size(max = 8)
+    private String salt;
 
     @Email
     private String email;
@@ -215,5 +221,21 @@ public class User implements UserDetails, Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
