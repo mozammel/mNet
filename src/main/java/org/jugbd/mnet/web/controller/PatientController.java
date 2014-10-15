@@ -133,7 +133,7 @@ public class PatientController {
         Patient patient = patientService.findOne(id);
         Register activeRegister = registerService.findActiveRegisterByPatientId(id);
 
-        uiModel.addAttribute("register", activeRegister == null ? null : activeRegister);
+        uiModel.addAttribute("register", activeRegister);
         uiModel.addAttribute("patient", patient);
 
         return "patient/show";
