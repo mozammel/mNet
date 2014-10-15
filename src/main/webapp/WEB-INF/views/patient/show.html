@@ -55,7 +55,18 @@
                             <li>Contact Number: <span th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span> </li>
                         </ul>
                         <a th:href="@{/register/admitPatient/}" class="btn btn-info"> Admit Patient</a>
-                        <a th:href="@{/register/close/__${register.id}__}" class="btn btn-info" onclick="if (!confirm('Are you sure?')) return false;"> Close Patient</a>
+                        <a th:href="@{#}" class="btn btn-info" onclick="closeRegister();"> Close Patient</a>
+
+                        <script type="text/javascript">
+                            function closeRegister(){
+                                if(confirm("Are you sure? ")){
+                                    $("#close-register").submit();
+                                }
+                            }
+                        </script>
+
+                        <form style="visibility: hidden" th:id="close-register" method="post" action="#" th:action="@{/register/close/__${register.id}__}">
+                        </form>
                     </div>
                 </div>
             </div>

@@ -60,7 +60,7 @@ public class RegisterController {
         return "redirect:/patient/show/" + register.getPatient().getId();
     }
 
-    @RequestMapping(value = "close/{registerId}", method = RequestMethod.GET)
+    @RequestMapping(value = "close/{registerId}", method = RequestMethod.POST)
     public String close(@PathVariable(value = "registerId") Long registerId) {
         log.debug("close() -> registerId ={}", registerId);
 
