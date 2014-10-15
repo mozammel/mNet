@@ -1,9 +1,12 @@
 package org.jugbd.mnet.service;
 
+import org.hibernate.Hibernate;
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,8 @@ import java.util.Date;
 @Service
 @Transactional
 public class RegisterServiceImpl implements RegisterService {
+
+    private static final Logger log = LoggerFactory.getLogger(RegisterService.class);
 
     @Autowired
     private RegisterDao registerDao;
