@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Bazlur Rahman Rokon
  * @since 10/14/14.
@@ -14,5 +16,5 @@ import org.springframework.stereotype.Repository;
 public interface RegisterDao extends JpaRepository<Register, Long> {
 
     @Query("select o from Register o where o.patient.id=:patientId and o.status='ACTIVE'")
-    public Register findActiveRegisterByPatientId(@Param("patientId") Long patientId);
+    List<Register> findActiveRegisterByPatientId(@Param("patientId") Long patientId);
 }

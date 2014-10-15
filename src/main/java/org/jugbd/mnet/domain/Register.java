@@ -24,7 +24,7 @@ public class Register extends PersistentObject {
 
     private String registrationId;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "register")
     private Set<Diagnosis> diagnoses = new HashSet<>();
 
     @ManyToOne

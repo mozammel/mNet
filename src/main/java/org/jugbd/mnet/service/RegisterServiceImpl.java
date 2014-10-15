@@ -4,12 +4,15 @@ import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -18,6 +21,8 @@ import java.util.Date;
 @Service
 @Transactional
 public class RegisterServiceImpl implements RegisterService {
+
+    private static final Logger log = LoggerFactory.getLogger(RegisterService.class);
 
     @Autowired
     private RegisterDao registerDao;
@@ -47,14 +52,16 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public Register findActiveRegisterByPatientId(Long patientId) {
 
-        Register register = registerDao.findActiveRegisterByPatientId(patientId);
-        if (register != null) {
+        List<Register> registers = registerDao.findActiveRegisterByPatientId(patientId);
+        if (registers != null && registers.size() > 0) {
 
-            register.getDiagnoses().size(); // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
-            register.getVitals().size();
+            registers.get(0).getDiagnoses().size(); // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
+            registers.get(0).getVitals().size();
+
+            return registers.get(0);
         }
 
-        return register;
+        return null;
     }
 
     @Override

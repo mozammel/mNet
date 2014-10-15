@@ -1,6 +1,7 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
@@ -130,7 +131,9 @@ public class PatientController {
     public String show(@PathVariable("id") Long id, Model uiModel) {
 
         Patient patient = patientService.findOne(id);
-        uiModel.addAttribute("register", registerService.findActiveRegisterByPatientId(id));
+        Register activeRegister = registerService.findActiveRegisterByPatientId(id);
+
+        uiModel.addAttribute("register", activeRegister == null ? null : activeRegister);
         uiModel.addAttribute("patient", patient);
 
         return "patient/show";

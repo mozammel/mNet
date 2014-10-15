@@ -74,10 +74,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Diagnosis</div>
                     <div class="panel-body">
-                        <div th:if="${register.diagnoses.size()==0}">
+                        <div th:if="${register.diagnoses.size() == 0}">
                             <h3 class="text-primary">No active diagnosis found</h3>
-                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>
+                        <div>
+                            <ul class="list-group" th:each="diagnosis : ${register.diagnoses}">
+                                <li class="list-group-item"><span th:text="${diagnosis.chiefComplain}"></span> <a th:href="@{/diagnosis/show/__${diagnosis.id}__}">Open</a></li>
+                            </ul>
+                        </div>
+
+                        <a class="btn btn-info" th:href="@{/diagnosis/create/__${register.id}__}">Add New</a>
                     </div>
                 </div>
             </div>
