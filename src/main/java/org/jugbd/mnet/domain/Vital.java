@@ -3,6 +3,7 @@ package org.jugbd.mnet.domain;
 import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Bazlur Rahman Rokon on 8/4/14.
@@ -16,18 +17,28 @@ public class Vital extends PersistentObject {
 
     @Version
     private Long version;
-    private double height; //Height (cm)
-    private double weight; //Weight (kg)
-    private double bmi; //(Calculated) BMI
-    private double temperature;//Temperature (F)
-    private int pulse; //Pulse per minute
-    private int respiratoryRate; //Respiratory rate per minute
-    private int systolic;  //Blood Pressure
-    private int diastolic;
-    private double bloodOxygenSaturation;//Blood oxygen saturation
+
+    private Double height;  //Height (cm)
+    private Double weight;  //Weight (kg)
+    private Double bmi;     //(Calculated) BMI
+
+    @NotNull
+    private Double temperature;     //Temperature (F)
+    private Integer pulse;          //Pulse per minute
+    private Integer respiratoryRate; //Respiratory rate per minute
+
+    @NotNull
+    private Integer systolic;  //Blood Pressure
+
+    @NotNull
+    private Integer diastolic;
+    private Double bloodOxygenSaturation;//Blood oxygen saturation
 
     @ManyToOne
     private Patient patient;
+
+    @ManyToOne
+    private Register register;
 
     @Column(length = 6)
     @Enumerated(EnumType.STRING)
@@ -49,75 +60,75 @@ public class Vital extends PersistentObject {
         this.version = version;
     }
 
-    public double getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public double getBmi() {
+    public Double getBmi() {
         return bmi;
     }
 
-    public void setBmi(double bmi) {
+    public void setBmi(Double bmi) {
         this.bmi = bmi;
     }
 
-    public double getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(double temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 
-    public int getPulse() {
+    public Integer getPulse() {
         return pulse;
     }
 
-    public void setPulse(int pulse) {
+    public void setPulse(Integer pulse) {
         this.pulse = pulse;
     }
 
-    public int getRespiratoryRate() {
+    public Integer getRespiratoryRate() {
         return respiratoryRate;
     }
 
-    public void setRespiratoryRate(int respiratoryRate) {
+    public void setRespiratoryRate(Integer respiratoryRate) {
         this.respiratoryRate = respiratoryRate;
     }
 
-    public int getSystolic() {
+    public Integer getSystolic() {
         return systolic;
     }
 
-    public void setSystolic(int systolic) {
+    public void setSystolic(Integer systolic) {
         this.systolic = systolic;
     }
 
-    public int getDiastolic() {
+    public Integer getDiastolic() {
         return diastolic;
     }
 
-    public void setDiastolic(int diastolic) {
+    public void setDiastolic(Integer diastolic) {
         this.diastolic = diastolic;
     }
 
-    public double getBloodOxygenSaturation() {
+    public Double getBloodOxygenSaturation() {
         return bloodOxygenSaturation;
     }
 
-    public void setBloodOxygenSaturation(double bloodOxygenSaturation) {
+    public void setBloodOxygenSaturation(Double bloodOxygenSaturation) {
         this.bloodOxygenSaturation = bloodOxygenSaturation;
     }
 
@@ -135,5 +146,13 @@ public class Vital extends PersistentObject {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
     }
 }

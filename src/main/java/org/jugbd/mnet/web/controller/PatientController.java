@@ -2,6 +2,7 @@ package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author ronygomes
@@ -135,6 +136,17 @@ public class PatientController {
 
         uiModel.addAttribute("register", activeRegister);
         uiModel.addAttribute("patient", patient);
+
+        List<Vital> vitals = new ArrayList<>(activeRegister.getVitals());
+
+        Collections.sort(vitals, new Comparator<Vital>() {
+            @Override
+            public int compare(Vital o1, Vital o2) {
+                return o2.getCreatedDate().compareTo(o1.getCreatedDate());
+            }
+        });
+
+        uiModel.addAttribute("lastVital", vitals.get(0));
 
         return "patient/show";
     }

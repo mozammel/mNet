@@ -6,7 +6,7 @@
       layout:decorator="layout/main">
 
 <head>
-    <title>Show Patient</title>
+    <title th:text="${patient.name}">Show Patient</title>
 </head>
 
 <body>
@@ -95,8 +95,59 @@
                     <div class="panel-body">
                         <div th:if="${register.vitals.size()==0}">
                             <h3 class="text-primary">No active vital found</h3>
-                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>
+
+                        <div class="list-group-item">
+                            <h4 class="text-primary">Last Vitals - <span th:text="${#dates.format(lastVital.createdDate.toDate(),'dd MMMM yyyy h:mm a')}"></span> </h4>
+
+                            <table class="table">
+                                <tr>
+                                    <td>Height</td>
+                                    <td th:text="${lastVital.height} ? ${lastVital.height + 'cm'}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Weight</td>
+                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + 'kg'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Calculated BMI</td>
+                                    <td th:text="${lastVital.bmi} ? ${lastVital.bmi }"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Temperature (&deg;F)</td>
+                                    <td th:text="${lastVital.temperature} ? ${lastVital.temperature}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Pulse</td>
+                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + '/min'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Respiratory Rate</td>
+                                    <td th:text="${lastVital.respiratoryRate} ? ${lastVital.respiratoryRate + '/min'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Blood Pressure</td>
+                                    <td>
+                                        <span th:text="${lastVital.systolic} ? ${lastVital.systolic }"></span>&MediumSpace;/
+                                        <span th:text="${lastVital.diastolic} ? ${lastVital.diastolic }"></span>
+                                    </td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Blood Oxygen Saturation</td>
+                                    <td th:text="${lastVital.bloodOxygenSaturation} ? ${lastVital.bloodOxygenSaturation + '%'}"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <br/>
+                        <a class="btn btn-info" th:href="@{/vital/create/__${register.id}__}">Add New</a>
                     </div>
                 </div>
             </div>

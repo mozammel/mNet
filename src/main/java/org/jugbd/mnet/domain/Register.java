@@ -39,7 +39,7 @@ public class Register extends PersistentObject {
     @Temporal(TemporalType.TIMESTAMP)
     private Date stopDatetime;
 
-    @OneToMany
+    @OneToMany(mappedBy = "register")
     private Set<Vital> vitals = new HashSet<>();
 
     @OneToMany

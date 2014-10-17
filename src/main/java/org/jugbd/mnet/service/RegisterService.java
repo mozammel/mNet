@@ -1,6 +1,7 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.Vital;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,4 +17,9 @@ public interface RegisterService {
     Register findActiveRegisterByPatientId(Long patientId);
 
     void closeRegister(Long registerId);
+
+    void update(Register register);
+
+    void addVital(Vital vital, Long registerId);
+
 }

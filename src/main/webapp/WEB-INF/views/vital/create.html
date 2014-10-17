@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Vital :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-heading">New Vital Entry</div>
+        <div class="panel-body">
+            <form class="form-horizontal" method='POST' th:object="${vital}" th:action="@{/vital/create}">
+                <fieldset>
+                    <legend>Capture Vitals</legend>
+                    <input type="hidden" th:name="registerId" th:id="registerId" th:value="${registerId}"/>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Height(cm)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" step="any" class="form-control input-sm" id="height" th:field="*{height}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('height')}">
+                                <span th:errors="*{height}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Weight(Kg)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control input-sm" th:field="*{weight}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('weight')}">
+                                <span th:errors="*{weight}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Temperature(&deg;F)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" step="any" class="form-control input-sm" th:field="*{temperature}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('temperature')}">
+                                <span th:errors="*{temperature}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Pulse/min
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control input-sm" th:field="*{pulse}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('pulse')}">
+                                <span th:errors="*{pulse}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Respiratory rate/min
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control input-sm" th:field="*{respiratoryRate}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('respiratoryRate')}">
+                                <span th:errors="*{respiratoryRate}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Blood Pressure
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control input-sm" th:field="*{systolic}"
+                                   placeholder="Systolic"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('systolic')}">
+                                <span th:errors="*{systolic}">Required</span>
+                            </p>
+                            <br/>
+                            <input type="number" class="form-control input-sm" th:field="*{diastolic}"
+                                   placeholder="Diastolic"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('systolic')}">
+                                <span th:errors="*{diastolic}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">
+                            Blood oxygen saturation (%)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control input-sm" th:field="*{bloodOxygenSaturation}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('bloodOxygenSaturation')}">
+                                <span th:errors="*{bloodOxygenSaturation}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <a href="#" class="btn btn-danger" th:href="@{/register/cancel}"> <span
+                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

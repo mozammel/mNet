@@ -8,6 +8,6 @@ build
 out
 s
 classes/
-rebel.xml
+src/main/resources/rebel.xml
 .classpath
 .project
