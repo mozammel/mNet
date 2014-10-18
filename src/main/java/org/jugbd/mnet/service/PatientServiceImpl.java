@@ -96,17 +96,17 @@ public class PatientServiceImpl implements PatientService {
 
                 if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.upper(personRoot.get(Patient_.healthId)), getLikePattern(searchCmd.getHealthId().toUpperCase()))));
+                            .add(cb.or(cb.like(cb.upper(personRoot.get(Patient_.healthId)), getLikePattern(searchCmd.getHealthId().trim().toUpperCase()))));
                 }
 
                 if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.equal(personRoot.get(Patient_.contactNumber), searchCmd.getPhoneNumber())));
+                            .add(cb.or(cb.equal(personRoot.get(Patient_.contactNumber), searchCmd.getPhoneNumber().trim())));
                 }
 
                 if (StringUtils.isNotEmpty(searchCmd.getName())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.lower(personRoot.get(Patient_.name)), getLikePattern(searchCmd.getName().toLowerCase()))));
+                            .add(cb.or(cb.like(cb.lower(personRoot.get(Patient_.name)), getLikePattern(searchCmd.getName().trim().toLowerCase()))));
                 }
 
                 return predicate;
