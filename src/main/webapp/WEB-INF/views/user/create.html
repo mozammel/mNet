@@ -20,7 +20,7 @@
                            th:text="#{label.user.fullName}">Username</label>
 
                     <div class="col-sm-3">
-                        <input type="text" id="fullName" th:field="*{fullName}" class="form-control input-sm"/>
+                        <input type="text" id="fullName" th:field="*{fullName}" maxlength="100" class="form-control input-sm"/>
 
                         <p class="text-danger" th:if="${#fields.hasErrors('fullName')}"><span th:errors="*{fullName}">Username required!</span>
                         </p>
@@ -32,7 +32,7 @@
                            th:text="#{label.user.username}">Username</label>
 
                     <div class="col-sm-3">
-                        <input type="text" th:field="*{username}" class="form-control input-sm"/>
+                        <input type="text" th:field="*{username}" maxlength="30" class="form-control input-sm"/>
 
                         <p class="text-danger" th:if="${#fields.hasErrors('username')}"><span th:errors="*{username}">Username required!</span>
                         </p>
@@ -44,7 +44,7 @@
                            th:text="#{label.user.password}">Password</label>
 
                     <div class="col-sm-3">
-                        <input type="text" th:field="*{password}" class="form-control input-sm"/>
+                        <input type="password" th:field="*{password}" class="form-control input-sm"/>
 
                         <p class="text-danger" th:if="${#fields.hasErrors('password')}"><span th:errors="*{password}">Password required!</span>
                         </p>
@@ -55,7 +55,7 @@
                     <label for="email" class="col-sm-2 control-label" th:text="#{label.user.email}">Email</label>
 
                     <div class="col-sm-3">
-                        <input type="text" th:field="*{email}" class="form-control input-sm"/>
+                        <input type="email" th:field="*{email}" class="form-control input-sm"/>
 
                         <p class="text-danger" th:if="${#fields.hasErrors('email')}"><span
                                 th:errors="*{email}">Email required!</span>
@@ -68,7 +68,8 @@
                         Number </label>
 
                     <div class="col-sm-3">
-                        <input type="text" th:field="*{phoneNumber}" class="form-control input-sm"/>
+                        <input type="text" maxlength="11" pattern="^01(1|5|6|7|8|9)\d{8}$"
+                               th:field="*{phoneNumber}" class="form-control input-sm"/>
                     </div>
                 </div>
 

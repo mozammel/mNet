@@ -33,6 +33,7 @@ public class User implements UserDetails, Serializable {
     private Long version;
 
     @NotEmpty
+    @Size(min = 4, max = 100)
     private String fullName;
 
     @NotNull
@@ -42,6 +43,8 @@ public class User implements UserDetails, Serializable {
     @NotEmpty
     @Size(min = 4, max = 30)
     @Column(nullable = false, unique = true)
+    @Pattern(regexp = "^[a-z0-9_-]{4,30}$",
+             message = "Username may only contain upper case or lower case character, digit, underscore and hyphen")
     private String username;
 
     @NotEmpty
@@ -59,6 +62,8 @@ public class User implements UserDetails, Serializable {
 
     @Email
     private String email;
+
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
     private String phoneNumber;
 
     @NotEmpty(message = "You must select one role")
