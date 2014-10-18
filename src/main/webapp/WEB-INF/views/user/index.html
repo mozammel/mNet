@@ -22,19 +22,25 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>Full Name</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Phone Number</th>
+                <th>Designation</th>
                 <th>Role(s)</th>
+                <th>Enabled ?</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item : ${page.content}">
-                <td><a href="#" th:href="@{'/user/show/' + ${item.id}}"> Open </a></td>
+                <td><a href="#" th:href="@{'/user/show/' + ${item.id}}">Open </a></td>
+                <td th:text="${item.fullName}"></td>
                 <td th:text="${item.username}"></td>
                 <td th:text="${item.email}"></td>
                 <td th:text="${item.phoneNumber}"></td>
+                <td th:text="${item.designation.label}"></td>
                 <td th:text="${item.roles}"></td>
+                <td th:value="${item.enabled}"></td>
             </tr>
             </tbody>
         </table>

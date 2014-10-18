@@ -17,6 +17,10 @@
                  id="message" class="alert alert-info">
             </div>
 
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.fullName}">Full Name</dt>
+                <dd th:text="${user.fullName}"></dd>
+            </dl>
 
             <dl class="dl-horizontal">
                 <dt th:text="#{label.user.username}">Username</dt>
@@ -31,6 +35,11 @@
             <dl class="dl-horizontal">
                 <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
                 <dd th:text="${user.phoneNumber}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.designation}">Designation</dt>
+                <dd th:text="${user.designation}"></dd>
             </dl>
 
             <dl class="dl-horizontal">

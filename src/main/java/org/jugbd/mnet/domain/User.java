@@ -2,12 +2,14 @@ package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.Designation;
 import org.jugbd.mnet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -29,6 +31,13 @@ public class User implements UserDetails, Serializable {
 
     @Version
     private Long version;
+
+    @NotEmpty
+    private String fullName;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Designation designation;
 
     @NotEmpty
     @Size(min = 4, max = 30)
@@ -170,6 +179,22 @@ public class User implements UserDetails, Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Designation getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(Designation designation) {
+        this.designation = designation;
     }
 
     @Override

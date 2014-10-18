@@ -19,6 +19,18 @@
                 <input type="text" th:field="*{version}" hidden="true"/>
 
                 <div class="form-group">
+                    <label for="fullName" class="col-sm-2 control-label"
+                           th:text="#{label.user.fullName}">Username</label>
+
+                    <div class="col-sm-3">
+                        <input type="text" id="fullName" th:field="*{fullName}" class="form-control input-sm"/>
+
+                        <p class="text-danger" th:if="${#fields.hasErrors('fullName')}"><span th:errors="*{fullName}">Username required!</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="username" class="col-sm-2 control-label"
                            th:text="#{label.user.username}">Username</label>
 
@@ -59,6 +71,26 @@
 
                     <div class="col-sm-3">
                         <input type="text" th:field="*{phoneNumber}" class="form-control input-sm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" th:text="#{label.user.designation}">Designation </label>
+
+                    <div class="col-sm-3">
+
+                        <select id="user-designation" th:field="*{designation}">
+                            <option value="" th:text="#{common.select.prompt}"></option>
+                            <option th:each="designation : ${T(org.jugbd.mnet.domain.enums.Designation).values()}"
+                                    th:value="${designation}"
+                                    th:text="${designation.label}"
+                                    th:selected="${designation == user.designation}">
+                            </option>
+                        </select>
+
+                        <p class="text-danger" th:if="${#fields.hasErrors('designation')}"><span
+                                th:errors="*{designation}">Designation required!</span>
+                        </p>
                     </div>
                 </div>
 
