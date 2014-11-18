@@ -128,8 +128,8 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a href="#" class="btn btn-danger" th:href="@{/register/cancel}"> <span
-                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <a href="#" class="btn btn-danger" th:href="@{/vital/back?registerId=__${registerId}__}"> <span
+                                th:text="#{label.back}">Back</span> </a>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </div>
