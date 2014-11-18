@@ -8,48 +8,61 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <div th:if="${message}"
-         th:text="${message}"
-         id="message" class="alert alert-info">
-    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"> User Details</div>
+        <div class="panel-body">
 
-    <fieldset>
-        <legend>Show User</legend>
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.username}">Username</dt>
-            <dd th:text="${user.username}"></dd>
-        </dl>
+            <div th:if="${message}"
+                 th:text="${message}"
+                 id="message" class="alert alert-info">
+            </div>
 
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.email}">Email</dt>
-            <dd th:text="${user.email}"></dd>
-        </dl>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.fullName}">Full Name</dt>
+                <dd th:text="${user.fullName}"></dd>
+            </dl>
 
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
-            <dd th:text="${user.phoneNumber}"></dd>
-        </dl>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.username}">Username</dt>
+                <dd th:text="${user.username}"></dd>
+            </dl>
 
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.role}">Role(s)</dt>
-            <dd th:text="${user.roles}"></dd>
-        </dl>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.email}">Email</dt>
+                <dd th:text="${user.email}"></dd>
+            </dl>
 
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.user.enabled}">Enable</dt>
-            <dd>
-                <div th:switch="${user.enabled}">
-                    <p th:case="${true}">Yes</p>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.phoneNumber}">Phone Number</dt>
+                <dd th:text="${user.phoneNumber}"></dd>
+            </dl>
 
-                    <p th:case="${false}">No</p>
-                </div>
-            </dd>
-        </dl>
-    </fieldset>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.designation}">Designation</dt>
+                <dd th:text="${user.designation}"></dd>
+            </dl>
 
-    <div>
-        <a href="#" class="btn btn-info" th:href="@{/user}"> Back To the List </a>
-        <a href="#" class="btn btn-info" th:href="@{'/user/edit/' + ${user.id}}"> Edit </a>
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.role}">Role(s)</dt>
+                <dd th:text="${user.roles}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.user.enabled}">Enable</dt>
+                <dd>
+                    <div th:switch="${user.enabled}">
+                        <p th:case="${true}">Yes</p>
+
+                        <p th:case="${false}">No</p>
+                    </div>
+                </dd>
+            </dl>
+
+            <div>
+                <a href="#" class="btn btn-info" th:href="@{/user}"> Back To the List </a>
+                <a href="#" class="btn btn-info" th:href="@{'/user/edit/' + ${user.id}}"> Edit </a>
+            </div>
+        </div>
     </div>
 </section>
 </body>

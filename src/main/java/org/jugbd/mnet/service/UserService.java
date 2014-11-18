@@ -1,10 +1,10 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by bazlur on 7/3/14.
@@ -15,7 +15,9 @@ public interface UserService extends UserDetailsService {
 
     User findByUserName(String username);
 
-    List<User> findAll();
+    Page<User> findAll(Pageable pageable);
 
     User findById(Long id);
+
+    User getCurrentLoggedInUser();
 }

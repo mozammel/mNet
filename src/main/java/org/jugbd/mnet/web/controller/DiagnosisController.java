@@ -1,26 +1,22 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.AdmissionInfo;
 import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.service.AdmissionInfoService;
-import org.jugbd.mnet.service.DiagnosisService;
-import org.jugbd.mnet.service.PatientService;
-import org.jugbd.mnet.service.UserService;
-import org.jugbd.mnet.utils.DateUtils;
+import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,22 +35,20 @@ public class DiagnosisController {
     private UserService userService;
 
     @Autowired
+    private RegisterService registerService;
+
+    @Autowired
     private AdmissionInfoService admissionInfoService;
 
     @Autowired
     private PatientService patientService;
 
-//    @ModelAttribute("diagnosis")
-//    private Diagnosis getDiagnosis() {
-//        return new Diagnosis();
-//    }
+    @RequestMapping(value = "/create/{registerId}", method = RequestMethod.GET)
+    public String create(@PathVariable Long registerId, Model map) {
 
-    @RequestMapping(value = "/create/{admissionId}", method = RequestMethod.GET)
-    public String create(@PathVariable(value = "admissionId") Long admissionId, Model map) {
-        AdmissionInfo admissionInfo = admissionInfoService.findOne(admissionId);
-
+        Register register = registerService.findOne(registerId);
         Diagnosis diagnosis = new Diagnosis();
-        diagnosis.setAdmissionInfo(admissionInfo);
+        diagnosis.setRegister(register);
 
         map.addAttribute("diagnosis", diagnosis);
 
@@ -62,25 +56,15 @@ public class DiagnosisController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("diagnosis") Diagnosis diagnosis,
+    public String save(@Valid Diagnosis diagnosis,
                        BindingResult result,
-                       Principal principal,
-                       Model uiModel,
                        RedirectAttributes redirectAttrs) throws ParseException {
 
         if (result.hasErrors()) {
+
             return "diagnosis/create";
         }
 
-        Date currentDate = DateUtils.getCurrentDate();
-        diagnosis.setEntryDate(currentDate);
-
-        //TODO revisit
-        //String username = principal.getName();
-        //User user = userService.findByUserName(username);
-        //Utils.updatePersistentProperties(diagnosis, user);
-        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
-        diagnosis.setAdmissionInfo(admissionInfo);
         diagnosisService.saveDiagnosis(diagnosis);
 
         redirectAttrs.addFlashAttribute("message", "Diagnosis information entry created!");
@@ -104,8 +88,7 @@ public class DiagnosisController {
 
         Diagnosis diagnosis = diagnosisService.getDiagnosis(diagnosisId);
         map.addAttribute("diagnosis", diagnosis);
-        map.addAttribute("patientId", diagnosis.getAdmissionInfo().getPatient().getId());
-        map.addAttribute("admissionId", diagnosis.getAdmissionInfo().getId());
+        map.addAttribute("patientId", diagnosis.getRegister().getPatient().getId());
 
         return "diagnosis/show";
     }
@@ -119,10 +102,7 @@ public class DiagnosisController {
             return "diagnosis/create";
         }
 
-        //TODO revisit later
-        AdmissionInfo admissionInfo = admissionInfoService.findOne(diagnosis.getAdmissionInfo().getId());
-        diagnosis.setAdmissionInfo(admissionInfo);
-        diagnosisService.saveDiagnosis(diagnosis);
+        diagnosisService.updateDiagnosis(diagnosis);
 
         redirectAttributes.addFlashAttribute("message", "Diagnosis information updated!");
 

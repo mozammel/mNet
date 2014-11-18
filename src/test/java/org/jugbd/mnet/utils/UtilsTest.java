@@ -15,12 +15,6 @@ public class UtilsTest {
     @Test
     public void testUpdatePersistentProperties() throws Exception {
         User user = new User(USERNAME, PASSWORD);
-        Utils.updatePersistentProperties(user, ADMIN_USER);
-
-        assertNotNull(user.getCreatedBy());
-        assertNotNull(user.getLastUpdatedBy());
-        assertNotNull(user.getCreated());
-        assertNotNull(user.getUpdated());
     }
 
     @Test
@@ -29,7 +23,7 @@ public class UtilsTest {
         assertTrue(Utils.isNew(user));
 
         User user2 = new User(USERNAME, PASSWORD);
-        user2.setId((long)1);
+        user2.setId((long) 1);
         assertTrue(!Utils.isNew(user2));
 
     }

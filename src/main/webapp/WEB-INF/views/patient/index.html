@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
@@ -17,23 +18,63 @@
         <p th:text="${message}"></p>
     </div>
 
-    <h3>Patient List</h3>
 
-    <table class="table table-hover">
-        <tr>
-            <th>#</th>
-            <th>Health ID</th>
-            <th>Patient Name</th>
-            <th>Contact Number</th>
-        </tr>
+    <div class="panel panel-default">
+        <div class="panel-heading">Patient List</div>
 
-        <tr th:each="patient : ${patients}">
-            <td><a th:href="@{/patient/show/__${patient.id}__}">Show</a></td>
-            <td th:text="${patient.healthId}">>Health ID</td>
-            <td th:text="${patient.name}">Patient Name</td>
-            <td th:text="${patient.contactNumber}">Contact Number</td>
-        </tr>
-    </table>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Health ID</th>
+                <th>Patient Name</th>
+                <th>Contact Number</th>
+                <th>Gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="patient : ${page.content}">
+                <td><a th:href="@{/patient/show/__${patient.id}__}">Open</a></td>
+                <td th:text="${patient.healthId}">>Health ID</td>
+                <td th:text="${patient.name}">Patient Name</td>
+                <td th:text="${patient.contactNumber}">Contact Number</td>
+                <td th:text="${patient.gender.label}">Gender</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pager">
+        <ul>
+            <li th:class="${page.firstPage}? 'disabled' : ''">
+                <span th:if="${page.firstPage}">&#8592; First</span>
+                <a th:if="${not page.firstPage}" th:href="@{${page.url}(page=1,size=${page.size})}">&#8592; First</a>
+            </li>
+            <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                <span th:if="${not page.hasPreviousPage}">&laquo;</span>
+                <a th:if="${page.hasPreviousPage}"
+                   th:href="@{${page.url}(page=${page.number -1},size=${page.size})}"
+                   title="Go to previous page">&laquo;</a>
+            </li>
+            <li th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+                <span th:if="${item.current}" th:text="${item.number}">1</span>
+                <a th:if="${not item.current}"
+                   th:href="@{${page.url}(page=${item.number},size=${page.size})}"><span
+                        th:text="${item.number}">1</span></a>
+            </li>
+            <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                <span th:if="${not page.hasNextPage}">&raquo;</span>
+                <a th:if="${page.hasNextPage}"
+                   th:href="@{${page.url}(page=${page.number +1},size=${page.size})}"
+                   title="Go to next page">&raquo;</a>
+            </li>
+            <li th:class="${page.lastPage}? 'disabled' : ''">
+                <span th:if="${page.lastPage}">Last &#8594;</span>
+                <a th:if="${not page.lastPage}"
+                   th:href="@{${page.url}(page=${page.totalPages},size=${page.size})}">Last &#8594; </a>
+            </li>
+        </ul>
+    </div>
 </section>
 </body>
 </html>

@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ward_info")
-public class WardInfo extends Persistence {
+public class WardInfo extends PersistentObject {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+
+<head>
+    <title>Vital's Details</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Vital's Details</div>
+        <div class="panel-body">
+
+            <table class="table">
+                <tr>
+                    <td>Height</td>
+                    <td th:text="${vital.height} ? ${vital.height + ' cm'}"></td>
+                </tr>
+
+                <tr>
+                    <td>Weight</td>
+                    <td th:text="${vital.weight} ? ${vital.weight + ' kg'}"></td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Calculated BMI</td>
+                    <td th:text="${vital.bmi} ? ${vital.bmi }"></td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Temperature (&deg;F)</td>
+                    <td th:text="${vital.temperature} ? ${vital.temperature}"></td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Pulse</td>
+                    <td th:text="${vital.weight} ? ${vital.weight + '/min'}"></td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Respiratory Rate</td>
+                    <td th:text="${vital.respiratoryRate} ? ${vital.respiratoryRate + '/min'}"></td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Blood Pressure</td>
+                    <td>
+                        <span th:text="${vital.systolic} ? ${vital.systolic }"></span>&MediumSpace;/
+                        <span th:text="${vital.diastolic} ? ${vital.diastolic }"></span>
+                    </td>
+                </tr>
+
+                <tr class="dl-horizontal">
+                    <td>Blood Oxygen Saturation</td>
+                    <td th:text="${vital.bloodOxygenSaturation} ? ${vital.bloodOxygenSaturation + ' %'}"></td>
+                </tr>
+
+            </table>
+
+            <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                <a href="#" class="btn btn-info" th:href="@{/patient/show/__${vital.patient.id}__}"> <span
+                        class="glyphicon glyphicon-arrow-left"></span> Back </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

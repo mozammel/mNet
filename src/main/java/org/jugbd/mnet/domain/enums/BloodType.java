@@ -14,9 +14,13 @@ public enum BloodType {
     O_POSITIVE("O+"),
     O_NEGATIVE("O-");
 
-    private final String value;
+    private final String label;
 
     BloodType(String value) {
-        this.value = value;
+        this.label = value;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

@@ -3,11 +3,13 @@ package org.jugbd.mnet.web.controller;
 import org.jugbd.mnet.domain.User;
 import org.jugbd.mnet.domain.enums.Role;
 import org.jugbd.mnet.service.UserService;
-import org.jugbd.mnet.utils.Utils;
+import org.jugbd.mnet.utils.PageWrapper;
 import org.jugbd.mnet.web.editor.AuthorityEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.List;
 
 /**
  * Created by Bazlur Rahman Rokon on 7/15/14.
@@ -31,13 +31,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ModelAttribute("user")
-    private User getUser() {
-        log.debug("getUser()");
-
-        return new User();
-    }
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
 
@@ -45,20 +38,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create() {
-        log.debug("create()");
+    public String create(User user) {
 
         return "user/create";
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("user") User user,
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    public String save(@Valid User user,
                        BindingResult result,
-                       RedirectAttributes redirectAttrs,
-                       Principal principal) {
-        log.debug("save() user ={}", user);
+                       RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
+
             return "user/create";
         }
 
@@ -68,10 +59,6 @@ public class UserController {
             return "user/create";
         }
 
-        //TODO revisit
-        //User currentUser = userService.findByUserName(principal.getName());
-        //Utils.updatePersistentProperties(user, currentUser);
-
         userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user created");
 
@@ -79,11 +66,11 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(Model uiModel) {
-        log.debug("index()");
+    public String index(Model uiModel, Pageable pageable) {
 
-        List<User> users = userService.findAll();
-        uiModel.addAttribute("users", users);
+        Page<User> users = userService.findAll(pageable);
+        PageWrapper<User> page = new PageWrapper<>(users, "/user");
+        uiModel.addAttribute("page", page);
 
         return "user/index";
     }
@@ -112,19 +99,13 @@ public class UserController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(@Valid @ModelAttribute("user") User user,
                          BindingResult result,
-                         RedirectAttributes redirectAttrs,
-                         Principal principal) {
+                         RedirectAttributes redirectAttrs) {
         log.debug("update() user ={}", user);
 
         if (result.hasErrors()) {
             return "user/edit";
         }
 
-        //TODO revisit
-        //User currentUser = userService.findByUserName(principal.getName());
-        //Utils.updatePersistentProperties(user, currentUser);
-
-        userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
 
         return "redirect:/user/show/" + user.getId().toString();

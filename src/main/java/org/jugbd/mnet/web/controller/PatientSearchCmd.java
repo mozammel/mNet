@@ -6,9 +6,7 @@ package org.jugbd.mnet.web.controller;
 public class PatientSearchCmd {
     private String healthId;
     private String phoneNumber;
-
-    public PatientSearchCmd() {
-    }
+    private String name;
 
     public String getHealthId() {
         return healthId;
@@ -24,5 +22,22 @@ public class PatientSearchCmd {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "PatientSearchCmd{" +
+                "healthId='" + healthId + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

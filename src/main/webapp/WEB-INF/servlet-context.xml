@@ -13,7 +13,19 @@
 
     <context:component-scan base-package="org.jugbd.mnet.web"/>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean id="pageagleArgumentResolver"
+                  class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+                <property name="fallbackPageable" ref="fallbackPageable"/>
+            </bean>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <bean id="fallbackPageable" class="org.springframework.data.domain.PageRequest">
+        <constructor-arg type="int" value="0"/>
+        <constructor-arg type="int" value="20"/>
+    </bean>
 
     <!-- Maps '/' requests to the 'home' view -->
     <mvc:view-controller path="/" view-name="home"/>
@@ -27,17 +39,18 @@
     <!-- **************************************************************** -->
     <bean id="templateResolver"
           class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".html" />
-        <property name="templateMode" value="HTML5" />
-        <property name="cacheable" value="false"/> <!-- Just for hot-deployment purpose; shouldn't be in production -->
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false"/>
+        <!-- Just for hot-deployment purpose; shouldn't be in production -->
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
-        <property name="templateResolver" ref="templateResolver" />
+        <property name="templateResolver" ref="templateResolver"/>
         <property name="additionalDialects">
             <set>
-                <bean class="org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect" />
+                <bean class="org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect"/>
                 <bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
             </set>
         </property>
@@ -47,12 +60,12 @@
     <!-- Resolves localized messages*.properties and application.properties
 		files in the application to allow for internationalization.-->
     <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-            id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
-            p:fallbackToSystemLocale="false" />
+          id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
+          p:fallbackToSystemLocale="false"/>
 
 
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
-        <property name="templateEngine" ref="templateEngine" />
+        <property name="templateEngine" ref="templateEngine"/>
     </bean>
 
     <!-- Efficiently serving static resources; e.g. test.png will be access-able directly by <SERVER>/images/test.png URL -->
@@ -60,7 +73,7 @@
 
     <mvc:interceptors>
         <!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
         <!--Interceptor for redirecting home page if user is already logged in-->
         <mvc:interceptor>
             <mvc:mapping path="/login"/>

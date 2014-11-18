@@ -15,4 +15,6 @@ public interface DiagnosisService {
     Diagnosis getDiagnosis(Long diagnosisId);
 
     List<Diagnosis> getDiagnosisList(Long patientId, Long admissionId);
+
+    void updateDiagnosis(Diagnosis diagnosis);
 }
