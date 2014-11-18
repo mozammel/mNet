@@ -91,13 +91,13 @@
         <div class="row">
             <div class="col-sm-6 col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Vital(s)</div>
+                    <div class="panel-heading">Vital</div>
                     <div class="panel-body">
-                        <div th:if="${register.vitals.size()==0}">
+                        <div th:if="${lastVital == null}">
                             <h3 class="text-primary">No active vital found</h3>
                         </div>
 
-                        <div class="list-group-item">
+                        <div th:if="${lastVital != null}">
                             <h4 class="text-primary">Last Vitals - <span th:text="${#dates.format(lastVital.createdDate.toDate(),'dd MMMM yyyy h:mm a')}"></span> </h4>
 
                             <table class="table">

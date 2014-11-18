@@ -132,21 +132,14 @@ public class PatientController {
     public String show(@PathVariable("id") Long id, Model uiModel) {
 
         Patient patient = patientService.findOne(id);
-        Register activeRegister = registerService.findActiveRegisterByPatientId(id);
-
-        uiModel.addAttribute("register", activeRegister);
         uiModel.addAttribute("patient", patient);
 
-        List<Vital> vitals = new ArrayList<>(activeRegister.getVitals());
+        Register activeRegister = registerService.findActiveRegisterByPatientId(id);
 
-        Collections.sort(vitals, new Comparator<Vital>() {
-            @Override
-            public int compare(Vital o1, Vital o2) {
-                return o2.getCreatedDate().compareTo(o1.getCreatedDate());
-            }
-        });
-
-        uiModel.addAttribute("lastVital", vitals.get(0));
+        if (activeRegister != null) {
+            uiModel.addAttribute("register", activeRegister);
+            uiModel.addAttribute("lastVital", getLastVital(activeRegister));
+        }
 
         return "patient/show";
     }
@@ -202,5 +195,22 @@ public class PatientController {
         uiModel.addAttribute("page", page);
 
         return "patient/index";
+    }
+
+    private Vital getLastVital(Register activeRegister) {
+        List<Vital> vitals = new ArrayList<>(activeRegister.getVitals());
+
+        if (vitals.size() > 0) {
+            Collections.sort(vitals, new Comparator<Vital>() {
+                @Override
+                public int compare(Vital o1, Vital o2) {
+                    return o2.getCreatedDate().compareTo(o1.getCreatedDate());
+                }
+            });
+
+            return vitals.get(0);
+        }
+
+        return null;
     }
 }
