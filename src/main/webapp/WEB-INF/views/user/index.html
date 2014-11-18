@@ -40,7 +40,10 @@
                 <td th:text="${item.phoneNumber}"></td>
                 <td th:text="${item.designation.label}"></td>
                 <td th:text="${item.roles}"></td>
-                <td th:value="${item.enabled}"></td>
+                <td th:switch="${item.enabled}">
+                        <span th:case="${true}">Yes</span>
+                        <span th:case="${false}">No</span>
+                </td>
             </tr>
             </tbody>
         </table>
