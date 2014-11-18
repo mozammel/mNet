@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.BloodType;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.MaritalStatus;
+import org.jugbd.mnet.domain.enums.Occupation;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -74,7 +75,13 @@ public class Patient extends PersistentObject {
     @Temporal(TemporalType.DATE)
     private Date deathDate;
 
+    @Column(length = 12)
+    @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private Occupation occupation;
 
     @Transient
     private Integer ageEstimated;
@@ -275,5 +282,13 @@ public class Patient extends PersistentObject {
 
     public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
     }
 }

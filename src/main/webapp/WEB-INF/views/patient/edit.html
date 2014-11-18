@@ -132,6 +132,23 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.occupation}">
+                            Occupation
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{occupation}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="occupation : ${T(org.jugbd.mnet.domain.enums.Occupation).values()}"
+                                        th:value="${occupation}"
+                                        th:text="${occupation.label}"
+                                        th:selected="${occupation == patient.occupation}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
                             Address
                         </label>
