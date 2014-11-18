@@ -83,6 +83,21 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
+                            Age (Years)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-age"
+                                   th:field="*{ageEstimated}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
+                                <span th:errors="*{ageEstimated}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" th:text="#{label.bloodGroup}">
                             Blood Group
                         </label>
@@ -100,17 +115,19 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
-                            Age (Years)
+                        <label class="col-sm-2 control-label" th:text="#{label.marital.status}">
+                            Marital Status
                         </label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" id="patient-age"
-                                   th:field="*{ageEstimated}"/>
-
-                            <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
-                                <span th:errors="*{ageEstimated}">Required</span>
-                            </p>
+                            <select th:field="*{maritalStatus}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="status : ${T(org.jugbd.mnet.domain.enums.MaritalStatus).values()}"
+                                        th:value="${status}"
+                                        th:text="${status.label}"
+                                        th:selected="${status == patient.maritalStatus}">
+                                </option>
+                            </select>
                         </div>
                     </div>
 
