@@ -55,6 +55,11 @@
             </dl>
 
             <dl class="dl-horizontal">
+                <dt>Educational Level</dt>
+                <dd th:text="${patient.educationLevel} ? ${patient.educationLevel.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
                 <dt>Address</dt>
                 <dd th:text="${patient.address.homeAddress} ? ${patient.address.homeAddress}"></dd>
             </dl>

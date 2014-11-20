@@ -149,6 +149,23 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.educational.level}">
+                            Education Level
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{educationLevel}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="educationLevel : ${T(org.jugbd.mnet.domain.enums.EducationLevel).values()}"
+                                        th:value="${educationLevel}"
+                                        th:text="${educationLevel.label}"
+                                        th:selected="${educationLevel == patient.educationLevel}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
                             Address
                         </label>
