@@ -81,4 +81,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean name="auditLogUtil" class="org.jugbd.mnet.audit.AuditLogUtil"/>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
 </beans>
