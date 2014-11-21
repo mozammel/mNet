@@ -106,6 +106,7 @@ public class UserController {
             return "user/edit";
         }
 
+        userService.save(user);
         redirectAttrs.addFlashAttribute("message", "Successfully user updated");
 
         return "redirect:/user/show/" + user.getId().toString();

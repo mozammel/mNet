@@ -33,14 +33,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setUsername(user.getUsername().trim());
-        user.setSalt(StringUtils.generateRandomString(16));
-        user.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        userDao.save(user);
+        if (user.getId() == null) {
+            user.setUsername(user.getUsername().trim());
+            user.setSalt(StringUtils.generateRandomString(16));
+            user.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+            user.setEnabled(true);
+            user.setAccountNonExpired(true);
+            user.setAccountNonLocked(true);
+            user.setCredentialsNonExpired(true);
+
+            userDao.save(user);
+        } else {
+            User savedUser = findById(user.getId());
+            savedUser.setFullName(user.getFullName());
+            savedUser.setEmail(user.getEmail());
+            savedUser.setRoles(user.getRoles());
+            savedUser.setDesignation(user.getDesignation());
+            savedUser.setPhoneNumber(user.getPhoneNumber());
+            savedUser.setPassword(user.getPassword());
+            savedUser.setSalt(StringUtils.generateRandomString(16));
+            savedUser.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+            savedUser.setEnabled(user.isEnabled());
+
+            userDao.save(savedUser);
+        }
     }
 
     @Override
