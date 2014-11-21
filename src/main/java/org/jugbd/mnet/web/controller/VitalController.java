@@ -1,7 +1,11 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.VitalService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -19,9 +24,13 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "vital")
 public class VitalController {
+    private static final Logger log = LoggerFactory.getLogger(VitalController.class);
 
     @Autowired
     private VitalService vitalService;
+
+    @Autowired
+    private RegisterService registerService;
 
     @RequestMapping(value = "/create/{registerId}", method = RequestMethod.GET)
     public String create(@PathVariable Long registerId, Vital vital, Model uiModel) {
@@ -44,7 +53,7 @@ public class VitalController {
             return "vital/create";
         }
 
-       Vital savedVital = vitalService.saveByRegisterId(vital, registerId);
+        Vital savedVital = vitalService.saveByRegisterId(vital, registerId);
 
         return "redirect:/vital/show/" + savedVital.getId();
     }
@@ -56,5 +65,13 @@ public class VitalController {
         uiModel.addAttribute("vital", vital);
 
         return "vital/show";
+    }
+
+    @RequestMapping(value = "back", method = RequestMethod.GET)
+    public String backToPatientShowPage(@RequestParam Long registerId) {
+        log.debug("back() registerId={}", registerId);
+        Register register = registerService.findOne(registerId);
+
+        return "redirect:/patient/show/" + register.getPatient().getId();
     }
 }
