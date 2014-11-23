@@ -98,12 +98,6 @@ public class Patient extends PersistentObject implements Auditable {
         return id;
     }
 
-    @Override
-    public String getLogDetail() {
-
-        return this.toString();
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
