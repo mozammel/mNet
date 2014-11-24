@@ -1,17 +1,20 @@
 package org.jugbd.mnet.audit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.hibernate.EmptyInterceptor;
-import org.hibernate.Session;
 import org.hibernate.type.Type;
 import org.jugbd.mnet.dao.AuditLogDao;
+import org.jugbd.mnet.domain.AuditLog;
 import org.jugbd.mnet.domain.Auditable;
 import org.jugbd.mnet.domain.enums.AuditAction;
 import org.jugbd.mnet.web.ApplicationContextProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -75,19 +78,20 @@ public class AuditLogInterceptor extends EmptyInterceptor {
 
             for (Iterator it = inserts.iterator(); it.hasNext(); ) {
                 Auditable entity = (Auditable) it.next();
-                AuditLogUtil.logIt(AuditAction.CREATED, entity, auditLogDao);
+
+                logEvent(AuditAction.CREATED, entity, auditLogDao);
             }
 
             for (Iterator it = updates.iterator(); it.hasNext(); ) {
                 Auditable entity = (Auditable) it.next();
 
-                AuditLogUtil.logIt(AuditAction.UPDATED, entity, auditLogDao);
+                logEvent(AuditAction.UPDATED, entity, auditLogDao);
             }
 
             for (Iterator it = deletes.iterator(); it.hasNext(); ) {
                 Auditable entity = (Auditable) it.next();
 
-                AuditLogUtil.logIt(AuditAction.DELETED, entity, auditLogDao);
+                logEvent(AuditAction.DELETED, entity, auditLogDao);
             }
 
         } finally {
@@ -95,6 +99,31 @@ public class AuditLogInterceptor extends EmptyInterceptor {
             updates.clear();
             deletes.clear();
         }
+    }
+
+    private void logEvent(AuditAction action, Auditable entity, AuditLogDao auditLogDao) {
+        log.debug(" action ={}, entity.getId()={}, entity.getLogDetail()={}", action, entity.getId());
+
+        AuditLog auditLog = new AuditLog();
+        auditLog.setAction(action);
+        auditLog.setDetail(make(entity));
+        auditLog.setEntityName(entity.getClass().getName());
+        auditLog.setEntityId(entity.getId());
+
+        auditLogDao.save(auditLog);
+    }
+
+    private String make(Object entity) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            ObjectWriter writer = mapper.writer();
+
+            return writer.writeValueAsString(entity);
+        } catch (IOException e) {
+            log.error("Can't serialize entity", e);
+        }
+        return null;
     }
 }
 

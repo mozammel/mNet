@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.AuditAction;
@@ -53,11 +54,14 @@ public class User implements UserDetails, Serializable, Auditable {
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
             message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
     @Transient
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @Size(max = 280)
     private String hashedPassword;
 
+    @JsonIgnore
     @Size(max = 16)
     private String salt;
 
@@ -111,12 +115,6 @@ public class User implements UserDetails, Serializable, Auditable {
 
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String getLogDetail() {
-
-        return this.toString();
     }
 
     public void setId(Long id) {
