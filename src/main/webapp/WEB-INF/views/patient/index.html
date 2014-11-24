@@ -48,7 +48,7 @@
         <ul>
             <li th:class="${page.firstPage}? 'disabled' : ''">
                 <span th:if="${page.firstPage}">&#8592; First</span>
-                <a th:if="${not page.firstPage}" th:href="@{${page.url}(page=1,size=${page.size})}">&#8592; First</a>
+                <a th:if="${not page.firstPage}" th:href="@{${page.url}(page=0,size=${page.size})}">&#8592; First</a>
             </li>
             <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
                 <span th:if="${not page.hasPreviousPage}">&laquo;</span>
@@ -71,7 +71,7 @@
             <li th:class="${page.lastPage}? 'disabled' : ''">
                 <span th:if="${page.lastPage}">Last &#8594;</span>
                 <a th:if="${not page.lastPage}"
-                   th:href="@{${page.url}(page=${page.totalPages},size=${page.size})}">Last &#8594; </a>
+                   th:href="@{${page.url}(page=${page.totalPages - 1},size=${page.size})}">Last &#8594; </a>
             </li>
         </ul>
     </div>
