@@ -43,6 +43,7 @@
 
                         <div class="col-sm-3">
                             <input type="text" class="form-control input-sm" id="patient-contact-no"
+                                   pattern="^01(1|5|6|7|8|9)\d{8}$"
                                    th:field="*{contactNumber}"/>
 
                             <p class="text-danger" th:if="${#fields.hasErrors('contactNumber')}">
@@ -78,6 +79,10 @@
                         <div class="col-sm-3">
                             <input type="text" class="form-control input-sm" id="patient-dob"
                                    th:field="*{dateOfBirth}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}">
+                                <span th:errors="*{dateOfBirth}">Required</span>
+                            </p>
                         </div>
                     </div>
 
@@ -87,7 +92,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" id="patient-age"
+                            <input type="number" min="1" max="120" class="form-control input-sm" id="patient-age"
                                    th:field="*{ageEstimated}"/>
 
                             <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
