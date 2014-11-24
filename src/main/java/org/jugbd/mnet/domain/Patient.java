@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "patient")
-public class Patient extends PersistentObject {
+public class Patient extends PersistentObject implements Auditable {
 
     private static final long serialVersionUID = 1L;
 
@@ -96,6 +96,12 @@ public class Patient extends PersistentObject {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getLogDetail() {
+
+        return this.toString();
     }
 
     public void setId(Long id) {
@@ -299,5 +305,28 @@ public class Patient extends PersistentObject {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", version=" + version +
+                ", healthId='" + healthId + '\'' +
+                ", name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", bloodType=" + bloodType +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", address=" + address +
+                ", dead=" + dead +
+                ", deathDate=" + deathDate +
+                ", maritalStatus=" + maritalStatus +
+                ", occupation=" + occupation +
+                ", educationLevel=" + educationLevel +
+                ", ageEstimated=" + ageEstimated +
+                ", birthdateEstimated=" + birthdateEstimated +
+                '}';
     }
 }
