@@ -81,4 +81,6 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
 </beans>

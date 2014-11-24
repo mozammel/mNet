@@ -1,7 +1,9 @@
 package org.jugbd.mnet.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.AuditAction;
 import org.jugbd.mnet.domain.enums.Designation;
 import org.jugbd.mnet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +24,7 @@ import java.util.List;
         name = "User.findByUsername",
         query = "from User u where u.username = ?"
 )
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails, Serializable, Auditable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -44,7 +46,7 @@ public class User implements UserDetails, Serializable {
     @Size(min = 4, max = 30)
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "^[a-z0-9_-]{4,30}$",
-             message = "Username may only contain upper case or lower case character, digit, underscore and hyphen")
+            message = "Username may only contain upper case or lower case character, digit, underscore and hyphen")
     private String username;
 
     @NotEmpty
@@ -52,11 +54,14 @@ public class User implements UserDetails, Serializable {
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
             message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
     @Transient
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     @Size(max = 280)
     private String hashedPassword;
 
+    @JsonIgnore
     @Size(max = 16)
     private String salt;
 
@@ -240,7 +245,18 @@ public class User implements UserDetails, Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", version=" + version +
+                ", fullName='" + fullName + '\'' +
+                ", designation=" + designation +
                 ", username='" + username + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", salt='" + salt + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", roles=" + roles +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
                 ", enabled=" + enabled +
                 '}';
     }

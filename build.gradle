@@ -72,6 +72,10 @@ dependencies {
     compile 'joda-time:joda-time:2.4'
     compile 'org.jadira.usertype:usertype.core:3.2.0.GA'
 
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.4.3'
+
     testCompile 'org.springframework:spring-test:4.0.5.RELEASE'
     testCompile 'junit:junit:4.11'
     testCompile "org.mockito:mockito-core:1.9.5"
