@@ -35,6 +35,23 @@
                             </p>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="patient-contact-no" class="col-sm-2 control-label required-field"
+                               th:text="#{label.contact.nid}">
+                            National Identification No
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-contact-no"
+                                   th:field="*{nid}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('nid')}">
+                                <span th:errors="*{nid}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="patient-contact-no" class="col-sm-2 control-label required-field"
                                th:text="#{label.contact.no}">

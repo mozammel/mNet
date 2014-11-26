@@ -63,6 +63,8 @@ public class Patient extends PersistentObject implements Auditable {
     @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
     private String contactNumber;
 
+    private String nid; // National Identification No
+
     @Valid
     @Embedded
     private Address address;
@@ -305,6 +307,14 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
     }
 
     @Override
