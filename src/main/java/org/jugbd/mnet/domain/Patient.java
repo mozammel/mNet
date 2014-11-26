@@ -6,10 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -46,7 +43,9 @@ public class Patient extends PersistentObject implements Auditable {
     private Date dateOfBirth;
 
     @Max(150)
+    @Min(0)
     @Transient
+    @Digits(integer = 3, fraction = 0)
     private Integer age;
 
     @NotNull
@@ -61,7 +60,10 @@ public class Patient extends PersistentObject implements Auditable {
     @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
     private String contactNumber;
+
+    private String nid; // National Identification No
 
     @Valid
     @Embedded
@@ -299,6 +301,14 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
     }
 
     @Override
