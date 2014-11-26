@@ -6,7 +6,7 @@
       layout:decorator="layout/main">
 
 <head>
-    <title>Show Patient</title>
+    <title th:text="${patient.name}">Show Patient</title>
 </head>
 
 <body>
@@ -33,8 +33,8 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <p class="text-right">
-                            <i>Patient ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong> <br/>
-                            <i>Registration No</i>: <span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
+                            <i>Health ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong> <br/>
+                            <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
                         </p>
                     </div>
                 </div>
@@ -50,12 +50,23 @@
                         Active since <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd-MMM-yyyy hh:mm:ss')}"></span><br/>
                         <strong>Emergency Contact -</strong><br/>
                         <ul>
-                            <li>Contact Person :<span th:text="${register.contactPerson !=null } ? ${register.contactPerson}"> </span> </li>
-                            <li>Relationship: <span th:text="${register.relationship} ? ${register.relationship.label}"> </span></li>
-                            <li>Contact Number: <span th:text="${register.emergencyContactNumber} ? ${register.emergencyContactNumber}"></span> </li>
+                            <li>Contact Person :<span th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"> </span> </li>
+                            <li>Relationship: <span th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"> </span></li>
+                            <li>Contact Number: <span th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span> </li>
                         </ul>
                         <a th:href="@{/register/admitPatient/}" class="btn btn-info"> Admit Patient</a>
-                        <a th:href="@{/register/close/__${register.id}__}" class="btn btn-info" onclick="if (!confirm('Are you sure?')) return false;"> Close Patient</a>
+                        <a th:href="@{#}" class="btn btn-info" onclick="closeRegister();"> Close Patient</a>
+
+                        <script type="text/javascript">
+                            function closeRegister(){
+                                if(confirm("Are you sure? ")){
+                                    $("#close-register").submit();
+                                }
+                            }
+                        </script>
+
+                        <form style="visibility: hidden" th:id="close-register" method="post" action="#" th:action="@{/register/close/__${register.id}__}">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -63,10 +74,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Diagnosis</div>
                     <div class="panel-body">
-                        <div th:if="${register.diagnosises.size()==0}">
+                        <div th:if="${register.diagnoses.size() == 0}">
                             <h3 class="text-primary">No active diagnosis found</h3>
-                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>
+                        <div>
+                            <ul class="list-group" th:each="diagnosis : ${register.diagnoses}">
+                                <li class="list-group-item"><span th:text="${diagnosis.chiefComplain}"></span> <a th:href="@{/diagnosis/show/__${diagnosis.id}__}">Open</a></li>
+                            </ul>
+                        </div>
+
+                        <a class="btn btn-info" th:href="@{/diagnosis/create/__${register.id}__}">Add New</a>
                     </div>
                 </div>
             </div>
@@ -74,12 +91,63 @@
         <div class="row">
             <div class="col-sm-6 col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Vital(s)</div>
+                    <div class="panel-heading">Vital</div>
                     <div class="panel-body">
-                        <div th:if="${register.diagnosises.size()==0}">
+                        <div th:if="${lastVital == null}">
                             <h3 class="text-primary">No active vital found</h3>
-                            <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
                         </div>
+
+                        <div th:if="${lastVital != null}">
+                            <h4 class="text-primary">Last Vitals - <span th:text="${#dates.format(lastVital.createdDate.toDate(),'dd MMMM yyyy h:mm a')}"></span> </h4>
+
+                            <table class="table">
+                                <tr>
+                                    <td>Height</td>
+                                    <td th:text="${lastVital.height} ? ${lastVital.height + 'cm'}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Weight</td>
+                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + 'kg'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Calculated BMI</td>
+                                    <td th:text="${lastVital.bmi} ? ${lastVital.bmi }"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Temperature (&deg;F)</td>
+                                    <td th:text="${lastVital.temperature} ? ${lastVital.temperature}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Pulse</td>
+                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + '/min'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Respiratory Rate</td>
+                                    <td th:text="${lastVital.respiratoryRate} ? ${lastVital.respiratoryRate + '/min'}"></td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Blood Pressure</td>
+                                    <td>
+                                        <span th:text="${lastVital.systolic} ? ${lastVital.systolic }"></span>&MediumSpace;/
+                                        <span th:text="${lastVital.diastolic} ? ${lastVital.diastolic }"></span>
+                                    </td>
+                                </tr>
+
+                                <tr class="dl-horizontal">
+                                    <td>Blood Oxygen Saturation</td>
+                                    <td th:text="${lastVital.bloodOxygenSaturation} ? ${lastVital.bloodOxygenSaturation + '%'}"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <br/>
+                        <a class="btn btn-info" th:href="@{/vital/create/__${register.id}__}">Add New</a>
                     </div>
                 </div>
             </div>

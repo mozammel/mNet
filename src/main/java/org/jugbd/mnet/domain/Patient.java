@@ -1,16 +1,12 @@
 package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.jugbd.mnet.domain.enums.BloodType;
-import org.jugbd.mnet.domain.enums.Gender;
+import org.jugbd.mnet.domain.enums.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "patient")
-public class Patient extends PersistentObject {
+public class Patient extends PersistentObject implements Auditable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +43,9 @@ public class Patient extends PersistentObject {
     private Date dateOfBirth;
 
     @Max(150)
+    @Min(0)
     @Transient
+    @Digits(integer = 3, fraction = 0)
     private Integer age;
 
     @NotNull
@@ -62,7 +60,10 @@ public class Patient extends PersistentObject {
     @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
     private String contactNumber;
+
+    private String nid; // National Identification No
 
     @Valid
     @Embedded
@@ -72,6 +73,18 @@ public class Patient extends PersistentObject {
 
     @Temporal(TemporalType.DATE)
     private Date deathDate;
+
+    @Column(length = 12)
+    @Enumerated(EnumType.STRING)
+    private MaritalStatus maritalStatus;
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private Occupation occupation;
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private EducationLevel educationLevel;
 
     @Transient
     private Integer ageEstimated;
@@ -139,14 +152,6 @@ public class Patient extends PersistentObject {
         this.contactNumber = contactNumber;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -193,6 +198,23 @@ public class Patient extends PersistentObject {
 
     public void setRegisters(Set<Register> registers) {
         this.registers = registers;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    @Valid
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     /**
@@ -257,11 +279,58 @@ public class Patient extends PersistentObject {
         setBirthdateEstimated(true);
     }
 
-    public Long getVersion() {
-        return version;
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public Occupation getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
+    public EducationLevel getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(EducationLevel educationLevel) {
+        this.educationLevel = educationLevel;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", version=" + version +
+                ", healthId='" + healthId + '\'' +
+                ", name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", bloodType=" + bloodType +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", address=" + address +
+                ", dead=" + dead +
+                ", deathDate=" + deathDate +
+                ", maritalStatus=" + maritalStatus +
+                ", occupation=" + occupation +
+                ", educationLevel=" + educationLevel +
+                ", ageEstimated=" + ageEstimated +
+                ", birthdateEstimated=" + birthdateEstimated +
+                '}';
     }
 }

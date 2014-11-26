@@ -1,16 +1,23 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
+import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.UserService;
+import org.jugbd.mnet.utils.PageWrapper;
+import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +25,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ronygomes
@@ -33,6 +40,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private RegisterService registerService;
 
     @Autowired
     private UserService userService;
@@ -56,14 +66,13 @@ public class PatientController {
                        BindingResult result,
                        RedirectAttributes redirectAttributes) {
 
-        if (patient.getAgeEstimated() != null) {
+        if (patient.getAge() == null) {
             patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
         }
 
         validatePatient(patient, result);
 
         if (result.hasErrors()) {
-            log.debug("save() result.getAllErrors() ={}", result.getAllErrors());
 
             return "patient/create";
         }
@@ -75,22 +84,9 @@ public class PatientController {
         return "redirect:/patient/show/" + patient.getId().toString();
     }
 
-    // quick and dirty solution, have to revisit later
     private void validatePatient(Patient patient, BindingResult result) {
         if (patient.getAge() == null) {
             result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
-        }
-
-        if (patient.getAddress().getDivision() == null || patient.getAddress().getDivision().length() == 0) {
-            result.pushNestedPath("address");
-            result.rejectValue("division", "error.patient.address.division", "Division is required");
-            result.popNestedPath();
-        }
-
-        if (patient.getAddress().getPoliceStation() == null || patient.getAddress().getPoliceStation().length() == 0) {
-            result.pushNestedPath("address");
-            result.rejectValue("policeStation", "error.patient.address.policeStation", "Police Station is required");
-            result.popNestedPath();
         }
     }
 
@@ -100,35 +96,60 @@ public class PatientController {
         Patient selectedPatient = patientService.findOne(id);
         uiModel.addAttribute("patient", selectedPatient);
 
-        return "patient/create";
+        return "patient/edit";
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String update(Patient patient,
+                         BindingResult result,
+                         RedirectAttributes redirectAttributes) {
+
+        validatePatient(patient, result);
+
+        if (result.hasErrors()) {
+
+            return "patient/edit";
+        }
+
+        patientService.update(patient);
+
+        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully updated"));
+
+        return "redirect:/patient/show/" + patient.getId().toString();
     }
 
     @RequestMapping(value = {"/", "/index", "/list"}, method = RequestMethod.GET)
-    public String index(@RequestParam(value = "page", required = false) Integer page,
-                        @RequestParam(value = "size", required = false) Integer size,
-                        Model uiModel) {
-        log.debug("index() page={}, size={}", page, size);
+    public String index(Model uiModel, Pageable pageable) {
 
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size;
-            final int firstResult = page == null ? 0 : (page - 1) * sizeNo;
-            uiModel.addAttribute("patients", patientService.findAll(firstResult, sizeNo));
-            float nrOfPages = (float) patientService.count() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("patients", patientService.findAll());
-        }
+        Page<Patient> patients = patientService.findAll(pageable);
+        PageWrapper<Patient> page = new PageWrapper<>(patients, "/patient/list");
+        uiModel.addAttribute("page", page);
 
         return "patient/index";
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
     public String show(@PathVariable("id") Long id, Model uiModel) {
-        log.debug("show()");
+
+        Patient patient = patientService.findOne(id);
+        uiModel.addAttribute("patient", patient);
+
+        Register activeRegister = registerService.findActiveRegisterByPatientId(id);
+
+        if (activeRegister != null) {
+            uiModel.addAttribute("register", activeRegister);
+            uiModel.addAttribute("lastVital", getLastVital(activeRegister));
+        }
+
+        return "patient/show";
+    }
+
+    @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
+    public String details(@PathVariable("id") Long id, Model uiModel) {
 
         uiModel.addAttribute("patient", patientService.findOne(id));
 
-        return "patient/show";
+        return "patient/details";
     }
 
     @RequestMapping(value = "cancel", method = RequestMethod.GET)
@@ -147,11 +168,13 @@ public class PatientController {
         return "patient/search";
     }
 
-    @RequestMapping(value = "/display", method = RequestMethod.POST)
-    public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd, Model uiModel) {
-        log.debug("display()");
+    @RequestMapping(value = "/display", method = RequestMethod.GET)
+    public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd, Pageable pageable, Model uiModel, HttpServletRequest request) {
+        log.info("display() patientSearchCmd ={}", patientSearchCmd);
 
-        if ((patientSearchCmd.getHealthId().isEmpty() && patientSearchCmd.getPhoneNumber().isEmpty())) {
+        if ((StringUtils.isEmpty(patientSearchCmd.getHealthId())
+                && StringUtils.isEmpty(patientSearchCmd.getPhoneNumber())
+                && StringUtils.isEmpty(patientSearchCmd.getName()))) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
             uiModel.addAttribute("error", "Please enter Health Id or Phone Number");
@@ -159,8 +182,8 @@ public class PatientController {
             return "patient/search";
         }
 
-        List<Patient> patientList = patientService.findByHealthIdOrPhoneNumber(patientSearchCmd.getHealthId(), patientSearchCmd.getPhoneNumber());
-        if (patientList == null || patientList.size() == 0) {
+        Page<Patient> patients = patientService.findPatientBySearchCmd(patientSearchCmd, pageable);
+        if (patients.getTotalElements() == 0) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
             uiModel.addAttribute("notFound", "The patient Information you are looking for, doesn't exist!");
@@ -168,8 +191,26 @@ public class PatientController {
             return "patient/search";
         }
 
-        uiModel.addAttribute("patients", patientList);
+        PageWrapper<Patient> page = new PageWrapper<>(patients, "/patient/display?" + request.getQueryString());
+        uiModel.addAttribute("page", page);
 
         return "patient/index";
+    }
+
+    private Vital getLastVital(Register activeRegister) {
+        List<Vital> vitals = new ArrayList<>(activeRegister.getVitals());
+
+        if (vitals.size() > 0) {
+            Collections.sort(vitals, new Comparator<Vital>() {
+                @Override
+                public int compare(Vital o1, Vital o2) {
+                    return o2.getCreatedDate().compareTo(o1.getCreatedDate());
+                }
+            });
+
+            return vitals.get(0);
+        }
+
+        return null;
     }
 }

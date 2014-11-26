@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Edit Patient</div>
+        <div class="panel-body">
+
+            <form class="form-horizontal" method='POST' th:object="${patient}" th:action="@{/patient/edit}">
+
+                <fieldset>
+                    <legend th:text="#{heading.patient.personal.info}">Patient Personal Info</legend>
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="form-group">
+                        <label for="patient-name" class="col-sm-2 control-label required-field"
+                               th:text="#{label.patient.name}">
+                            Patient Name
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-name" th:field="*{name}"
+                                   data-bv-notempty="true"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('name')}">
+                                <span th:errors="*{name}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-contact-no" class="col-sm-2 control-label required-field"
+                               th:text="#{label.contact.nid}">
+                            National Identification No
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-contact-no"
+                                   th:field="*{nid}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('nid')}">
+                                <span th:errors="*{nid}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-contact-no" class="col-sm-2 control-label required-field"
+                               th:text="#{label.contact.no}">
+                            Contact Number
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-contact-no"
+                                   th:field="*{contactNumber}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('contactNumber')}">
+                                <span th:errors="*{contactNumber}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.sex}">
+                            Sex
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{gender}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="gender : ${T(org.jugbd.mnet.domain.enums.Gender).values()}"
+                                        th:value="${gender}"
+                                        th:text="${gender.label}"
+                                        th:selected="${gender == patient.gender}">
+                                </option>
+                            </select>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
+                                <span th:errors="*{gender}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-dob" class="col-sm-2 control-label date" th:text="#{label.date.birth}">
+                            Date of Birth
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-dob"
+                                   th:field="*{dateOfBirth}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-age" class="col-sm-2 control-label" th:text="#{label.age.year}">
+                            Age (Years)
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-age"
+                                   th:field="*{ageEstimated}"/>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('ageEstimated')}">
+                                <span th:errors="*{ageEstimated}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.bloodGroup}">
+                            Blood Group
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{bloodType}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="bloodType : ${T(org.jugbd.mnet.domain.enums.BloodType).values()}"
+                                        th:value="${bloodType}"
+                                        th:text="${bloodType.label}"
+                                        th:selected="${bloodType == patient.bloodType}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.marital.status}">
+                            Marital Status
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{maritalStatus}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="status : ${T(org.jugbd.mnet.domain.enums.MaritalStatus).values()}"
+                                        th:value="${status}"
+                                        th:text="${status.label}"
+                                        th:selected="${status == patient.maritalStatus}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.occupation}">
+                            Occupation
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{occupation}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="occupation : ${T(org.jugbd.mnet.domain.enums.Occupation).values()}"
+                                        th:value="${occupation}"
+                                        th:text="${occupation.label}"
+                                        th:selected="${occupation == patient.occupation}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.educational.level}">
+                            Education Level
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select th:field="*{educationLevel}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="educationLevel : ${T(org.jugbd.mnet.domain.enums.EducationLevel).values()}"
+                                        th:value="${educationLevel}"
+                                        th:text="${educationLevel.label}"
+                                        th:selected="${educationLevel == patient.educationLevel}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
+                            Address
+                        </label>
+
+                        <div class="col-sm-3">
+                            <textarea type="text" class="form-control input-sm" id="patient-address"
+                                      th:field="*{address.homeAddress}"></textarea>
+                        </div>
+
+                        <p class="text-danger" th:if="${#fields.hasErrors('address.homeAddress')}">
+                            <span th:errors="*{address.homeAddress}">Required</span>
+                        </p>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-po" class="col-sm-2 control-label" th:text="#{label.address.post.office}">
+                            Post Office
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-po"
+                                   th:field="*{address.postOffice}"/>
+                        </div>
+                        <p class="text-danger" th:if="${#fields.hasErrors('gender')}">
+                            <span th:errors="*{address.postOffice}">Required</span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-ps" class="col-sm-2 control-label"
+                               th:text="#{label.address.police.station}">
+                            Police Station
+                        </label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control input-sm" id="patient-ps"
+                                   th:field="*{address.policeStation}"/>
+                        </div>
+                        <p class="text-danger" th:if="${#fields.hasErrors('address.policeStation')}">
+                            <span th:errors="*{address.policeStation}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-district" class="col-sm-2 control-label required-field"
+                               th:text="#{label.district}">
+                            Division
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select id="patient-district" th:field="*{address.district}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="district : ${T(org.jugbd.mnet.domain.enums.District).values()}"
+                                        th:value="${district}"
+                                        th:text="${district.name}"
+                                        th:selected="${district == patient.address.district}">
+                                </option>
+
+                            </select>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('address.district')}">
+                                <span th:errors="*{address.district}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="patient-division" class="col-sm-2 control-label required-field"
+                               th:text="#{label.division}">
+                            Division
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select id="patient-division" th:field="*{address.division}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option value="Barisal">Barisal</option>
+                                <option value="Chittagong">Chittagong</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Khulna">Khulna</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Rangpur">Rangpur</option>
+                                <option value="Sylhet">Sylhet</option>
+                            </select>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('address.division')}">
+                                <span th:errors="*{address.division}">Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <a href="#" class="btn btn-danger" th:href="@{/patient/cancel}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary" th:text="#{label.add.patient}">Save Patient
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+        $('#patient-dob').datepicker({
+            format: "dd/mm/yyyy",
+            startView: 2,
+            autoclose: true
+        });
+    </script>
+</div>
+
+</body>
+</html>

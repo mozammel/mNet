@@ -26,9 +26,9 @@ public class PatientIdGenerator {
     /* Explicitly mentioning it although it's the default. We need WRITE lock. */
     public static String generate(Address address) {
         String divisionPref = address.getDivision().substring(0, 3).toUpperCase();
-        String policeStationPrefix = address.getPoliceStation().substring(0, 4).toUpperCase();
+        String districtPrefix = address.getDistrict().getShortCode().toUpperCase();
         String seq = nextSequence(); // the sequence
-        String main = divisionPref + "-" + policeStationPrefix + "-" + seq;
+        String main = divisionPref + "-" + districtPrefix + "-" + seq;
         return main + calculateCheckDigit(main);
     }
 

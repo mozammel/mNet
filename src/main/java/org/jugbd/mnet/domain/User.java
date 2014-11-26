@@ -1,7 +1,10 @@
 package org.jugbd.mnet.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.AuditAction;
+import org.jugbd.mnet.domain.enums.Designation;
 import org.jugbd.mnet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ import java.util.List;
         name = "User.findByUsername",
         query = "from User u where u.username = ?"
 )
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails, Serializable, Auditable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -30,21 +34,41 @@ public class User implements UserDetails, Serializable {
     @Version
     private Long version;
 
-    @Size(min = 4, max = 30)
-    @NotNull
     @NotEmpty
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Size(min = 4, max = 100)
+    private String fullName;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private Designation designation;
+
     @NotEmpty
-    @Size(min = 8)
-    @Column(nullable = false)
-//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
-//            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
+    @Size(min = 4, max = 30)
+    @Column(nullable = false, unique = true)
+    @Pattern(regexp = "^[a-z0-9_-]{4,30}$",
+            message = "Username may only contain upper case or lower case character, digit, underscore and hyphen")
+    private String username;
+
+    @NotEmpty
+    @Size(min = 8, max = 32)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
+            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
+    @Transient
+    @JsonIgnore
     private String password;
+
+    @JsonIgnore
+    @Size(max = 280)
+    private String hashedPassword;
+
+    @JsonIgnore
+    @Size(max = 16)
+    private String salt;
+
     @Email
     private String email;
+
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
     private String phoneNumber;
 
     @NotEmpty(message = "You must select one role")
@@ -167,6 +191,22 @@ public class User implements UserDetails, Serializable {
         this.enabled = enabled;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Designation getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(Designation designation) {
+        this.designation = designation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -205,7 +245,18 @@ public class User implements UserDetails, Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", version=" + version +
+                ", fullName='" + fullName + '\'' +
+                ", designation=" + designation +
                 ", username='" + username + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", salt='" + salt + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", roles=" + roles +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
                 ", enabled=" + enabled +
                 '}';
     }
@@ -216,5 +267,21 @@ public class User implements UserDetails, Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+
+<head>
+    <title>Patient's Details</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Patient's Details</div>
+        <div class="panel-body">
+
+            <dl class="dl-horizontal">
+                <dt>Patient Name</dt>
+                <dd th:text="${patient.name}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Health ID</dt>
+                <dd th:text="${patient.healthId}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>National Identification No</dt>
+                <dd th:text="${patient.nid}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Gender</dt>
+                <dd th:text="${patient.gender.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Age</dt>
+                <dd>
+                    <span th:text="${patient.age}"></span>
+                    <span> year(s)</span>
+                    <span th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></span>
+                    <span th:if="${patient.birthdateEstimated}" class="badge">Est.</span>
+                </dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Blood Group</dt>
+                <dd th:text="${patient.bloodType} ? ${patient.bloodType.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Marital Status</dt>
+                <dd th:text="${patient.maritalStatus} ? ${patient.maritalStatus.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Occupation</dt>
+                <dd th:text="${patient.occupation} ? ${patient.occupation.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Educational Level</dt>
+                <dd th:text="${patient.educationLevel} ? ${patient.educationLevel.label}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt>Address</dt>
+                <dd th:text="${patient.address.homeAddress} ? ${patient.address.homeAddress}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt> Post Office</dt>
+                <dd th:text="${patient.address.postOffice} ? ${patient.address.postOffice}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt> Police Station</dt>
+                <dd th:text="${patient.address.policeStation} ? ${patient.address.policeStation}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt> District</dt>
+                <dd th:text="${patient.address.district} ? ${patient.address.district.name}"></dd>
+            </dl>
+
+
+            <dl class="dl-horizontal">
+                <dt> Division</dt>
+                <dd th:text="${patient.address.division} ? ${patient.address.division}"></dd>
+            </dl>
+
+            <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                <a href="#" class="btn btn-info" th:href="@{/patient/show/__${patient.id}__}"> <span class="glyphicon"></span> Back </a>
+                <a href="#" class="btn btn-info" th:href="@{/patient/edit/__${patient.id}__}"> <span class="glyphicon"></span> Edit </a>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

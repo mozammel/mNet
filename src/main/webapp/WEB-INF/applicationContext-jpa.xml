@@ -24,6 +24,7 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <prop key="hibernate.ejb.interceptor">org.jugbd.mnet.audit.AuditLogInterceptor</prop>
             </props>
         </property>
     </bean>
@@ -31,7 +32,7 @@
     <!-- auditing -->
     <jpa:auditing auditor-aware-ref="auditorAware"/>
 
-    <bean id="auditorAware" class="org.jugbd.mnet.security.SpringSecurityAuditorAware"/>
+    <bean id="auditorAware" class="org.jugbd.mnet.audit.SpringSecurityAuditorAware"/>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${jdbc.driverClassName}"/>

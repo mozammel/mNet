@@ -9,59 +9,54 @@
 
 <body>
 <section layout:fragment="content">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span th:text="#{heading.diagnosis.diagnosis.details}">Diagnosis Details</span></div>
+        <div class="panel-body">
 
-    <div th:if="${message}" class="alert alert-info">
-        <p th:text="${message}"></p>
+            <div th:if="${message}" class="alert alert-info">
+                <p th:text="${message}"></p>
+            </div>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.entry.date}">Entry On</dt>
+                <dd th:text="${diagnosis.entryDate} ? ${#dates.format(diagnosis.entryDate,'dd-MMM-yyyy')}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.chief.complains}">Chief Complain(s)</dt>
+                <dd th:text="${diagnosis.chiefComplain}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.present.illness}">Present Illness</dt>
+                <dd th:text="${diagnosis.presentIllness}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.associated.symptoms}">Associated Symptom(s)</dt>
+                <dd th:text="${diagnosis.associatedSymptoms}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.physical.exams}">Physical Examination(s)</dt>
+                <dd th:text="${diagnosis.physicalExamination}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.systemic.exams}">Systemic Examination(s)</dt>
+                <dd th:text="${diagnosis.systemicExamination}"></dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt th:text="#{label.plan}">Plan</dt>
+                <dd th:text="${diagnosis.plan}"></dd>
+            </dl>
+            <hr/>
+        </div>
     </div>
 
-    <fieldset>
-        <legend th:text="#{heading.diagnosis.diagnosis.details}">Diagnosis Details</legend>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.entry.date}">Entry On</dt>
-            <dd th:text="${diagnosis.entryDate} ? ${#dates.format(diagnosis.entryDate,'dd-MMM-yyyy')}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.chief.complains}">Chief Complain(s)</dt>
-            <dd th:text="${diagnosis.chiefComplain}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.present.illness}">Present Illness</dt>
-            <dd th:text="${diagnosis.presentIllness}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.associated.symptoms}">Associated Symptom(s)</dt>
-            <dd th:text="${diagnosis.associatedSymptoms}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.physical.exams}">Physical Examination(s)</dt>
-            <dd th:text="${diagnosis.physicalExamination}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.systemic.exams}">Systemic Examination(s)</dt>
-            <dd th:text="${diagnosis.systemicExamination}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.picture.info}">Picture Information</dt>
-            <dd th:text="${diagnosis.pictureInformation}"></dd>
-        </dl>
-
-        <dl class="dl-horizontal">
-            <dt th:text="#{label.plan}">Plan</dt>
-            <dd th:text="${diagnosis.plan}"></dd>
-        </dl>
-    </fieldset>
-    <hr/>
-
     <div>
-        <a href="#" class="btn btn-info" th:href="@{/admissionInfo/show/__${admissionId}__}">Back To Admission
-            Info</a>
+        <a href="#" class="btn btn-info" th:href="@{/patient/show/__${patientId}__}">Back </a>
         <a href="#" class="btn btn-info" th:href="@{/diagnosis/edit/__${diagnosis.id}__}"> Edit </a>
     </div>
 </section>

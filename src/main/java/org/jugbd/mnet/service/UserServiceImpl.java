@@ -2,11 +2,13 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.UserDao;
 import org.jugbd.mnet.domain.User;
+import org.jugbd.mnet.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.security.Principal;
-import java.util.List;
 
 /**
  * Created by bazlur on 7/3/14.
@@ -33,12 +33,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), null));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-        userDao.save(user);
+        if (user.getId() == null) {
+            user.setUsername(user.getUsername().trim());
+            user.setSalt(StringUtils.generateRandomString(16));
+            user.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+            user.setEnabled(true);
+            user.setAccountNonExpired(true);
+            user.setAccountNonLocked(true);
+            user.setCredentialsNonExpired(true);
+
+            userDao.save(user);
+        } else {
+            User savedUser = findById(user.getId());
+            savedUser.setFullName(user.getFullName());
+            savedUser.setEmail(user.getEmail());
+            savedUser.setRoles(user.getRoles());
+            savedUser.setDesignation(user.getDesignation());
+            savedUser.setPhoneNumber(user.getPhoneNumber());
+            savedUser.setPassword(user.getPassword());
+            savedUser.setSalt(StringUtils.generateRandomString(16));
+            savedUser.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+            savedUser.setEnabled(user.isEnabled());
+
+            userDao.save(savedUser);
+        }
     }
 
     @Override
@@ -72,17 +90,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentLoggedInUser() {
-        log.debug("getCurrentLoggedInUser()");
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("authentication.getName() ={}", authentication.getName());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.debug("getCurrentLoggedInUser() => user.getUsername() ={}, id={}", user.getUsername(), user.getId());
 
-        return findByUserName(authentication.getName());
+        return findById(user.getId());
     }
 
     @Override
-    public List<User> findAll() {
+    public Page<User> findAll(Pageable pageable) {
 
-        return userDao.findAll();
+        return userDao.findAll(pageable);
     }
 }
