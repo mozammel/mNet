@@ -98,6 +98,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long count() {
+
+        return userDao.count();
+    }
+
+    @Override
     public Page<User> findAll(Pageable pageable) {
 
         return userDao.findAll(pageable);
