@@ -9,111 +9,131 @@
 
 <body>
 <section layout:fragment="content">
-    <div class="panel panel-default">
-        <div class="panel-heading">Create New User</div>
-        <div class="panel-body">
+    <div id="page-wrapper">
 
-            <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/create}" method="POST">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Create New User</h1>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label for="fullName" class="col-sm-2 control-label"
-                           th:text="#{label.user.fullName}">Username</label>
+        <div class="row">
 
-                    <div class="col-sm-3">
-                        <input type="text" id="fullName" th:field="*{fullName}" maxlength="100" class="form-control input-sm"/>
+            <div class="panel panel-default">
+                <div class="panel-heading">Create New User</div>
+                <div class="panel-body">
 
-                        <p class="text-danger" th:if="${#fields.hasErrors('fullName')}"><span th:errors="*{fullName}">Username required!</span>
-                        </p>
-                    </div>
-                </div>
+                    <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/create}"
+                          method="POST">
 
-                <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label"
-                           th:text="#{label.user.username}">Username</label>
+                        <div class="form-group">
+                            <label for="fullName" class="col-sm-2 control-label"
+                                   th:text="#{label.user.fullName}">Username</label>
 
-                    <div class="col-sm-3">
-                        <input type="text" th:field="*{username}" maxlength="30" class="form-control input-sm"/>
+                            <div class="col-sm-3">
+                                <input type="text" id="fullName" th:field="*{fullName}" maxlength="100"
+                                       class="form-control input-sm"/>
 
-                        <p class="text-danger" th:if="${#fields.hasErrors('username')}"><span th:errors="*{username}">Username required!</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label"
-                           th:text="#{label.user.password}">Password</label>
-
-                    <div class="col-sm-3">
-                        <input type="password" th:field="*{password}" class="form-control input-sm"/>
-
-                        <p class="text-danger" th:if="${#fields.hasErrors('password')}"><span th:errors="*{password}">Password required!</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label" th:text="#{label.user.email}">Email</label>
-
-                    <div class="col-sm-3">
-                        <input type="email" th:field="*{email}" class="form-control input-sm"/>
-
-                        <p class="text-danger" th:if="${#fields.hasErrors('email')}"><span
-                                th:errors="*{email}">Email required!</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="phoneNumber" class="col-sm-2 control-label" th:text="#{label.user.phoneNumber}">Phone
-                        Number </label>
-
-                    <div class="col-sm-3">
-                        <input type="text" maxlength="11" pattern="^01(1|5|6|7|8|9)\d{8}$"
-                               th:field="*{phoneNumber}" class="form-control input-sm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" th:text="#{label.user.designation}">Designation </label>
-
-                    <div class="col-sm-3">
-
-                        <select id="user-designation" th:field="*{designation}">
-                            <option value="" th:text="#{common.select.prompt}"></option>
-                            <option th:each="designation : ${T(org.jugbd.mnet.domain.enums.Designation).values()}"
-                                    th:value="${designation}"
-                                    th:text="${designation.label}"
-                                    th:selected="${designation == user.designation}">
-                            </option>
-                        </select>
-
-                        <p class="text-danger" th:if="${#fields.hasErrors('designation')}"><span
-                                th:errors="*{designation}">Designation required!</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" th:text="#{label.user.role}">Role(s) </label>
-
-                    <div class="col-sm-3">
-                        <div th:each="role : ${T(org.jugbd.mnet.domain.enums.Role).values()}">
-                            <input type="checkbox" th:field="*{roles}" th:value="${role}"/>
-                            <label th:text="${role}">example</label>
+                                <p class="text-danger" th:if="${#fields.hasErrors('fullName')}"><span
+                                        th:errors="*{fullName}">Username required!</span>
+                                </p>
+                            </div>
                         </div>
-                        <p class="text-danger" th:if="${#fields.hasErrors('roles')}"><span
-                                th:errors="*{roles}">Role required!</span>
-                        </p>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label"
+                                   th:text="#{label.user.username}">Username</label>
+
+                            <div class="col-sm-3">
+                                <input type="text" th:field="*{username}" maxlength="30" class="form-control input-sm"/>
+
+                                <p class="text-danger" th:if="${#fields.hasErrors('username')}"><span
+                                        th:errors="*{username}">Username required!</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label"
+                                   th:text="#{label.user.password}">Password</label>
+
+                            <div class="col-sm-3">
+                                <input type="password" th:field="*{password}" class="form-control input-sm"/>
+
+                                <p class="text-danger" th:if="${#fields.hasErrors('password')}"><span
+                                        th:errors="*{password}">Password required!</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label"
+                                   th:text="#{label.user.email}">Email</label>
+
+                            <div class="col-sm-3">
+                                <input type="email" th:field="*{email}" class="form-control input-sm"/>
+
+                                <p class="text-danger" th:if="${#fields.hasErrors('email')}"><span
+                                        th:errors="*{email}">Email required!</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber" class="col-sm-2 control-label" th:text="#{label.user.phoneNumber}">Phone
+                                Number </label>
+
+                            <div class="col-sm-3">
+                                <input type="text" maxlength="11" pattern="^01(1|5|6|7|8|9)\d{8}$"
+                                       th:field="*{phoneNumber}" class="form-control input-sm"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   th:text="#{label.user.designation}">Designation </label>
+
+                            <div class="col-sm-3">
+
+                                <select id="user-designation" th:field="*{designation}">
+                                    <option value="" th:text="#{common.select.prompt}"></option>
+                                    <option th:each="designation : ${T(org.jugbd.mnet.domain.enums.Designation).values()}"
+                                            th:value="${designation}"
+                                            th:text="${designation.label}"
+                                            th:selected="${designation == user.designation}">
+                                    </option>
+                                </select>
+
+                                <p class="text-danger" th:if="${#fields.hasErrors('designation')}"><span
+                                        th:errors="*{designation}">Designation required!</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" th:text="#{label.user.role}">Role(s) </label>
+
+                            <div class="col-sm-3">
+                                <div th:each="role : ${T(org.jugbd.mnet.domain.enums.Role).values()}">
+                                    <input type="checkbox" th:field="*{roles}" th:value="${role}"/>
+                                    <label th:text="${role}">example</label>
+                                </div>
+                                <p class="text-danger" th:if="${#fields.hasErrors('roles')}"><span
+                                        th:errors="*{roles}">Role required!</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/user/cancel}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="#" class="btn btn-danger" th:href="@{/user/cancel}"> <span
-                                th:text="#{label.cancel}">Cancel</span> </a>
-                        <button type="submit" class="btn btn-primary" th:text="#{button.save}">Save Changes</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>

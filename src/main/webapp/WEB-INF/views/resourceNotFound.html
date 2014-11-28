@@ -17,14 +17,15 @@
 <body>
 
 <section layout:fragment="content">
-    <h2> Opps!! </h2>
+    <div id="page-wrapper">
 
-    <h3> It's looking like you may have taken a wrong turn.
-        Don't worry... it happens to the best of us.</h3>
+        <h2> Opps!! </h2>
 
-    <h3>Go back, click on <a th:href="@{/}"> home</a> and start over it again, that might help you get back on
-        track.
-    </h3>
+        <h3>Sorry, the page you requested was not found..</h3>
+
+        <h3><a th:href="@{/index}"> Go Back Home</a>
+        </h3>
+    </div>
 </section>
 </body>
 </html>
