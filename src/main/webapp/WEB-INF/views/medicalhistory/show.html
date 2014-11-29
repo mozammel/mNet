@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">New Medical History</h2>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Medical History</div>
+                <div class="panel-body">
+                    <div th:if="${message}" class="alert alert-info">
+                        <p th:text="${message}"></p>
+                    </div>
+                    <dl class="dl-horizontal">
+                        <dt>Past Medical History</dt>
+                        <dd th:text="${medicalHistory.pastMedicalHistory}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Menstrual History</dt>
+                        <dd th:text="'Period: ' + ${medicalHistory.period}"></dd>
+                        <dd th:text="'Days: ' + ${medicalHistory.days}"></dd>
+                        <dd th:text="'Cycle: ' +${medicalHistory.menstrualCycle.label}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Past Surgical History</dt>
+                        <dd th:text="${medicalHistory.pastSurgicalHistory}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Drug History</dt>
+                        <dd th:text="${medicalHistory.drugHistory}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Family History</dt>
+                        <dd th:text="${medicalHistory.familyHistory}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Economic Condition</dt>
+                        <dd th:text="${medicalHistory.economicCondition} ? ${medicalHistory.economicCondition.label}"></dd>
+                    </dl>
+
+                    <dl class="dl-horizontal">
+                        <dt>Similar Diseases In Family</dt>
+                        <div th:switch="${similarDiseasesInFamily}">
+                            <dd th:case="${true}">Yes</dd>
+                            <dd th:case="${false}">No</dd>
+                        </div>
+
+                <span th:if="${medicalHistory.similarDiseasesInFamily}">
+                    <dd>Yes</dd>
+                </span>
+                <span th:unless="${medicalHistory.similarDiseasesInFamily}">
+                    <dd>No</dd>
+                </span>
+                    </dl>
+
+                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/medicalhistory/edit/__${medicalHistory.id}__}"> <span
+                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

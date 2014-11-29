@@ -65,7 +65,7 @@
                             Relationship
                         </label>
                         <div class="col-sm-3">
-                            <select id="patient-relationship" th:field="*{patientContact.relationship}">
+                            <select class="form-control" id="patient-relationship" th:field="*{patientContact.relationship}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
                                         th:value="${relationship}"

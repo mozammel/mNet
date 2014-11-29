@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -65,6 +66,8 @@ public class Patient extends PersistentObject implements Auditable {
 
     private String nid; // National Identification No
 
+    private EconomicCondition economicCondition;
+
     @Valid
     @Embedded
     private Address address;
@@ -90,6 +93,7 @@ public class Patient extends PersistentObject implements Auditable {
     private Integer ageEstimated;
     private Boolean birthdateEstimated = false;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private Set<Register> registers = new HashSet<>();
 
@@ -309,6 +313,14 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setNid(String nid) {
         this.nid = nid;
+    }
+
+    public EconomicCondition getEconomicCondition() {
+        return economicCondition;
+    }
+
+    public void setEconomicCondition(EconomicCondition economicCondition) {
+        this.economicCondition = economicCondition;
     }
 
     @Override

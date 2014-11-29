@@ -80,7 +80,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select th:field="*{gender}">
+                            <select class="form-control"  th:field="*{gender}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="gender : ${T(org.jugbd.mnet.domain.enums.Gender).values()}"
                                         th:value="${gender}"
@@ -126,7 +126,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select th:field="*{bloodType}">
+                            <select class="form-control"  th:field="*{bloodType}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="bloodType : ${T(org.jugbd.mnet.domain.enums.BloodType).values()}"
                                         th:value="${bloodType}"
@@ -143,7 +143,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select th:field="*{maritalStatus}">
+                            <select class="form-control"  th:field="*{maritalStatus}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="status : ${T(org.jugbd.mnet.domain.enums.MaritalStatus).values()}"
                                         th:value="${status}"
@@ -160,7 +160,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select th:field="*{occupation}">
+                            <select class="form-control"  th:field="*{occupation}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="occupation : ${T(org.jugbd.mnet.domain.enums.Occupation).values()}"
                                         th:value="${occupation}"
@@ -177,7 +177,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select th:field="*{educationLevel}">
+                            <select class="form-control"  th:field="*{educationLevel}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="educationLevel : ${T(org.jugbd.mnet.domain.enums.EducationLevel).values()}"
                                         th:value="${educationLevel}"
@@ -185,6 +185,27 @@
                                         th:selected="${educationLevel == patient.educationLevel}">
                                 </option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" th:text="#{label.socio.economic.condition}">
+                            Socio Economic Condition
+                        </label>
+
+                        <div class="col-sm-3">
+                            <select class="form-control"  th:field="*{economicCondition}">
+                                <option value="" th:text="#{common.select.prompt}"></option>
+                                <option th:each="item : ${T(org.jugbd.mnet.domain.enums.EconomicCondition).values()}"
+                                        th:value="${item}"
+                                        th:text="${item.label}"
+                                        th:selected="${item == patient.economicCondition}">
+                                </option>
+                            </select>
+
+                            <p class="text-danger" th:if="${#fields.hasErrors('economicCondition')}">
+                                <span th:errors="*{economicCondition}">Required</span>
+                            </p>
                         </div>
                     </div>
 
@@ -238,7 +259,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select id="patient-district" th:field="*{address.district}">
+                            <select class="form-control" id="patient-district" th:field="*{address.district}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option th:each="district : ${T(org.jugbd.mnet.domain.enums.District).values()}"
                                         th:value="${district}"
@@ -261,7 +282,7 @@
                         </label>
 
                         <div class="col-sm-3">
-                            <select id="patient-division" th:field="*{address.division}">
+                            <select class="form-control"  id="patient-division" th:field="*{address.division}">
                                 <option value="" th:text="#{common.select.prompt}"></option>
                                 <option value="Barisal">Barisal</option>
                                 <option value="Chittagong">Chittagong</option>
