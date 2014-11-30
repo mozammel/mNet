@@ -5,7 +5,7 @@ package org.jugbd.mnet.domain.enums;
  * @date 11/26/2014.
  */
 public enum Condition {
-    SUPERFICIAL("Superficial"), DEEP("Deep"), MIXED("Deep");
+    SUPERFICIAL("Superficial"), DEEP("Deep"), MIXED("Mixed");
 
     private String label;
 

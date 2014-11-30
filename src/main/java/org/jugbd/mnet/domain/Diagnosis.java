@@ -6,9 +6,7 @@ import javax.persistence.*;
  * Created by Raqibul Islam on 7/1/14.
  */
 @Entity
-public class Diagnosis extends PersistentObject {
-
-    private static final long serialVersionUID = 1L;
+public class Diagnosis extends PersistentObject implements Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,23 +15,26 @@ public class Diagnosis extends PersistentObject {
     @Version
     private Long version;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData burns;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData congenitalAnomaly;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData neoplastic;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData postInfective;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData traumatic;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData aesthetic;
+
+    @OneToOne(mappedBy = "diagnosis")
+    private Register register;
 
     public Long getId() {
         return id;
@@ -97,5 +98,13 @@ public class Diagnosis extends PersistentObject {
 
     public void setAesthetic(DiagnosisData aesthetic) {
         this.aesthetic = aesthetic;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
     }
 }

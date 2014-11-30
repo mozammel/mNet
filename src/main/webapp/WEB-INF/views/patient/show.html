@@ -72,8 +72,8 @@
                                             th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span>
                                     </li>
                                 </ul>
-                                <a th:href="@{/register/admitPatient/}" class="btn btn-info pull-left"> Admit Patient</a>
-                                <a th:href="@{#}" class="btn btn-info pull-right" style="margin-right: 10px" onclick="closeRegister();"> Close Patient</a>
+                                <a th:href="@{/register/admitPatient/}" class="btn btn-info pull-left"><span class="glyphicon glyphicon-plus"></span> Admit Patient</a>
+                                <a th:href="@{#}" class="btn btn-info pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
 
                                 <script type="text/javascript">
                                     function closeRegister() {
@@ -97,7 +97,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.medicalHistory == null}">
                                     <h3 class="text-primary">No active Medical History found</h3>
-                                    <a class="btn btn-info" th:href="@{/medicalhistory/create/__${register.id}__}">Add
+                                    <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
                                         New</a>
                                 </div>
 
@@ -211,7 +211,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <a class="btn btn-info pull-right" th:href="@{/vital/create/__${register.id}__}">Add New</a>
+                                <a class="btn btn-info pull-right" th:href="@{/vital/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.chiefComplaint == null}">
                                     <h3 class="text-primary">No active Chief Complaint found</h3>
-                                    <a class="btn btn-info" th:href="@{/chiefcomplaints/create/__${register.id}__}">Add
+                                    <a class="btn btn-info pull-right" th:href="@{/chiefcomplaints/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
                                         New</a>
                                 </div>
                                 <div th:if="${register.chiefComplaint != null}">
@@ -285,7 +285,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.examination == null}">
                                     <h3 class="text-primary">No active Examination found</h3>
-                                    <a class="btn btn-info" th:href="@{/examination/create/__${register.id}__}">Add New</a>
+                                    <a class="btn btn-info pull-right" th:href="@{/examination/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
                                 <div th:if="${register.examination != null}">
                                     <table class="table table-condensed">
@@ -370,6 +370,83 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Examination </div>
+                            <div class="panel-body">
+                                <div th:if="${register.diagnosis == null}">
+                                    <h3 class="text-primary">No active Diagnosis found</h3>
+                                    <a class="btn btn-info pull-right" th:href="@{/diagnosis/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.diagnosis != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td><strong>Burn</strong></td>
+                                            <span th:if="${register.diagnosis.burns}">
+                                                <td th:text="${register.diagnosis.burns.percentage} ? ${register.diagnosis.burns.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.burns.conditions} ? 'Condition - ' + ${register.diagnosis.burns.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.burns.daysOld} ? ${register.diagnosis.burns.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Congenital Anomaly</strong></td>
+                                            <span th:if="${register.diagnosis.congenitalAnomaly}">
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.percentage} ? ${register.diagnosis.congenitalAnomaly.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.conditions} ? 'Condition - ' + ${register.diagnosis.congenitalAnomaly.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.daysOld} ? ${register.diagnosis.congenitalAnomaly.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Neoplastic</strong></td>
+                                            <span th:if="${register.diagnosis.neoplastic}">
+                                                <td th:text="${register.diagnosis.neoplastic.percentage} ? ${register.diagnosis.neoplastic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.neoplastic.conditions} ? 'Condition - ' + ${register.diagnosis.neoplastic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.neoplastic.daysOld} ? ${register.diagnosis.neoplastic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Post Infective</strong></td>
+                                            <span th:if="${register.diagnosis.postInfective}">
+                                                <td th:text="${register.diagnosis.postInfective.percentage} ? ${register.diagnosis.postInfective.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.postInfective.conditions} ? 'Condition - ' + ${register.diagnosis.postInfective.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.postInfective.daysOld} ? ${register.diagnosis.postInfective.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Traumatic</strong></td>
+                                            <span th:if="${register.diagnosis.traumatic}">
+                                                <td th:text="${register.diagnosis.traumatic.percentage} ? ${register.diagnosis.traumatic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.traumatic.conditions} ? 'Condition - ' + ${register.diagnosis.traumatic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.traumatic.daysOld} ? ${register.diagnosis.traumatic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Aesthetic</strong></td>
+                                            <span th:if="${register.diagnosis.aesthetic}">
+                                                <td th:text="${register.diagnosis.aesthetic.percentage} ? ${register.diagnosis.aesthetic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.aesthetic.conditions} ? 'Condition - ' + ${register.diagnosis.aesthetic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.aesthetic.daysOld} ? ${register.diagnosis.aesthetic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/diagnosis/edit/__${register.diagnosis.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div th:unless="${register}" class="row">
@@ -378,7 +455,7 @@
                         <div class="panel-heading">Register</div>
                         <div class="panel-body">
                             <h3 class="text-primary">This patient has not any active register</h3>
-                            <a class="btn btn-info" th:href="@{/register/patient/__${patient.id}__}">Register</a>
+                            <a class="btn btn-info pull-right" th:href="@{/register/patient/__${patient.id}__}"><span class="glyphicon glyphicon-plus"></span> Register</a>
                         </div>
                     </div>
                 </div>

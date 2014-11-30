@@ -1,6 +1,5 @@
 package org.jugbd.mnet.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
@@ -51,16 +50,20 @@ public class Register extends PersistentObject {
     private Status status;
 
     @OneToOne
-    @JoinColumn(name="medical_history_id")
+    @JoinColumn(name = "medical_history_id")
     private MedicalHistory medicalHistory;
 
     @OneToOne
-    @JoinColumn(name="chief_complaint_id")
+    @JoinColumn(name = "chief_complaint_id")
     private ChiefComplaint chiefComplaint;
 
     @OneToOne
-    @JoinColumn(name="examination_id")
+    @JoinColumn(name = "examination_id")
     private Examination examination;
+
+    @OneToOne
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnosis diagnosis;
 
     @Valid
     @Embedded
@@ -185,5 +188,13 @@ public class Register extends PersistentObject {
 
     public void setExamination(Examination examination) {
         this.examination = examination;
+    }
+
+    public Diagnosis getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(Diagnosis diagnosis) {
+        this.diagnosis = diagnosis;
     }
 }
