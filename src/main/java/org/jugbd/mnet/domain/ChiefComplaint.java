@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jugbd.mnet.domain.enums.ChildBornWith;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -32,8 +33,10 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
     private Integer monthOfUlcerOrSwellingFor; //Presented with ulcer or swelling for
     private Integer yearsOfUlcerOrSwellingFor; //Presented with ulcer or swelling for
 
+    @Size(max = 1000)
     private String breastRelatedComplaint; //TODO have to figure out what they meant actually
 
+    @Size(max = 1000)
     private String presentIllness;
 
     @JsonIgnore

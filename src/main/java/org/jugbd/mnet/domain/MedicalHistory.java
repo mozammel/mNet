@@ -5,6 +5,7 @@ import org.jugbd.mnet.domain.enums.MenstrualCycle;
 import org.jugbd.mnet.domain.enums.PastMedicalHistory;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -19,6 +20,7 @@ public class MedicalHistory extends PersistentObject implements Auditable {
     @Version
     private Long version;
 
+    @Column(length = 6)
     @Enumerated(EnumType.STRING)
     private PastMedicalHistory pastMedicalHistory;
     //Menstrual History
@@ -28,11 +30,17 @@ public class MedicalHistory extends PersistentObject implements Auditable {
     @Column(nullable = true)
     private Integer days;
 
+    @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private MenstrualCycle menstrualCycle;
 
+    @Size(max = 1000)
     private String pastSurgicalHistory;
+
+    @Size(max = 1000)
     private String drugHistory;
+
+    @Size(max = 1000)
     private String familyHistory;
     private Boolean similarDiseasesInFamily;
 

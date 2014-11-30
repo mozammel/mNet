@@ -3,6 +3,7 @@ package org.jugbd.mnet.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -26,12 +27,22 @@ public class Examination extends PersistentObject implements Auditable {
     private Boolean neckVein;
 
     @Column(length = 1000)
+    @Size(max = 1000)
     private String listeningExamination;
     //Systemic Examination
+    @Size(max = 1000)
     private String respiratorySystem;
+
+    @Size(max = 1000)
     private String gISystem;
+
+    @Size(max = 1000)
     private String cardiovascularSystem;
+
+    @Size(max = 1000)
     private String urogenitalSystem;
+
+    @Size(max = 1000)
     private String nervousSystem;
 
     @JsonIgnore

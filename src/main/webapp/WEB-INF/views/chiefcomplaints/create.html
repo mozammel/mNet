@@ -24,6 +24,8 @@
                     <form class="form-horizontal" method='POST' th:object="${chiefComplaint}"
                           th:action="@{/chiefcomplaints/create}">
 
+                        <input type="hidden" th:field="*{register.id}"/>
+
                         <fieldset>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"

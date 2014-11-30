@@ -1,5 +1,7 @@
 package org.jugbd.mnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -33,6 +35,7 @@ public class Diagnosis extends PersistentObject implements Auditable {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData aesthetic;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "diagnosis")
     private Register register;
 
