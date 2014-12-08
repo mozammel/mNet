@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
             savedUser.setPassword(user.getPassword());
             savedUser.setSalt(StringUtils.generateRandomString(16));
             savedUser.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
-            savedUser.setEnabled(user.isEnabled());
 
             userDao.save(savedUser);
         }
@@ -95,6 +94,12 @@ public class UserServiceImpl implements UserService {
         log.debug("getCurrentLoggedInUser() => user.getUsername() ={}, id={}", user.getUsername(), user.getId());
 
         return findById(user.getId());
+    }
+
+    @Override
+    public Long count() {
+
+        return userDao.count();
     }
 
     @Override

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Past Medical History</h2>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">New Medical History</div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal" method='POST' th:object="${medicalHistory}"
+                          th:action="@{/medicalhistory/create}">
+
+                        <fieldset>
+                            <legend th:text="#{heading.past.medical.history}">Patient Past Medical History</legend>
+
+                            <input type="hidden" th:field="*{register.id}"/>
+
+                            <div class="form-group">
+                                <label for="pastMedicalHistory" class="col-sm-2 control-label required-field"
+                                       th:text="#{label.past.medical.history}">
+                                    Past Medical History
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" th:field="*{pastMedicalHistory}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="item : ${T(org.jugbd.mnet.domain.enums.PastMedicalHistory).values()}"
+                                                th:value="${item}"
+                                                th:text="${item.name()}"
+                                                th:selected="${item == medicalHistory.pastMedicalHistory}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pastMedicalHistory')}">
+                                        <span th:errors="*{pastMedicalHistory}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div th:if="${isFemale}">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.menstrual.history}">
+                                        Menstrual History
+                                    </label>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">P</div>
+                                                    <input type="text" class="form-control input-sm" id="period"
+                                                           th:field="*{period}" placeholder="Period"/>
+                                                </div>
+                                                <p class="text-danger" th:if="${#fields.hasErrors('period')}">
+                                                    <span th:errors="*{period}">Required</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">D</div>
+                                                    <input type="text" class="form-control input-sm" id="period"
+                                                           th:field="*{days}"
+                                                           placeholder="Days"/>
+                                                </div>
+
+                                                <p class="text-danger" th:if="${#fields.hasErrors('days')}">
+                                                    <span th:errors="*{days}">Required</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                        <span th:each="cycle : ${T(org.jugbd.mnet.domain.enums.MenstrualCycle).values()}">
+                                            <input type="radio" th:value="${cycle}" th:field="*{menstrualCycle}"/>
+                                            <label class="inline control-label" th:for="${#ids.prev('menstrualCycle')}"
+                                                   th:text="${cycle.label}"></label>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.past.surgical.history}">
+                                    Past Surgical History
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm"
+                                              th:field="*{pastSurgicalHistory}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pastSurgicalHistory')}">
+                                        <span th:errors="*{pastSurgicalHistory}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.drug.history}">
+                                    Drug History
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm"
+                                              th:field="*{drugHistory}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('drugHistory')}">
+                                        <span th:errors="*{drugHistory}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.family.history}">
+                                    Family History
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm"
+                                              th:field="*{familyHistory}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('familyHistory')}">
+                                        <span th:errors="*{familyHistory}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       th:text="#{label.family.history.of.similar.diseases}">
+                                    Family history of similar diseases
+                                </label>
+
+                                <div class="col-sm-3">
+
+                                    <label class="radio-inline">
+                                        <input type="radio" th:field="*{similarDiseasesInFamily}" th:value="${true}"/>
+                                        Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" th:field="*{similarDiseasesInFamily}" th:value="${false}"/>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger"
+                                   th:href="@{/medicalhistory/cancel/__${medicalHistory.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span>
+                                </a>
+                                <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
+                                    Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

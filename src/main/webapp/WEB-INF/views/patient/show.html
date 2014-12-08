@@ -11,164 +11,452 @@
 
 <body>
 <section layout:fragment="content">
-
-    <div th:if="${message}" class="alert alert-info">
-        <p th:text="${message}"></p>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-sm-8 col-md-8">
-                        <h3 class="text-primary"><a th:href="@{/patient/details/__${patient.id}__}"> <span
-                                th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
-                            <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
-                            <small th:text="${patient.age}"></small><small> year(s) </small>
-                            <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></small>
-                            <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
-                            <small><a sec:authorize="hasRole('ROLE_ADMIN')"
-                                      th:href="@{/patient/edit/__${patient.id}__}">Edit</a>
-                            </small>
-                        </h3>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <p class="text-right">
-                            <i>Health ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong> <br/>
-                            <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong class="badge" th:text="${register.registrationId}"></strong> </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div th:if="${register}">
+    <div id="page-wrapper">
         <div class="row">
-            <div class="col-sm-6 col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Registration Info</div>
-                    <div class="panel-body">
-                        Active since <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd-MMM-yyyy hh:mm:ss')}"></span><br/>
-                        <strong>Emergency Contact -</strong><br/>
-                        <ul>
-                            <li>Contact Person :<span th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"> </span> </li>
-                            <li>Relationship: <span th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"> </span></li>
-                            <li>Contact Number: <span th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span> </li>
-                        </ul>
-                        <a th:href="@{/register/admitPatient/}" class="btn btn-info"> Admit Patient</a>
-                        <a th:href="@{#}" class="btn btn-info" onclick="closeRegister();"> Close Patient</a>
-
-                        <script type="text/javascript">
-                            function closeRegister(){
-                                if(confirm("Are you sure? ")){
-                                    $("#close-register").submit();
-                                }
-                            }
-                        </script>
-
-                        <form style="visibility: hidden" th:id="close-register" method="post" action="#" th:action="@{/register/close/__${register.id}__}">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Diagnosis</div>
-                    <div class="panel-body">
-                        <div th:if="${register.diagnoses.size() == 0}">
-                            <h3 class="text-primary">No active diagnosis found</h3>
-                        </div>
-                        <div>
-                            <ul class="list-group" th:each="diagnosis : ${register.diagnoses}">
-                                <li class="list-group-item"><span th:text="${diagnosis.chiefComplain}"></span> <a th:href="@{/diagnosis/show/__${diagnosis.id}__}">Open</a></li>
-                            </ul>
-                        </div>
-
-                        <a class="btn btn-info" th:href="@{/diagnosis/create/__${register.id}__}">Add New</a>
-                    </div>
-                </div>
+            <div class="col-lg-12">
+                <h2 class="page-header">Patient Diagnosis Information</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Vital</div>
-                    <div class="panel-body">
-                        <div th:if="${lastVital == null}">
-                            <h3 class="text-primary">No active vital found</h3>
+            <div th:if="${message}" class="alert alert-info">
+                <p th:text="${message}"></p>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-sm-8 col-md-8">
+                                <h3 class="text-primary"><a th:href="@{/patient/details/__${patient.id}__}"> <span
+                                        th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
+                                    <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
+                                    <small th:text="${patient.age}"></small>
+                                    <small> year(s)</small>
+                                    <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></small>
+                                    <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
+                                    <small><a sec:authorize="hasRole('ROLE_ADMIN')"
+                                              th:href="@{/patient/edit/__${patient.id}__}">Edit</a>
+                                    </small>
+                                </h3>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <p class="text-right">
+                                    <i>Health ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong>
+                                    <br/>
+                                    <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong
+                                        class="badge" th:text="${register.registrationId}"></strong> </span>
+                                </p>
+                            </div>
                         </div>
-
-                        <div th:if="${lastVital != null}">
-                            <h4 class="text-primary">Last Vitals - <span th:text="${#dates.format(lastVital.createdDate.toDate(),'dd MMMM yyyy h:mm a')}"></span> </h4>
-
-                            <table class="table">
-                                <tr>
-                                    <td>Height</td>
-                                    <td th:text="${lastVital.height} ? ${lastVital.height + 'cm'}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Weight</td>
-                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + 'kg'}"></td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Calculated BMI</td>
-                                    <td th:text="${lastVital.bmi} ? ${lastVital.bmi }"></td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Temperature (&deg;F)</td>
-                                    <td th:text="${lastVital.temperature} ? ${lastVital.temperature}"></td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Pulse</td>
-                                    <td th:text="${lastVital.weight} ? ${lastVital.weight + '/min'}"></td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Respiratory Rate</td>
-                                    <td th:text="${lastVital.respiratoryRate} ? ${lastVital.respiratoryRate + '/min'}"></td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Blood Pressure</td>
-                                    <td>
-                                        <span th:text="${lastVital.systolic} ? ${lastVital.systolic }"></span>&MediumSpace;/
-                                        <span th:text="${lastVital.diastolic} ? ${lastVital.diastolic }"></span>
-                                    </td>
-                                </tr>
-
-                                <tr class="dl-horizontal">
-                                    <td>Blood Oxygen Saturation</td>
-                                    <td th:text="${lastVital.bloodOxygenSaturation} ? ${lastVital.bloodOxygenSaturation + '%'}"></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <br/>
-                        <a class="btn btn-info" th:href="@{/vital/create/__${register.id}__}">Add New</a>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Outcome(s)</div>
-                    <div class="panel-body">
-                        <h3 class="text-primary">No active outcome found</h3>
-                        <a class="btn btn-info" th:href="@{/register/diagnosis/__${register.id}__}">Add New</a>
+            <div th:if="${register}">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Registration Info</div>
+                            <div class="panel-body">
+                                <h4 class="text-primary">Active since - <span
+                                        th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                                </h4>
+
+                                <strong>Emergency Contact -</strong><br/>
+                                <ul>
+                                    <li>Contact Person :<span
+                                            th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"> </span>
+                                    </li>
+                                    <li>Relationship: <span
+                                            th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"> </span>
+                                    </li>
+                                    <li>Contact Number: <span
+                                            th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span>
+                                    </li>
+                                </ul>
+                                <a th:href="@{/register/admitPatient/}" class="btn btn-info pull-left"><span class="glyphicon glyphicon-plus"></span> Admit Patient</a>
+                                <a th:href="@{#}" class="btn btn-info pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
+
+                                <script type="text/javascript">
+                                    function closeRegister() {
+                                        if (confirm("Are you sure? ")) {
+                                            $("#close-register").submit();
+                                        }
+                                    }
+                                </script>
+
+                                <form style="visibility: hidden" th:id="close-register" method="post" action="#"
+                                      th:action="@{/register/close/__${register.id}__}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Medical History</div>
+
+                            <div class="panel-body">
+                                <div th:if="${register.medicalHistory == null}">
+                                    <h3 class="text-primary">No active Medical History found</h3>
+                                    <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
+                                        New</a>
+                                </div>
+
+                                <div th:if="${register.medicalHistory != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td><strong>Past Medical History</strong></td>
+                                            <td th:text="${register.medicalHistory.pastMedicalHistory}"></td>
+                                        </tr>
+                                        <tr th:if="${register.patient.gender == 'Female'}">
+                                            <td>Menstrual History</td>
+                                            <td th:text="'Period: ' +${register.medicalHistory.period}"></td>
+                                            <td th:text="'Days: ' + ${register.medicalHistory.days}"></td>
+                                            <td th:text="'Cycle: ' +${register.medicalHistory.menstrualCycle.label}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong> Past Surgical History</strong></td>
+                                            <td th:text="${register.medicalHistory.pastSurgicalHistory}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Drug History</strong></td>
+                                            <td th:text="${register.medicalHistory.drugHistory}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Family History</strong></td>
+                                            <td th:text="${register.medicalHistory.familyHistory}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Similar Diseases In Family</strong></td>
+                                            <span th:if="${register.medicalHistory.similarDiseasesInFamily}">
+                                                <td>Yes</td>
+                                            </span>
+                                            <span th:unless="${register.medicalHistory.similarDiseasesInFamily}">
+                                                <td>No</td>
+                                            </span>
+                                        </tr>
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/medicalhistory/edit/__${register.medicalHistory.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Vital</div>
+                            <div class="panel-body">
+                                <div th:if="${lastVital == null}">
+                                    <h3 class="text-primary">No active vital found</h3>
+                                </div>
+
+                                <div th:if="${lastVital != null}">
+                                    <h4 class="text-primary">Last Vitals - <span
+                                            th:text="${#dates.format(lastVital.createdDate.toDate(),'dd MMMM yyyy h:mm a')}"></span>
+                                    </h4>
+
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td><strong> Height</strong></td>
+                                            <td th:text="${lastVital.height} ? ${lastVital.height + 'cm'}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Weight</strong></td>
+                                            <td th:text="${lastVital.weight} ? ${lastVital.weight + 'kg'}"></td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Calculated BMI</strong></td>
+                                            <td th:text="${lastVital.bmi} ? ${lastVital.bmi }"></td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Temperature (&deg;F)</strong></td>
+                                            <td th:text="${lastVital.temperature} ? ${lastVital.temperature}"></td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Pulse</strong></td>
+                                            <td th:text="${lastVital.weight} ? ${lastVital.weight + '/min'}"></td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Respiratory Rate</strong></td>
+                                            <td th:text="${lastVital.respiratoryRate} ? ${lastVital.respiratoryRate + '/min'}"></td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Blood Pressure</strong></td>
+                                            <td>
+                                                <span th:text="${lastVital.systolic} ? ${lastVital.systolic }"></span>&MediumSpace;/
+                                                <span th:text="${lastVital.diastolic} ? ${lastVital.diastolic }"></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="dl-horizontal">
+                                            <td><strong>Blood Oxygen Saturation</strong></td>
+                                            <td th:text="${lastVital.bloodOxygenSaturation} ? ${lastVital.bloodOxygenSaturation + '%'}"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <a class="btn btn-info pull-right" th:href="@{/vital/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Chief Complaint</div>
+                            <div class="panel-body">
+                                <div th:if="${register.chiefComplaint == null}">
+                                    <h3 class="text-primary">No active Chief Complaint found</h3>
+                                    <a class="btn btn-info pull-right" th:href="@{/chiefcomplaints/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
+                                        New</a>
+                                </div>
+                                <div th:if="${register.chiefComplaint != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>H/O Burn</td>
+                                            <td th:if="${register.chiefComplaint.daysOfBurns}" th:text="${register.chiefComplaint.daysOfBurns + ' day(s)'}"></td>
+                                            <td th:if="${register.chiefComplaint.hoursOfBurn}" th:text="${register.chiefComplaint.hoursOfBurn + ' hour(s)'}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Child Born With</td>
+                                            <td th:text="${register.chiefComplaint.childBornWith} ? ${register.chiefComplaint.childBornWith.label}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>H/O Trauma</td>
+                                            <td th:if="${register.chiefComplaint.daysOfTrauma}" th:text="${register.chiefComplaint.daysOfTrauma + ' day(s)'}"></td>
+                                            <td th:if="${register.chiefComplaint.hoursOfTrauma}" th:text="${register.chiefComplaint.hoursOfTrauma + ' hour(s)'}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>H/O Infection</td>
+                                            <td th:if="${register.chiefComplaint.daysOfInfection}" th:text="${register.chiefComplaint.daysOfInfection + ' day(s)'}"></td>
+                                            <td th:if="${register.chiefComplaint.hoursOfInfection}" th:text="${register.chiefComplaint.hoursOfInfection + ' hour(s)'}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Presented with ulcer or swelling for</td>
+                                            <td th:if="${register.chiefComplaint.yearsOfUlcerOrSwellingFor}" th:text="${register.chiefComplaint.yearsOfUlcerOrSwellingFor + ' year(s)'}"></td>
+                                            <td th:if="${register.chiefComplaint.monthOfUlcerOrSwellingFor}" th:text="${register.chiefComplaint.monthOfUlcerOrSwellingFor + ' month(s)'}"></td>
+                                            <td th:if="${register.chiefComplaint.daysOfUlcerOrSwellingFor}" th:text="${register.chiefComplaint.daysOfUlcerOrSwellingFor + ' day(s)'}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Breast Related Complaint</td>
+                                            <td th:text="${register.chiefComplaint.breastRelatedComplaint} ? ${register.chiefComplaint.breastRelatedComplaint }"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Present Illness</td>
+                                            <td th:text="${register.chiefComplaint.presentIllness} ? ${register.chiefComplaint.presentIllness }"></td>
+                                        </tr>
+                                    </table>
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/chiefcomplaints/edit/__${register.chiefComplaint.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Examination </div>
+                            <div class="panel-body">
+                                <div th:if="${register.examination == null}">
+                                    <h3 class="text-primary">No active Examination found</h3>
+                                    <a class="btn btn-info pull-right" th:href="@{/examination/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.examination != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td><strong>Anaemia</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.anaemia}"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Jaundice</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.jaundice}"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Accessible Lymph Node</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.accessibleLymphNode}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Dehydration</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.dehydration}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Oelema</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.oelema}"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Neck Vein</strong></td>
+                                            <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                       th:checked="${register.examination.neckVein}"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Listening Examination</strong></td>
+                                            <td th:text="${register.examination.listeningExamination} ? ${register.examination.listeningExamination}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Respiratory System</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.respiratorySystem)}" th:text="${register.examination.respiratorySystem}"></td>
+                                            <td th:if="${#strings.isEmpty(register.examination.respiratorySystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>GI System</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.gISystem)}" th:text="${register.examination.gISystem}"></td>
+                                            <td th:if="${#strings.isEmpty(register.examination.gISystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Cardiovascular System</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.cardiovascularSystem)}" th:text="${register.examination.cardiovascularSystem}"></td>
+                                            <td th:if="${#strings.isEmpty(register.examination.cardiovascularSystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Urogenital System</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.urogenitalSystem)}" th:text="${register.examination.urogenitalSystem}"></td>
+                                            <td th:if="${#strings.isEmpty(register.examination.urogenitalSystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Nervous System</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.nervousSystem)}" th:text="${register.examination.nervousSystem}"></td>
+                                            <td th:if="${#strings.isEmpty(register.examination.nervousSystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/examination/edit/__${register.examination.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Diagnosis</div>
+                            <div class="panel-body">
+                                <div th:if="${register.diagnosis == null}">
+                                    <h3 class="text-primary">No active Diagnosis found</h3>
+                                    <a class="btn btn-info pull-right" th:href="@{/diagnosis/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.diagnosis != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td><strong>Burn</strong></td>
+                                            <span th:if="${register.diagnosis.burns}">
+                                                <td th:text="${register.diagnosis.burns.percentage} ? ${register.diagnosis.burns.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.burns.conditions} ? 'Condition - ' + ${register.diagnosis.burns.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.burns.daysOld} ? ${register.diagnosis.burns.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Congenital Anomaly</strong></td>
+                                            <span th:if="${register.diagnosis.congenitalAnomaly}">
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.percentage} ? ${register.diagnosis.congenitalAnomaly.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.conditions} ? 'Condition - ' + ${register.diagnosis.congenitalAnomaly.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.congenitalAnomaly.daysOld} ? ${register.diagnosis.congenitalAnomaly.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Neoplastic</strong></td>
+                                            <span th:if="${register.diagnosis.neoplastic}">
+                                                <td th:text="${register.diagnosis.neoplastic.percentage} ? ${register.diagnosis.neoplastic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.neoplastic.conditions} ? 'Condition - ' + ${register.diagnosis.neoplastic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.neoplastic.daysOld} ? ${register.diagnosis.neoplastic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Post Infective</strong></td>
+                                            <span th:if="${register.diagnosis.postInfective}">
+                                                <td th:text="${register.diagnosis.postInfective.percentage} ? ${register.diagnosis.postInfective.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.postInfective.conditions} ? 'Condition - ' + ${register.diagnosis.postInfective.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.postInfective.daysOld} ? ${register.diagnosis.postInfective.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Traumatic</strong></td>
+                                            <span th:if="${register.diagnosis.traumatic}">
+                                                <td th:text="${register.diagnosis.traumatic.percentage} ? ${register.diagnosis.traumatic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.traumatic.conditions} ? 'Condition - ' + ${register.diagnosis.traumatic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.traumatic.daysOld} ? ${register.diagnosis.traumatic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Aesthetic</strong></td>
+                                            <span th:if="${register.diagnosis.aesthetic}">
+                                                <td th:text="${register.diagnosis.aesthetic.percentage} ? ${register.diagnosis.aesthetic.percentage} + '%' "></td>
+                                                <td th:text="${register.diagnosis.aesthetic.conditions} ? 'Condition - ' + ${register.diagnosis.aesthetic.conditions.label}"></td>
+                                                <td th:text="${register.diagnosis.aesthetic.daysOld} ? ${register.diagnosis.aesthetic.daysOld} + ' day(s) old' "></td>
+                                            </span>
+                                        </tr>
+
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/diagnosis/edit/__${register.diagnosis.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div th:unless="${register}" class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <h3 class="text-primary">This patient has not any active register</h3>
-                    <a class="btn btn-info" th:href="@{/register/patient/__${patient.id}__}">Register</a>
+            <div th:unless="${register}" class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Register</div>
+                        <div class="panel-body">
+                            <h3 class="text-primary">This patient has not any active register</h3>
+                            <a class="btn btn-info pull-right" th:href="@{/register/patient/__${patient.id}__}"><span class="glyphicon glyphicon-plus"></span> Register</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

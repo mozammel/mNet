@@ -7,7 +7,6 @@ import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
-import org.jugbd.mnet.service.UserService;
 import org.jugbd.mnet.utils.PageWrapper;
 import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.editor.GenderEditor;
@@ -44,9 +43,6 @@ public class PatientController {
     @Autowired
     private RegisterService registerService;
 
-    @Autowired
-    private UserService userService;
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
 
@@ -66,7 +62,7 @@ public class PatientController {
                        BindingResult result,
                        RedirectAttributes redirectAttributes) {
 
-        if (patient.getAge() == null) {
+        if (patient.getAge() == null && patient.getBirthdateEstimated()) {
             patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
         }
 

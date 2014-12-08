@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,8 +61,12 @@ public class Patient extends PersistentObject implements Auditable {
     @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
-    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$", message = "Phone number must be valid ba")
     private String contactNumber;
+
+    private String nid; // National Identification No
+
+    private EconomicCondition economicCondition;
 
     @Valid
     @Embedded
@@ -86,8 +91,9 @@ public class Patient extends PersistentObject implements Auditable {
 
     @Transient
     private Integer ageEstimated;
-    private Boolean birthdateEstimated = false;
+    private boolean birthdateEstimated = false;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private Set<Register> registers = new HashSet<>();
 
@@ -174,11 +180,11 @@ public class Patient extends PersistentObject implements Auditable {
         this.deathDate = deathDate;
     }
 
-    public Boolean getBirthdateEstimated() {
+    public boolean getBirthdateEstimated() {
         return birthdateEstimated;
     }
 
-    public void setBirthdateEstimated(Boolean birthdateEstimated) {
+    public void setBirthdateEstimated(boolean birthdateEstimated) {
         this.birthdateEstimated = birthdateEstimated;
     }
 
@@ -299,6 +305,22 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
+    public EconomicCondition getEconomicCondition() {
+        return economicCondition;
+    }
+
+    public void setEconomicCondition(EconomicCondition economicCondition) {
+        this.economicCondition = economicCondition;
     }
 
     @Override
