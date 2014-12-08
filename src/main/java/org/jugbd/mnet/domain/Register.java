@@ -23,9 +23,9 @@ public class Register extends PersistentObject {
     private Long version;
 
     private String registrationId;
-
-    @OneToMany(mappedBy = "register")
-    private Set<Diagnosis> diagnoses = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "register")
+//    private Set<Diagnosis> diagnoses = new HashSet<>();
 
     @ManyToOne
     private Patient patient;
@@ -48,6 +48,22 @@ public class Register extends PersistentObject {
     @Column(length = 6)
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToOne
+    @JoinColumn(name = "medical_history_id")
+    private MedicalHistory medicalHistory;
+
+    @OneToOne
+    @JoinColumn(name = "chief_complaint_id")
+    private ChiefComplaint chiefComplaint;
+
+    @OneToOne
+    @JoinColumn(name = "examination_id")
+    private Examination examination;
+
+    @OneToOne
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnosis diagnosis;
 
     @Valid
     @Embedded
@@ -77,13 +93,14 @@ public class Register extends PersistentObject {
         this.registrationId = registrationId;
     }
 
-    public Set<Diagnosis> getDiagnoses() {
-        return diagnoses;
-    }
 
-    public void setDiagnoses(Set<Diagnosis> diagnoses) {
-        this.diagnoses = diagnoses;
-    }
+//    public Set<Diagnosis> getDiagnoses() {
+//        return diagnoses;
+//    }
+//
+//    public void setDiagnoses(Set<Diagnosis> diagnoses) {
+//        this.diagnoses = diagnoses;
+//    }
 
     public Patient getPatient() {
         return patient;
@@ -147,5 +164,37 @@ public class Register extends PersistentObject {
 
     public void setVisits(Set<Visit> visits) {
         this.visits = visits;
+    }
+
+    public MedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(MedicalHistory medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
+
+    public ChiefComplaint getChiefComplaint() {
+        return chiefComplaint;
+    }
+
+    public void setChiefComplaint(ChiefComplaint chiefComplaint) {
+        this.chiefComplaint = chiefComplaint;
+    }
+
+    public Examination getExamination() {
+        return examination;
+    }
+
+    public void setExamination(Examination examination) {
+        this.examination = examination;
+    }
+
+    public Diagnosis getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(Diagnosis diagnosis) {
+        this.diagnosis = diagnosis;
     }
 }

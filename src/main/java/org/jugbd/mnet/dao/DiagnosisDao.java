@@ -16,7 +16,7 @@ public interface DiagnosisDao extends JpaRepository<Diagnosis, Long> {
     //TODO revisit
     //@Query("SELECT d FROM Diagnosis d WHERE d.patient.id=:patientId AND d.admissionInfo.id=:admissionId")
     //List<Diagnosis> getDiagnosisList(@Param("patientId") Long patientId, @Param("admissionId") Long admissionId);
-
-    @Query("SELECT d FROM Diagnosis d WHERE d.register.id=:registerId AND d.status='ACTIVE'")
-    List<Diagnosis> findActiveDiagnosisByRegisterId(@Param(value = "registerId")  Long registerId);
+//
+//    @Query("SELECT d FROM Diagnosis d WHERE d.register.id=:registerId AND d.status='ACTIVE'")
+//    List<Diagnosis> findActiveDiagnosisByRegisterId(@Param(value = "registerId")  Long registerId);
 }

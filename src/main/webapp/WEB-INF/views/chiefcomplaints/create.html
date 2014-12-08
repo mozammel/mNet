@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Chief Complaints</h2>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">New Chief Complaints</div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal" method='POST' th:object="${chiefComplaint}"
+                          th:action="@{/chiefcomplaints/create}">
+
+                        <input type="hidden" th:field="*{register.id}"/>
+
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.ho.burn}">
+                                    H/O Burn
+                                </label>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">H</div>
+                                            <input type="text" class="form-control input-sm" th:field="*{hoursOfBurn}"
+                                                   placeholder="Hours"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('hoursOfBurn')}">
+                                            <span th:errors="*{hoursOfBurn}">Required</span>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">D</div>
+                                            <input type="text" class="form-control input-sm" th:field="*{daysOfBurns}"
+                                                   placeholder="Day"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('daysOfBurns')}">
+                                            <span th:errors="*{daysOfBurns}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.child.born.with}">
+                                    Child Born with
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" th:field="*{childBornWith}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="item : ${T(org.jugbd.mnet.domain.enums.ChildBornWith).values()}"
+                                                th:value="${item}"
+                                                th:text="${item.label}"
+                                                th:selected="${item == chiefComplaint.childBornWith}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('childBornWith')}">
+                                        <span th:errors="*{pastMedicalHistory}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.ho.trauma}">
+                                    H/O Trauma
+                                </label>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">H</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{hoursOfTrauma}"
+                                                   placeholder="Hours"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('hoursOfTrauma')}">
+                                            <span th:errors="*{hoursOfTrauma}">Required</span>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">D</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{daysOfTrauma}"
+                                                   placeholder="Day"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('daysOfTrauma')}">
+                                            <span th:errors="*{daysOfTrauma}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.ho.infection}">
+                                    H/O Infection
+                                </label>
+
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">H</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{hoursOfInfection}"
+                                                   placeholder="Hours"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('hoursOfInfection')}">
+                                            <span th:errors="*{hoursOfInfection}">Required</span>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">D</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{daysOfInfection}"
+                                                   placeholder="Day"/>
+                                        </div>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('daysOfInfection')}">
+                                            <span th:errors="*{daysOfInfection}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.ho.ulcer.or.swelling}">
+                                    Presented with ulcer or swelling for
+                                </label>
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">D</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{daysOfUlcerOrSwellingFor}"
+                                                   placeholder="Day"/>
+                                        </div>
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('daysOfUlcerOrSwellingFor')}">
+                                            <span th:errors="*{daysOfUlcerOrSwellingFor}">Required</span>
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">M</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{monthOfUlcerOrSwellingFor}"
+                                                   placeholder="Month"/>
+                                        </div>
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('monthOfUlcerOrSwellingFor')}">
+                                            <span th:errors="*{monthOfUlcerOrSwellingFor}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Y</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   th:field="*{yearsOfUlcerOrSwellingFor}"
+                                                   placeholder="Year"/>
+                                        </div>
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('yearsOfUlcerOrSwellingFor')}">
+                                            <span th:errors="*{yearsOfUlcerOrSwellingFor}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.breast.related.complaint}">
+                                    Breast related Complaint
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm" rows="3"
+                                              th:field="*{breastRelatedComplaint}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('breastRelatedComplaint')}">
+                                        <span th:errors="*{breastRelatedComplaint}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.chief.complaint.present.illness}">
+                                    Breast related Complaint
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm" rows="3"
+                                              th:field="*{presentIllness}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('breastRelatedComplaint')}">
+                                        <span th:errors="*{presentIllness}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/chiefcomplaints/cancel/__${chiefComplaint.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span>
+                                </a>
+                                <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
+                                    Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

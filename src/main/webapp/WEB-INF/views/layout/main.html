@@ -86,8 +86,13 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu" sec:authorize="isAuthenticated()">
+                    <li><a href="#" th:href="@{/admin/index}"><i class="fa fa-home fa-fw"></i> Home<span
+                        class="fa arrow"></span></a></li>
 
                     <li><a href="#" th:href="@{/patient/search}"><i class="fa fa-search fa-fw"></i> Search Patient<span
+                            class="fa arrow"></span></a></li>
+
+                    <li><a href="#" th:href="@{/patient/create}"><i class="fa fa-edit fa-fw"></i> Intake Patient<span
                             class="fa arrow"></span></a></li>
 
                     <li><a href="#" th:href="@{/patient/list}"><i class="fa fa-table fa-fw"></i> Patient List<span
