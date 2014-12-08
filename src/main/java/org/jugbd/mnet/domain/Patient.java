@@ -61,7 +61,7 @@ public class Patient extends PersistentObject implements Auditable {
     @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
-    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$")
+    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$", message = "Phone number must be valid ba")
     private String contactNumber;
 
     private String nid; // National Identification No
@@ -91,7 +91,7 @@ public class Patient extends PersistentObject implements Auditable {
 
     @Transient
     private Integer ageEstimated;
-    private Boolean birthdateEstimated = false;
+    private boolean birthdateEstimated = false;
 
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
@@ -180,11 +180,11 @@ public class Patient extends PersistentObject implements Auditable {
         this.deathDate = deathDate;
     }
 
-    public Boolean getBirthdateEstimated() {
+    public boolean getBirthdateEstimated() {
         return birthdateEstimated;
     }
 
-    public void setBirthdateEstimated(Boolean birthdateEstimated) {
+    public void setBirthdateEstimated(boolean birthdateEstimated) {
         this.birthdateEstimated = birthdateEstimated;
     }
 

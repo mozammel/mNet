@@ -62,7 +62,7 @@ public class PatientController {
                        BindingResult result,
                        RedirectAttributes redirectAttributes) {
 
-        if (patient.getAge() == null) {
+        if (patient.getAge() == null && patient.getBirthdateEstimated()) {
             patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
         }
 
