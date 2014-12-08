@@ -51,8 +51,8 @@ public class User implements UserDetails, Serializable, Auditable {
 
     @NotEmpty
     @Size(min = 8, max = 32)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
-            message = "Password must contain at least one special character, one digit, one lowercase and upper case letter and no whitespace.")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+!=])(?=\\S+$).{8,}$",
+            message = "Password must contain at least one special character (@ # $ % ^ & + !), one digit, one lowercase and upper case letter and no whitespace.")
     @Transient
     @JsonIgnore
     private String password;
