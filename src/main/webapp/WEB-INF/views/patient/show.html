@@ -284,6 +284,11 @@
                                             <td>Present Illness</td>
                                             <td th:text="${register.chiefComplaint.presentIllness} ? ${register.chiefComplaint.presentIllness }"></td>
                                         </tr>
+
+                                        <tr>
+                                            <td>Comments</td>
+                                            <td th:text="${register.chiefComplaint.comments} ? ${register.chiefComplaint.comments}"></td>
+                                        </tr>
                                     </table>
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
                                         <a href="#" class="btn btn-info pull-right"

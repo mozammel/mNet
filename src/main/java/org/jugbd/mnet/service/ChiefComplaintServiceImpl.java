@@ -47,6 +47,7 @@ public class ChiefComplaintServiceImpl implements ChiefComplaintService {
             chiefComplaintFromDb.setMonthOfUlcerOrSwellingFor(chiefComplaint.getMonthOfUlcerOrSwellingFor());
             chiefComplaintFromDb.setPresentIllness(chiefComplaint.getPresentIllness());
             chiefComplaintFromDb.setYearsOfUlcerOrSwellingFor(chiefComplaint.getYearsOfUlcerOrSwellingFor());
+            chiefComplaintFromDb.setComments(chiefComplaint.getComments());
 
             return chiefComplaintDao.save(chiefComplaintFromDb);
         }
