@@ -57,7 +57,7 @@
                                th:text="#{label.user.password}">Password</label>
 
                         <div class="col-sm-3">
-                            <input type="text" th:field="*{password}" class="form-control input-sm"/>
+                            <input type="password" th:field="*{password}" class="form-control input-sm"/>
 
                             <p class="text-danger" th:if="${#fields.hasErrors('password')}"><span
                                     th:errors="*{password}">Password required!</span>
