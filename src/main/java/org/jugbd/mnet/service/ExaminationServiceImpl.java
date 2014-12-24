@@ -41,6 +41,7 @@ public class ExaminationServiceImpl implements ExaminationService {
             examinationFromDb.setDehydration(examination.getDehydration());
             examinationFromDb.setOelema(examination.getOelema());
             examinationFromDb.setNeckVein(examination.getNeckVein());
+            examinationFromDb.setgExaminationComments(examination.getgExaminationComments());
 
             examinationFromDb.setListeningExamination(examination.getListeningExamination());
             examinationFromDb.setRespiratorySystem(examination.getRespiratorySystem());
@@ -48,6 +49,7 @@ public class ExaminationServiceImpl implements ExaminationService {
             examinationFromDb.setCardiovascularSystem(examination.getCardiovascularSystem());
             examinationFromDb.setUrogenitalSystem(examination.getUrogenitalSystem());
             examinationFromDb.setNervousSystem(examination.getNervousSystem());
+            examinationFromDb.setComments(examination.getComments());
 
             return examinationDao.save(examinationFromDb);
         }

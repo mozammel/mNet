@@ -352,7 +352,12 @@
                                         </tr>
 
                                         <tr>
-                                            <td><strong>Listening Examination</strong></td>
+                                            <td><strong>Generel Examination Comments</strong></td>
+                                            <td th:text="${register.examination.gExaminationComments} ? ${register.examination.gExaminationComments}"></td>
+                                        </tr>
+                                        <hr/>
+                                        <tr>
+                                            <td><strong>Local Examination</strong></td>
                                             <td th:text="${register.examination.listeningExamination} ? ${register.examination.listeningExamination}"></td>
                                         </tr>
 
@@ -384,6 +389,11 @@
                                             <td><strong>Nervous System</strong></td>
                                             <td  th:if="${!#strings.isEmpty(register.examination.nervousSystem)}" th:text="${register.examination.nervousSystem}"></td>
                                             <td th:if="${#strings.isEmpty(register.examination.nervousSystem)}" th:text="'No Abnormality Detected'"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><strong>Comments</strong></td>
+                                            <td  th:if="${!#strings.isEmpty(register.examination.comments)}" th:text="${register.examination.comments}"></td>
                                         </tr>
 
                                     </table>

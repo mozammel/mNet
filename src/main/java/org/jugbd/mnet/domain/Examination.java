@@ -26,6 +26,9 @@ public class Examination extends PersistentObject implements Auditable {
     private Boolean oelema;
     private Boolean neckVein;
 
+    @Size(max = 1000)
+    private String gExaminationComments;
+
     @Column(length = 1000)
     @Size(max = 1000)
     private String listeningExamination;
@@ -48,6 +51,9 @@ public class Examination extends PersistentObject implements Auditable {
     @JsonIgnore
     @OneToOne(mappedBy = "examination")
     private Register register;
+
+    @Size(max = 1000)
+    private String comments;
 
     public Long getId() {
         return id;
@@ -113,6 +119,14 @@ public class Examination extends PersistentObject implements Auditable {
         this.neckVein = neckVein;
     }
 
+    public String getgExaminationComments() {
+        return gExaminationComments;
+    }
+
+    public void setgExaminationComments(String gExaminationComments) {
+        this.gExaminationComments = gExaminationComments;
+    }
+
     public String getListeningExamination() {
         return listeningExamination;
     }
@@ -167,5 +181,13 @@ public class Examination extends PersistentObject implements Auditable {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
