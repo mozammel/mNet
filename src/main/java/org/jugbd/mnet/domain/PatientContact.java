@@ -1,10 +1,11 @@
 package org.jugbd.mnet.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.Relationship;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -16,17 +17,16 @@ import java.io.Serializable;
 @Embeddable
 public class PatientContact implements Serializable {
 
-    @NotEmpty
     @Size(max = 100)
     @Column(length = 100)
     private String contactPerson;
 
-    @NotNull
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Relationship relationship;
 
-    @NotEmpty
+    private String comments;
+
     @Size(max = 32)
     @Column(length = 32)
     private String emergencyContactNumber;
@@ -53,5 +53,13 @@ public class PatientContact implements Serializable {
 
     public void setEmergencyContactNumber(String emergencyContactNumber) {
         this.emergencyContactNumber = emergencyContactNumber;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

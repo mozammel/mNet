@@ -24,7 +24,6 @@
                 <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/update}" method="POST">
 
                     <input type="text" th:field="*{id}" hidden="true"/>
-                    <input type="text" th:field="*{version}" hidden="true"/>
 
                     <div class="form-group">
                         <label for="fullName" class="col-sm-2 control-label"

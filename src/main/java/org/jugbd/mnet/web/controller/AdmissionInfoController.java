@@ -43,7 +43,7 @@ public class AdmissionInfoController {
     public String create(@RequestParam(value = "patientId", required = true) Long patientId, Model uiModel) {
         Patient patient = patientService.findOne(patientId);
         AdmissionInfo admissionInfo = new AdmissionInfo();
-        admissionInfo.setPatient(patient);
+        //admissionInfo.setPatient(patient);
 
         uiModel.addAttribute("admissionInfo", admissionInfo);
 
@@ -57,7 +57,8 @@ public class AdmissionInfoController {
         }
 
         admissionInfoService.save(admissionInfo);
-        return "redirect:/patient/show/" + admissionInfo.getPatient().getId().toString();
+        //return "redirect:/patient/show/" + admissionInfo.getPatient().getId().toString();
+        return "";
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
@@ -84,6 +85,7 @@ public class AdmissionInfoController {
         }
 
         admissionInfoService.save(admissionInfo);
-        return "redirect:/admissionInfo/show/" + admissionInfo.getId().toString();
+        //return "redirect:/admissionInfo/show/" + admissionInfo.getId().toString();
+        return null;
     }
 }

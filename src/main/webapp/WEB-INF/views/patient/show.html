@@ -60,19 +60,39 @@
                                         th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
                                 </h4>
 
-                                <strong>Emergency Contact -</strong><br/>
-                                <ul>
-                                    <li>Contact Person :<span
-                                            th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"> </span>
-                                    </li>
-                                    <li>Relationship: <span
-                                            th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"> </span>
-                                    </li>
-                                    <li>Contact Number: <span
-                                            th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></span>
-                                    </li>
-                                </ul>
-                                <a th:href="@{/register/admitPatient/}" class="btn btn-info pull-left"><span class="glyphicon glyphicon-plus"></span> Admit Patient</a>
+                                <table class="table table-condensed">
+                                    <tr>
+                                        <td>Contact Person</td>
+                                        <td th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Relationship</td>
+                                        <td th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Number</td>
+                                        <td th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Admission Date</td>
+                                        <td th:text="${register.admissionDate} ? ${#dates.format(register.admissionDate,'dd MMMM yyyy')}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ward</td>
+                                        <td th:text="${register.ward} ? ${register.ward.label}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bed Number</td>
+                                        <td th:text="${register.bedNumber} ? ${register.bedNumber}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unit</td>
+                                        <td th:text="${register.unit} ? ${register.unit}"></td>
+                                    </tr>
+
+                                </table>
+
                                 <a th:href="@{#}" class="btn btn-info pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
 
                                 <script type="text/javascript">

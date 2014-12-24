@@ -41,11 +41,6 @@ public class RegisterServiceImpl implements RegisterService {
         register.setStartDatetime(new Date());
         register.setStatus(Status.ACTIVE);
         registerDao.save(register);
-
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        register.setRegistrationId(register.getId() + "/" + year);
-
-        registerDao.save(register);
     }
 
     @Override

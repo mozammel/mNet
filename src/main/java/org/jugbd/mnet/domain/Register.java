@@ -1,9 +1,14 @@
 package org.jugbd.mnet.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.Status;
+import org.jugbd.mnet.domain.enums.Ward;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,16 +27,32 @@ public class Register extends PersistentObject {
     @Version
     private Long version;
 
+    @NotNull
+    @NotEmpty
     private String registrationId;
-//
-//    @OneToMany(mappedBy = "register")
-//    private Set<Diagnosis> diagnoses = new HashSet<>();
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date admissionDate;
+
+    @NotNull
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private Ward ward;
+
+    @NotEmpty
+    @Size(max = 32)
+    @Column(length = 32)
+    private String bedNumber;
+
+    @NotEmpty
+    @Size(max = 32)
+    @Column(length = 32)
+    private String unit;
 
     @ManyToOne
     private Patient patient;
-
-    @ManyToOne
-    private AdmissionInfo admissionInfo;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDatetime;
@@ -93,14 +114,37 @@ public class Register extends PersistentObject {
         this.registrationId = registrationId;
     }
 
+    public Date getAdmissionDate() {
+        return admissionDate;
+    }
 
-//    public Set<Diagnosis> getDiagnoses() {
-//        return diagnoses;
-//    }
-//
-//    public void setDiagnoses(Set<Diagnosis> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
+    public void setAdmissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
+
+    public void setWard(Ward ward) {
+        this.ward = ward;
+    }
+
+    public String getBedNumber() {
+        return bedNumber;
+    }
+
+    public void setBedNumber(String bedNumber) {
+        this.bedNumber = bedNumber;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 
     public Patient getPatient() {
         return patient;
@@ -108,14 +152,6 @@ public class Register extends PersistentObject {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public AdmissionInfo getAdmissionInfo() {
-        return admissionInfo;
-    }
-
-    public void setAdmissionInfo(AdmissionInfo admissionInfo) {
-        this.admissionInfo = admissionInfo;
     }
 
     public Date getStartDatetime() {
@@ -134,14 +170,6 @@ public class Register extends PersistentObject {
         this.stopDatetime = stopDatetime;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public Set<Vital> getVitals() {
         return vitals;
     }
@@ -150,20 +178,20 @@ public class Register extends PersistentObject {
         this.vitals = vitals;
     }
 
-    public PatientContact getPatientContact() {
-        return patientContact;
-    }
-
-    public void setPatientContact(PatientContact patientContact) {
-        this.patientContact = patientContact;
-    }
-
     public Set<Visit> getVisits() {
         return visits;
     }
 
     public void setVisits(Set<Visit> visits) {
         this.visits = visits;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public MedicalHistory getMedicalHistory() {
@@ -196,5 +224,13 @@ public class Register extends PersistentObject {
 
     public void setDiagnosis(Diagnosis diagnosis) {
         this.diagnosis = diagnosis;
+    }
+
+    public PatientContact getPatientContact() {
+        return patientContact;
+    }
+
+    public void setPatientContact(PatientContact patientContact) {
+        this.patientContact = patientContact;
     }
 }

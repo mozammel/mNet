@@ -6,19 +6,6 @@
 <head>
     <title>Home Page :: MediNetServices</title>
     <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
-    <script src="../../../resources/js/bootstrap-datepicker.js" th:scr="@{/resources/js/bootstrap-datepicker.js}"></script>
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('#patient-dob').datepicker({
-                todayBtn: true,
-                keyboardNavigation: false,
-                calendarWeeks: true,
-                autoclose: true,
-                startView: 2,
-                todayHighlight: true
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -31,66 +18,173 @@
         </div>
         <div class="row">
             <div class="panel panel-default">
-        <div class="panel-heading">New Register Entry</div>
-        <div class="panel-body">
-            <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/save}">
-                <fieldset>
-                    <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
-                    <input type="hidden" th:field="*{patient.id}"/>
-                    <div class="form-group">
-                        <label for="patient-contact-name" class="col-sm-2 control-label">
-                            Contact Name
-                        </label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" id="patient-contact-name" th:field="*{patientContact.contactPerson}"/>
-                            <p class="text-danger" th:if="${#fields.hasErrors('patientContact.contactPerson')}">
-                                <span th:errors="*{patientContact.contactPerson}">Required</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="emergency-contact-name" class="col-sm-2 control-label" th:text="#{label.emergy.contact.no}">
-                            Emergency Contact Number
-                        </label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm" id="emergency-contact-name"
-                                   th:field="*{patientContact.emergencyContactNumber}"/>
-                            <p class="text-danger" th:if="${#fields.hasErrors('patientContact.emergencyContactNumber')}">
-                                <span th:errors="*{patientContact.emergencyContactNumber}">Required</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-relationship" class="col-sm-2 control-label" th:text="#{label.relationship}">
-                            Relationship
-                        </label>
-                        <div class="col-sm-3">
-                            <select class="form-control" id="patient-relationship" th:field="*{patientContact.relationship}">
-                                <option value="" th:text="#{common.select.prompt}"></option>
-                                <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
-                                        th:value="${relationship}"
-                                        th:text="${relationship.label}"
-                                        th:selected="${relationship == register.patientContact.relationship}">
-                                </option>
-                            </select>
-                            <p class="text-danger" th:if="${#fields.hasErrors('patientContact.relationship')}">
-                                <span th:errors="*{patientContact.relationship}">Required</span>
-                            </p>
-                        </div>
-                    </div>
-                </fieldset>
+                <div class="panel-heading">New Register Entry</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/save}">
+                        <fieldset>
+                            <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
+                            <input type="hidden" th:field="*{patient.id}"/>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="#" class="btn btn-danger" th:href="@{/register/cancel}"> <span th:text="#{label.cancel}">Cancel</span> </a>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
+                            <div class="form-group">
+                                <label for="patient-contact-name" class="col-sm-2 control-label">
+                                    Contact Name
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="patient-contact-name"
+                                           th:field="*{patientContact.contactPerson}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('patientContact.contactPerson')}">
+                                        <span th:errors="*{patientContact.contactPerson}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency-contact-name" class="col-sm-2 control-label"
+                                       th:text="#{label.emergy.contact.no}">
+                                    Emergency Contact Number
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="emergency-contact-name"
+                                           th:field="*{patientContact.emergencyContactNumber}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('patientContact.emergencyContactNumber')}">
+                                        <span th:errors="*{patientContact.emergencyContactNumber}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="patient-relationship" class="col-sm-2 control-label"
+                                       th:text="#{label.relationship}">
+                                    Relationship
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="patient-relationship"
+                                            th:field="*{patientContact.relationship}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
+                                                th:value="${relationship}"
+                                                th:text="${relationship.label}"
+                                                th:selected="${relationship == register.patientContact.relationship}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('patientContact.relationship')}">
+                                        <span th:errors="*{patientContact.relationship}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Admission Information</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.registration.number}">
+                                    Registration Number </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{registrationId}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('registrationId')}">
+                                        <span th:errors="*{registrationId}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.ward}"> Ward </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="patient-relationship" th:field="*{ward}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="ward : ${T(org.jugbd.mnet.domain.enums.Ward).values()}"
+                                                th:value="${ward}"
+                                                th:text="${ward.label}"
+                                                th:selected="${ward == register.ward}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('ward')}">
+                                        <span th:errors="*{ward}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.registration.bedNumber}"> Bed
+                                    Number </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{bedNumber}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bedNumber')}">
+                                        <span th:errors="*{bedNumber}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.registration.unit}">
+                                    Unit </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{unit}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('unit')}">
+                                        <span th:errors="*{unit}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.registration.admission.date}">
+                                    Admission Date </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{admissionDate}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}">
+                                        <span th:errors="*{admissionDate}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/register/cancel}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
         </div>
     </div>
 </section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#admissionDate').datepicker({
+                todayBtn: true,
+                keyboardNavigation: false,
+                calendarWeeks: true,
+                autoclose: true,
+                startView: 2,
+                todayHighlight: true
+            });
+        });
+    </script>
+</div>
 </body>
 </html>
