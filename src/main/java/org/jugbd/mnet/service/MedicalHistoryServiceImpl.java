@@ -44,6 +44,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
             medicalHistoryFromDb.setPastSurgicalHistory(medicalHistory.getPastSurgicalHistory());
             medicalHistoryFromDb.setPresentIllness(medicalHistory.getPresentIllness());
             medicalHistoryFromDb.setSimilarDiseasesInFamily(medicalHistory.getSimilarDiseasesInFamily());
+            medicalHistoryFromDb.setComments(medicalHistory.getComments());
 
             return medicalHistoryDao.save(medicalHistoryFromDb);
         }

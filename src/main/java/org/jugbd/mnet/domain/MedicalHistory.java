@@ -44,7 +44,11 @@ public class MedicalHistory extends PersistentObject implements Auditable {
     private String familyHistory;
     private Boolean similarDiseasesInFamily;
 
+    @Size(max = 1000)
     private String presentIllness;
+
+    @Size(max = 1000)
+    private String comments;
 
     @JsonIgnore
     @OneToOne(mappedBy = "medicalHistory")
@@ -144,6 +148,14 @@ public class MedicalHistory extends PersistentObject implements Auditable {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     @Override

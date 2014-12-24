@@ -160,6 +160,19 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Comments </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control input-sm"
+                                              th:field="*{comments}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('comments')}">
+                                        <span th:errors="*{comments}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
                         </fieldset>
 
                         <div class="form-group">

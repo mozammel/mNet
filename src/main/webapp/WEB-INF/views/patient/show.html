@@ -117,8 +117,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.medicalHistory == null}">
                                     <h3 class="text-primary">No active Medical History found</h3>
-                                    <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
-                                        New</a>
+                                    <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
 
                                 <div th:if="${register.medicalHistory != null}">
@@ -157,6 +156,10 @@
                                             <span th:unless="${register.medicalHistory.similarDiseasesInFamily}">
                                                 <td>No</td>
                                             </span>
+                                        </tr>
+                                        <tr>
+                                            <td>Comments</td>
+                                            <td th:text="${register.medicalHistory.comments} ? ${register.medicalHistory.comments}"></td>
                                         </tr>
                                     </table>
 
