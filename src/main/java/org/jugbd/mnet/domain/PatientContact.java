@@ -25,6 +25,7 @@ public class PatientContact implements Serializable {
     @Enumerated(EnumType.STRING)
     private Relationship relationship;
 
+    @Size(max = 100)
     private String comments;
 
     @Size(max = 32)

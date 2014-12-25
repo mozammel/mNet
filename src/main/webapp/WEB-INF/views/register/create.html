@@ -56,13 +56,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="patient-relationship" class="col-sm-2 control-label"
+                                <label  class="col-sm-2 control-label"
                                        th:text="#{label.relationship}">
                                     Relationship
                                 </label>
 
                                 <div class="col-sm-3">
-                                    <select class="form-control" id="patient-relationship"
+                                    <select class="form-control"
                                             th:field="*{patientContact.relationship}">
                                         <option value="" th:text="#{common.select.prompt}"></option>
                                         <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
@@ -75,6 +75,20 @@
                                     <p class="text-danger" th:if="${#fields.hasErrors('patientContact.relationship')}">
                                         <span th:errors="*{patientContact.relationship}">Required</span>
                                     </p>
+                                </div>
+                            </div>
+
+                            <div id="relationShipOtherComment">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.relationship.comment}">Comment </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm" th:field="*{patientContact.comments}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('patientContact.comments')}">
+                                            <span th:errors="*{patientContact.comments}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -200,6 +214,7 @@
         });
 
         addDropdownChangeEvent("ward","wardOtherComment");
+        addDropdownChangeEvent("patientContact\\.relationship","relationShipOtherComment");
 
         function addDropdownChangeEvent(selectId, commentDiv) {
             jQuery("#" + selectId).change(function () {
