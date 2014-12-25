@@ -100,7 +100,7 @@
                                 <label class="col-sm-2 control-label" th:text="#{label.ward}"> Ward </label>
 
                                 <div class="col-sm-3">
-                                    <select class="form-control" id="patient-relationship" th:field="*{ward}">
+                                    <select class="form-control" th:field="*{ward}">
                                         <option value="" th:text="#{common.select.prompt}"></option>
                                         <option th:each="ward : ${T(org.jugbd.mnet.domain.enums.Ward).values()}"
                                                 th:value="${ward}"
@@ -112,6 +112,20 @@
                                     <p class="text-danger" th:if="${#fields.hasErrors('ward')}">
                                         <span th:errors="*{ward}">Required</span>
                                     </p>
+                                </div>
+                            </div>
+
+                            <div id="wardOtherComment">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.ward.comment}">Comment </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm" th:field="*{wardOther}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('wardOther')}">
+                                            <span th:errors="*{wardOther}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -184,6 +198,35 @@
                 todayHighlight: true
             });
         });
+
+        addDropdownChangeEvent("ward","wardOtherComment");
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableCommentBoxIfOther(selectId, commentDiv);
+            });
+        }
+
+        function enableCommentBoxIfOther(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === 'OTHER') {
+                enableCommentBox(true, commentId)
+            } else {
+                enableCommentBox(false, commentId)
+            }
+        }
+
+        function enableCommentBox(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+
     </script>
 </div>
 </body>

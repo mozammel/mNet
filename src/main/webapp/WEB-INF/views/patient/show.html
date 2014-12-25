@@ -81,6 +81,7 @@
                                     <tr>
                                         <td>Ward</td>
                                         <td th:text="${register.ward} ? ${register.ward.label}"></td>
+                                        <td th:if="${register.wardOther}" th:text="${register.wardOther}"></td>
                                     </tr>
                                     <tr>
                                         <td>Bed Number</td>

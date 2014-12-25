@@ -41,6 +41,10 @@ public class Register extends PersistentObject {
     @Enumerated(EnumType.STRING)
     private Ward ward;
 
+    @Size(max = 100)
+    @Column(length = 100)
+    private String wardOther;
+
     @NotEmpty
     @Size(max = 32)
     @Column(length = 32)
@@ -128,6 +132,14 @@ public class Register extends PersistentObject {
 
     public void setWard(Ward ward) {
         this.ward = ward;
+    }
+
+    public String getWardOther() {
+        return wardOther;
+    }
+
+    public void setWardOther(String wardOther) {
+        this.wardOther = wardOther;
     }
 
     public String getBedNumber() {
