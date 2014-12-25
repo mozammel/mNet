@@ -84,96 +84,25 @@
                                     Congenital Anomaly
                                 </label>
 
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{congenitalAnomaly.percentage}"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('congenitalAnomaly.percentage')}">
-                                            <span th:errors="*{congenitalAnomaly.percentage}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" th:field="*{congenitalAnomaly.conditions}">
-                                            <option value="" th:text="#{common.select.prompt}"></option>
-                                            <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Condition).values()}"
-                                                    th:value="${item}"
-                                                    th:text="${item.label}"
-                                                    th:selected="${item == diagnosis.congenitalAnomaly.conditions}">
-                                            </option>
-                                        </select>
-
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('congenitalAnomaly.conditions')}">
-                                            <span th:errors="*{congenitalAnomaly.conditions}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{congenitalAnomaly.daysOld}" placeholder="Days old"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('congenitalAnomaly.daysOld')}">
-                                            <span th:errors="*{congenitalAnomaly.daysOld}">Required</span>
-                                        </p>
-                                    </div>
-
+                                <div class="col-sm-2">
+                                    <textarea class="form-control input-sm" th:field="*{congenitalAnomaly}"></textarea>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('congenitalAnomaly')}">
+                                        <span th:errors="*{congenitalAnomaly}">Required</span>
+                                    </p>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"
-                                       th:text="#{label.diagnosis.neoplastic}">
-                                    Neoplastic
-                                </label>
+                                       th:text="#{label.diagnosis.neoplastic}"> Neoplastic </label>
 
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{neoplastic.percentage}"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('neoplastic.percentage')}">
-                                            <span th:errors="*{neoplastic.percentage}">Required</span>
-                                        </p>
-                                    </div>
+                                <div class="col-sm-2">
+                                    <textarea class="form-control input-sm" th:field="*{neoplastic}"></textarea>
 
-                                    <div class="col-sm-2">
-                                        <select class="form-control" th:field="*{neoplastic.conditions}">
-                                            <option value="" th:text="#{common.select.prompt}"></option>
-                                            <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Condition).values()}"
-                                                    th:value="${item}"
-                                                    th:text="${item.label}"
-                                                    th:selected="${item == diagnosis.neoplastic.conditions}">
-                                            </option>
-                                        </select>
-
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('neoplastic.conditions')}">
-                                            <span th:errors="*{neoplastic.conditions}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{neoplastic.daysOld}" placeholder="Days old"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('neoplastic.daysOld')}">
-                                            <span th:errors="*{neoplastic.daysOld}">Required</span>
-                                        </p>
-                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('neoplastic')}"><span th:errors="*{neoplastic}">Required</span>
+                                    </p>
                                 </div>
                             </div>
 
@@ -183,46 +112,13 @@
                                     Post Infective
                                 </label>
 
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{postInfective.percentage}"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('postInfective.percentage')}">
-                                            <span th:errors="*{postInfective.percentage}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" th:field="*{postInfective.conditions}">
-                                            <option value="" th:text="#{common.select.prompt}"></option>
-                                            <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Condition).values()}"
-                                                    th:value="${item}"
-                                                    th:text="${item.label}"
-                                                    th:selected="${item == diagnosis.postInfective.conditions}">
-                                            </option>
-                                        </select>
-
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('postInfective.conditions')}">
-                                            <span th:errors="*{postInfective.conditions}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{postInfective.daysOld}" placeholder="Days old"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('postInfective.daysOld')}">
-                                            <span th:errors="*{postInfective.daysOld}">Required</span>
-                                        </p>
-                                    </div>
+                                <div class="col-sm-2">
+                                        <textarea type="number" class="form-control input-sm"
+                                                  th:field="*{postInfective}"></textarea>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('postInfective')}">
+                                        <span th:errors="*{postInfective}">Required</span>
+                                    </p>
                                 </div>
                             </div>
 
@@ -232,46 +128,12 @@
                                     Traumatic
                                 </label>
 
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{traumatic.percentage}"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('traumatic.percentage')}">
-                                            <span th:errors="*{traumatic.percentage}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <select class="form-control" th:field="*{traumatic.conditions}">
-                                            <option value="" th:text="#{common.select.prompt}"></option>
-                                            <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Condition).values()}"
-                                                    th:value="${item}"
-                                                    th:text="${item.label}"
-                                                    th:selected="${item == diagnosis.traumatic.conditions}">
-                                            </option>
-                                        </select>
-
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('traumatic.conditions')}">
-                                            <span th:errors="*{traumatic.conditions}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{traumatic.daysOld}" placeholder="Days old"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('traumatic.daysOld')}">
-                                            <span th:errors="*{traumatic.daysOld}">Required</span>
-                                        </p>
-                                    </div>
+                                <div class="col-sm-2">
+                                    <textarea  class="form-control input-sm" th:field="*{traumatic}"></textarea>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('traumatic')}">
+                                        <span th:errors="*{traumatic}">Required</span>
+                                    </p>
                                 </div>
                             </div>
 
@@ -281,46 +143,29 @@
                                     Aesthetic
                                 </label>
 
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{aesthetic.percentage}"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('aesthetic.percentage')}">
-                                            <span th:errors="*{aesthetic.percentage}">Required</span>
-                                        </p>
-                                    </div>
+                                <div class="col-sm-2">
+                                        <textarea type="text" class="form-control input-sm"
+                                                  th:field="*{aesthetic}"></textarea>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('aesthetic')}">
+                                        <span th:errors="*{aesthetic}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
 
-                                    <div class="col-sm-2">
-                                        <select class="form-control" th:field="*{aesthetic.conditions}">
-                                            <option value="" th:text="#{common.select.prompt}"></option>
-                                            <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Condition).values()}"
-                                                    th:value="${item}"
-                                                    th:text="${item.label}"
-                                                    th:selected="${item == diagnosis.aesthetic.conditions}">
-                                            </option>
-                                        </select>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.comment}">
+                                    Comment
+                                </label>
 
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('aesthetic.conditions')}">
-                                            <span th:errors="*{aesthetic.conditions}">Required</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="number" class="form-control input-sm"
-                                                   th:field="*{aesthetic.daysOld}" placeholder="Days old"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('aesthetic.daysOld')}">
-                                            <span th:errors="*{aesthetic.daysOld}">Required</span>
-                                        </p>
-                                    </div>
+                                <div class="col-sm-2">
+                                        <textarea type="text" class="form-control input-sm"
+                                                  th:field="*{comment}"></textarea>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('comment')}">
+                                        <span th:errors="*{comment}">Required</span>
+                                    </p>
                                 </div>
                             </div>
 

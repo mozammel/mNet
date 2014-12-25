@@ -3,6 +3,7 @@ package org.jugbd.mnet.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Raqibul Islam on 7/1/14.
@@ -20,20 +21,23 @@ public class Diagnosis extends PersistentObject implements Auditable {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DiagnosisData burns;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private DiagnosisData congenitalAnomaly;
+    @Size(max = 1000)
+    private String congenitalAnomaly;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private DiagnosisData neoplastic;
+    @Size(max = 1000)
+    private String neoplastic;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private DiagnosisData postInfective;
+    @Size(max = 1000)
+    private String postInfective;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private DiagnosisData traumatic;
+    @Size(max = 1000)
+    private String traumatic;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private DiagnosisData aesthetic;
+    @Size(max = 1000)
+    private String aesthetic;
+
+    @Size(max = 1000)
+    private String comment;
 
     @JsonIgnore
     @OneToOne(mappedBy = "diagnosis")
@@ -63,43 +67,43 @@ public class Diagnosis extends PersistentObject implements Auditable {
         this.burns = burns;
     }
 
-    public DiagnosisData getCongenitalAnomaly() {
+    public String getCongenitalAnomaly() {
         return congenitalAnomaly;
     }
 
-    public void setCongenitalAnomaly(DiagnosisData congenitalAnomaly) {
+    public void setCongenitalAnomaly(String congenitalAnomaly) {
         this.congenitalAnomaly = congenitalAnomaly;
     }
 
-    public DiagnosisData getNeoplastic() {
+    public String getNeoplastic() {
         return neoplastic;
     }
 
-    public void setNeoplastic(DiagnosisData neoplastic) {
+    public void setNeoplastic(String neoplastic) {
         this.neoplastic = neoplastic;
     }
 
-    public DiagnosisData getPostInfective() {
+    public String getPostInfective() {
         return postInfective;
     }
 
-    public void setPostInfective(DiagnosisData postInfective) {
+    public void setPostInfective(String postInfective) {
         this.postInfective = postInfective;
     }
 
-    public DiagnosisData getTraumatic() {
+    public String getTraumatic() {
         return traumatic;
     }
 
-    public void setTraumatic(DiagnosisData traumatic) {
+    public void setTraumatic(String traumatic) {
         this.traumatic = traumatic;
     }
 
-    public DiagnosisData getAesthetic() {
+    public String getAesthetic() {
         return aesthetic;
     }
 
-    public void setAesthetic(DiagnosisData aesthetic) {
+    public void setAesthetic(String aesthetic) {
         this.aesthetic = aesthetic;
     }
 
@@ -109,5 +113,13 @@ public class Diagnosis extends PersistentObject implements Auditable {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

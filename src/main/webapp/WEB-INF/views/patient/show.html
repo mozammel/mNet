@@ -424,55 +424,41 @@
                                         <tr>
                                             <td><strong>Burn</strong></td>
                                             <span th:if="${register.diagnosis.burns}">
-                                                <td th:text="${register.diagnosis.burns.percentage} ? ${register.diagnosis.burns.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.burns.conditions} ? 'Condition - ' + ${register.diagnosis.burns.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.burns.daysOld} ? ${register.diagnosis.burns.daysOld} + ' day(s) old' "></td>
+                                                <td>
+                                                    <span th:text="${register.diagnosis.burns.percentage} ? ${register.diagnosis.burns.percentage} + '%' "></span>&nbsp;&nbsp;
+                                                    <span th:text="${register.diagnosis.burns.conditions} ? 'Condition - ' + ${register.diagnosis.burns.conditions.label}"></span>&nbsp;&nbsp;
+                                                    <span th:text="${register.diagnosis.burns.daysOld} ? ${register.diagnosis.burns.daysOld} + ' day(s) old' "></span>&nbsp;&nbsp;
+                                                </td>
                                             </span>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Congenital Anomaly</strong></td>
-                                            <span th:if="${register.diagnosis.congenitalAnomaly}">
-                                                <td th:text="${register.diagnosis.congenitalAnomaly.percentage} ? ${register.diagnosis.congenitalAnomaly.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.congenitalAnomaly.conditions} ? 'Condition - ' + ${register.diagnosis.congenitalAnomaly.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.congenitalAnomaly.daysOld} ? ${register.diagnosis.congenitalAnomaly.daysOld} + ' day(s) old' "></td>
-                                            </span>
+                                            <span th:if="${register.diagnosis.congenitalAnomaly}"> <td th:text="${register.diagnosis.congenitalAnomaly}"></td> </span>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Neoplastic</strong></td>
-                                            <span th:if="${register.diagnosis.neoplastic}">
-                                                <td th:text="${register.diagnosis.neoplastic.percentage} ? ${register.diagnosis.neoplastic.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.neoplastic.conditions} ? 'Condition - ' + ${register.diagnosis.neoplastic.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.neoplastic.daysOld} ? ${register.diagnosis.neoplastic.daysOld} + ' day(s) old' "></td>
-                                            </span>
+                                            <span th:if="${register.diagnosis.neoplastic}"> <td th:text="${register.diagnosis.neoplastic}"></td> </span>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Post Infective</strong></td>
-                                            <span th:if="${register.diagnosis.postInfective}">
-                                                <td th:text="${register.diagnosis.postInfective.percentage} ? ${register.diagnosis.postInfective.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.postInfective.conditions} ? 'Condition - ' + ${register.diagnosis.postInfective.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.postInfective.daysOld} ? ${register.diagnosis.postInfective.daysOld} + ' day(s) old' "></td>
-                                            </span>
+                                            <span th:if="${register.diagnosis.postInfective}"> <td th:text="${register.diagnosis.postInfective}"></td> </span>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Traumatic</strong></td>
-                                            <span th:if="${register.diagnosis.traumatic}">
-                                                <td th:text="${register.diagnosis.traumatic.percentage} ? ${register.diagnosis.traumatic.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.traumatic.conditions} ? 'Condition - ' + ${register.diagnosis.traumatic.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.traumatic.daysOld} ? ${register.diagnosis.traumatic.daysOld} + ' day(s) old' "></td>
-                                            </span>
+                                            <span th:if="${register.diagnosis.traumatic}"> <td th:text="${register.diagnosis.traumatic}"></td> </span>
                                         </tr>
 
                                         <tr>
                                             <td><strong>Aesthetic</strong></td>
-                                            <span th:if="${register.diagnosis.aesthetic}">
-                                                <td th:text="${register.diagnosis.aesthetic.percentage} ? ${register.diagnosis.aesthetic.percentage} + '%' "></td>
-                                                <td th:text="${register.diagnosis.aesthetic.conditions} ? 'Condition - ' + ${register.diagnosis.aesthetic.conditions.label}"></td>
-                                                <td th:text="${register.diagnosis.aesthetic.daysOld} ? ${register.diagnosis.aesthetic.daysOld} + ' day(s) old' "></td>
-                                            </span>
+                                            <span th:if="${register.diagnosis.aesthetic}"> <td th:text="${register.diagnosis.aesthetic}"></td> </span> </tr>
+
+                                        <tr>
+                                            <td><strong>Comment</strong></td>
+                                            <span th:if="${register.diagnosis.comment}"><td th:text="${register.diagnosis.comment}"></td> </span>
                                         </tr>
 
                                     </table>
