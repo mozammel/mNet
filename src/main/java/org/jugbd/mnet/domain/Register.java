@@ -67,6 +67,9 @@ public class Register extends PersistentObject {
     @OneToMany(mappedBy = "register")
     private Set<Vital> vitals = new HashSet<>();
 
+    @OneToMany(mappedBy = "register")
+    private Set<OperationalDetail> operationalDetails = new HashSet<>();
+
     @OneToMany
     private Set<Visit> visits;
 
@@ -200,6 +203,14 @@ public class Register extends PersistentObject {
 
     public void setVisits(Set<Visit> visits) {
         this.visits = visits;
+    }
+
+    public Set<OperationalDetail> getOperationalDetails() {
+        return operationalDetails;
+    }
+
+    public void setOperationalDetails(Set<OperationalDetail> operationalDetails) {
+        this.operationalDetails = operationalDetails;
     }
 
     public Status getStatus() {
