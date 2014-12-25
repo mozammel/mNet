@@ -473,6 +473,85 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Plan Of Rx</div>
+                            <div class="panel-body">
+                                <div th:if="${register.treatmentPlan == null}">
+                                    <h3 class="text-primary">No active Diagnosis found</h3>
+                                    <a class="btn btn-info pull-right"
+                                       th:href="@{/treatmentplan/create/__${register.id}__}"><span
+                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.treatmentPlan != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>Treatment Plan</td>
+                                            <td th:text="${register.treatmentPlan.treatmentPlanType} ? ${register.treatmentPlan.treatmentPlanType.label}"></td>
+                                        </tr>
+
+                                        <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'OPERATIVE'}">
+                                            <tr>
+                                                <td>STSG/FTSG</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.stsgOrFtsg}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Flap-Pedicled</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.flapPedicled}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Free-Flapd</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.freeFlap}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Tissue Expansion</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.tissueExpansion}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Fasciotomy/Escharotomy</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.fasciotomyOrEscharotomy}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Implant Insertion</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.implantInsertion}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Repair/ Reconstruction of Part</td>
+                                                <td><input type="checkbox" class="form-control checkbox input-sm" disabled="disabled"
+                                                           th:checked="${register.treatmentPlan.repairReconstructionPart}"/></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Comments</td>
+                                                <td th:text="${register.treatmentPlan.comment}"></td>
+                                            </tr>
+                                        </div>
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/treatmentplan/edit/__${register.treatmentPlan.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div th:unless="${register}" class="row">
                 <div class="col-sm-12 col-md-12">

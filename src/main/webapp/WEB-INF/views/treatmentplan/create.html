@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">New Plan Rx</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">New Treatment plan</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method='POST' th:object="${treatmentPlan}"
+                          th:action="@{/treatmentplan/create}">
+
+                        <fieldset>
+
+                            <input type="hidden" th:field="*{register.id}"/>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" th:text="#{label.treatment.plan.plan}">
+                                    Plan
+                                </label>
+
+                                <div class="col-sm-3">
+
+                                    <select class="form-control" th:field="*{treatmentPlanType}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="plan : ${T(org.jugbd.mnet.domain.enums.TreatmentPlanType).values()}"
+                                                th:value="${plan}"
+                                                th:text="${plan.label}"
+                                                th:selected="${plan == treatmentPlan.treatmentPlanType}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('treatmentPlanType')}">
+                                        <span th:errors="*{treatmentPlanType}">Required</span>
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div id="treatmentPlanDiv">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.treatment.plan.stsgOrFtsg}">
+                                        stsgOrFtsg
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{stsgOrFtsg}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('stsgOrFtsg')}">
+                                            <span th:errors="*{stsgOrFtsg}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                           th:text="#{label.treatment.plan.flapPedicled}">
+                                        flapPedicled
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{flapPedicled}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('flapPedicled')}">
+                                            <span th:errors="*{flapPedicled}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.treatment.plan.freeFlap}">
+                                        freeFlap
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{freeFlap}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('freeFlap')}">
+                                            <span th:errors="*{freeFlap}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                           th:text="#{label.treatment.plan.tissueExpansion}">
+                                        tissueExpansion
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{tissueExpansion}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('tissueExpansion')}">
+                                            <span th:errors="*{tissueExpansion}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                           th:text="#{label.treatment.plan.fasciotomyOrEscharotomy}">
+                                        fasciotomyOrEscharotomy
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{fasciotomyOrEscharotomy}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('fasciotomyOrEscharotomy')}">
+                                            <span th:errors="*{fasciotomyOrEscharotomy}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                           th:text="#{label.treatment.plan.implantInsertion}">
+                                        implantInsertion
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{implantInsertion}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('implantInsertion')}">
+                                            <span th:errors="*{implantInsertion}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"
+                                           th:text="#{label.treatment.plan.repairReconstructionPart}">
+                                        repairReconstructionPart
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="form-control checkbox input-sm"
+                                               th:field="*{repairReconstructionPart}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('repairReconstructionPart')}">
+                                            <span th:errors="*{repairReconstructionPart}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Comments </label>
+
+                                    <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" rows="3" th:field="*{comment}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
+                                            <span th:errors="*{comment}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/treatmentplan/cancel/__${treatmentPlan.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+
+        addDropdownChangeEvent("treatmentPlanType","treatmentPlanDiv");
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableOperativeBoxIfOPERATIVE(selectId, commentDiv);
+            });
+        }
+
+        function enableOperativeBoxIfOPERATIVE(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === 'OPERATIVE') {
+                enableOperativeBox(true, commentId)
+            } else {
+                enableOperativeBox(false, commentId)
+            }
+        }
+
+        function enableOperativeBox(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>

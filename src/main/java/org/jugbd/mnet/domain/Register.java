@@ -90,6 +90,10 @@ public class Register extends PersistentObject {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
+    @OneToOne
+    @JoinColumn(name = "treatment_plan_id")
+    private TreatmentPlan treatmentPlan;
+
     @Valid
     @Embedded
     private PatientContact patientContact;
@@ -236,6 +240,14 @@ public class Register extends PersistentObject {
 
     public void setDiagnosis(Diagnosis diagnosis) {
         this.diagnosis = diagnosis;
+    }
+
+    public TreatmentPlan getTreatmentPlan() {
+        return treatmentPlan;
+    }
+
+    public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
     }
 
     public PatientContact getPatientContact() {
