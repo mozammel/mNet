@@ -4,15 +4,16 @@ import org.jugbd.mnet.dao.ComplicationManagementDao;
 import org.jugbd.mnet.domain.ComplicationManagement;
 import org.jugbd.mnet.domain.Register;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 /**
  * @author Bazlur Rahman Rokon
  * @date 12/26/14.
  */
 @Service
-@Repository
+@Transactional
 public class ComplicationManagementServiceImpl implements ComplicationManagementService {
 
     @Autowired
