@@ -66,8 +66,6 @@ public class Patient extends PersistentObject implements Auditable {
 
     private String nid; // National Identification No
 
-    private EconomicCondition economicCondition;
-
     @Valid
     @Embedded
     private Address address;
@@ -313,14 +311,6 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setNid(String nid) {
         this.nid = nid;
-    }
-
-    public EconomicCondition getEconomicCondition() {
-        return economicCondition;
-    }
-
-    public void setEconomicCondition(EconomicCondition economicCondition) {
-        this.economicCondition = economicCondition;
     }
 
     @Override

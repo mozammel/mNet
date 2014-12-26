@@ -195,27 +195,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" th:text="#{label.socio.economic.condition}">
-                            Socio Economic Condition
-                        </label>
-
-                        <div class="col-sm-3">
-                            <select class="form-control"  th:field="*{economicCondition}">
-                                <option value="" th:text="#{common.select.prompt}"></option>
-                                <option th:each="item : ${T(org.jugbd.mnet.domain.enums.EconomicCondition).values()}"
-                                        th:value="${item}"
-                                        th:text="${item.label}"
-                                        th:selected="${item == patient.economicCondition}">
-                                </option>
-                            </select>
-
-                            <p class="text-danger" th:if="${#fields.hasErrors('economicCondition')}">
-                                <span th:errors="*{economicCondition}">Required</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
                             Address
                         </label>
