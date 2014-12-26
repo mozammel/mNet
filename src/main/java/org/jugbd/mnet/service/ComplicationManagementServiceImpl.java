@@ -39,6 +39,7 @@ public class ComplicationManagementServiceImpl implements ComplicationManagement
             complicationManagementFromDb.setPostOperativeComplication(complicationManagement.getPostOperativeComplication());
             complicationManagementFromDb.setManagementOfComplication(complicationManagement.getManagementOfComplication());
             complicationManagementFromDb.setOutcome(complicationManagement.getOutcome());
+            complicationManagementFromDb.setComment(complicationManagement.getComment());
             complicationManagementFromDb.setHospitalStays(complicationManagement.getHospitalStays());
             complicationManagementFromDb.setCaseSummery(complicationManagement.getCaseSummery());
 

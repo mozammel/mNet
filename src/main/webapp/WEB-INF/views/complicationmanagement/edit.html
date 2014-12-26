@@ -77,6 +77,23 @@
                                 </div>
                             </div>
 
+                            <div id="commentDiv">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label required-field"
+                                           th:text="#{label.complication.management.comment}">
+                                        Comment
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <textarea type="number" class="form-control" th:field="*{comment}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
+                                            <span th:errors="*{comment}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"
                                        th:text="#{label.complication.management.hospitalStays}">
@@ -123,6 +140,52 @@
         </div>
     </div>
 </section>
+
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+
+        initialize();
+
+        var condition = "OTHER";
+
+        function initialize() {
+            var selectedItem = jQuery("select[id='outcome'] option:selected").val();
+
+            if (!(selectedItem != condition)) {
+                enableOperativeBox(false, "commentDiv");
+            }
+
+            addDropdownChangeEvent("outcome", "commentDiv");
+        }
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableCommentBoxIfOutcomeOther(selectId, commentDiv);
+            });
+        }
+
+        function enableCommentBoxIfOutcomeOther(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === condition) {
+                enableOperativeBox(true, commentId)
+            } else {
+                enableOperativeBox(false, commentId)
+            }
+        }
+
+        function enableOperativeBox(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+    </script>
+</div>
 
 </body>
 </html>

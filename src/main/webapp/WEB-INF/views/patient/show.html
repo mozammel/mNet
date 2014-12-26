@@ -614,7 +614,11 @@
 
                                         <tr>
                                             <td>Outcome</td>
-                                            <td th:text="${register.complicationManagement.outcome}?${register.complicationManagement.outcome.label}"></td>
+                                            <td>
+                                                <span th:text="${register.complicationManagement.outcome}?${register.complicationManagement.outcome.label}"></span>
+                                                <span th:if="${#strings.toString(register.complicationManagement.outcome) == 'OTHER' }"
+                                                      th:text="${register.complicationManagement.comment}? ' - ' + ${register.complicationManagement.comment}"></span>
+                                            </td>
                                         </tr>
 
                                         <tr>

@@ -32,7 +32,10 @@ public class ComplicationManagement extends PersistentObject implements Auditabl
     @NotNull
     @Column(length = 12)
     @Enumerated(EnumType.STRING)
-    private Outcome outcome; //TODO comment filed if other
+    private Outcome outcome;
+
+    @Size(max = 100)
+    private String comment; // if others
 
     @NotNull
     private Integer hospitalStays;
@@ -83,6 +86,14 @@ public class ComplicationManagement extends PersistentObject implements Auditabl
 
     public void setOutcome(Outcome outcome) {
         this.outcome = outcome;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Integer getHospitalStays() {
