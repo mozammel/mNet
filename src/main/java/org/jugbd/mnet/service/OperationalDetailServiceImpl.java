@@ -25,7 +25,7 @@ public class OperationalDetailServiceImpl implements OperationalDetailService {
     @Override
     public OperationalDetail save(OperationalDetail operationalDetail) {
         if (operationalDetail.getId() == null) {
-            Register register = registerService.findOne(operationalDetail.getId());
+            Register register = registerService.findOne(operationalDetail.getRegister().getId());
 
             operationalDetail.setRegister(register);
 

@@ -1,8 +1,14 @@
 package org.jugbd.mnet.domain;
 
-import org.joda.time.DateTime;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.jugbd.mnet.domain.enums.RequiredNotRequired;
+import org.jugbd.mnet.domain.enums.YesNo;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -15,19 +21,40 @@ public class OperationalDetail extends PersistentObject implements Auditable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private DateTime dateTime;
+    @NotNull
+    @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm a")
+    private Date dateTime;
+
+    @NotEmpty
     private String anaesthesia;
+
+    @NotEmpty
     private String nameOfOperation;
     private String indication;
+
+    @NotEmpty
     private String nameOfSurgeon;
+
+    @NotEmpty
     private String nameOfAnaesthetist;
     private String findings;
     private String incision;
     private String donorSite;
     private String plasty;
     private String recipientSite;
-    private Boolean bloodTransfusion; // Required- Not Required
-    private Boolean drain;
+
+    @NotNull
+    @Column(length = 15)
+    @Enumerated(EnumType.STRING)
+    private RequiredNotRequired bloodTransfusion; // Required- Not Required
+
+    @NotNull
+    @Column(length = 5)
+    @Enumerated(EnumType.STRING)
+    private YesNo drain;
+
+    @Size(max = 1000)
+    private String comment;
 
     @ManyToOne
     private Register register;
@@ -41,11 +68,11 @@ public class OperationalDetail extends PersistentObject implements Auditable {
         this.id = id;
     }
 
-    public DateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(DateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -129,19 +156,19 @@ public class OperationalDetail extends PersistentObject implements Auditable {
         this.recipientSite = recipientSite;
     }
 
-    public Boolean getBloodTransfusion() {
+    public RequiredNotRequired getBloodTransfusion() {
         return bloodTransfusion;
     }
 
-    public void setBloodTransfusion(Boolean bloodTransfusion) {
+    public void setBloodTransfusion(RequiredNotRequired bloodTransfusion) {
         this.bloodTransfusion = bloodTransfusion;
     }
 
-    public Boolean getDrain() {
+    public YesNo getDrain() {
         return drain;
     }
 
-    public void setDrain(Boolean drain) {
+    public void setDrain(YesNo drain) {
         this.drain = drain;
     }
 
@@ -151,5 +178,13 @@ public class OperationalDetail extends PersistentObject implements Auditable {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

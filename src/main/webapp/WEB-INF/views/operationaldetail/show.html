@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Operational Detail</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Operational Detail</div>
+                <div class="panel-body">
+
+                    <table class="table table-condensed">
+                        <tr>
+                            <td> Date And Time</td>
+                            <td th:text="${operationalDetail.dateTime} ? ${#dates.format(operationalDetail.dateTime,'dd MMMM yyyy h:mm a')}"></td>
+                        </tr>
+                        <tr>
+                            <td> Anaesthesia</td>
+                            <td th:text="${operationalDetail.anaesthesia} ? ${operationalDetail.anaesthesia}"></td>
+                        </tr>
+                        <tr>
+                            <td> Name Of Operation</td>
+                            <td th:text="${operationalDetail.nameOfOperation} ? ${operationalDetail.nameOfOperation}"></td>
+                        </tr>
+                        <tr>
+                            <td> Indication</td>
+                            <td th:text="${operationalDetail.indication} ? ${operationalDetail.indication}"></td>
+                        </tr>
+                        <tr>
+                            <td> Name Of Surgeon</td>
+                            <td th:text="${operationalDetail.nameOfSurgeon} ? ${operationalDetail.nameOfSurgeon}"></td>
+                        </tr>
+                        <tr>
+                            <td> Name Of Anaesthetist</td>
+                            <td th:text="${operationalDetail.nameOfAnaesthetist} ? ${operationalDetail.nameOfAnaesthetist}"></td>
+                        </tr>
+                        <tr>
+                            <td> Findings</td>
+                            <td th:text="${operationalDetail.findings} ? ${operationalDetail.findings}"></td>
+                        </tr>
+                        <tr>
+                            <td> Incision</td>
+                            <td th:text="${operationalDetail.incision} ? ${operationalDetail.incision}"></td>
+                        </tr>
+                        <tr>
+                            <td> Donor Site</td>
+                            <td th:text="${operationalDetail.donorSite} ? ${operationalDetail.donorSite}"></td>
+                        </tr>
+                        <tr>
+                            <td> Plasty</td>
+                            <td th:text="${operationalDetail.plasty} ? ${operationalDetail.plasty}"></td>
+                        </tr>
+                        <tr>
+                            <td> Recipient Site</td>
+                            <td th:text="${operationalDetail.recipientSite} ? ${operationalDetail.recipientSite}"></td>
+                        </tr>
+                        <tr>
+                            <td> Blood Transfusion</td>
+                            <td th:text="${operationalDetail.bloodTransfusion} ? ${operationalDetail.bloodTransfusion.label}"></td>
+                        </tr>
+                        <tr>
+                            <td> Drain</td>
+                            <td th:text="${operationalDetail.drain} ? ${operationalDetail.drain.label}"></td>
+                        </tr>
+                        <tr>
+                            <td> Comments</td>
+                            <td th:text="${operationalDetail.comment} ? ${operationalDetail.comment}"></td>
+                        </tr>
+                    </table>
+
+                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
+                                th:text="#{label.back}">Back</span> </a>
+
+                        <a href="#" class="btn btn-info"
+                           th:href="@{/operationaldetail/edit/__${operationalDetail.id}__}"> <span
+                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

@@ -551,6 +551,42 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Operational Details</div>
+                            <div class="panel-body">
+                                <div th:if="${register.operationalDetails.size() == 0}">
+                                    <h3 class="text-primary">No Operational Details found</h3>
+                                </div>
+                                <div th:if="${register.operationalDetails.size() > 0}">
+
+                                <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Date And Time</th>
+                                            <th>Name Of Operation</th>
+                                            <th>Findings</th>
+                                            <th>#</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="operationalDetail : ${register.operationalDetails}">
+                                            <td th:text="${operationalDetail.dateTime} ? ${#dates.format(operationalDetail.dateTime,'dd MMMM yyyy h:mm a')}"></td>
+                                            <td th:text="${operationalDetail.nameOfOperation} ? ${operationalDetail.nameOfOperation}"> </td>
+                                            <td th:text="${operationalDetail.findings} ? ${operationalDetail.findings}"></td>
+                                            <td><a th:href="@{/operationaldetail/show/__${operationalDetail.id}__}">Details</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a class="btn btn-info pull-right"
+                                   th:href="@{/operationaldetail/create/__${register.id}__}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div th:unless="${register}" class="row">

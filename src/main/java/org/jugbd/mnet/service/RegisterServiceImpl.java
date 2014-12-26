@@ -57,6 +57,7 @@ public class RegisterServiceImpl implements RegisterService {
 
             //registers.get(0).getDiagnoses().size(); // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
             registers.get(0).getVitals().size();
+            registers.get(0).getOperationalDetails().size();
 
             return registers.get(0);
         }

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/bootstrap-datetimepicker.css" th:href="@{/resources/css/bootstrap-datetimepicker.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Edit Operational Detail</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Operational Details</div>
+                <div class="panel-body">
+
+                    <form class="form-horizontal" method='POST' th:object="${operationalDetail}"
+                          th:action="@{/operationaldetail/edit}">
+
+                        <fieldset>
+
+                            <input type="hidden" th:field="*{register.id}"/>
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Date And Time </label>
+
+                                <div class="col-sm-3">
+
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" th:field="*{dateTime}"/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('dateTime')}">
+                                        <span th:errors="*{dateTime}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Anaesthesia </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control"  th:field="*{anaesthesia}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('anaesthesia')}">
+                                        <span th:errors="*{anaesthesia}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Name Of Operation </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control"  th:field="*{nameOfOperation}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('nameOfOperation')}">
+                                        <span th:errors="*{nameOfOperation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Indication </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control"  th:field="*{indication}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('indication')}">
+                                        <span th:errors="*{indication}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Name Of Surgeon </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control"  th:field="*{nameOfSurgeon}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('nameOfSurgeon')}">
+                                        <span th:errors="*{nameOfSurgeon}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Name Of Anaesthetist</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{nameOfAnaesthetist}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('nameOfAnaesthetist')}">
+                                        <span th:errors="*{nameOfAnaesthetist}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Findings</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{findings}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('findings')}">
+                                        <span th:errors="*{findings}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Incision</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{incision}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('incision')}">
+                                        <span th:errors="*{incision}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Donor Site</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{donorSite}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('donorSite')}">
+                                        <span th:errors="*{donorSite}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Plasty</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{plasty}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('plasty')}">
+                                        <span th:errors="*{plasty}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Recipient Site</label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" th:field="*{recipientSite}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('recipientSite')}">
+                                        <span th:errors="*{recipientSite}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Blood Transfusion</label>
+
+                                <div class="col-sm-3">
+
+                                    <div th:each="item : ${T(org.jugbd.mnet.domain.enums.RequiredNotRequired).values()}" class="radio">
+                                        <input type="radio" th:value="${item}" th:field="*{bloodTransfusion}" />
+                                        <label  th:text="${item.label}">Required</label>
+                                    </div>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodTransfusion')}">
+                                        <span th:errors="*{bloodTransfusion}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Drain</label>
+
+                                <div class="col-sm-3">
+
+                                    <div  th:each="item : ${T(org.jugbd.mnet.domain.enums.YesNo).values()}" class="radio">
+                                        <input type="radio" th:value="${item}" th:field="*{drain}" />
+                                        <label th:text="${item.label}">Required</label>
+                                    </div>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodTransfusion')}">
+                                        <span th:errors="*{bloodTransfusion}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Comments </label>
+
+                                <div class="col-sm-3">
+                                    <textarea type="text" class="form-control" rows="3" th:field="*{comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
+                                        <span th:errors="*{comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript" src="../../../resources/js/moment.js"
+            th:src="@{/resources/js/moment.js}"></script>
+
+    <script type="application/javascript" src="../../../resources/js/bootstrap-datetimepicker.min.js"
+            th:src="@{/resources/js/bootstrap-datetimepicker.min.js}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+</div>
+
+</body>
+</html>
