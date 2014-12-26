@@ -101,6 +101,10 @@ public class Register extends PersistentObject {
     @JoinColumn(name = "complication_management")
     private ComplicationManagement complicationManagement;
 
+    @OneToOne
+    @JoinColumn(name = "life_style_id")
+    private LifeStyle lifeStyle;
+
     @Valid
     @Embedded
     private PatientContact patientContact;
@@ -279,5 +283,13 @@ public class Register extends PersistentObject {
 
     public void setComplicationManagement(ComplicationManagement complicationManagement) {
         this.complicationManagement = complicationManagement;
+    }
+
+    public LifeStyle getLifeStyle() {
+        return lifeStyle;
+    }
+
+    public void setLifeStyle(LifeStyle lifeStyle) {
+        this.lifeStyle = lifeStyle;
     }
 }
