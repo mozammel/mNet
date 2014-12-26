@@ -198,8 +198,11 @@
 
         function initialize() {
             var selectedItem = jQuery("select[id='treatmentPlanType'] option:selected").val();
-            if (selectedItem !== 'OPERATIVE') {
-                enableOperativeBox(false, "treatmentPlanDiv");
+
+            if (selectedItem === 'OPERATIVE') {
+                enableOperativeBox(true, "treatmentPlanDiv");
+            }else{
+                enableOperativeBox(false, "treatmentPlanDiv")
             }
 
             addDropdownChangeEvent("treatmentPlanType", "treatmentPlanDiv");

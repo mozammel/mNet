@@ -193,16 +193,28 @@
 
 <div layout:fragment="custom-scripts">
     <script type="application/javascript">
+        initialize();
 
-        addDropdownChangeEvent("treatmentPlanType","treatmentPlanDiv");
+        function initialize() {
+            var selectedItem = jQuery("select[id='treatmentPlanType'] option:selected").val();
+
+            if (selectedItem === 'OPERATIVE') {
+                enableOperativeBox(true, "treatmentPlanDiv");
+            }else{
+                enableOperativeBox(false, "treatmentPlanDiv")
+            }
+
+            addDropdownChangeEvent("treatmentPlanType", "treatmentPlanDiv");
+        }
+
 
         function addDropdownChangeEvent(selectId, commentDiv) {
             jQuery("#" + selectId).change(function () {
-                enableOperativeBoxIfOPERATIVE(selectId, commentDiv);
+                enableOperativeBoxIfOperative(selectId, commentDiv);
             });
         }
 
-        function enableOperativeBoxIfOPERATIVE(selectId, commentId) {
+        function enableOperativeBoxIfOperative(selectId, commentId) {
 
             var others = jQuery("select[id='" + selectId + "'] option:selected").val();
 
