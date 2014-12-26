@@ -588,6 +588,57 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Complication of Management</div>
+                            <div class="panel-body">
+                                <div th:if="${register.complicationManagement == null}">
+                                    <h3 class="text-primary">No Complication of Management found</h3>
+                                    <a class="btn btn-info pull-right"
+                                       th:href="@{/complicationmanagement/create/__${register.id}__}"><span
+                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.complicationManagement != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>Post Operative Complication</td>
+                                            <td th:text="${register.complicationManagement.postOperativeComplication}?${register.complicationManagement.postOperativeComplication}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Management of Complication</td>
+                                            <td th:text="${register.complicationManagement.managementOfComplication}?${register.complicationManagement.managementOfComplication}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Outcome</td>
+                                            <td th:text="${register.complicationManagement.outcome}?${register.complicationManagement.outcome.label}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Hospital Stays</td>
+                                            <td th:text="${register.complicationManagement.hospitalStays}?${register.complicationManagement.hospitalStays}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Case summery</td>
+                                            <td th:text="${register.complicationManagement.caseSummery}?${register.complicationManagement.caseSummery}"></td>
+                                        </tr>
+
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/complicationmanagement/edit/__${register.complicationManagement.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div th:unless="${register}" class="row">
                 <div class="col-sm-12 col-md-12">

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.Outcome;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -28,11 +29,12 @@ public class ComplicationManagement extends PersistentObject implements Auditabl
     @Size(max = 2000)
     private String managementOfComplication;
 
-    @NotEmpty
+    @NotNull
     @Column(length = 12)
     @Enumerated(EnumType.STRING)
-    private Outcome outcome;
+    private Outcome outcome; //TODO comment filed if other
 
+    @NotNull
     private Integer hospitalStays;
 
     @Size(max = 2000)

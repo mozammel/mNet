@@ -89,7 +89,7 @@ public class MedicalHistoryController {
                          RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
 
-            return "medicalhistory/create";
+            return "medicalhistory/edit";
         }
 
         MedicalHistory saveMedicalHistory = medicalHistoryService.save(medicalHistory);

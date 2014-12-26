@@ -27,7 +27,12 @@ public class ComplicationManagementServiceImpl implements ComplicationManagement
             Register register = registerService.findOne(complicationManagement.getRegister().getId());
             complicationManagement.setRegister(register);
 
-            return complicationManagementDao.save(complicationManagement);
+            ComplicationManagement savedComplicationManagement = complicationManagementDao.save(complicationManagement);
+            register.setComplicationManagement(savedComplicationManagement);
+
+            registerService.save(register);
+
+            return savedComplicationManagement;
         } else {
             ComplicationManagement complicationManagementFromDb = complicationManagementDao.findOne(complicationManagement.getId());
 
