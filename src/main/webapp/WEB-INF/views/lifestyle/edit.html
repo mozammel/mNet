@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Edit Life Style</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Edit Life Style</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method='POST' th:object="${lifeStyle}"
+                          th:action="@{/lifestyle/edit}">
+                        <fieldset>
+                            <input type="hidden" th:field="*{register.id}"/>
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.complication.lifestyle.economicalStatus}">
+                                    Economical Status
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{economicalStatus}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('economicalStatus')}">
+                                        <span th:errors="*{economicalStatus}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.complication.lifestyle.habit}">
+                                    Habit
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" th:field="*{habit}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="item : ${T(org.jugbd.mnet.domain.enums.Habit).values()}"
+                                                th:value="${item}"
+                                                th:text="${item.label}"
+                                                th:selected="${item == lifeStyle.habit}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('habit')}">
+                                        <span th:errors="*{habit}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div id="commentDiv">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label required-field"
+                                           th:text="#{label.complication.lifestyle.otherHabit}">
+                                        Other Habit
+                                    </label>
+
+                                    <div class="col-sm-3">
+                                        <textarea type="number" class="form-control" th:field="*{otherHabit}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('otherHabit')}">
+                                            <span th:errors="*{otherHabit}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.complication.lifestyle.comment}">
+                                    Comment
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
+                                        <span th:errors="*{comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger" th:href="@{/lifestyle/cancel/__${lifeStyle.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+
+        var condition = "OTHER";
+
+        initialize();
+
+        function initialize() {
+            var selectedItem = jQuery("select[id='habit'] option:selected").val();
+
+            if (selectedItem.toUpperCase() === condition) {
+                enableOperativeBox(true, "commentDiv")
+            } else {
+                enableOperativeBox(false, "commentDiv")
+            }
+
+            addDropdownChangeEvent("habit", "commentDiv");
+        }
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableCommentBoxIfOutcomeOther(selectId, commentDiv);
+            });
+        }
+
+        function enableCommentBoxIfOutcomeOther(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === condition) {
+                enableOperativeBox(true, commentId)
+            } else {
+                enableOperativeBox(false, commentId)
+            }
+        }
+
+        function enableOperativeBox(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>

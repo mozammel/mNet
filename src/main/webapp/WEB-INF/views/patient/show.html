@@ -642,6 +642,48 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Life Style</div>
+                            <div class="panel-body">
+                                <div th:if="${register.lifeStyle == null}">
+                                    <h3 class="text-primary">No Life Style record found</h3>
+                                    <a class="btn btn-info pull-right"
+                                       th:href="@{/lifestyle/create/__${register.id}__}"><span
+                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+                                <div th:if="${register.lifeStyle != null}">
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td>Economical Status</td>
+                                            <td th:text="${register.lifeStyle.economicalStatus}?${register.lifeStyle.economicalStatus}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Habit</td>
+                                            <td>
+                                                <span th:text="${register.lifeStyle.habit}?${register.lifeStyle.habit.label}"></span>
+                                                <span th:if="${#strings.toString(register.lifeStyle.habit) == 'OTHER' }"
+                                                      th:text="${register.lifeStyle.otherHabit}? ' - ' + ${register.lifeStyle.otherHabit}"></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Comment</td>
+                                            <td th:text="${register.lifeStyle.comment}?${register.lifeStyle.comment}"></td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                                        <a href="#" class="btn btn-info pull-right"
+                                           th:href="@{/lifestyle/edit/__${register.lifeStyle.id}__}"> <span
+                                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div th:unless="${register}" class="row">
