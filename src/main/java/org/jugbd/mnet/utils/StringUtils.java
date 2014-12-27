@@ -30,4 +30,12 @@ public class StringUtils {
 
         return finalString.toString();
     }
+
+    public static String getTrimmedString(String text, int lengthToTrim) {
+        if (text.length() <= lengthToTrim) {
+            return text;
+        }
+
+        return text.substring(0, lengthToTrim);
+    }
 }

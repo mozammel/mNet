@@ -109,6 +109,10 @@ public class Register extends PersistentObject {
     @JoinColumn(name = "investigation_id")
     private Investigation investigation;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "picture_information_id")
+    private PictureInformation pictureInformation;
+
     @Valid
     @Embedded
     private PatientContact patientContact;
@@ -303,5 +307,13 @@ public class Register extends PersistentObject {
 
     public void setInvestigation(Investigation investigation) {
         this.investigation = investigation;
+    }
+
+    public PictureInformation getPictureInformation() {
+        return pictureInformation;
+    }
+
+    public void setPictureInformation(PictureInformation pictureInformation) {
+        this.pictureInformation = pictureInformation;
     }
 }

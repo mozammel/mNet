@@ -76,6 +76,8 @@ dependencies {
     compile 'joda-time:joda-time:2.4'
     compile 'org.jadira.usertype:usertype.core:3.2.0.GA'
 
+    compile 'commons-io:commons-io:1.4'
+    compile 'commons-fileupload:commons-fileupload:1.2'
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.4.3'

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+
+    <link href="../../../resources/css/lightbox-2.7.1.css" th:href="@{/resources/css/lightbox-2.7.1.css}"
+          rel="stylesheet"/>
+
+    <style type="text/css">
+        .border-box {
+            border: 1px solid #e0ecff;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -khtml-border-radius: 5px;
+        }
+
+        .help-block, .help-block ul {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Picture Information</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Picture Information</div>
+                <div class="panel-body">
+
+                    <fieldset>
+                        <legend>Upload Files</legend>
+
+                        <div th:if="${error}" class="alert alert-danger">
+                            <p th:text="${error}"></p>
+                        </div>
+                        <div th:if="${message}" class="alert alert-info">
+                            <p th:text="${message}"></p>
+                        </div>
+
+                        <form method="POST" enctype="multipart/form-data" role="form" data-toggle="validator"
+                              class="form-horizontal"
+                              th:action="@{/uploadFile?__${_csrf.parameterName}__=__${_csrf.token}__}">
+
+                            <input hidden="hidden" name="registerId" th:value="${register.id}"/>
+
+                            <div class="form-group">
+                                <label for="file-photo" style="margin-bottom: 0" class="col-sm-2 control-label">
+                                    <span>Max. file size: <b>3 MB</b></span>
+                                    <span>,Supported formats: <b>JPG, PNG,PDF, DOC</b></span>
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input name="file" id="file-photo" type="file"
+                                           class="form-control input-sm"
+                                           style="float: left"
+                                           required="required" maxlength="3145728"
+                                           filetypes="jpg,jpeg,png,png,doc,docx"
+                                           data-maxlength-error="Photo size exceeded maximum size of 3 MB"
+                                           data-filetypes-error="Please upload a valid File (JPG / PNG / PDF / DOC / DOCX)"/>
+
+                                    <span class="help-block with-errors"
+                                          style="clear: both; color: #a94442"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fileName" class="col-sm-2 control-label">
+                                    File Name
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control input-sm"
+                                           name="fileName" id="fileName" type="text" required="required"/>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pictureInformationType" class="col-sm-2 control-label">
+                                    File For
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="pictureInformationType"
+                                            required="required"
+                                            id="pictureInformationType">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="item : ${T(org.jugbd.mnet.domain.enums.PictureInformationType).values()}"
+                                                th:value="${item}"
+                                                th:text="${item.label}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-2 control-label">
+                                    Comments
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" name="comment"
+                                              id="comment" type="text"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Upload File</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </fieldset>
+
+                    <hr/>
+
+                    <fieldset>
+                        <legend>Day One</legend>
+                        <div th:if="${pictureInformation.getDayOneAttachments().size() > 0}">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+
+                                    <div th:each="item: ${pictureInformation.getDayOneAttachments()}">
+
+                                        <td>
+                                            <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
+                                                 id="image_div" class="col-md-3 col-lg-3" align="center">
+                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"
+                                                       data-lightbox="photo" th:data-title="${item.fileName}">
+
+                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                             style="max-height: 160px; max-width: 160px"/>
+                                                    </a>
+                                                </div>
+                                                <span th:text="${item.comment} ? ${item.comment}"></span>
+                                            </div>
+
+                                            <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
+
+                                                <div align="center"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"><span
+                                                            th:text="${item.fileName}"></span>
+                                                    </a><br/>
+                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </fieldset>
+                    <hr/>
+
+                    <fieldset>
+                        <legend>Preoperative</legend>
+
+                        <div th:if="${pictureInformation.getPreOperativeAttachments().size() > 0}">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+
+                                    <div th:each="item: ${pictureInformation.getPreOperativeAttachments()}">
+
+                                        <td>
+                                            <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
+                                                 id="image_div" class="col-md-3 col-lg-3" align="center">
+                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"
+                                                       data-lightbox="photo" th:data-title="${item.fileName}">
+
+                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                             style="max-height: 160px; max-width: 160px"/>
+                                                    </a>
+                                                </div>
+                                                <span th:text="${item.comment} ? ${item.comment}"></span>
+                                            </div>
+
+                                            <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
+
+                                                <div align="center"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"><span
+                                                            th:text="${item.fileName}"></span>
+                                                    </a><br/>
+                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <hr/>
+                    <fieldset>
+                        <legend>Pre-Operation</legend>
+                        <div th:if="${pictureInformation.getPreOperationAttachments().size() > 0}">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+
+                                    <div th:each="item: ${pictureInformation.getPreOperationAttachments()}">
+
+                                        <td>
+                                            <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
+                                                 id="image_div" class="col-md-3 col-lg-3" align="center">
+                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"
+                                                       data-lightbox="photo" th:data-title="${item.fileName}">
+
+                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                             style="max-height: 160px; max-width: 160px"/>
+                                                    </a>
+                                                </div>
+                                                <span th:text="${item.comment} ? ${item.comment}"></span>
+                                            </div>
+
+                                            <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
+
+                                                <div align="center"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"><span
+                                                            th:text="${item.fileName}"></span>
+                                                    </a><br/>
+                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <hr/>
+                    <fieldset>
+                        <legend>Postoperative</legend>
+                        <div th:if="${pictureInformation.getPostOperativeAttachments().size() > 0}">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+
+                                    <div th:each="item: ${pictureInformation.getPostOperativeAttachments()}">
+
+                                        <td>
+                                            <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
+                                                 id="image_div" class="col-md-3 col-lg-3" align="center">
+                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"
+                                                       data-lightbox="photo" th:data-title="${item.fileName}">
+
+                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                             style="max-height: 160px; max-width: 160px"/>
+                                                    </a>
+                                                </div>
+                                                <span th:text="${item.comment} ? ${item.comment}"></span>
+                                            </div>
+
+                                            <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
+
+                                                <div align="center"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"><span
+                                                            th:text="${item.fileName}"></span>
+                                                    </a><br/>
+                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <hr/>
+                    <fieldset>
+                        <legend>On Discharge</legend>
+                        <div th:if="${pictureInformation.getOnDischargeAttachments().size() > 0}">
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+
+                                    <div th:each="item: ${pictureInformation.getOnDischargeAttachments()}">
+
+                                        <td>
+                                            <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
+                                                 id="image_div" class="col-md-3 col-lg-3" align="center">
+                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"
+                                                       data-lightbox="photo" th:data-title="${item.fileName}">
+
+                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                             style="max-height: 160px; max-width: 160px"/>
+                                                    </a>
+                                                </div>
+                                                <span th:text="${item.comment} ? ${item.comment}"></span>
+                                            </div>
+
+                                            <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
+
+                                                <div align="center"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <a th:href="@{/file/__${item.id}__}"><span
+                                                            th:text="${item.fileName}"></span>
+                                                    </a><br/>
+                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </table>
+                        </div>
+                    </fieldset>
+
+                    <hr/>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div layout:fragment="custom-scripts">
+
+    <script type="text/javascript" src="../../../resources/js/validator-0.3.0.js"
+            th:src="@{/resources/js/validator-0.3.0.js}"></script>
+    <script src="../../../resources/js/lightbox-2.7.1.js" th:src="@{/resources/js/lightbox-2.7.1.js}"></script>
+    <script src="../../../resources/js/bootstrap-dialog.js" th:src="@{/resources/js/bootstrap-dialog.js}"></script>
+
+    <script type="text/javascript">
+
+        //<![CDATA[
+
+        function upload(form) {
+            uploadFile('photo', form);
+        }
+
+        function removeCV() {
+            BootstrapDialog.show({
+                title: 'Deleting CV!',
+                message: 'Are you sure you want to delete your CV?',
+                type: BootstrapDialog.TYPE_WARNING,
+                buttons: [
+                    {
+                        label: 'Cancel',
+                        action: function (thisDialog) {
+                            thisDialog.close();
+                        }
+                    },
+                    {
+                        label: 'Delete CV',
+                        cssClass: 'btn-warning',
+                        action: function (thisDialog) {
+                            thisDialog.close();
+
+                            $.ajax({
+                                url: 'removeCv',
+                                type: 'POST',
+                                success: function (data) {
+                                    window.location.reload();
+                                },
+                                submit: function (e) {
+                                    e.preventDefault();
+                                },
+                                error: function (request, status, error) {
+                                    BootstrapDialog.alert({
+                                        title: 'Error Deleting CV',
+                                        message: request.responseText + " : " + error,
+                                        type: BootstrapDialog.TYPE_DANGER
+                                    });
+                                }
+                            });
+                        }
+                    }
+                ]
+            });
+        }
+
+        // ]]>
+
+
+    </script>
+</div>
+
+</body>
+</html>
