@@ -95,19 +95,7 @@
 
                                 </table>
 
-                                <a th:href="@{#}" class="btn btn-danger pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
 
-                                <script type="text/javascript">
-                                    function closeRegister() {
-                                        if (confirm("Are you sure? ")) {
-                                            $("#close-register").submit();
-                                        }
-                                    }
-                                </script>
-
-                                <form style="visibility: hidden" th:id="close-register" method="post" action="#"
-                                      th:action="@{/register/close/__${register.id}__}">
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -728,6 +716,32 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="panel panel-default" style="margin: 15px">
+                        <div class="panel-body">
+                            <a th:href="@{#}" class="btn btn-danger pull-right" style="margin-right: 10px"
+                               onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
+
+                            <script type="text/javascript">
+                                function closeRegister() {
+                                    if (confirm("Are you sure? ")) {
+                                        $("#close-register").submit();
+                                    }
+                                }
+                            </script>
+
+                            <form style="visibility: hidden" th:id="close-register" method="post" action="#"
+                                  th:action="@{/register/close/__${register.id}__}">
+                            </form>
+
+
+                            <a href="#" class="btn btn-info pull-left" th:href="@{/patient/cancel}"> <span
+                                    th:text="#{label.back}">Back</span>
+                            </a>
                         </div>
                     </div>
                 </div>
