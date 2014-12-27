@@ -47,7 +47,6 @@
         <security:intercept-url pattern="/patient/cancel" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
 
         <security:intercept-url pattern="/patient/*" access="hasRole('ROLE_USER,ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/diagnosis/**" access="hasRole('ROLE_USER,ROLE_ADMIN')"/>
 
     </security:http>
 
