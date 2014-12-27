@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user")
+@Secured("ROLE_ADMIN")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 

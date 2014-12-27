@@ -7,6 +7,7 @@ import org.jugbd.mnet.service.VitalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
  * @since 10/17/14.
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping(value = "vital")
 public class VitalController {
     private static final Logger log = LoggerFactory.getLogger(VitalController.class);

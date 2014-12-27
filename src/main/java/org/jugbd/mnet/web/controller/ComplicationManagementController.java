@@ -1,13 +1,11 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.dao.ComplicationManagementDao;
 import org.jugbd.mnet.domain.ComplicationManagement;
-import org.jugbd.mnet.domain.MedicalHistory;
 import org.jugbd.mnet.domain.Register;
-import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.service.ComplicationManagementService;
 import org.jugbd.mnet.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +21,7 @@ import javax.validation.Valid;
  * @date 12/26/14.
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping("complicationmanagement")
 public class ComplicationManagementController {
     @Autowired

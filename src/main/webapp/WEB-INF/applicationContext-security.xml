@@ -12,8 +12,6 @@
 
     <context:component-scan base-package="org.jugbd.mnet.security"/>
 
-    <security:global-method-security pre-post-annotations="enabled"/>
-
     <security:http auto-config="true" use-expressions="true">
         <security:form-login authentication-failure-url="/login-error"
                              username-parameter="username"
@@ -48,14 +46,9 @@
         <security:intercept-url pattern="/patient/show/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
         <security:intercept-url pattern="/patient/cancel" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
 
-        <security:intercept-url pattern="/admissionInfo/create" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/admissionInfo/edit/*" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/admissionInfo/save" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/admissionInfo/update" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/admissionInfo/show/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/patient/*" access="hasRole('ROLE_USER,ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/diagnosis/**" access="hasRole('ROLE_USER,ROLE_ADMIN')"/>
 
-        <security:intercept-url pattern="/patient/*" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/diagnosis/*" access="hasRole('ROLE_ADMIN')"/>
     </security:http>
 
     <security:authentication-manager alias="authenticationManager">

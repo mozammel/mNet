@@ -7,6 +7,7 @@ import org.jugbd.mnet.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
  * @author Mushfekur Rahman (mushfek0001)
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping("/diagnosis")
 public class DiagnosisController {
 

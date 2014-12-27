@@ -10,6 +10,7 @@ import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,7 @@ import java.util.Date;
  * @date 12/26/14.
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping("operationaldetail")
 public class OperationalDetailController {
 

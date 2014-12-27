@@ -5,6 +5,7 @@ import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.service.InvestigationService;
 import org.jugbd.mnet.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
  * @date 12/27/14.
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping("investigation")
 public class InvestigationController {
 

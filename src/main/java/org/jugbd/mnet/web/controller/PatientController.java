@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,7 @@ import java.util.*;
  * @author ronygomes
  */
 @Controller
+@Secured("ROLE_ADMIN, ROLE_USER")
 @RequestMapping("/patient")
 public class PatientController {
     private static final Logger log = LoggerFactory.getLogger(PatientController.class);
