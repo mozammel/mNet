@@ -95,4 +95,10 @@ public class PictureInformationController {
         return pictureInformationService.getUploadedFileAsResponseEntity(attachmentId);
     }
 
+    @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
+    public String cancel(@PathVariable Long registerId) {
+
+        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+    }
+
 }
