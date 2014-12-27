@@ -81,11 +81,12 @@
 
                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
 
-                        <a href="#" class="btn btn-info"
+                        <a href="#" class="btn btn-info  pull-left"
                            th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
+                                class="glyphicon glyphicon-arrow-left"></span> <span
                                 th:text="#{label.back}">Back</span> </a>
 
-                        <a href="#" class="btn btn-info"
+                        <a href="#" class="btn btn-info pull-right"
                            th:href="@{/operationaldetail/edit/__${operationalDetail.id}__}"> <span
                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                     </div>
