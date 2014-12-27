@@ -28,7 +28,7 @@ import java.util.Date;
  * @since 10/14/14.
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("register")
 public class RegisterController {
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);

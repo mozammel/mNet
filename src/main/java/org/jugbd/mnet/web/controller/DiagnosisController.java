@@ -22,7 +22,7 @@ import javax.validation.Valid;
  * @author Mushfekur Rahman (mushfek0001)
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/diagnosis")
 public class DiagnosisController {
 

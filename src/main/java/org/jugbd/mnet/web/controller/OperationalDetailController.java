@@ -30,7 +30,7 @@ import java.util.Date;
  * @date 12/26/14.
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("operationaldetail")
 public class OperationalDetailController {
 

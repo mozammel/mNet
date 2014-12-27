@@ -24,7 +24,7 @@ import javax.validation.Valid;
  * @date 11/27/2014.
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/medicalhistory")
 public class MedicalHistoryController {
     private static Logger log = LoggerFactory.getLogger(MedicalHistoryController.class);

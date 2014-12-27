@@ -34,7 +34,7 @@ import java.util.*;
  * @author ronygomes
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/patient")
 public class PatientController {
     private static final Logger log = LoggerFactory.getLogger(PatientController.class);

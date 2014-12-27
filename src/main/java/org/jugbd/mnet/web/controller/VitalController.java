@@ -23,7 +23,7 @@ import javax.validation.Valid;
  * @since 10/17/14.
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(value = "vital")
 public class VitalController {
     private static final Logger log = LoggerFactory.getLogger(VitalController.class);

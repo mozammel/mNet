@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @date 12/27/14.
  */
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("investigation")
 public class InvestigationController {
 

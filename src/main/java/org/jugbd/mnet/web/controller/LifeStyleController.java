@@ -22,7 +22,7 @@ import javax.validation.Valid;
  */
 
 @Controller
-@Secured("ROLE_ADMIN, ROLE_USER")
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("lifestyle")
 public class LifeStyleController {
 
