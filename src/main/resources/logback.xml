@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true" scan="true" scanPeriod="5 seconds">
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/tmp/mNet.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>/tmp/mNet.log.%d.gz</fileNamePattern>
+
+            <!-- keep 180 days' worth of history -->
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date %level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>smtp.gmail.com</smtpHost>
+        <smtpPort>587</smtpPort>
+        <STARTTLS>true</STARTTLS>
+        <username>alert.mnet.services@gmail.net</username>
+        <password>jf147852#23SWE</password>
+        <asynchronousSending>true</asynchronousSending>
+        <to>alert.mnet.services@gmail.net</to>
+        <subject>mNet App Alert %m</subject>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%date{ISO8601} %-5level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} %class.%method\(%file:%line\) - %msg %n</Pattern>
+        </layout>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="EMAIL"/>
+    </root>
+
+</configuration>

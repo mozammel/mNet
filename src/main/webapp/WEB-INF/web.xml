@@ -12,6 +12,10 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
     <!-- Processes application requests -->
     <servlet>
         <servlet-name>appServlet</servlet-name>
@@ -48,6 +52,16 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>MdcFilter</filter-name>
+        <filter-class>org.jugbd.mnet.filter.MdcFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MdcFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->
     <welcome-file-list>
