@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Investigation</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Investigation</div>
+                <div class="panel-body">
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th>#</th>
+                        <th>TC</th>
+                        <th>DC</th>
+                        <th>HB</th>
+                        <th>ESR</th>
+                        <th>PCV</th>
+                        <th>Comment</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Blood CBC</td>
+                            <td th:text="${investigation.bloodCbc.tc}? ${investigation.bloodCbc.tc}"></td>
+                            <td th:text="${investigation.bloodCbc.dc}? ${investigation.bloodCbc.dc}"></td>
+                            <td th:text="${investigation.bloodCbc.hb}? ${investigation.bloodCbc.hb}"></td>
+                            <td th:text="${investigation.bloodCbc.esr}? ${investigation.bloodCbc.esr}"></td>
+                            <td th:text="${investigation.bloodCbc.pcv}? ${investigation.bloodCbc.pcv}"></td>
+                            <td th:text="${investigation.bloodCbc.comment}? ${investigation.bloodCbc.comment}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th>#</th>
+                        <th>Name Of Organism</th>
+                        <th>Sensitive Antibiotic</th>
+                        <th>Comment</th>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Blood C/S</td>
+                            <td th:text="${investigation.bloodCs.nameOfOrganism}? ${investigation.bloodCs.nameOfOrganism}"></td>
+                            <td th:text="${investigation.bloodCs.sensitiveAntibiotic}? ${investigation.bloodCs.sensitiveAntibiotic}"></td>
+                            <td th:text="${investigation.bloodCs.comment}? ${investigation.bloodCs.comment}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <hr/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th>#</th>
+                        <th>Name Of Organism</th>
+                        <th>Sensitive Antibiotic</th>
+                        <th>Comment</th>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Wound C/S</td>
+                            <td th:text="${investigation.woundCs.nameOfOrganism}? ${investigation.woundCs.nameOfOrganism}"></td>
+                            <td th:text="${investigation.woundCs.sensitiveAntibiotic}? ${investigation.woundCs.sensitiveAntibiotic}"></td>
+                            <td th:text="${investigation.woundCs.comment}? ${investigation.woundCs.comment}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <hr/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th>#</th>
+                        <th>Sodium (Na)</th>
+                        <th>Chlorine (Cl)</th>
+                        <th>Potassium (K)</th>
+                        <th>Bicarbonate (HCO3)</th>
+                        <th>Calcium (Ca)</th>
+                        <th>Comment</th>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Electrolyte</td>
+                            <td th:text="${investigation.electrolyte.sodium}? ${investigation.electrolyte.sodium}"></td>
+                            <td th:text="${investigation.electrolyte.chlorine}? ${investigation.electrolyte.chlorine}"></td>
+                            <td th:text="${investigation.electrolyte.potassium}? ${investigation.electrolyte.potassium}"></td>
+                            <td th:text="${investigation.electrolyte.bicarbonate}? ${investigation.electrolyte.bicarbonate}"></td>
+                            <td th:text="${investigation.electrolyte.calcium}? ${investigation.electrolyte.calcium}"></td>
+                            <td th:text="${investigation.electrolyte.comment}? ${investigation.electrolyte.comment}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <hr/>
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th>#</th>
+                        <th>Patient</th>
+                        <th>Control</th>
+                        <th>IN Index</th>
+                        <th>Comment</th>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PT</td>
+                            <td th:text="${investigation.pt.patient}? ${investigation.pt.patient}"></td>
+                            <td th:text="${investigation.pt.control}? ${investigation.pt.control}"></td>
+                            <td th:text="${investigation.pt.inIndex}? ${investigation.pt.inIndex}"></td>
+                            <td th:text="${investigation.pt.comment}? ${investigation.pt.comment}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <hr/>
+                    <table class="table table-condensed table-bordered">
+
+                        <thead>
+                        <th>#</th>
+                        <th>#</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td width="40%">RBS</td>
+                            <td th:text="${investigation.rbs}? ${investigation.rbs}"></td>
+                        </tr>
+
+                        <tr>
+                            <td>S. Creatinine</td>
+                            <td th:text="${investigation.serumCreatinine}? ${investigation.serumCreatinine}"></td>
+                        </tr>
+                        <tr>
+                            <td>S. Albumin</td>
+                            <td th:text="${investigation.serumAlbumin}? ${investigation.serumAlbumin}"></td>
+                        </tr>
+                        <tr>
+                            <td>S. Total Protein</td>
+                            <td th:text="${investigation.sTotalProtein}? ${investigation.sTotalProtein}"></td>
+                        </tr>
+                        <tr>
+                            <td>A/G Ratio</td>
+                            <td th:text="${investigation.albuminGlobulinRatio}? ${investigation.albuminGlobulinRatio}"></td>
+                        </tr>
+
+                        <tr>
+                            <td>SGPT</td>
+                            <td th:text="${investigation.sgpt}? ${investigation.sgpt}"></td>
+                        </tr>
+                        <tr>
+                            <td>Al phos</td>
+                            <td th:text="${investigation.alphos}? ${investigation.alphos}"></td>
+                        </tr>
+                        <tr>
+                            <td>APTT</td>
+                            <td th:text="${investigation.aptt}? ${investigation.aptt}"></td>
+                        </tr>
+
+                        <tr>
+                            <td>FDP</td>
+                            <td th:text="${investigation.fdp}? ${investigation.fdp}"></td>
+                        </tr>
+                        <tr>
+                            <td>D-Dimer</td>
+                            <td th:text="${investigation.dDimer}? ${investigation.dDimer}"></td>
+                        </tr>
+                        <tr>
+                            <td>C-ReactiveProtein</td>
+                            <td th:text="${investigation.cReactiveProtein}? ${investigation.cReactiveProtein}"></td>
+                        </tr>
+                        <tr>
+                            <td>X-Ray/USG</td>
+                            <td th:text="${investigation.xRayUsg}? ${investigation.xRayUsg}"></td>
+                        </tr>
+                        <tr>
+                            <td> MRI/MRA/CT/Echo/E.C.G</td>
+                            <td th:text="${investigation.mriMraCtEchoEcg}? ${investigation.mriMraCtEchoEcg}"></td>
+                        </tr>
+                        <tr>
+                            <td>Duplex Scan/ Doppler Study</td>
+                            <td th:text="${investigation.duplexScanDopplerStudy}? ${investigation.duplexScanDopplerStudy}"></td>
+                        </tr>
+                        <tr>
+                            <td>FNAC / Histopathology</td>
+                            <td th:text="${investigation.fnacHistopathology}? ${investigation.fnacHistopathology}"></td>
+                        </tr>
+                        <tr>
+                            <td>Other Investigation</td>
+                            <td th:text="${investigation.otherInvestigation}? ${investigation.otherInvestigation}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+
+                        <a href="#" class="btn btn-info  pull-left"
+                           th:href="@{/investigation/cancel/__${investigation.register.id}__}"> <span
+                                class="glyphicon glyphicon-arrow-left"></span> <span
+                                th:text="#{label.back}">Back</span> </a>
+
+                        <a href="#" class="btn btn-info pull-right"
+                           th:href="@{/investigation/edit/__${investigation.id}__}"> <span
+                                class="glyphicon glyphicon-edit"></span> Edit </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

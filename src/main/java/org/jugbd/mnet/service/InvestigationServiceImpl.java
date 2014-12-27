@@ -56,6 +56,7 @@ public class InvestigationServiceImpl implements InvestigationService {
             savedInvestigation.setxRayUsg(investigation.getxRayUsg());
             savedInvestigation.setDuplexScanDopplerStudy(investigation.getDuplexScanDopplerStudy());
             savedInvestigation.setFnacHistopathology(investigation.getFnacHistopathology());
+            savedInvestigation.setOtherInvestigation(investigation.getOtherInvestigation());
 
             return savedInvestigation;
         }

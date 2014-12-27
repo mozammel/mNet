@@ -22,6 +22,9 @@ public class Investigation extends PersistentObject implements Auditable {
 
     @Valid
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "comment", column = @Column(name = "comment_blood_cbc"))
+    })
     private BloodCbc bloodCbc;
 
     @Valid
@@ -29,7 +32,7 @@ public class Investigation extends PersistentObject implements Auditable {
     @AttributeOverrides({
             @AttributeOverride(name = "nameOfOrganism", column = @Column(name = "blood_cbc_name_of_organism")),
             @AttributeOverride(name = "sensitiveAntibiotic", column = @Column(name = "blood_cbc_sensitive_antibiotic")),
-            @AttributeOverride(name = "comment", column = @Column(name = "blood_cbc_comment"))
+            @AttributeOverride(name = "comment", column = @Column(name = "comment_blood_cs"))
     })
     private CultureAndSensitivity bloodCs;
 
@@ -41,7 +44,7 @@ public class Investigation extends PersistentObject implements Auditable {
     @AttributeOverrides({
             @AttributeOverride(name = "nameOfOrganism", column = @Column(name = "wound_cs_name_of_organism")),
             @AttributeOverride(name = "sensitiveAntibiotic", column = @Column(name = "wound_cs_sensitive_antibiotic")),
-            @AttributeOverride(name = "comment", column = @Column(name = "wound_cs_comment"))
+            @AttributeOverride(name = "comment", column = @Column(name = "comment_wound_cs"))
     })
     private CultureAndSensitivity woundCs;
 
@@ -57,9 +60,8 @@ public class Investigation extends PersistentObject implements Auditable {
     @Size(max = 100)
     private String albuminGlobulinRatio;
 
-    @Size(max = 100)
     @AttributeOverrides({
-            @AttributeOverride(name = "comment", column = @Column(name = "electrolyte_comment"))
+            @AttributeOverride(name = "comment", column = @Column(name = "comment_electrolyte"))
     })
     private Electrolyte electrolyte;
 
@@ -74,9 +76,8 @@ public class Investigation extends PersistentObject implements Auditable {
 
     @Valid
     @Embedded
-    @Size(max = 100)
     @AttributeOverrides({
-            @AttributeOverride(name = "comment", column = @Column(name = "pt_comment"))
+            @AttributeOverride(name = "comment", column = @Column(name = "comment_pt"))
     })
     private PT pt;
 

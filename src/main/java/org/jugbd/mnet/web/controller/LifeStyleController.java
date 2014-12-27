@@ -72,10 +72,10 @@ public class LifeStyleController {
             return "lifestyle/edit";
         }
 
-        LifeStyle saveMedicalHistory = lifeStyleService.save(lifeStyle);
+        LifeStyle savedLifeStyle = lifeStyleService.save(lifeStyle);
 
         redirectAttributes.addFlashAttribute("message", "Life Style successfully updated");
-        return "redirect:/patient/show/" + saveMedicalHistory.getRegister().getPatient().getId();
+        return "redirect:/patient/show/" + savedLifeStyle.getRegister().getPatient().getId();
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)

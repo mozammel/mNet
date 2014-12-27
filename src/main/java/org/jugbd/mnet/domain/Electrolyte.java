@@ -18,6 +18,9 @@ public class Electrolyte implements Serializable {
     private String chlorine;
 
     @Size(max = 100)
+    private String potassium;
+
+    @Size(max = 100)
     private String bicarbonate;
 
     @Size(max = 100)
@@ -32,6 +35,14 @@ public class Electrolyte implements Serializable {
 
     public void setSodium(String sodium) {
         this.sodium = sodium;
+    }
+
+    public String getPotassium() {
+        return potassium;
+    }
+
+    public void setPotassium(String potassium) {
+        this.potassium = potassium;
     }
 
     public String getChlorine() {

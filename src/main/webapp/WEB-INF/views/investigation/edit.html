@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Home Page :: MediNetServices</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Edit Investigation</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">Edit Investigation</div>
+                <div class="panel-body">
+
+
+                    <form class="form-horizontal" method='POST' th:object="${investigation}"
+                          th:action="@{/investigation/create}">
+
+                        <input type="hidden" th:field="*{register.id}"/>
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <fieldset>
+                            <legend>Blood CBC</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> TC </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCbc.tc}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.tc')}">
+                                        <span th:errors="*{bloodCbc.tc}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> DC </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCbc.dc}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.dc')}">
+                                        <span th:errors="*{bloodCbc.dc}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> HB </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCbc.hb}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.hb')}">
+                                        <span th:errors="*{bloodCbc.hb}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> ESR </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCbc.esr}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.esr')}">
+                                        <span th:errors="*{bloodCbc.esr}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> PCV </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCbc.pcv}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.pcv')}">
+                                        <span th:errors="*{bloodCbc.pcv}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Comment </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{bloodCbc.comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.comment')}">
+                                        <span th:errors="*{bloodCbc.comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Blood C/S</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Name Of Organism</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCs.nameOfOrganism}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.nameOfOrganism')}">
+                                        <span th:errors="*{bloodCs.nameOfOrganism}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Sensitive Antibiotic</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{bloodCs.sensitiveAntibiotic}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.sensitiveAntibiotic')}">
+                                        <span th:errors="*{bloodCs.sensitiveAntibiotic}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Comment </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{bloodCs.comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.comment')}">
+                                        <span th:errors="*{bloodCs.comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Wound C/S</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Name Of Organism</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{woundCs.nameOfOrganism}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('woundCs.nameOfOrganism')}">
+                                        <span th:errors="*{woundCs.nameOfOrganism}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Sensitive Antibiotic</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{woundCs.sensitiveAntibiotic}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('woundCs.sensitiveAntibiotic')}">
+                                        <span th:errors="*{woundCs.sensitiveAntibiotic}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Comment </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{woundCs.comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('woundCs.comment')}">
+                                        <span th:errors="*{woundCs.comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Electrolyte</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Sodium (NA)</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{electrolyte.sodium}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.sodium')}">
+                                        <span th:errors="*{electrolyte.sodium}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Potassium (K)</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{electrolyte.potassium}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.potassium')}">
+                                        <span th:errors="*{electrolyte.potassium}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Chlorine (Cl)</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{electrolyte.chlorine}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.chlorine')}">
+                                        <span th:errors="*{electrolyte.chlorine}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Bicarbonate (HCO3)</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{electrolyte.bicarbonate}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.bicarbonate')}">
+                                        <span th:errors="*{electrolyte.bicarbonate}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Calcium (Ca)</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{electrolyte.calcium}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.calcium')}">
+                                        <span th:errors="*{electrolyte.calcium}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Comment </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{electrolyte.comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.comment')}">
+                                        <span th:errors="*{electrolyte.comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>PT</legend>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Patient</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{pt.patient}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pt.patient')}">
+                                        <span th:errors="*{pt.patient}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Control</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{pt.control}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pt.control')}">
+                                        <span th:errors="*{pt.control}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> IN Index</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{pt.inIndex}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pt.inIndex')}">
+                                        <span th:errors="*{pt.inIndex}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Comment</label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{pt.comment}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pt.comment')}">
+                                        <span th:errors="*{pt.comment}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Others</legend>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> RBS</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{rbs}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('rbs')}">
+                                        <span th:errors="*{rbs}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> S. Creatinine</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{serumCreatinine}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
+                                        <span th:errors="*{serumCreatinine}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> S. Albumin</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{serumAlbumin}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('serumAlbumin')}">
+                                        <span th:errors="*{serumAlbumin}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> S. Total Protein</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{sTotalProtein}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('sTotalProtein')}">
+                                        <span th:errors="*{sTotalProtein}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">A/G Ratio </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{albuminGlobulinRatio}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('albuminGlobulinRatio')}">
+                                        <span th:errors="*{albuminGlobulinRatio}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">SGPT </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{sgpt}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('sgpt')}">
+                                        <span th:errors="*{sgpt}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">Al phos </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{alphos}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('alphos')}">
+                                        <span th:errors="*{alphos}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">APTT </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{aptt}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('aptt')}">
+                                        <span th:errors="*{aptt}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">FDP </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{fdp}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('fdp')}">
+                                        <span th:errors="*{fdp}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">D-Dimer </label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{dDimer}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('dDimer')}">
+                                        <span th:errors="*{dDimer}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field">C-Reactive Protein</label>
+
+                                <div class="col-sm-3">
+                                    <input class="form-control" th:field="*{cReactiveProtein}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('cReactiveProtein')}">
+                                        <span th:errors="*{cReactiveProtein}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> X-Ray/ USG</label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{xRayUsg}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('xRayUsg')}">
+                                        <span th:errors="*{xRayUsg}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> MRI/MRA/CT/Echo/E.C.G </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{mriMraCtEchoEcg}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('mriMraCtEchoEcg')}">
+                                        <span th:errors="*{mriMraCtEchoEcg}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Duplex Scan/ Doppler
+                                    Study </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{duplexScanDopplerStudy}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('duplexScanDopplerStudy')}">
+                                        <span th:errors="*{duplexScanDopplerStudy}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> FNAC / Histopathology </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" th:field="*{fnacHistopathology}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('fnacHistopathology')}">
+                                        <span th:errors="*{fnacHistopathology}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Other Investigation </label>
+
+                                <div class="col-sm-3">
+                                    <textarea class="form-control" rows="5" th:field="*{otherInvestigation}"></textarea>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('otherInvestigation')}">
+                                        <span th:errors="*{otherInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <a href="#" class="btn btn-danger"
+                                   th:href="@{/investigation/cancel/__${investigation.register.id}__}"> <span
+                                        th:text="#{label.cancel}">Cancel</span> </a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+
+    </script>
+</div>
+
+</body>
+</html>

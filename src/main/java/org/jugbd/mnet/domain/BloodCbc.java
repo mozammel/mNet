@@ -1,6 +1,5 @@
 package org.jugbd.mnet.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -27,8 +26,7 @@ public class BloodCbc implements Serializable {
     private String pcv;
 
     @Size(max = 1000)
-    @Column(name = "blood_cbs_comment")
-    private String bloodCbsComment;
+    private String comment;
 
     public String getTc() {
         return tc;
@@ -70,11 +68,11 @@ public class BloodCbc implements Serializable {
         this.pcv = pcv;
     }
 
-    public String getBloodCbsComments() {
-        return bloodCbsComment;
+    public String getComment() {
+        return comment;
     }
 
-    public void setBloodCbsComments(String bloodCbsComments) {
-        this.bloodCbsComment = bloodCbsComments;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
