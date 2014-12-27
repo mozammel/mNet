@@ -95,7 +95,7 @@
 
                                 </table>
 
-                                <a th:href="@{#}" class="btn btn-info pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
+                                <a th:href="@{#}" class="btn btn-danger pull-right" style="margin-right: 10px" onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
 
                                 <script type="text/javascript">
                                     function closeRegister() {
@@ -118,7 +118,7 @@
 
                             <div class="panel-body">
                                 <div th:if="${register.medicalHistory == null}">
-                                    <h3 class="text-primary">No active Medical History found</h3>
+                                    <h3 class="text-primary">No Medical History found</h3>
                                     <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
 
@@ -245,7 +245,7 @@
                             <div class="panel-heading">Chief Complaint</div>
                             <div class="panel-body">
                                 <div th:if="${register.chiefComplaint == null}">
-                                    <h3 class="text-primary">No active Chief Complaint found</h3>
+                                    <h3 class="text-primary">No Chief Complaint found</h3>
                                     <a class="btn btn-info pull-right" th:href="@{/chiefcomplaints/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
                                         New</a>
                                 </div>
@@ -314,7 +314,7 @@
                             <div class="panel-heading">Examination </div>
                             <div class="panel-body">
                                 <div th:if="${register.examination == null}">
-                                    <h3 class="text-primary">No active Examination found</h3>
+                                    <h3 class="text-primary">No Examination found</h3>
                                     <a class="btn btn-info pull-right" th:href="@{/examination/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
                                 <div th:if="${register.examination != null}">
@@ -416,7 +416,7 @@
                             <div class="panel-heading">Diagnosis</div>
                             <div class="panel-body">
                                 <div th:if="${register.diagnosis == null}">
-                                    <h3 class="text-primary">No active Diagnosis found</h3>
+                                    <h3 class="text-primary">No Diagnosis found</h3>
                                     <a class="btn btn-info pull-right" th:href="@{/diagnosis/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
                                 <div th:if="${register.diagnosis != null}">
@@ -480,7 +480,7 @@
                             <div class="panel-heading">Plan Of Rx</div>
                             <div class="panel-body">
                                 <div th:if="${register.treatmentPlan == null}">
-                                    <h3 class="text-primary">No active Diagnosis found</h3>
+                                    <h3 class="text-primary">No Plan Of Rx found</h3>
                                     <a class="btn btn-info pull-right"
                                        th:href="@{/treatmentplan/create/__${register.id}__}"><span
                                             class="glyphicon glyphicon-plus"></span> Add New</a>
@@ -689,7 +689,7 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-6">
                         <div class="panel panel-default">
-                        <div class="panel-heading">Life Style</div>
+                        <div class="panel-heading">Investigation</div>
                         <div class="panel-body">
                             <div th:if="${register.investigation == null}">
                                 <h3 class="text-primary">No Investigation record found</h3>
@@ -715,7 +715,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Register</div>
                         <div class="panel-body">
-                            <h3 class="text-primary">This patient has not any active register</h3>
+                            <h3 class="text-primary">This patient has not registered yet</h3>
                             <a class="btn btn-info pull-right" th:href="@{/register/patient/__${patient.id}__}"><span class="glyphicon glyphicon-plus"></span> Register</a>
                         </div>
                     </div>
