@@ -34,10 +34,10 @@
         <smtpHost>smtp.gmail.com</smtpHost>
         <smtpPort>587</smtpPort>
         <STARTTLS>true</STARTTLS>
-        <username>alert.mnet.services@gmail.net</username>
+        <username>alert.mnet.services@gmail.com</username>
         <password>jf147852#23SWE</password>
         <asynchronousSending>true</asynchronousSending>
-        <to>alert.mnet.services@gmail.net</to>
+        <to>alert.mnet.services@gmail.com</to>
         <subject>mNet App Alert %m</subject>
 
         <layout class="ch.qos.logback.classic.PatternLayout">

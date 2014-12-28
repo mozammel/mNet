@@ -73,6 +73,8 @@ dependencies {
 
     compile 'ch.qos.logback:logback-classic:1.1.2'
     compile 'org.slf4j:jcl-over-slf4j:1.7.7'
+    compile 'javax.mail:mail:1.4.7'
+    compile 'javax.activation:activation:1.1.1'
 
     compile 'joda-time:joda-time:2.4'
     compile 'org.jadira.usertype:usertype.core:3.2.0.GA'
