@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 
@@ -24,7 +25,7 @@
                 <div class="panel-body">
 
                     <form class="form-horizontal" role="form" th:object="${user}" th:action="@{/user/create}"
-                          method="POST">
+                          method="POST" data-toggle="validator">
 
                         <div class="form-group">
                             <label for="fullName" class="col-sm-2 control-label"
@@ -32,7 +33,7 @@
 
                             <div class="col-sm-3">
                                 <input type="text" id="fullName" th:field="*{fullName}" maxlength="100"
-                                       class="form-control input-sm"/>
+                                       class="form-control input-sm" required="required"/>
 
                                 <p class="text-danger" th:if="${#fields.hasErrors('fullName')}"><span
                                         th:errors="*{fullName}">Username required!</span>
@@ -45,7 +46,9 @@
                                    th:text="#{label.user.username}">Username</label>
 
                             <div class="col-sm-3">
-                                <input type="text" th:field="*{username}" maxlength="30" class="form-control input-sm"/>
+                                <input type="text" th:field="*{username}" maxlength="30"
+                                       required="required"
+                                       class="form-control input-sm"/>
 
                                 <p class="text-danger" th:if="${#fields.hasErrors('username')}"><span
                                         th:errors="*{username}">Username required!</span>
@@ -58,7 +61,9 @@
                                    th:text="#{label.user.password}">Password</label>
 
                             <div class="col-sm-3">
-                                <input type="password" th:field="*{password}" class="form-control input-sm"/>
+                                <input type="password" th:field="*{password}"
+                                       required="required"
+                                       class="form-control input-sm"/>
 
                                 <p class="text-danger" th:if="${#fields.hasErrors('password')}"><span
                                         th:errors="*{password}">Password required!</span>
@@ -95,7 +100,7 @@
 
                             <div class="col-sm-3">
 
-                                <select id="user-designation" th:field="*{designation}">
+                                <select id="user-designation" th:field="*{designation}" required="required">
                                     <option value="" th:text="#{common.select.prompt}"></option>
                                     <option th:each="designation : ${T(org.jugbd.mnet.domain.enums.Designation).values()}"
                                             th:value="${designation}"
