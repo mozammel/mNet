@@ -1,8 +1,13 @@
 package org.jugbd.mnet.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -11,6 +16,10 @@ import java.io.Serializable;
 
 @Embeddable
 public class Electrolyte implements Serializable {
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateOfInvestigation;
+
     @Size(max = 100)
     private String sodium;
 
@@ -28,6 +37,14 @@ public class Electrolyte implements Serializable {
 
     @Size(max = 100)
     private String comment;
+
+    public Date getDateOfInvestigation() {
+        return dateOfInvestigation;
+    }
+
+    public void setDateOfInvestigation(Date dateOfInvestigation) {
+        this.dateOfInvestigation = dateOfInvestigation;
+    }
 
     public String getSodium() {
         return sodium;

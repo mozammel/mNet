@@ -72,7 +72,7 @@ public class OperationalDetailController {
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    private String show(@PathVariable Long id,Model uiModel) {
+    public String show(@PathVariable Long id, Model uiModel) {
         OperationalDetail operationalDetail = operationalDetailService.findOne(id);
         uiModel.addAttribute("operationalDetail", operationalDetail);
 

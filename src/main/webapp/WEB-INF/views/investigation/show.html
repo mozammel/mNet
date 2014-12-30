@@ -22,6 +22,7 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                         <th>#</th>
+                        <th>Date</th>
                         <th>TC</th>
                         <th>DC</th>
                         <th>HB</th>
@@ -32,6 +33,7 @@
                         <tbody>
                         <tr>
                             <td>Blood CBC</td>
+                            <td th:text="${investigation.bloodCbc.dateOfInvestigation}? ${investigation.bloodCbc.dateOfInvestigation}"></td>
                             <td th:text="${investigation.bloodCbc.tc}? ${investigation.bloodCbc.tc}"></td>
                             <td th:text="${investigation.bloodCbc.dc}? ${investigation.bloodCbc.dc}"></td>
                             <td th:text="${investigation.bloodCbc.hb}? ${investigation.bloodCbc.hb}"></td>
@@ -45,6 +47,7 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                         <th>#</th>
+                        <th>Date</th>
                         <th>Name Of Organism</th>
                         <th>Sensitive Antibiotic</th>
                         <th>Comment</th>
@@ -53,6 +56,7 @@
                         <tbody>
                         <tr>
                             <td>Blood C/S</td>
+                            <td th:text="${investigation.bloodCs.dateOfInvestigation}? ${investigation.bloodCs.dateOfInvestigation}"></td>
                             <td th:text="${investigation.bloodCs.nameOfOrganism}? ${investigation.bloodCs.nameOfOrganism}"></td>
                             <td th:text="${investigation.bloodCs.sensitiveAntibiotic}? ${investigation.bloodCs.sensitiveAntibiotic}"></td>
                             <td th:text="${investigation.bloodCs.comment}? ${investigation.bloodCs.comment}"></td>
@@ -64,6 +68,7 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                         <th>#</th>
+                        <th>Date</th>
                         <th>Name Of Organism</th>
                         <th>Sensitive Antibiotic</th>
                         <th>Comment</th>
@@ -72,6 +77,7 @@
                         <tbody>
                         <tr>
                             <td>Wound C/S</td>
+                            <td th:text="${investigation.woundCs.dateOfInvestigation}? ${investigation.woundCs.dateOfInvestigation}"></td>
                             <td th:text="${investigation.woundCs.nameOfOrganism}? ${investigation.woundCs.nameOfOrganism}"></td>
                             <td th:text="${investigation.woundCs.sensitiveAntibiotic}? ${investigation.woundCs.sensitiveAntibiotic}"></td>
                             <td th:text="${investigation.woundCs.comment}? ${investigation.woundCs.comment}"></td>
@@ -83,6 +89,7 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                         <th>#</th>
+                        <th>Date</th>
                         <th>Sodium (Na)</th>
                         <th>Chlorine (Cl)</th>
                         <th>Potassium (K)</th>
@@ -94,6 +101,7 @@
                         <tbody>
                         <tr>
                             <td>Electrolyte</td>
+                            <td th:text="${investigation.electrolyte.dateOfInvestigation}? ${investigation.electrolyte.dateOfInvestigation}"></td>
                             <td th:text="${investigation.electrolyte.sodium}? ${investigation.electrolyte.sodium}"></td>
                             <td th:text="${investigation.electrolyte.chlorine}? ${investigation.electrolyte.chlorine}"></td>
                             <td th:text="${investigation.electrolyte.potassium}? ${investigation.electrolyte.potassium}"></td>
@@ -108,6 +116,7 @@
                     <table class="table table-condensed table-bordered">
                         <thead>
                         <th>#</th>
+                        <th>Date</th>
                         <th>Patient</th>
                         <th>Control</th>
                         <th>IN Index</th>
@@ -117,6 +126,7 @@
                         <tbody>
                         <tr>
                             <td>PT</td>
+                            <td th:text="${investigation.pt.dateOfInvestigation}? ${investigation.pt.dateOfInvestigation}"></td>
                             <td th:text="${investigation.pt.patient}? ${investigation.pt.patient}"></td>
                             <td th:text="${investigation.pt.control}? ${investigation.pt.control}"></td>
                             <td th:text="${investigation.pt.inIndex}? ${investigation.pt.inIndex}"></td>
@@ -131,70 +141,86 @@
                         <thead>
                         <th>#</th>
                         <th>#</th>
+                        <th>#</th>
                         </thead>
                         <tbody>
                         <tr>
                             <td width="40%">RBS</td>
                             <td th:text="${investigation.rbs}? ${investigation.rbs}"></td>
+                            <td th:text="${investigation.dateRbs}? ${investigation.dateRbs}"></td>
                         </tr>
 
                         <tr>
                             <td>S. Creatinine</td>
                             <td th:text="${investigation.serumCreatinine}? ${investigation.serumCreatinine}"></td>
+                            <td th:text="${investigation.dateSerumCreatinine}? ${investigation.dateSerumCreatinine}"></td>
                         </tr>
                         <tr>
                             <td>S. Albumin</td>
                             <td th:text="${investigation.serumAlbumin}? ${investigation.serumAlbumin}"></td>
+                            <td th:text="${investigation.dateSerumAlbumin}? ${investigation.dateSerumAlbumin}"></td>
                         </tr>
                         <tr>
                             <td>S. Total Protein</td>
                             <td th:text="${investigation.sTotalProtein}? ${investigation.sTotalProtein}"></td>
+                            <td th:text="${investigation.dateSTotalProtein}? ${investigation.dateSTotalProtein}"></td>
                         </tr>
                         <tr>
                             <td>A/G Ratio</td>
                             <td th:text="${investigation.albuminGlobulinRatio}? ${investigation.albuminGlobulinRatio}"></td>
+                            <td th:text="${investigation.dateAlbuminGlobulinRatio}? ${investigation.dateAlbuminGlobulinRatio}"></td>
                         </tr>
 
                         <tr>
                             <td>SGPT</td>
                             <td th:text="${investigation.sgpt}? ${investigation.sgpt}"></td>
+                            <td th:text="${investigation.dateSgpt}? ${investigation.dateSgpt}"></td>
                         </tr>
                         <tr>
                             <td>Al phos</td>
                             <td th:text="${investigation.alphos}? ${investigation.alphos}"></td>
+                            <td th:text="${investigation.dateAlphos}? ${investigation.dateAlphos}"></td>
                         </tr>
                         <tr>
                             <td>APTT</td>
                             <td th:text="${investigation.aptt}? ${investigation.aptt}"></td>
+                            <td th:text="${investigation.dateAptt}? ${investigation.dateAptt}"></td>
                         </tr>
 
                         <tr>
                             <td>FDP</td>
                             <td th:text="${investigation.fdp}? ${investigation.fdp}"></td>
+                            <td th:text="${investigation.dateFdp}? ${investigation.dateFdp}"></td>
                         </tr>
                         <tr>
                             <td>D-Dimer</td>
                             <td th:text="${investigation.dDimer}? ${investigation.dDimer}"></td>
+                            <td th:text="${investigation.dateDDimer}? ${investigation.dateDDimer}"></td>
                         </tr>
                         <tr>
                             <td>C-ReactiveProtein</td>
                             <td th:text="${investigation.cReactiveProtein}? ${investigation.cReactiveProtein}"></td>
+                            <td th:text="${investigation.dateCReactiveProtein}? ${investigation.dateCReactiveProtein}"></td>
                         </tr>
                         <tr>
                             <td>X-Ray/USG</td>
                             <td th:text="${investigation.xRayUsg}? ${investigation.xRayUsg}"></td>
+                            <td th:text="${investigation.dateOfXRayUsg}? ${investigation.dateOfXRayUsg}"></td>
                         </tr>
                         <tr>
                             <td> MRI/MRA/CT/Echo/E.C.G</td>
                             <td th:text="${investigation.mriMraCtEchoEcg}? ${investigation.mriMraCtEchoEcg}"></td>
+                            <td th:text="${investigation.dateOfMriMraCtEchoEcg}? ${investigation.dateOfMriMraCtEchoEcg}"></td>
                         </tr>
                         <tr>
                             <td>Duplex Scan/ Doppler Study</td>
                             <td th:text="${investigation.duplexScanDopplerStudy}? ${investigation.duplexScanDopplerStudy}"></td>
+                            <td th:text="${investigation.dateOfDuplexScanDopplerStudy}? ${investigation.dateOfDuplexScanDopplerStudy}"></td>
                         </tr>
                         <tr>
                             <td>FNAC / Histopathology</td>
                             <td th:text="${investigation.fnacHistopathology}? ${investigation.fnacHistopathology}"></td>
+                            <td th:text="${investigation.dateOfFnacHistopathology}? ${investigation.dateOfFnacHistopathology}"></td>
                         </tr>
                         <tr>
                             <td>Other Investigation</td>

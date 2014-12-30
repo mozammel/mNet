@@ -55,9 +55,10 @@ public class RegisterServiceImpl implements RegisterService {
         List<Register> registers = registerDao.findActiveRegisterByPatientId(patientId);
         if (registers != null && registers.size() > 0) {
 
-            //registers.get(0).getDiagnoses().size(); // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
+             // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
             registers.get(0).getVitals().size();
             registers.get(0).getOperationalDetails().size();
+            registers.get(0).getInvestigation().size();
 
             return registers.get(0);
         }
