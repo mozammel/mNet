@@ -5,6 +5,7 @@
       layout:decorator="layout/main">
 <head>
     <title>Home Page :: MediNetServices</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 </head>
 <body>
 
@@ -805,7 +806,16 @@
 </section>
 
 <div layout:fragment="custom-scripts">
-    <script type="application/javascript">
+
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+
+        $('.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
 
     </script>
 </div>
