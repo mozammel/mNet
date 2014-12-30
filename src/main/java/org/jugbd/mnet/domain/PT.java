@@ -1,7 +1,12 @@
 package org.jugbd.mnet.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -9,6 +14,10 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class PT {
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date dateOfInvestigation;
+
     @Size(max = 100)
     private String patient;
 
@@ -20,6 +29,14 @@ public class PT {
 
     @Size(max = 100)
     private String comment;
+
+    public Date getDateOfInvestigation() {
+        return dateOfInvestigation;
+    }
+
+    public void setDateOfInvestigation(Date dateOfInvestigation) {
+        this.dateOfInvestigation = dateOfInvestigation;
+    }
 
     public String getPatient() {
         return patient;

@@ -5,6 +5,41 @@
       layout:decorator="layout/main">
 <head>
     <title>Home Page :: MediNetServices</title>
+
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+
+    <style>
+        .form-inv {
+            margin: 0 auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+        }
+
+        body {
+            background: #f7f8f9;
+        }
+
+        .form-inv input[type="text"] {
+            font-size: 16px;
+            height: auto;
+            padding: 7px 9px;
+        }
+
+        .form-footer a {
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .field_inv {
+            width: 48%;
+            display: inline-block;
+            float: left;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -20,7 +55,7 @@
                 <div class="panel-heading">Add Investigation</div>
                 <div class="panel-body">
 
-                   
+
                     <form class="form-horizontal" method='POST' th:object="${investigation}"
                           th:action="@{/investigation/create}">
 
@@ -30,9 +65,23 @@
                             <legend>Blood CBC</legend>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label required-field"> TC </label>
+                                <label class="col-sm-2 control-label required-field"> Date </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
+                                    <input type="date" class="form-control" id="patient-dob"
+                                           th:field="*{bloodCbc.dateOfInvestigation}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('bloodCbc.dateOfInvestigation')}">
+                                        <span th:errors="*{bloodCbc.dateOfInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-sm-2  control-label required-field"> TC </label>
+
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCbc.tc}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.tc')}">
@@ -41,10 +90,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="col-sm-2 control-label required-field"> DC </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCbc.dc}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.dc')}">
@@ -53,10 +102,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="col-sm-2 control-label required-field"> HB </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCbc.hb}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.hb')}">
@@ -65,10 +114,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="col-sm-2 control-label required-field"> ESR </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCbc.esr}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.esr')}">
@@ -77,10 +126,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="col-sm-2 control-label required-field"> PCV </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCbc.pcv}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.pcv')}">
@@ -89,10 +138,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group ">
                                 <label class="col-sm-2 control-label required-field"> Comment </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <textarea class="form-control" th:field="*{bloodCbc.comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCbc.comment')}">
@@ -106,10 +155,25 @@
                         <fieldset>
                             <legend>Blood C/S</legend>
 
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Date </label>
+
+                                <div class="col-md-2">
+                                    <input type="date" class="form-control" id="patient-dob"
+                                           th:field="*{bloodCs.dateOfInvestigation}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('bloodCs.dateOfInvestigation')}">
+                                        <span th:errors="*{bloodCs.dateOfInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Name Of Organism</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCs.nameOfOrganism}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.nameOfOrganism')}">
@@ -121,10 +185,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Sensitive Antibiotic</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{bloodCs.sensitiveAntibiotic}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.sensitiveAntibiotic')}">
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('bloodCs.sensitiveAntibiotic')}">
                                         <span th:errors="*{bloodCs.sensitiveAntibiotic}">Required</span>
                                     </p>
                                 </div>
@@ -133,7 +198,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Comment </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <textarea class="form-control" th:field="*{bloodCs.comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodCs.comment')}">
@@ -148,9 +213,23 @@
                             <legend>Wound C/S</legend>
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Date </label>
+
+                                <div class="col-md-2">
+                                    <input type="date" class="form-control" id="patient-dob"
+                                           th:field="*{woundCs.dateOfInvestigation}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('woundCs.dateOfInvestigation')}">
+                                        <span th:errors="*{woundCs.dateOfInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Name Of Organism</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{woundCs.nameOfOrganism}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('woundCs.nameOfOrganism')}">
@@ -162,10 +241,11 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Sensitive Antibiotic</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{woundCs.sensitiveAntibiotic}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('woundCs.sensitiveAntibiotic')}">
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('woundCs.sensitiveAntibiotic')}">
                                         <span th:errors="*{woundCs.sensitiveAntibiotic}">Required</span>
                                     </p>
                                 </div>
@@ -174,7 +254,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Comment </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <textarea class="form-control" th:field="*{woundCs.comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('woundCs.comment')}">
@@ -189,9 +269,23 @@
                             <legend>Electrolyte</legend>
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Date </label>
+
+                                <div class="col-md-2">
+                                    <input type="date" class="form-control" id="patient-dob"
+                                           th:field="*{electrolyte.dateOfInvestigation}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('electrolyte.dateOfInvestigation')}">
+                                        <span th:errors="*{electrolyte.dateOfInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Sodium (NA)</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{electrolyte.sodium}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.sodium')}">
@@ -203,7 +297,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Potassium (K)</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{electrolyte.potassium}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.potassium')}">
@@ -216,7 +310,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Chlorine (Cl)</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{electrolyte.chlorine}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.chlorine')}">
@@ -228,7 +322,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Bicarbonate (HCO3)</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{electrolyte.bicarbonate}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.bicarbonate')}">
@@ -240,7 +334,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Calcium (Ca)</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{electrolyte.calcium}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.calcium')}">
@@ -252,7 +346,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Comment </label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <textarea class="form-control" th:field="*{electrolyte.comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('electrolyte.comment')}">
@@ -267,9 +361,22 @@
                             <legend>PT</legend>
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"> Date </label>
+
+                                <div class="col-md-2">
+                                    <input type="date" class="form-control" id="patient-dob"
+                                           th:field="*{pt.dateOfInvestigation}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('pt.dateOfInvestigation')}">
+                                        <span th:errors="*{pt.dateOfInvestigation}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Patient</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{pt.patient}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('pt.patient')}">
@@ -281,7 +388,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Control</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{pt.control}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('pt.control')}">
@@ -293,7 +400,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> IN Index</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <input class="form-control" th:field="*{pt.control}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('pt.control')}">
@@ -305,7 +412,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Comment</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-md-2">
                                     <textarea class="form-control" th:field="*{pt.comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('pt.comment')}">
@@ -321,156 +428,297 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> RBS</label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{rbs}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{rbs}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('rbs')}">
-                                        <span th:errors="*{rbs}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('rbs')}">
+                                            <span th:errors="*{rbs}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" placeholder="" class="form-control"
+                                               th:field="*{dateRbs}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateRbs')}">
+                                            <span th:errors="*{dateRbs}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> S. Creatinine</label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{serumCreatinine}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{serumCreatinine}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
-                                        <span th:errors="*{serumCreatinine}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
+                                            <span th:errors="*{serumCreatinine}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateSerumAlbumin}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
+                                            <span th:errors="*{dateSerumAlbumin}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> S. Albumin</label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{serumAlbumin}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{serumAlbumin}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('serumAlbumin')}">
-                                        <span th:errors="*{serumAlbumin}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('serumAlbumin')}">
+                                            <span th:errors="*{serumAlbumin}">Required</span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{dateSerumCreatinine}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSerumCreatinine')}">
+                                            <span th:errors="*{dateSerumCreatinine}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> S. Total Protein</label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{serumAlbumin}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{serumAlbumin}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('sTotalProtein')}">
-                                        <span th:errors="*{sTotalProtein}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('sTotalProtein')}">
+                                            <span th:errors="*{sTotalProtein}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateSTotalProtein}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSTotalProtein')}">
+                                            <span th:errors="*{dateSTotalProtein}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">A/G Ratio </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{albuminGlobulinRatio}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{albuminGlobulinRatio}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('albuminGlobulinRatio')}">
-                                        <span th:errors="*{albuminGlobulinRatio}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('albuminGlobulinRatio')}">
+                                            <span th:errors="*{albuminGlobulinRatio}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{dateAlbuminGlobulinRatio}"/>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('dateAlbuminGlobulinRatio')}">
+                                            <span th:errors="*{dateAlbuminGlobulinRatio}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">SGPT </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{sgpt}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{sgpt}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('sgpt')}">
-                                        <span th:errors="*{sgpt}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('sgpt')}">
+                                            <span th:errors="*{sgpt}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{dateSgpt}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSgpt')}">
+                                            <span th:errors="*{dateSgpt}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">Al phos </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{alphos}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" th:field="*{alphos}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('alphos')}">
-                                        <span th:errors="*{alphos}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('alphos')}">
+                                            <span th:errors="*{alphos}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateAlphos}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateAlphos')}">
+                                            <span th:errors="*{dateAlphos}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">APTT </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{aptt}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{aptt}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('aptt')}">
-                                        <span th:errors="*{aptt}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('aptt')}">
+                                            <span th:errors="*{aptt}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateAptt}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateAptt')}">
+                                            <span th:errors="*{dateAptt}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">FDP </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{fdp}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{fdp}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('fdp')}">
-                                        <span th:errors="*{fdp}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('fdp')}">
+                                            <span th:errors="*{fdp}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateFdp}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateFdp')}">
+                                            <span th:errors="*{dateFdp}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">D-Dimer </label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{dDimer}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{dDimer}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('dDimer')}">
-                                        <span th:errors="*{dDimer}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dDimer')}">
+                                            <span th:errors="*{dDimer}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateDDimer}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateDDimer')}">
+                                            <span th:errors="*{dateDDimer}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field">C-Reactive Protein</label>
 
-                                <div class="col-sm-3">
-                                    <input class="form-control" th:field="*{cReactiveProtein}"/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-control" th:field="*{cReactiveProtein}"/>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('cReactiveProtein')}">
-                                        <span th:errors="*{cReactiveProtein}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('cReactiveProtein')}">
+                                            <span th:errors="*{cReactiveProtein}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateCReactiveProtein}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateCReactiveProtein')}">
+                                            <span th:errors="*{dateCReactiveProtein}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> X-Ray/ USG</label>
 
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" th:field="*{xRayUsg}"></textarea>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" th:field="*{xRayUsg}"></textarea>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('xRayUsg')}">
-                                        <span th:errors="*{xRayUsg}">Required</span>
-                                    </p>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('xRayUsg')}">
+                                            <span th:errors="*{xRayUsg}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control" th:field="*{dateOfXRayUsg}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateOfXRayUsg')}">
+                                            <span th:errors="*{dateOfXRayUsg}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> MRI/MRA/CT/Echo/E.C.G </label>
 
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" th:field="*{mriMraCtEchoEcg}"></textarea>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('mriMraCtEchoEcg')}">
-                                        <span th:errors="*{mriMraCtEchoEcg}">Required</span>
-                                    </p>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" th:field="*{mriMraCtEchoEcg}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('mriMraCtEchoEcg')}">
+                                            <span th:errors="*{mriMraCtEchoEcg}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control"
+                                               th:field="*{dateOfMriMraCtEchoEcg}"/>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('dateOfMriMraCtEchoEcg')}">
+                                            <span th:errors="*{dateOfMriMraCtEchoEcg}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -478,32 +726,64 @@
                                 <label class="col-sm-2 control-label required-field"> Duplex Scan/ Doppler
                                     Study </label>
 
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" th:field="*{duplexScanDopplerStudy}"></textarea>
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('duplexScanDopplerStudy')}">
-                                        <span th:errors="*{duplexScanDopplerStudy}">Required</span>
-                                    </p>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <textarea class="form-control"
+                                                  th:field="*{duplexScanDopplerStudy}"></textarea>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('duplexScanDopplerStudy')}">
+                                            <span th:errors="*{duplexScanDopplerStudy}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control"
+                                               th:field="*{dateOfDuplexScanDopplerStudy}"/>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('dateOfDuplexScanDopplerStudy')}">
+                                            <span th:errors="*{dateOfDuplexScanDopplerStudy}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> FNAC / Histopathology </label>
 
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" th:field="*{fnacHistopathology}"></textarea>
+                                <div class="row">
 
-                                    <p class="text-danger" th:if="${#fields.hasErrors('fnacHistopathology')}">
-                                        <span th:errors="*{fnacHistopathology}">Required</span>
-                                    </p>
+
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" th:field="*{fnacHistopathology}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('fnacHistopathology')}">
+                                            <span th:errors="*{fnacHistopathology}">Required</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input type="date" class="form-control"
+                                               th:field="*{dateOfFnacHistopathology}"/>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('dateOfFnacHistopathology')}">
+                                            <span th:errors="*{dateOfFnacHistopathology}">Required</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"> Other Investigation </label>
 
-                                <div class="col-sm-3">
-                                    <textarea class="form-control" rows="5" th:field="*{otherInvestigation}"></textarea>
+                                <div class="col-md-2">
+                                    <textarea class="form-control" rows="5"
+                                              th:field="*{otherInvestigation}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('otherInvestigation')}">
                                         <span th:errors="*{otherInvestigation}">Required</span>
@@ -512,6 +792,7 @@
                             </div>
 
                         </fieldset>
+
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
@@ -529,8 +810,15 @@
 </section>
 
 <div layout:fragment="custom-scripts">
-    <script type="application/javascript">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
 
+    <script>
+        $('#patient-dob').datepicker({
+            format: "dd/mm/yyyy",
+            startView: 2,
+            autoclose: true
+        });
     </script>
 </div>
 

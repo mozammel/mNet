@@ -52,7 +52,7 @@
     <root level="DEBUG">
         <appender-ref ref="ASYNC"/>
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="EMAIL"/>
+        <!--<appender-ref ref="EMAIL"/>-->
     </root>
 
 </configuration>
