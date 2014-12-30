@@ -50,6 +50,7 @@
                     </div>
                 </div>
             </div>
+
             <div th:if="${register}">
                 <div class="row">
                     <div class="col-sm-6 col-md-6">
@@ -228,6 +229,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-sm-6 col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">Chief Complaint</div>
@@ -701,22 +703,44 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Investigation</div>
                             <div class="panel-body">
-                                <div th:if="${register.investigation == null}">
+                                <div th:if="${register.investigation.size() == 0}">
                                     <h3 class="text-primary">No Investigation record found</h3>
-                                    <a class="btn btn-info pull-right"
-                                       th:href="@{/investigation/create/__${register.id}__}"><span
-                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+
                                 </div>
-                                <div th:if="${register.investigation != null}">
+                                <div th:if="${register.investigation.size() > 0}">
+
                                     <h3 class="text-primary">Investigation record has been added.</h3>
-                                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
-                                           th:href="@{/investigation/show/__${register.investigation.id}__}"> <span
-                                                class="glyphicon glyphicon-edit"></span> Show  Details</a>
-                                    </div>
+
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Created On</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="investigation, row : ${register.investigation}">
+
+                                            <td th:text="${'#' + row.index + 1}"></td>
+                                            <td th:text="${#dates.format(investigation.createdDate,'dd-MMM-yyyy')}"></td>
+
+                                            <td><a th:href="@{/investigation/show/__${investigation.id}__}">Show
+                                                Details</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+
+                                <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+
+                                </div>
+                                <a class="btn btn-info pull-right"
+                                   th:href="@{/investigation/create/__${register.id}__}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -745,7 +769,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
             <div th:unless="${register}" class="row">
                 <div class="col-sm-12 col-md-12">
                     <div class="panel panel-default">

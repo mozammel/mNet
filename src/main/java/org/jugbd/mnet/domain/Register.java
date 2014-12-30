@@ -105,9 +105,8 @@ public class Register extends PersistentObject {
     @JoinColumn(name = "life_style_id")
     private LifeStyle lifeStyle;
 
-    @OneToOne
-    @JoinColumn(name = "investigation_id")
-    private Investigation investigation;
+    @OneToMany(mappedBy = "register")
+    private Set<Investigation> investigation = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "picture_information_id")
@@ -301,11 +300,11 @@ public class Register extends PersistentObject {
         this.lifeStyle = lifeStyle;
     }
 
-    public Investigation getInvestigation() {
+    public Set<Investigation> getInvestigation() {
         return investigation;
     }
 
-    public void setInvestigation(Investigation investigation) {
+    public void setInvestigation(Set<Investigation> investigation) {
         this.investigation = investigation;
     }
 

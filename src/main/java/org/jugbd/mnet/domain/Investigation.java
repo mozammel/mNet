@@ -174,7 +174,7 @@ public class Investigation extends PersistentObject implements Auditable {
     private String otherInvestigation;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "investigation")
+    @ManyToOne
     private Register register;
 
     @Override

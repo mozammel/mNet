@@ -27,13 +27,9 @@ public class InvestigationServiceImpl implements InvestigationService {
 
         if (investigation.getId() == null) {
             Register register = registerService.findOne(investigation.getRegister().getId());
-
             investigation.setRegister(register);
-            Investigation savedInvestigation = investigationDao.save(investigation);
 
-            register.setInvestigation(savedInvestigation);
-
-            return savedInvestigation;
+            return investigationDao.save(investigation);
         } else {
 
             Investigation savedInvestigation = investigationDao.findOne(investigation.getId());
