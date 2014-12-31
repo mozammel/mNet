@@ -18,23 +18,18 @@ public class PictureInformation extends PersistentObject {
     private Long version;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "day_one_attachment_id")
     private Set<Attachment> dayOneAttachments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pre_operative_attachment_id")
     private Set<Attachment> preOperativeAttachments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pre_operation_attachment_id")
     private Set<Attachment> preOperationAttachments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_operative_attachment_id")
     private Set<Attachment> postOperativeAttachments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "on_discharge_attachment_id")
     private Set<Attachment> onDischargeAttachments = new HashSet<>();
 
     @OneToOne(mappedBy = "pictureInformation")
