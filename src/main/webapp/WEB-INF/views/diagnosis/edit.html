@@ -28,6 +28,22 @@
                         <input type="hidden" th:field="*{id}"/>
 
                         <fieldset>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label required-field"
+                                       th:text="#{label.diagnosis.icd10}">
+                                    ICD10 Code
+                                </label>
+
+                                <div class="col-sm-2">
+                                    <input class="form-control input-sm" th:field="*{icd10}"/>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('icd10')}">
+                                        <span th:errors="*{icd10}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label required-field"
                                        th:text="#{label.diagnosis.burn}">

@@ -34,6 +34,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             return savedDiagnosis;
         } else {
             Diagnosis diagnosisFromDb = diagnosisDao.findOne(diagnosis.getId());
+            diagnosisFromDb.setIcd10(diagnosis.getIcd10());
             diagnosisFromDb.setAesthetic(diagnosis.getAesthetic());
             diagnosisFromDb.setBurns(diagnosis.getBurns());
             diagnosisFromDb.setCongenitalAnomaly(diagnosis.getCongenitalAnomaly());
