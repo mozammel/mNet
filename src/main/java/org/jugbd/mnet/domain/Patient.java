@@ -3,6 +3,8 @@ package org.jugbd.mnet.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,6 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "patient")
 public class Patient extends PersistentObject implements Auditable {
+    private static Logger log = LoggerFactory.getLogger(Patient.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -64,6 +67,7 @@ public class Patient extends PersistentObject implements Auditable {
     @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$", message = "Phone number must be valid ba")
     private String contactNumber;
 
+    @Size(max = 20)
     private String nid; // National Identification No
 
     @Valid
@@ -226,9 +230,15 @@ public class Patient extends PersistentObject implements Auditable {
      * @return int value of the person's age
      */
     public Integer getAge(Date onDate) {
+
         if (dateOfBirth == null) {
+            if (ageEstimated != null) {
+                return ageEstimated;
+            }
             return null;
         }
+
+        log.debug("dateOfBirth is not null");
 
         // Use default end date as today.
         Calendar today = Calendar.getInstance();

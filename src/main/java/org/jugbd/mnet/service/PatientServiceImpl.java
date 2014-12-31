@@ -82,6 +82,11 @@ public class PatientServiceImpl implements PatientService {
         patientFromDb.setDead(patient.getDead());
         patientFromDb.setDeathDate(patient.getDeathDate());
         patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
+        patientFromDb.setNid(patient.getNid());
+        patientFromDb.setMaritalStatus(patient.getMaritalStatus());
+        patientFromDb.setOccupation(patient.getOccupation());
+        patientFromDb.setEducationLevel(patient.getEducationLevel());
+        patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
 
         patientDao.save(patientFromDb);
     }
