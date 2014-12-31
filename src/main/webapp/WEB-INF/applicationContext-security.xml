@@ -54,11 +54,7 @@
     </security:authentication-manager>
 
     <!-- Configure Authentication mechanism -->
-    <bean class="org.jugbd.mnet.security.DatabaseAuthenticationProvider"
-          id="databaseAuthenticationProvider">
-        <property name="adminUser" value="admin"/>
-        <property name="adminPassword" value="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"/>
-    </bean>
+    <bean class="org.jugbd.mnet.security.DatabaseAuthenticationProvider" id="databaseAuthenticationProvider"/>
 
     <bean class="org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder"
           id="messageDigestPasswordEncoder">
