@@ -103,7 +103,7 @@
 
                     <div class="col-sm-6 col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Medical History</div>
+                            <div class="panel-heading">Past Medical History</div>
 
                             <div class="panel-body">
                                 <div th:if="${register.medicalHistory == null}">
@@ -117,7 +117,7 @@
                                             <td><strong>Past Medical History</strong></td>
                                             <td th:text="${register.medicalHistory.pastMedicalHistory}"></td>
                                         </tr>
-                                        <tr th:if="${register.patient.gender == 'Female'}">
+                                        <tr th:if="${#strings.toString(register.patient.gender).toUpperCase() == 'FEMALE'}">
                                             <td>Menstrual History</td>
                                             <td th:text="'Period: ' +${register.medicalHistory.period}"></td>
                                             <td th:text="'Days: ' + ${register.medicalHistory.days}"></td>
