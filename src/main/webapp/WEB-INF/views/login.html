@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-        >
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Log In :: mNetServices</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -51,7 +51,7 @@
 
 <div class="container">
     <div class="form-signin">
-        <img src="../../resources/images/logo.png" />
+        <img src="../../resources/images/logo.png" th:src="@{/resources/images/logo.png}"/>
 
         <fieldset>
             <legend>Please Log in</legend>
