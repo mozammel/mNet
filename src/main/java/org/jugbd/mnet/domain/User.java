@@ -3,7 +3,6 @@ package org.jugbd.mnet.domain;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.jugbd.mnet.domain.enums.AuditAction;
 import org.jugbd.mnet.domain.enums.Designation;
 import org.jugbd.mnet.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +23,7 @@ import java.util.List;
         name = "User.findByUsername",
         query = "from User u where u.username = ?"
 )
-public class User implements UserDetails, Serializable, Auditable {
+public class User extends PersistentObject implements UserDetails, Serializable, Auditable {
     private static final long serialVersionUID = 1L;
 
     @Id
