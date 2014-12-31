@@ -84,6 +84,7 @@ dependencies {
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.4.3'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.4'
 
     testCompile 'org.springframework:spring-test:4.0.5.RELEASE'
     testCompile 'junit:junit:4.11'
