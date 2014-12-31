@@ -39,6 +39,9 @@ public class Diagnosis extends PersistentObject implements Auditable {
     @Size(max = 1000)
     private String comment;
 
+    @Size(max = 100)
+    private String icd10;
+
     @JsonIgnore
     @OneToOne(mappedBy = "diagnosis")
     private Register register;
@@ -121,5 +124,13 @@ public class Diagnosis extends PersistentObject implements Auditable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getIcd10() {
+        return icd10;
+    }
+
+    public void setIcd10(String icd10) {
+        this.icd10 = icd10;
     }
 }

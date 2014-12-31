@@ -412,6 +412,11 @@
                                 <div th:if="${register.diagnosis != null}">
                                     <table class="table table-condensed">
                                         <tr>
+                                            <td><strong>ICD10</strong></td>
+                                            <span th:if="${register.diagnosis.icd10}"> <td th:text="${register.diagnosis.icd10}"></td> </span>
+                                        </tr>
+
+                                        <tr>
                                             <td><strong>Burn</strong></td>
                                             <span th:if="${register.diagnosis.burns}">
                                                 <td>
