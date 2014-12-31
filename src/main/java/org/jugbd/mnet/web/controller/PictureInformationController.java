@@ -45,10 +45,8 @@ public class PictureInformationController {
         Register register = registerService.findOne(registerId);
         PictureInformation pictureInformation = register.getPictureInformation();
 
-        if (pictureInformation != null) {
-            uiModel.addAttribute("pictureInformation", pictureInformation);
-        }
-
+        if (pictureInformation == null) pictureInformation = new PictureInformation();
+        uiModel.addAttribute("pictureInformation", pictureInformation);
         uiModel.addAttribute("register", register);
 
         return "picture/show";

@@ -687,7 +687,7 @@
                         <div class="panel-heading">Picture Information</div>
                         <div class="panel-body">
                             <div th:if="${register.pictureInformation == null}">
-                                <h3 class="text-primary">No Investigation record found</h3>
+                                <h3 class="text-primary">No picture information found</h3>
                                 <a class="btn btn-info pull-right"
                                    th:href="@{/picture/__${register.id}__}"><span
                                         class="glyphicon glyphicon-plus"></span> Add New</a>
@@ -713,8 +713,6 @@
 
                                 </div>
                                 <div th:if="${register.investigation.size() > 0}">
-
-                                    <h3 class="text-primary">Investigation record has been added.</h3>
 
                                     <table class="table table-condensed">
                                         <thead>
@@ -747,7 +745,6 @@
                         </div>
                     </div>
                     </div>
-                </div>
 
                 <div class="row">
                     <div class="panel panel-default" style="margin: 15px">
@@ -763,7 +760,7 @@
                                 }
                             </script>
 
-                            <form style="visibility: hidden" th:id="close-register" method="post" action="#"
+                            <form th:if="${register}" style="visibility: hidden" th:id="close-register" method="post" action="#"
                                   th:action="@{/register/close/__${register.id}__}">
                             </form>
 
@@ -774,6 +771,8 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
 
             <div th:unless="${register}" class="row">
                 <div class="col-sm-12 col-md-12">
