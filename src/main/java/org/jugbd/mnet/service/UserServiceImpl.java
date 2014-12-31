@@ -45,14 +45,15 @@ public class UserServiceImpl implements UserService {
             userDao.save(user);
         } else {
             User savedUser = findById(user.getId());
+
             savedUser.setFullName(user.getFullName());
             savedUser.setEmail(user.getEmail());
             savedUser.setRoles(user.getRoles());
             savedUser.setDesignation(user.getDesignation());
             savedUser.setPhoneNumber(user.getPhoneNumber());
-            savedUser.setPassword(user.getPassword());
-            savedUser.setSalt(StringUtils.generateRandomString(16));
-            savedUser.setHashedPassword(messageDigestPasswordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+
+            String encryptedPassword = messageDigestPasswordEncoder.encodePassword(user.getPassword(), savedUser.getSalt());
+            savedUser.setHashedPassword(encryptedPassword);
 
             userDao.save(savedUser);
         }

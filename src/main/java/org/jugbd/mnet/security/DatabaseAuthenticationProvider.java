@@ -25,9 +25,6 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private String adminUser;
-    private String adminPassword;
-
     @Autowired
     private UserService userService;
 
@@ -47,48 +44,26 @@ public class DatabaseAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (!StringUtils.hasText(password)) {
             throw new BadCredentialsException("Please enter password");
         }
-        String encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, null);
 
-        String expectedPassword;
-        User targetUser;
+        try {
+            User targetUser = (User) userService.loadUserByUsername(username);
+            String encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, targetUser.getSalt());
+            String expectedPassword = targetUser.getHashedPassword();
 
-        if (adminUser.equals(username)) {
-            // pseudo-user admin (ie not configured via Person)
-            expectedPassword = adminPassword;
-            // authenticate admin
+            if (!StringUtils.hasText(expectedPassword)) {
+                throw new BadCredentialsException("No password for "
+                        + username
+                        + " set in database, contact administrator");
+            }
+
             if (!encryptedPassword.equals(expectedPassword)) {
-                throw new BadCredentialsException("Invalid password");
+                throw new BadCredentialsException("Invalid Password");
             }
-            // authorize admin
-            targetUser = new User(adminUser, adminPassword);
-            targetUser.setRoles(Arrays.asList(Role.ROLE_ADMIN));
-        } else {
-            try {
-                targetUser = (User) userService.loadUserByUsername(username);
-                encryptedPassword = messageDigestPasswordEncoder.encodePassword(password, targetUser.getSalt());
-                // authenticate the person
-                expectedPassword = targetUser.getHashedPassword();
-                if (!StringUtils.hasText(expectedPassword)) {
-                    throw new BadCredentialsException("No password for "
-                            + username
-                            + " set in database, contact administrator");
-                }
-                if (!encryptedPassword.equals(expectedPassword)) {
-                    throw new BadCredentialsException("Invalid Password");
-                }
 
-            } catch (Exception ex) {
-                throw new BadCredentialsException("Invalid user");
-            }
+            return targetUser;
+
+        } catch (Exception ex) {
+            throw new BadCredentialsException("Invalid user");
         }
-        return targetUser;
-    }
-
-    public void setAdminPassword(String adminPassword) {
-        this.adminPassword = adminPassword;
-    }
-
-    public void setAdminUser(String adminUser) {
-        this.adminUser = adminUser;
     }
 }
