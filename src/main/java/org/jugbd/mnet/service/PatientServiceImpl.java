@@ -2,7 +2,6 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.Patient_;
 import org.jugbd.mnet.utils.PatientIdGenerator;
 import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.controller.PatientSearchCmd;
@@ -101,17 +100,17 @@ public class PatientServiceImpl implements PatientService {
 
                 if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.upper(personRoot.get(Patient_.healthId)), getLikePattern(searchCmd.getHealthId().trim().toUpperCase()))));
+                            .add(cb.or(cb.like(cb.upper(personRoot.<String>get("healthId")), getLikePattern(searchCmd.getHealthId().trim().toUpperCase()))));
                 }
 
                 if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.equal(personRoot.get(Patient_.contactNumber), searchCmd.getPhoneNumber().trim())));
+                            .add(cb.or(cb.equal(personRoot.get("contactNumber"), searchCmd.getPhoneNumber().trim())));
                 }
 
                 if (StringUtils.isNotEmpty(searchCmd.getName())) {
                     predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.lower(personRoot.get(Patient_.name)), getLikePattern(searchCmd.getName().trim().toLowerCase()))));
+                            .add(cb.or(cb.like(cb.lower(personRoot.<String>get("name")), getLikePattern(searchCmd.getName().trim().toLowerCase()))));
                 }
 
                 return predicate;
