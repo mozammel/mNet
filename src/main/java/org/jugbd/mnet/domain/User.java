@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -23,6 +24,7 @@ import java.util.List;
         name = "User.findByUsername",
         query = "from User u where u.username = ?"
 )
+@JsonIgnoreProperties({ "createdBy", "lastModifiedBy"})
 public class User extends PersistentObject implements UserDetails, Serializable, Auditable {
     private static final long serialVersionUID = 1L;
 
