@@ -18,13 +18,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @NamedQuery(
         name = "User.findByUsername",
         query = "from User u where u.username = ?"
 )
-@JsonIgnoreProperties({ "createdBy", "lastModifiedBy"})
+@JsonIgnoreProperties({"createdBy", "lastModifiedBy"})
 public class User extends PersistentObject implements UserDetails, Serializable, Auditable {
     private static final long serialVersionUID = 1L;
 

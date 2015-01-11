@@ -127,12 +127,21 @@ public class PatientController {
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable("id") Long id, Model uiModel) {
+    public String show(@PathVariable("id") Long id,
+                       @RequestParam(value = "registerId", required = false) Long registerId,
+                       Model uiModel) {
 
         Patient patient = patientService.findOne(id);
         uiModel.addAttribute("patient", patient);
+        uiModel.addAttribute("registers", registerService.findAllRegisterByPatientId(patient.getId()));
 
-        Register activeRegister = registerService.findActiveRegisterByPatientId(id);
+        Register activeRegister;
+
+        if (registerId != null) {
+            activeRegister = registerService.findOne(registerId);
+        } else {
+            activeRegister = registerService.findActiveRegisterByPatientId(id);
+        }
 
         if (activeRegister != null) {
             uiModel.addAttribute("register", activeRegister);

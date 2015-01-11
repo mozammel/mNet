@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.RequiredNotRequired;
 import org.jugbd.mnet.domain.enums.YesNo;
