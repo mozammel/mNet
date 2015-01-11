@@ -56,6 +56,7 @@ public class OperationalDetail extends PersistentObject implements Auditable {
     @Size(max = 1000)
     private String comment;
 
+    @JsonIgnore
     @ManyToOne
     private Register register;
 
