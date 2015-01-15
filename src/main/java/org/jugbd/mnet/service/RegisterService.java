@@ -4,6 +4,8 @@ import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author Bazlur Rahman Rokon
  * @since 10/14/14.
@@ -15,6 +17,8 @@ public interface RegisterService {
     Register findOne(Long registerId);
 
     Register findActiveRegisterByPatientId(Long patientId);
+
+    List<Register> findAllRegisterByPatientId(Long patientId);
 
     void closeRegister(Long registerId);
 

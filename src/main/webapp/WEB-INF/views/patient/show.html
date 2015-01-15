@@ -51,6 +51,43 @@
                 </div>
             </div>
 
+            <div th:if="${not #lists.isEmpty(registers)}" class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">All Registers</div>
+                        <div class="panel-body">
+                            <div class="col-sm-8 col-md-8">
+                                <table class="table table-condensed">
+                                       <thead>
+                                            <th>#</th>
+                                            <th>Registration Number</th>
+                                            <th>Admission Date</th>
+                                            <th>Ward</th>
+                                            <th>Bed Number</th>
+                                            <th>Unit</th>
+                                            <th>Status</th>
+                                       </thead>
+                                       <tbody>
+                                        <tr th:each="register : ${registers}">
+                                               <td><a th:href="@{/patient/show/__${patient.id}__?registerId=__${register.id}__}">Open</a></td>
+                                               <td th:text="${register.registrationId}"></td>
+                                               <td th:text="${register.admissionDate} ? ${#dates.format(register.admissionDate,'dd MMMM yyyy')}"></td>
+                                               <td>
+                                                   <span th:text="${register.ward} ? ${register.ward.label}"/>
+                                                   <span th:if="${register.wardOther}" th:text="${register.wardOther}"/>
+                                               </td>
+                                               <td th:text="${register.bedNumber} ? ${register.bedNumber}"></td>
+                                               <td th:text="${register.unit} ? ${register.unit}"></td>
+                                               <td th:text="${register.status} ? ${register.status}"></td>
+                                           </tr>
+                                       </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div th:if="${register}">
                 <div class="row">
                     <div class="col-sm-6 col-md-6">

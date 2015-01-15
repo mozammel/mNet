@@ -17,4 +17,7 @@ public interface RegisterDao extends JpaRepository<Register, Long> {
 
     @Query("select o from Register o where o.patient.id=:patientId and o.status='ACTIVE'")
     List<Register> findActiveRegisterByPatientId(@Param("patientId") Long patientId);
+
+    @Query("select o from Register o where o.patient.id=:patientId")
+    List<Register> findAllRegisterByPatientId(@Param("patientId") Long patientId);
 }

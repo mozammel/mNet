@@ -2,6 +2,8 @@ package org.jugbd.mnet.domain;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -12,6 +14,7 @@ import java.util.Set;
 import static junit.framework.TestCase.assertEquals;
 
 public class UserTest {
+    private static final Logger log = LoggerFactory.getLogger(UserTest.class);
     private static Validator validator;
 
     @BeforeClass
@@ -26,6 +29,8 @@ public class UserTest {
         User user = new User("Bazlur", "Asdf#42D");
 
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+
+        constraintViolations.stream().forEach(a -> log.debug("{}", a.getMessage()));
 
         assertEquals(0, constraintViolations.size());
     }
