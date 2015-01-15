@@ -18,7 +18,7 @@ public interface PatientService {
 
     public List<Patient> findAll();
 
-    public Page<Patient> findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable);
+    public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable);
 
     Page<Patient> findAll(Pageable pageable);
 

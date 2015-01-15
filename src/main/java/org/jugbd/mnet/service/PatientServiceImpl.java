@@ -28,13 +28,15 @@ import java.util.List;
 @Transactional
 public class PatientServiceImpl implements PatientService {
 
-    private static final Logger log = LoggerFactory.getLogger(PatientServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PatientServiceImpl.class);
 
     @Autowired
     private PatientDao patientDao;
 
     @Override
     public Patient create(Patient patient) {
+        LOGGER.debug("creating new patient with info : {}", patient);
+
         patient.setHealthId(PatientIdGenerator.generate(patient.getAddress()));
 
         if (patient.getDateOfBirth() == null) {
@@ -70,6 +72,8 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void update(Patient patient) {
+        LOGGER.debug("Updating patient with info : {}", patient);
+
         Patient patientFromDb = findOne(patient.getId());
 
         patientFromDb.setName(patient.getName());
@@ -90,39 +94,43 @@ public class PatientServiceImpl implements PatientService {
         patientDao.save(patientFromDb);
     }
 
-    public Page<Patient> findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
+    public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
+        LOGGER.debug("finding patient information with info : {}", searchCmd);
 
-        return patientDao.findAll(new Specification<Patient>() {
-            @Override
-            public Predicate toPredicate(Root<Patient> personRoot, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        return patientDao.findAll((patientRoot, query, cb) -> {
 
-                Predicate predicate = cb.disjunction();
+            Predicate predicate = cb.disjunction();
 
-                if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
-                    predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.upper(personRoot.<String>get("healthId")), getLikePattern(searchCmd.getHealthId().trim().toUpperCase()))));
-                }
-
-                if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
-                    predicate.getExpressions()
-                            .add(cb.or(cb.equal(personRoot.get("contactNumber"), searchCmd.getPhoneNumber().trim())));
-                }
-
-                if (StringUtils.isNotEmpty(searchCmd.getName())) {
-                    predicate.getExpressions()
-                            .add(cb.or(cb.like(cb.lower(personRoot.<String>get("name")), getLikePattern(searchCmd.getName().trim().toLowerCase()))));
-                }
-
-                return predicate;
+            if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
+                predicate
+                        .getExpressions()
+                        .add(cb.or(cb.like(cb.upper(patientRoot.<String>get("healthId")),
+                                getLikePattern(searchCmd.getHealthId()
+                                        .trim()
+                                        .toUpperCase()))));
             }
+
+            if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
+                predicate
+                        .getExpressions()
+                        .add(cb.or(cb.equal(patientRoot.get("contactNumber"), searchCmd.getPhoneNumber().trim())));
+            }
+
+            if (StringUtils.isNotEmpty(searchCmd.getName())) {
+                predicate
+                        .getExpressions()
+                        .add(cb.or(cb.like(cb.lower(patientRoot.<String>get("name")),
+                                getLikePattern(searchCmd.getName()
+                                        .trim()
+                                        .toLowerCase()))));
+            }
+
+            return predicate;
         }, pageable);
     }
 
-    private String getLikePattern(final String searchTerm) {
-        StringBuilder pattern = new StringBuilder();
-        pattern.append("%");
-        pattern.append(searchTerm.toLowerCase());
-        pattern.append("%");
-        return pattern.toString();
+    private String getLikePattern(String searchTerm) {
+
+        return "%" + searchTerm.toLowerCase() + "%";
     }
 }
