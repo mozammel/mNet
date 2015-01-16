@@ -2,6 +2,7 @@ package org.jugbd.mnet.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.District;
+import org.jugbd.mnet.utils.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -82,5 +83,17 @@ public class Address {
 
     public void setDistrict(District district) {
         this.district = district;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        if (StringUtils.isNotEmpty(homeAddress)) builder.append(homeAddress).append(" ");
+        if (StringUtils.isNotEmpty(policeStation)) builder.append(policeStation).append(" ");
+        if (StringUtils.isNotEmpty(postOffice)) builder.append(postOffice).append(" ");
+        builder.append(district.getName()).append(" ");
+        builder.append(division).append(" ");
+
+        return builder.toString();
     }
 }
