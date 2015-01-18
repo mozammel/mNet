@@ -63,6 +63,14 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label" th:text="#{label.register.id}">Register ID</label>
+
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input-sm" id="registerId" th:field="*{registerId}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="reset" class="btn btn-danger" th:text="#{button.reset}">Reset</button>
                         <button type="submit" class="btn btn-primary" th:text="#{button.search}">Search</button>

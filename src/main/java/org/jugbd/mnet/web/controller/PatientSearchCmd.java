@@ -7,6 +7,7 @@ public class PatientSearchCmd {
     private String healthId;
     private String phoneNumber;
     private String name;
+    private String registerId;
 
     public String getHealthId() {
         return healthId;
@@ -30,6 +31,14 @@ public class PatientSearchCmd {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRegisterId() {
+        return registerId;
+    }
+
+    public void setRegisterId(String registerId) {
+        this.registerId = registerId;
     }
 
     @Override

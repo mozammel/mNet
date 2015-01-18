@@ -2,6 +2,7 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.utils.PatientIdGenerator;
 import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.controller.PatientSearchCmd;
@@ -13,10 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -94,6 +92,16 @@ public class PatientServiceImpl implements PatientService {
         patientDao.save(patientFromDb);
     }
 
+    /*
+    * SELECT patient0_
+    *
+    *FROM patient patient0_
+    *WHERE upper(patient0_.health_id) LIKE ? OR patient0_.contact_number = ? OR lower(patient0_.name) LIKE ? OR
+    *  patient0_.id = (SELECT patient2_.id
+    *                  FROM register register1_ INNER JOIN patient patient2_ ON register1_.patient = patient2_.id
+    *                  WHERE register1_.registration_id = ?)
+    *LIMIT ?
+    */
     public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
         LOGGER.debug("finding patient information with info : {}", searchCmd);
 
@@ -123,6 +131,15 @@ public class PatientServiceImpl implements PatientService {
                                 getLikePattern(searchCmd.getName()
                                         .trim()
                                         .toLowerCase()))));
+            }
+
+            if (StringUtils.isNotEmpty(searchCmd.getRegisterId())){
+
+                Subquery<Patient> sq = query.subquery(Patient.class);
+                Root<Register> project = sq.from(Register.class);
+                Join<Register, Patient> sqEmp = project.join("patient");
+                sq.select(sqEmp).where(cb.equal(project.get("registrationId"), searchCmd.getRegisterId()));
+                predicate.getExpressions().add(cb.or (cb.equal((patientRoot.get("id")), sq)));
             }
 
             return predicate;

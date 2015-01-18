@@ -179,17 +179,18 @@ public class PatientController {
     public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd, Pageable pageable, Model uiModel, HttpServletRequest request) {
         log.info("display() patientSearchCmd ={}", patientSearchCmd);
 
-        if ((StringUtils.isEmpty(patientSearchCmd.getHealthId())
+        if (StringUtils.isEmpty(patientSearchCmd.getHealthId())
                 && StringUtils.isEmpty(patientSearchCmd.getPhoneNumber())
-                && StringUtils.isEmpty(patientSearchCmd.getName()))) {
+                && StringUtils.isEmpty(patientSearchCmd.getName())
+                && StringUtils.isEmpty(patientSearchCmd.getRegisterId())) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
-            uiModel.addAttribute("error", "Please enter Health Id or Phone Number");
+            uiModel.addAttribute("error", "Please enter Health Id or Phone Number or Register Id");
 
             return "patient/search";
         }
 
-        Page<Patient> patients = patientService.findPatientBySearchCmd(patientSearchCmd, pageable);
+        Page patients = patientService.findPatientBySearchCmd(patientSearchCmd, pageable);
         if (patients.getTotalElements() == 0) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
