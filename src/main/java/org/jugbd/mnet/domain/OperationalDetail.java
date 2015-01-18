@@ -1,6 +1,6 @@
 package org.jugbd.mnet.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.RequiredNotRequired;
 import org.jugbd.mnet.domain.enums.YesNo;
@@ -16,7 +16,8 @@ import java.util.Date;
  * @date 12/26/14.
  */
 @Entity
-public class OperationalDetail extends PersistentObject implements Auditable {
+@JsonIgnoreProperties({"register"})
+public class OperationalDetail extends PersistentObject implements Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,7 +58,6 @@ public class OperationalDetail extends PersistentObject implements Auditable {
     @Size(max = 1000)
     private String comment;
 
-    @JsonIgnore
     @ManyToOne
     private Register register;
 

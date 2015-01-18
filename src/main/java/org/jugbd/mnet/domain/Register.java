@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jugbd.mnet.domain.enums.Status;
 import org.jugbd.mnet.domain.enums.Ward;

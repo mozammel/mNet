@@ -3,6 +3,7 @@ package org.jugbd.mnet.audit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
@@ -118,6 +119,7 @@ public class AuditLogInterceptor extends EmptyInterceptor {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JodaModule());
+            mapper.registerModule(new Hibernate4Module());
             mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             ObjectWriter writer = mapper.writer();
 

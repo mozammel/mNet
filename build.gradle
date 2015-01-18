@@ -81,9 +81,8 @@ dependencies {
 
     compile 'commons-io:commons-io:1.4'
     compile 'commons-fileupload:commons-fileupload:1.2'
-    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.4.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.4.4'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.4'
 
     testCompile 'org.springframework:spring-test:4.0.5.RELEASE'

@@ -1,5 +1,6 @@
 package org.jugbd.mnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
@@ -9,7 +10,8 @@ import javax.validation.constraints.NotNull;
  * Created by Bazlur Rahman Rokon on 8/4/14.
  */
 @Entity
-public class Vital extends PersistentObject {
+@JsonIgnoreProperties({"register"})
+public class Vital extends PersistentObject implements Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +46,7 @@ public class Vital extends PersistentObject {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Override
     public Long getId() {
         return id;
     }
