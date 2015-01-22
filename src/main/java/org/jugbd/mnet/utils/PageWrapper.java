@@ -25,11 +25,11 @@ public class PageWrapper<T> {
         currentNumber = page.getNumber();
         int start, size;
         if (page.getTotalPages() <= MAX_PAGE_ITEM_DISPLAY) {
-            start = 1;
+            start = 0;
             size = page.getTotalPages();
         } else {
             if (currentNumber <= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY / 2) {
-                start = 1;
+                start = 0;
                 size = MAX_PAGE_ITEM_DISPLAY;
             } else if (currentNumber >= page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY / 2) {
                 start = page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY + 1;
