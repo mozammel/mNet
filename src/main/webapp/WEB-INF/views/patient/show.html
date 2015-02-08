@@ -94,8 +94,15 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Registration Info</div>
                             <div class="panel-body">
-                                <h4 class="text-primary">Active since - <span
-                                        th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+
+                                <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}" class="text-primary">
+                                    Active since -
+                                    <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                                </h4>
+
+                                <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}" class="text-danger">
+                                    Closed on -
+                                    <span th:text="${register.stopDatetime} ? ${#dates.format(register.stopDatetime,'dd MMMM yyyy h:mm a')}"></span>
                                 </h4>
 
                                 <table class="table table-condensed">
@@ -783,11 +790,11 @@
                     </div>
                     </div>
 
-                <div class="row">
-                    <div class="panel panel-default" style="margin: 15px">
-                        <div class="panel-body">
-                            <a th:href="@{#}" class="btn btn-danger pull-right" style="margin-right: 10px"
-                               onclick="closeRegister();"><span class="glyphicon glyphicon-remove"></span> Close Patient</a>
+                <div class="row panel-footer">
+
+                            <a th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}"
+                               th:href="@{#}" class="btn btn-danger pull-right" style="margin-right: 10px"
+                               onclick="closeRegister();"> <span class="glyphicon glyphicon-remove"></span> Close Patient</a>
 
                             <script type="text/javascript">
                                 function closeRegister() {
@@ -801,14 +808,16 @@
                                   th:action="@{/register/close/__${register.id}__}">
                             </form>
 
-
-                            <a href="#" class="btn btn-info pull-left" th:href="@{/patient/cancel}"> <span
-                                    th:text="#{label.back}">Back</span>
+                            <a th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}"
+                                href="#" class="btn btn-primary pull-left" th:href="@{/patient/cancel}">
+                                <span class="glyphicon glyphicon-arrow-left"></span> Back
                             </a>
-                        </div>
-                    </div>
-                </div>
 
+                            <a th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}"
+                               href="#" class="btn btn-primary pull-left" th:href="@{/patient/show/__${register.patient.id}__}">
+                                <span class="glyphicon glyphicon-arrow-left"></span> Back
+                            </a>
+                    </div>
             </div>
 
             <div th:unless="${register}" class="row">
@@ -817,7 +826,8 @@
                         <div class="panel-heading">Register</div>
                         <div class="panel-body">
                             <h3 class="text-primary">This patient has not any active registration</h3>
-                            <a class="btn btn-info pull-right" th:href="@{/register/patient/__${patient.id}__}"><span class="glyphicon glyphicon-plus"></span> Register</a>
+                            <a class="btn btn-primary btn-success pull-right" th:href="@{/register/patient/__${patient.id}__}">
+                                <span class="glyphicon glyphicon-plus"></span> Add Register</a>
                         </div>
                     </div>
                 </div>

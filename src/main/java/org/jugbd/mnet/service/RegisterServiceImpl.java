@@ -81,6 +81,7 @@ public class RegisterServiceImpl implements RegisterService {
     public void closeRegister(Long registerId) {
         Register register = registerDao.findOne(registerId);
         register.setStatus(Status.CLOSED);
+        register.setStopDatetime(new Date());
         registerDao.save(register);
     }
 
