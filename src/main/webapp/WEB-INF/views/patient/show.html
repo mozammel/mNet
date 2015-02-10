@@ -163,8 +163,8 @@
                                         </tr>
                                         <tr th:if="${#strings.toString(register.patient.gender).toUpperCase() == 'FEMALE'}">
                                             <td>Menstrual History</td>
-                                            <td th:text="'Period: ' +${register.medicalHistory.period}"></td>
-                                            <td th:text="'Days: ' + ${register.medicalHistory.days}"></td>
+                                            <td th:text="${register.medicalHistory.period} ? 'Period: ' +${register.medicalHistory.period}"></td>
+                                            <td th:text="${register.medicalHistory.days} ? 'Days: ' + ${register.medicalHistory.days}"></td>
                                             <td th:text="${register.medicalHistory.menstrualCycle} ? 'Cycle: ' +${register.medicalHistory.menstrualCycle.label}"></td>
                                         </tr>
 
