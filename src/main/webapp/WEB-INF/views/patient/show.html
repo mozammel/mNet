@@ -165,7 +165,7 @@
                                             <td>Menstrual History</td>
                                             <td th:text="'Period: ' +${register.medicalHistory.period}"></td>
                                             <td th:text="'Days: ' + ${register.medicalHistory.days}"></td>
-                                            <td th:text="'Cycle: ' +${register.medicalHistory.menstrualCycle.label}"></td>
+                                            <td th:text="${register.medicalHistory.menstrualCycle} ? 'Cycle: ' +${register.medicalHistory.menstrualCycle.label}"></td>
                                         </tr>
 
                                         <tr>
