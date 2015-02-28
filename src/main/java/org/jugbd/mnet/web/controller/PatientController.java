@@ -1,5 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
+import org.joda.time.DateTime;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
@@ -206,19 +207,11 @@ public class PatientController {
     }
 
     private Vital getLastVital(Register activeRegister) {
-        List<Vital> vitals = new ArrayList<>(activeRegister.getVitals());
-
-        if (vitals.size() > 0) {
-            Collections.sort(vitals, new Comparator<Vital>() {
-                @Override
-                public int compare(Vital o1, Vital o2) {
-                    return o2.getCreatedDate().compareTo(o1.getCreatedDate());
-                }
-            });
-
-            return vitals.get(0);
-        }
-
-        return null;
+        return activeRegister
+                .getVitals()
+                .stream()
+                .sorted((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()))
+                .findFirst()
+                .orElse(null);
     }
 }
