@@ -1,6 +1,5 @@
 package org.jugbd.mnet.web.controller;
 
-import org.joda.time.DateTime;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
@@ -29,7 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+
+import static org.jugbd.mnet.utils.StringUtils.isEmpty;
 
 /**
  * @author ronygomes
@@ -61,9 +62,7 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String save(@Valid Patient patient,
-                       BindingResult result,
-                       RedirectAttributes redirectAttributes) {
+    public String save(@Valid Patient patient, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (patient.getAge() == null && patient.getBirthdateEstimated()) {
             patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
@@ -77,16 +76,9 @@ public class PatientController {
         }
 
         patientService.create(patient);
-
         redirectAttributes.addFlashAttribute("message", String.format("Patient successfully created"));
 
         return "redirect:/patient/show/" + patient.getId().toString();
-    }
-
-    private void validatePatient(Patient patient, BindingResult result) {
-        if (patient.getAge() == null) {
-            result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
-        }
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -99,9 +91,7 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String update(Patient patient,
-                         BindingResult result,
-                         RedirectAttributes redirectAttributes) {
+    public String update(@Valid Patient patient, BindingResult result, RedirectAttributes redirectAttributes) {
 
         validatePatient(patient, result);
 
@@ -128,8 +118,7 @@ public class PatientController {
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable("id") Long id,
-                       @RequestParam(value = "registerId", required = false) Long registerId,
+    public String show(@PathVariable Long id, @RequestParam(value = "registerId", required = false) Long registerId,
                        Model uiModel) {
 
         Patient patient = patientService.findOne(id);
@@ -177,13 +166,14 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/display", method = RequestMethod.GET)
-    public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd, Pageable pageable, Model uiModel, HttpServletRequest request) {
+    public String display(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd,
+                          Pageable pageable, Model uiModel, HttpServletRequest request) {
         log.info("display() patientSearchCmd ={}", patientSearchCmd);
 
-        if (StringUtils.isEmpty(patientSearchCmd.getHealthId())
-                && StringUtils.isEmpty(patientSearchCmd.getPhoneNumber())
-                && StringUtils.isEmpty(patientSearchCmd.getName())
-                && StringUtils.isEmpty(patientSearchCmd.getRegisterId())) {
+        if (isEmpty(patientSearchCmd.getHealthId())
+                && isEmpty(patientSearchCmd.getPhoneNumber())
+                && isEmpty(patientSearchCmd.getName())
+                && isEmpty(patientSearchCmd.getRegisterId())) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
             uiModel.addAttribute("error", "Please enter Health Id or Phone Number or Register Id");
@@ -192,6 +182,7 @@ public class PatientController {
         }
 
         Page patients = patientService.findPatientBySearchCmd(patientSearchCmd, pageable);
+        
         if (patients.getTotalElements() == 0) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
@@ -207,11 +198,18 @@ public class PatientController {
     }
 
     private Vital getLastVital(Register activeRegister) {
+        
         return activeRegister
                 .getVitals()
                 .stream()
                 .sorted((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    private void validatePatient(Patient patient, BindingResult result) {
+        if (patient.getAge() == null) {
+            result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
+        }
     }
 }
