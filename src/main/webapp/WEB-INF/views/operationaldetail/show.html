@@ -19,8 +19,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Operational Detail</div>
                 <div class="panel-body">
-
-                    <table class="table table-condensed">
+                    <table class="table table-hover">
                         <tr>
                             <td> Date And Time</td>
                             <td th:text="${operationalDetail.dateTime} ? ${#dates.format(operationalDetail.dateTime,'dd MMMM yyyy h:mm a')}"></td>
@@ -78,18 +77,20 @@
                             <td th:text="${operationalDetail.comment} ? ${operationalDetail.comment}"></td>
                         </tr>
                     </table>
+                </div>
+                <div class="panel-footer">
+                    <a th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}" class="btn btn-sm btn-primary"
+                       type="button" data-toggle="tooltip" data-original-title="Go Back">
+                        <i class="glyphicon glyphicon-arrow-left"> Back</i>
+                    </a>
 
-                    <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-
-                        <a href="#" class="btn btn-info  pull-left"
-                           th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
-                                class="glyphicon glyphicon-arrow-left"></span> <span
-                                th:text="#{label.back}">Back</span> </a>
-
-                        <a href="#" class="btn btn-info pull-right"
-                           th:href="@{/operationaldetail/edit/__${operationalDetail.id}__}"> <span
-                                class="glyphicon glyphicon-edit"></span> Edit </a>
-                    </div>
+                        <span class="pull-right">
+                            <a th:href="@{/operationaldetail/edit/__${operationalDetail.id}__}"
+                               class="btn btn-sm btn-warning" type="button"
+                               data-toggle="tooltip"
+                               data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"> Edit</i>
+                            </a>
+                        </span>
                 </div>
             </div>
         </div>
