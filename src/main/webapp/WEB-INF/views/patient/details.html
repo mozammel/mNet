@@ -17,6 +17,7 @@
                 <h2 class="page-header">Patient Personal Information</h2>
             </div>
         </div>
+        
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Patient's Details</div>
@@ -31,95 +32,98 @@
                         <div class=" col-md-9 col-lg-9 hitden-xs hitden-sm">
 
                             <table class="table table-hover">
-                                
+
                                 <tbody>
-                                
-                                    <tr>
-                                        <td>Patient Name</td>
-                                        <td th:text="${patient.name}"></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Health ID</td>
-                                        <td th:text="${patient.healthId}"></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>National Identification No</td>
-                                        <td th:text="${patient.nid}"></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td th:text="${patient.gender.label}"></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Age</td>
-                                        <td>
-                                            <span th:text="${patient.age}"></span>
-                                            <span> year(s)</span>
-                                            <span th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></span>
-                                            <span th:if="${patient.birthdateEstimated}" class="badge">Est.</span>
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Blood Group</td>
-                                        <td th:text="${patient.bloodType} ? ${patient.bloodType.label}"></td>    
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Marital Status</td>
-                                        <td th:text="${patient.maritalStatus} ? ${patient.maritalStatus.label}"></td> 
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Occupation</td>
-                                        <td th:text="${patient.occupation} ? ${patient.occupation.label}"></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Educational Level</td>
-                                        <td th:text="${patient.educationLevel} ? ${patient.educationLevel.label}"></td>
-                                    </tr>
-    
-                                    <tr>
-                                        <td>Atdress</td>
-                                        <td th:text="${patient.address.homeAddress} ? ${patient.address.homeAddress}"></td>
-                                    </tr>
-    
-                                    <tr>
-                                        <td> Post Office</td>
-                                        <td th:text="${patient.address.postOffice} ? ${patient.address.postOffice}"></td>
-                                    </tr>
-    
-                                    <tr>
-                                        <td> Police Station</td>
-                                        <td th:text="${patient.address.policeStation} ? ${patient.address.policeStation}"></td>
-                                    </tr>
-    
-                                    <tr>
-                                        <td> District</td>
-                                        <td th:text="${patient.address.district} ? ${patient.address.district.name}"></td>
-                                    </tr>
-    
-                                    <tr>
-                                        <td> Division</td>
-                                        <td th:text="${patient.address.division} ? ${patient.address.division}"></td>
-                                    </tr>
-                                
+
+                                <tr>
+                                    <td>Patient Name</td>
+                                    <td th:text="${patient.name}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Health ID</td>
+                                    <td th:text="${patient.healthId}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>National Identification No</td>
+                                    <td th:text="${patient.nid}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Gender</td>
+                                    <td th:text="${patient.gender.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Age</td>
+                                    <td>
+                                        <span th:text="${patient.age}"></span>
+                                        <span> year(s)</span>
+                                        <span th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></span>
+                                        <span th:if="${patient.birthdateEstimated}" class="badge">Est.</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Blood Group</td>
+                                    <td th:text="${patient.bloodType} ? ${patient.bloodType.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Marital Status</td>
+                                    <td th:text="${patient.maritalStatus} ? ${patient.maritalStatus.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Occupation</td>
+                                    <td th:text="${patient.occupation} ? ${patient.occupation.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Educational Level</td>
+                                    <td th:text="${patient.educationLevel} ? ${patient.educationLevel.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Atdress</td>
+                                    <td th:text="${patient.address.homeAddress} ? ${patient.address.homeAddress}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td> Post Office</td>
+                                    <td th:text="${patient.address.postOffice} ? ${patient.address.postOffice}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td> Police Station</td>
+                                    <td th:text="${patient.address.policeStation} ? ${patient.address.policeStation}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td> District</td>
+                                    <td th:text="${patient.address.district} ? ${patient.address.district.name}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td> Division</td>
+                                    <td th:text="${patient.address.division} ? ${patient.address.division}"></td>
+                                </tr>
+
                                 </tbody>
-                            
+
                             </table>
 
-                            <div class="panel-footer">
-                                <a th:href="@{/patient/show/__${patient.id}__}" class="btn btn-sm btn-primary"
-                                   type="button" data-toggle="tooltip" data-original-title="Go Back">
-                                    <i class="glyphicon glyphicon-arrow-left"> Back</i>
-                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a th:href="@{/patient/show/__${patient.id}__}" class="btn btn-sm btn-primary"
+                       type="button" data-toggle="tooltip" data-original-title="Go Back">
+                        <i class="glyphicon glyphicon-arrow-left"> Back</i>
+                    </a>
 
-                                <span class="pull-right">
+                            <span class="pull-right">
                                     <a th:href="@{/patient/edit/__${patient.id}__}"
                                        class="btn btn-sm btn-warning" type="button"
                                        data-toggle="tooltip"
@@ -127,12 +131,10 @@
                                         Edit</i>
                                     </a>
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+
                 </div>
             </div>
+        </div>
     </div>
 </section>
 </body>
