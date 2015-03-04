@@ -22,7 +22,7 @@
                 <div class="panel-heading">New Medical History</div>
                 <div class="panel-body">
 
-                    <form class="form-horizontal" method='POST' th:object="${medicalHistory}"
+                    <form id="pastMedicalHistory-form" class="form-horizontal" method='POST' th:object="${medicalHistory}"
                           th:action="@{/medicalhistory/edit}">
 
                         <fieldset>
@@ -179,19 +179,25 @@
 
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger"
-                                   th:href="@{/medicalhistory/cancel/__${medicalHistory.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span>
-                                </a>
-                                <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
-                                    Changes
-                                </button>
-                            </div>
-                        </div>
                     </form>
+                    
                 </div>
+
+                <div class="panel-footer">
+
+                    <a href="#" class="btn btn-danger"
+                       th:href="@{/medicalhistory/cancel/__${medicalHistory.register.id}__}"> <i
+                            class="glyphicon glyphicon-arrow-left"></i> <span
+                            th:text="#{label.cancel}">Cancel</span>
+                    </a>
+
+                    <button type="submit" class="btn btn-primary pull-right"
+                            onclick="document.getElementById('pastMedicalHistory-form').submit();">
+                        <span class="glyphicon glyphicon-ok"></span> <span th:text="#{label.save.changes}"></span>
+                    </button>
+
+                </div>
+                
             </div>
         </div>
     </div>
