@@ -40,6 +40,8 @@
                         <th>Contact Number</th>
                         <th>Gender</th>
                         <th>Address</th>
+                        <th>Created On</th>
+                        <th>Last Updated On</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,6 +51,8 @@
                         <td th:text="${patient.contactNumber}">Contact Number</td>
                         <td th:text="${patient.gender.label}">Gender</td>
                         <td th:text="${patient.address}">Gender</td>
+                        <td th:text="${#dates.format(patient.createdDate,'dd-MM-yyyy')}">Created</td>
+                        <td th:text="${#dates.format(patient.lastModifiedDate,'dd-MM-yyyy')}">Last Updated</td>
                     </tr>
                     </tbody>
                 </table>
