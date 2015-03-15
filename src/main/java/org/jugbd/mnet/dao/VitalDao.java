@@ -2,6 +2,7 @@ package org.jugbd.mnet.dao;
 
 import org.jugbd.mnet.domain.Vital;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @since 10/17/14.
  */
 @Repository
-public interface VitalDao extends JpaRepository<Vital,Long> {
+public interface VitalDao extends JpaRepository<Vital,Long>, JpaSpecificationExecutor<Vital> {
 }

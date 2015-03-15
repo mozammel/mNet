@@ -1,12 +1,16 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.VitalService;
+import org.jugbd.mnet.utils.PageWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -68,6 +73,17 @@ public class VitalController {
 
         return "vital/show";
     }
+
+    @RequestMapping(value = "/index/{registerId}", method = RequestMethod.GET)
+    public String index(@PathVariable Long registerId, Model uiModel) {
+
+        List<Vital> vitals = vitalService.findByRegisterId(registerId);
+        uiModel.addAttribute("vitals", vitals);
+        uiModel.addAttribute("registerId", registerId);
+
+        return "vital/index";
+    }
+
 
     @RequestMapping(value = "back", method = RequestMethod.GET)
     public String backToPatientShowPage(@RequestParam Long registerId) {
