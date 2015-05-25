@@ -1,0 +1,1 @@
+UPDATE patient SET blood_type = 'A_POSITIVE' where blood_type = 'B_POSITIVE';
