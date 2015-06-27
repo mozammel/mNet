@@ -152,7 +152,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.medicalHistory == null}">
                                     <h3 class="text-primary">No Medical History found</h3>
-                                    <a class="btn btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                    <a class="btn btn-sm btn-info pull-right" th:href="@{/medicalhistory/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
 
                                 <div th:if="${register.medicalHistory != null}">
@@ -199,7 +199,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/medicalhistory/edit/__${register.medicalHistory.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -269,8 +269,8 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <a class="btn btn-info pull-left" th:href="@{/vital/index/__${register.id}__}"><span class="glyphicon glyphicon-th-list"></span>View all</a>
-                                <a class="btn btn-info pull-right" th:href="@{/vital/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                <a class="btn btn-sm btn-info pull-left" th:href="@{/vital/index/__${register.id}__}"><span class="glyphicon glyphicon-th-list"></span>View all</a>
+                                <a class="btn btn-sm btn-info pull-right" th:href="@{/vital/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.chiefComplaint == null}">
                                     <h3 class="text-primary">No Chief Complaint found</h3>
-                                    <a class="btn btn-info pull-right" th:href="@{/chiefcomplaints/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
+                                    <a class="btn btn-sm btn-info pull-right" th:href="@{/chiefcomplaints/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add
                                         New</a>
                                 </div>
                                 <div th:if="${register.chiefComplaint != null}">
@@ -331,7 +331,7 @@
                                         </tr>
                                     </table>
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/chiefcomplaints/edit/__${register.chiefComplaint.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -350,7 +350,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.examination == null}">
                                     <h3 class="text-primary">No Examination found</h3>
-                                    <a class="btn btn-info pull-right" th:href="@{/examination/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                    <a class="btn btn-sm btn-info pull-right" th:href="@{/examination/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
                                 <div th:if="${register.examination != null}">
                                     <table class="table table-condensed">
@@ -436,7 +436,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/examination/edit/__${register.examination.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -452,7 +452,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.diagnosis == null}">
                                     <h3 class="text-primary">No Diagnosis found</h3>
-                                    <a class="btn btn-info pull-right" th:href="@{/diagnosis/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+                                    <a class="btn btn-sm btn-info pull-right" th:href="@{/diagnosis/create/__${register.id}__}"><span class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
                                 <div th:if="${register.diagnosis != null}">
                                     <table class="table table-condensed">
@@ -504,7 +504,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/diagnosis/edit/__${register.diagnosis.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -521,7 +521,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.treatmentPlan == null}">
                                     <h3 class="text-primary">No Plan Of Rx found</h3>
-                                    <a class="btn btn-info pull-right"
+                                    <a class="btn btn-sm btn-info pull-right"
                                        th:href="@{/treatmentplan/create/__${register.id}__}"><span
                                             class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
@@ -583,7 +583,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/treatmentplan/edit/__${register.treatmentPlan.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -621,7 +621,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <a class="btn btn-info pull-right"
+                                <a class="btn btn-sm btn-info pull-right"
                                    th:href="@{/operationaldetail/create/__${register.id}__}"><span
                                         class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
@@ -636,7 +636,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.complicationManagement == null}">
                                     <h3 class="text-primary">No Complication of Management found</h3>
-                                    <a class="btn btn-info pull-right"
+                                    <a class="btn btn-sm btn-info pull-right"
                                        th:href="@{/complicationmanagement/create/__${register.id}__}"><span
                                             class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
@@ -674,7 +674,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/complicationmanagement/edit/__${register.complicationManagement.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -689,7 +689,7 @@
                             <div class="panel-body">
                                 <div th:if="${register.lifeStyle == null}">
                                     <h3 class="text-primary">No Life Style record found</h3>
-                                    <a class="btn btn-info pull-right"
+                                    <a class="btn btn-sm btn-info pull-right"
                                        th:href="@{/lifestyle/create/__${register.id}__}"><span
                                             class="glyphicon glyphicon-plus"></span> Add New</a>
                                 </div>
@@ -716,7 +716,7 @@
                                     </table>
 
                                     <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                        <a href="#" class="btn btn-info pull-right"
+                                        <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/lifestyle/edit/__${register.lifeStyle.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
                                     </div>
@@ -733,14 +733,14 @@
                         <div class="panel-body">
                             <div th:if="${register.pictureInformation == null}">
                                 <h3 class="text-primary">No picture information found</h3>
-                                <a class="btn btn-info pull-right"
+                                <a class="btn btn-sm btn-info pull-right"
                                    th:href="@{/picture/__${register.id}__}"><span
                                         class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
                             <div th:if="${register.pictureInformation != null}">
                                 <h3 class="text-primary">Picture Information record has been added.</h3>
                                 <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                    <a href="#" class="btn btn-info pull-right"
+                                    <a href="#" class="btn btn-sm btn-info pull-right"
                                        th:href="@{/picture/__${register.id}__}"> <span
                                             class="glyphicon glyphicon-edit"></span> Show Details</a>
                                 </div>
@@ -783,7 +783,7 @@
                                 <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
 
                                 </div>
-                                <a class="btn btn-info pull-right"
+                                <a class="btn btn-sm btn-info pull-right"
                                    th:href="@{/investigation/create/__${register.id}__}"><span
                                         class="glyphicon glyphicon-plus"></span> Add New</a>
                             </div>
