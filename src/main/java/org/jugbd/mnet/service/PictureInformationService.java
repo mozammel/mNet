@@ -20,4 +20,6 @@ public interface PictureInformationService {
     void upload(Long registerId, MultipartFile file, PictureInformationType pictureInformationType, String fileName, String comment);
 
     ResponseEntity<byte[]> getUploadedFileAsResponseEntity(Long fileId);
+
+    PictureInformation findPictureInformationByRegistrationId(Long registerId);
 }

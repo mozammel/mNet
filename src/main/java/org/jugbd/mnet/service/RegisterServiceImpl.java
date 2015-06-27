@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -54,14 +55,12 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public Register findActiveRegisterByPatientId(Long patientId) {
 
-        List<Register> registers = registerDao.findActiveRegisterByPatientId(patientId);
-        if (registers != null && registers.size() > 0) {
-            initializeRegister(registers.get(0));
-
-            return registers.get(0);
-        }
-
-        return null;
+        return Optional.ofNullable(registerDao.findActiveRegisterByPatientId(patientId))
+                .map(registers -> registers.stream()
+                        .findFirst()
+                        .map(this::initializeRegister)
+                        .orElse(null))
+                .orElse(null);
     }
 
     @Override
@@ -70,11 +69,14 @@ public class RegisterServiceImpl implements RegisterService {
         return registerDao.findAllRegisterByPatientId(patientId);
     }
 
-    private void initializeRegister(Register register) {
+    private Register initializeRegister(Register register) {
+        log.info("initializeRegister() ={}", register);
         // Ref: http://stackoverflow.com/questions/19928568/hibernate-best-practice-to-pull-all-lazy-collections
         register.getVitals().size();
         register.getOperationalDetails().size();
         register.getInvestigation().size();
+
+        return register;
     }
 
     @Override

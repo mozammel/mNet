@@ -29,6 +29,7 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Height</th>
                         <th>Weight</th>
                         <th>Calculated BMI</th>
@@ -42,6 +43,11 @@
                     </thead>
                     <tbody>
                     <tr th:each="vital : ${vitals}">
+                        <td>
+                            <a href="#" class="btn btn-sm btn-info" th:href="@{/vital/show/__${vital.id}__}">
+                                <span class="glyphicon glyphicon-edit">Open</span>
+                            </a>
+                        </td>
                         <td th:text="${vital.height} ? ${vital.height + ' cm'}"></td>
                         <td th:text="${vital.weight} ? ${vital.weight + ' kg'}"></td>
                         <td th:text="${vital.bmi} ? ${vital.bmi }"></td>
@@ -53,13 +59,14 @@
                             <span th:text="${vital.diastolic} ? ${vital.diastolic }"></span>
                         </td>
                         <td th:text="${vital.bloodOxygenSaturation} ? ${vital.bloodOxygenSaturation + ' %'}"></td>
-                        <th th:text="${#dates.format(vital.createdDate.toDate(),'dd MMM yyyy h:mm a')}"></th>
+                        <td th:text="${#dates.format(vital.createdDate.toDate(),'dd MMM yyyy h:mm a')}"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="panel-footer">
-                <a href="#" class="btn btn-primary" th:href="@{/vital/back?registerId=__${registerId}__}"> <span class="glyphicon glyphicon-arrow-left"></span>
+                <a href="#" class="btn btn-primary btn-sm" th:href="@{/vital/back?registerId=__${registerId}__}"> <span
+                        class="glyphicon glyphicon-arrow-left"></span>
                     <span th:text="#{label.back}">Back</span> </a>
             </div>
         </div>

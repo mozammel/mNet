@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PictureInformationDao extends JpaRepository<PictureInformation, Long> {
+    PictureInformation findPictureInformationByRegister_Id(Long id);
 }

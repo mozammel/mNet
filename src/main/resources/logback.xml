@@ -35,7 +35,7 @@
         <smtpPort>587</smtpPort>
         <STARTTLS>true</STARTTLS>
         <username>alert.mnet.services@gmail.com</username>
-        <password>jf147852#23SWE</password>
+        <password>n+o6OPhi</password>
         <asynchronousSending>true</asynchronousSending>
         <to>alert.mnet.services@gmail.com</to>
         <subject>mNet App Alert %m</subject>

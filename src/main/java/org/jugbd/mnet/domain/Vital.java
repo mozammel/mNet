@@ -36,13 +36,13 @@ public class Vital extends PersistentObject implements Auditable {
     private Integer diastolic;
     private Double bloodOxygenSaturation;//Blood oxygen saturation
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Patient patient;
 
     @ManyToOne
     private Register register;
 
-    @Column(length = 6)
+    @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
 

@@ -1,7 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.PictureInformation;
-import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.PictureInformationType;
 import org.jugbd.mnet.service.PictureInformationService;
 import org.jugbd.mnet.service.RegisterService;
@@ -42,12 +41,10 @@ public class PictureInformationController {
     public String show(@PathVariable Long registerId, Model uiModel) {
         log.info("show() registerId={}", registerId);
 
-        Register register = registerService.findOne(registerId);
-        PictureInformation pictureInformation = register.getPictureInformation();
+        PictureInformation pictureInformation = pictureInformationService.findPictureInformationByRegistrationId(registerId);
 
-        if (pictureInformation == null) pictureInformation = new PictureInformation();
         uiModel.addAttribute("pictureInformation", pictureInformation);
-        uiModel.addAttribute("register", register);
+        uiModel.addAttribute("register", pictureInformation.getRegister());
 
         return "picture/show";
     }
@@ -74,7 +71,7 @@ public class PictureInformationController {
         pictureInformationService.upload(registerId, file, pictureInformationType, fileName, comment);
         redirectAttributes.addFlashAttribute("message", "File successfully uploaded");
 
-        return "redirect:/picture/" + new Long(1);
+        return "redirect:/picture/" + registerId;
     }
 
     private String validate(MultipartFile file, String[] validFileTypes, int maxFileSize, String field) {

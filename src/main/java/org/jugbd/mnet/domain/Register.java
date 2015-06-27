@@ -316,4 +316,19 @@ public class Register extends PersistentObject {
     public void setPictureInformation(PictureInformation pictureInformation) {
         this.pictureInformation = pictureInformation;
     }
+
+    @Override
+    public String toString() {
+
+        return "Register{" +
+                "registrationId='" + registrationId + '\'' +
+                ", id=" + id +
+                ", version=" + version +
+                ", ward=" + ward +
+                ", admissionDate=" + admissionDate +
+                ", wardOther='" + wardOther + '\'' +
+                ", bedNumber='" + bedNumber + '\'' +
+                ", unit='" + unit + '\'' +
+                '}';
+    }
 }

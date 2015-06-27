@@ -73,6 +73,20 @@ public class PictureInformationServiceImpl implements PictureInformationService 
     }
 
     @Override
+    public PictureInformation findPictureInformationByRegistrationId(Long registerId) {
+
+        PictureInformation pictureInformation = pictureInformationDao.findPictureInformationByRegister_Id(registerId);
+
+        if (pictureInformation == null) {
+            pictureInformation = new PictureInformation();
+            Register register = registerService.findOne(registerId);
+            pictureInformation.setRegister(register);
+        }
+
+        return pictureInformation;
+    }
+
+    @Override
     public void upload(Long registerId, MultipartFile file, PictureInformationType pictureInformationType, String fileName, String comment) {
         log.info("upload()");
 

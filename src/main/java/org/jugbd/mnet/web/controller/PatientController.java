@@ -5,10 +5,10 @@ import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.Gender;
 import org.jugbd.mnet.domain.enums.Relationship;
+import org.jugbd.mnet.domain.enums.Status;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.utils.PageWrapper;
-import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
 import org.slf4j.Logger;
@@ -201,7 +201,7 @@ public class PatientController {
         
         return activeRegister
                 .getVitals()
-                .stream()
+                .stream().filter(vital -> vital.getStatus() == Status.ACTIVE)
                 .sorted((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()))
                 .findFirst()
                 .orElse(null);

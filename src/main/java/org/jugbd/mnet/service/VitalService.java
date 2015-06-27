@@ -19,4 +19,6 @@ public interface VitalService {
     Vital findOne(Long id);
 
     List<Vital> findByRegisterId(Long registerId);
+
+    Long delete(Long id);
 }

@@ -1,16 +1,12 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.VitalService;
-import org.jugbd.mnet.utils.PageWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,6 +80,12 @@ public class VitalController {
         return "vital/index";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable Long id) {
+        Long registrationId = vitalService.delete(id);
+
+        return "redirect:/vital/index/" + registrationId;
+    }
 
     @RequestMapping(value = "back", method = RequestMethod.GET)
     public String backToPatientShowPage(@RequestParam Long registerId) {

@@ -1,0 +1,1 @@
+ALTER TABLE `vital` CHANGE `status` `status` VARCHAR( 10 ) NULL DEFAULT NULL ;

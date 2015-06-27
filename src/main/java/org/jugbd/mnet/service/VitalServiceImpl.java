@@ -4,17 +4,11 @@ import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.dao.VitalDao;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.domain.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -35,8 +29,9 @@ public class VitalServiceImpl implements VitalService {
         Register register = registerDao.findOne(registerId);
         vital.setPatient(register.getPatient());
         vital.setRegister(register);
+        vital.setStatus(Status.ACTIVE);
 
-      return vitalDao.save(vital);
+        return vitalDao.save(vital);
     }
 
     @Override
@@ -48,8 +43,15 @@ public class VitalServiceImpl implements VitalService {
     @Override
     public List<Vital> findByRegisterId(Long registerId) {
 
-        return vitalDao.findAll((root, query, cb) -> {
-            return cb.equal(root.get("register"), registerId);
-        });
+        return vitalDao.findByStatusAndRegister_Id(Status.ACTIVE, registerId);
+    }
+
+    @Override
+    public Long delete(Long id) {
+        Vital vital = vitalDao.findOne(id);
+        vital.setStatus(Status.DELETED);
+        Vital savedVital = vitalDao.save(vital);
+
+        return savedVital.getRegister().getId();
     }
 }
