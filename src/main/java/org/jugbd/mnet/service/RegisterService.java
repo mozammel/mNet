@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Component
 public interface RegisterService {
-    void save(Register register);
+    Register save(Register register);
 
     Register findOne(Long registerId);
 

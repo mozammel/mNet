@@ -13,17 +13,17 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">New Registry Entry</h2>
+                <h2 class="page-header">Edit Registry Entry</h2>
             </div>
         </div>
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">New Register Entry</div>
-                <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/save}">
+                <div class="panel-heading">Edit Register</div>
+                <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/update}">
                     <div class="panel-body">
                         <fieldset>
                             <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
-                            <input type="hidden" th:field="*{patient.id}"/>
+                            <input type="hidden" th:field="*{id}"/>
 
                             <div class="form-group">
                                 <label for="patient-contact-name" class="col-sm-2 control-label">
@@ -186,13 +186,16 @@
 
                         </fieldset>
 
-                    </div>
-                    <div class="panel-footer clearfix">
+                        <!--<div class="form-group">-->
 
+                        <!--</div>-->
+                    </div>
+
+                    <div class="panel-footer clearfix">
                         <a href="#" class="btn btn-danger pull-left" th:href="@{/register/cancel/} + *{patient.id}"> <span
                                 th:text="#{label.cancel}">Cancel</span> </a>
-                        <button type="submit" class="btn btn-primary pull-right">Save Changes <span
-                                class="glyphicon glyphicon-ok-circle"></span></button>
+
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes <span class="glyphicon glyphicon-ok-circle"></span></button>
                     </div>
                 </form>
             </div>

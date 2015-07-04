@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -82,13 +81,28 @@ public class RegisterController {
 
         return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
     }
-    
+
     @RequestMapping(value = "cancel/{patientId}", method = RequestMethod.GET)
-    public String cancel(@PathVariable(value ="patientId") Long patientId) {
+    public String cancel(@PathVariable(value = "patientId") Long patientId) {
         log.debug("cancel()");
 
         return "redirect:/patient/show/" + patientId;
     }
 
+    @RequestMapping(value = "/edit/{registrationId}", method = RequestMethod.GET)
+    public String editRegistration(@PathVariable Long registrationId, Model uiModel) {
+        Register register = registerService.findOne(registrationId);
+
+        uiModel.addAttribute("register", register);
+
+        return "register/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateRegistration(@Valid Register register) {
+        Register savedRegister = registerService.save(register);
+
+        return "redirect:/patient/show/" + savedRegister.getPatient().getId();
+    }
 }
 

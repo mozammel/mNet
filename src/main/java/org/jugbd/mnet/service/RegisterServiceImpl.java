@@ -3,6 +3,7 @@ package org.jugbd.mnet.service;
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.dao.VitalDao;
+import org.jugbd.mnet.domain.PatientContact;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.Status;
@@ -36,11 +37,31 @@ public class RegisterServiceImpl implements RegisterService {
     private VitalDao vitalDao;
 
     @Override
-    public void save(Register register) {
-        register.setPatient(patientDao.findOne(register.getPatient().getId()));
-        register.setStartDatetime(new Date());
-        register.setStatus(Status.ACTIVE);
-        registerDao.save(register);
+    public Register save(Register register) {
+        if (register.getId() != null) {
+            Register registerFromDb = registerDao.findOne(register.getId());
+
+            PatientContact patientContact = registerFromDb.getPatientContact();
+            patientContact.setContactPerson(register.getPatientContact().getContactPerson());
+            patientContact.setEmergencyContactNumber(register.getPatientContact().getEmergencyContactNumber());
+            patientContact.setRelationship(register.getPatientContact().getRelationship());
+            patientContact.setComments(register.getPatientContact().getComments());
+
+            registerFromDb.setRegistrationId(register.getRegistrationId());
+            registerFromDb.setWard(register.getWard());
+            registerFromDb.setWardOther(register.getWardOther());
+            registerFromDb.setBedNumber(register.getBedNumber());
+            registerFromDb.setUnit(register.getUnit());
+            registerFromDb.setAdmissionDate(register.getAdmissionDate());
+
+            return registerDao.save(registerFromDb);
+        } else {
+            register.setPatient(patientDao.findOne(register.getPatient().getId()));
+            register.setStartDatetime(new Date());
+            register.setStatus(Status.ACTIVE);
+
+            return registerDao.save(register);
+        }
     }
 
     @Override
