@@ -6,7 +6,7 @@ import org.jugbd.mnet.domain.Register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Bazlur Rahman Rokon

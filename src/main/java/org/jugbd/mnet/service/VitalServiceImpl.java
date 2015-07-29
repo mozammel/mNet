@@ -6,8 +6,8 @@ import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author Bazlur Rahman Rokon
  * @since 10/17/14.
  */
-@Repository
+@Transactional
 @Service
 public class VitalServiceImpl implements VitalService {
     @Autowired

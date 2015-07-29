@@ -4,15 +4,15 @@ import org.jugbd.mnet.dao.TreatmentPlanDao;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.TreatmentPlan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Bazlur Rahman Rokon
  * @date 12/25/14.
  */
 @Service
-@Repository
+@Transactional
 public class TreatmentPlanServiceImpl implements TreatmentPlanService {
 
     @Autowired

@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Create new Chief Complaints</title>
 </head>
 
 <body>
@@ -18,6 +18,7 @@
         <!-- /.row -->
         <div class="row">
             <div class="panel panel-default">
+
                 <div class="panel-heading">New Chief Complaints</div>
                 <div class="panel-body">
 
@@ -76,8 +77,23 @@
                                     </select>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('childBornWith')}">
-                                        <span th:errors="*{pastMedicalHistory}">Required</span>
+                                        <span th:errors="*{childBornWith}">Required</span>
                                     </p>
+                                </div>
+                            </div>
+
+                            <div id="childBornWithOther">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Other Name </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm"
+                                               th:field="*{childBornWithOther}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('childBornWithOther')}">
+                                            <span th:errors="*{childBornWithOther}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -249,7 +265,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger" th:href="@{/chiefcomplaints/cancel/__${chiefComplaint.register.id}__}"> <span
+                                <a href="#" class="btn btn-danger"
+                                   th:href="@{/chiefcomplaints/cancel/__${chiefComplaint.register.id}__}"> <span
                                         th:text="#{label.cancel}">Cancel</span>
                                 </a>
                                 <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
@@ -263,6 +280,43 @@
         </div>
     </div>
 </section>
+
+<div layout:fragment="custom-scripts">
+
+    <script>
+        jQuery(document).ready(function () {
+            enableChildBornWithOther(false, "childBornWithOther");
+            addDropdownChangeEvent("childBornWith", "childBornWithOther");
+        });
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableCommentBoxIfOther(selectId, commentDiv);
+            });
+        }
+
+        function enableCommentBoxIfOther(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === 'OTHER') {
+                enableChildBornWithOther(true, commentId)
+            } else {
+                enableChildBornWithOther(false, commentId)
+            }
+        }
+
+        function enableChildBornWithOther(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+
+    </script>
+</div>
 
 </body>
 </html>

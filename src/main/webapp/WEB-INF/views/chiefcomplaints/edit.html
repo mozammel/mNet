@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Edit Chief Complaints</title>
     <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 </head>
 
@@ -81,6 +81,21 @@
                                     <p class="text-danger" th:if="${#fields.hasErrors('childBornWith')}">
                                         <span th:errors="*{pastMedicalHistory}">Required</span>
                                     </p>
+                                </div>
+                            </div>
+
+                            <div id="childBornWithOther">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Other Name </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control input-sm"
+                                               th:field="*{childBornWithOther}"/>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('childBornWithOther')}">
+                                            <span th:errors="*{childBornWithOther}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -267,6 +282,43 @@
         </div>
     </div>
 </section>
+
+<div layout:fragment="custom-scripts">
+
+    <script type="application/javascript">
+
+        enableChildBornWithOther(false, "childBornWithOther");
+        enableOtherBoxIfOther("childBornWith", "childBornWithOther");
+        addDropdownChangeEvent("childBornWith", "childBornWithOther");
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery('#' + selectId).change(function () {
+                console.log("on changed");
+                enableOtherBoxIfOther(selectId, commentDiv);
+            });
+        }
+
+        function enableOtherBoxIfOther(selectId, commentId) {
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() == 'OTHER') {
+                enableChildBornWithOther(true, commentId)
+            } else {
+                enableChildBornWithOther(false, commentId)
+            }
+        }
+
+        function enableChildBornWithOther(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+
+    </script>
+</div>
 
 </body>
 </html>

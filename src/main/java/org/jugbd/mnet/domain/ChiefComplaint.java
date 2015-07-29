@@ -22,6 +22,8 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
     @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private ChildBornWith childBornWith;
+    @Size(max = 100)
+    private String childBornWithOther;
 
     private Integer hoursOfTrauma;
     private Integer daysOfTrauma;
@@ -76,6 +78,15 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
 
     public void setChildBornWith(ChildBornWith childBornWith) {
         this.childBornWith = childBornWith;
+    }
+
+    public String getChildBornWithOther() {
+        return childBornWithOther;
+    }
+
+    public ChiefComplaint setChildBornWithOther(String childBornWithOther) {
+        this.childBornWithOther = childBornWithOther;
+        return this;
     }
 
     public Integer getHoursOfTrauma() {

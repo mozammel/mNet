@@ -5,12 +5,14 @@ import org.jugbd.mnet.domain.ChiefComplaint;
 import org.jugbd.mnet.domain.Register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Bazlur Rahman Rokon
  * @date 11/29/2014.
  */
 @Service
+@Transactional
 public class ChiefComplaintServiceImpl implements ChiefComplaintService {
 
     @Autowired
@@ -37,6 +39,7 @@ public class ChiefComplaintServiceImpl implements ChiefComplaintService {
             ChiefComplaint chiefComplaintFromDb = chiefComplaintDao.findOne(chiefComplaint.getId());
             chiefComplaintFromDb.setBreastRelatedComplaint(chiefComplaint.getBreastRelatedComplaint());
             chiefComplaintFromDb.setChildBornWith(chiefComplaint.getChildBornWith());
+            chiefComplaintFromDb.setChildBornWithOther(chiefComplaint.getChildBornWithOther());
             chiefComplaintFromDb.setDaysOfBurns(chiefComplaint.getDaysOfBurns());
             chiefComplaintFromDb.setDaysOfInfection(chiefComplaint.getDaysOfInfection());
             chiefComplaintFromDb.setDaysOfTrauma(chiefComplaint.getDaysOfTrauma());
