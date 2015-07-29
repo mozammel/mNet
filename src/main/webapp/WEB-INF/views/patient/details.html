@@ -58,9 +58,9 @@
                                 <tr>
                                     <td>Age</td>
                                     <td>
-                                        <span th:text="${patient.age}"></span>
-                                        <span> year(s)</span>
-                                        <span th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd-MMM-yyyy')}"></span>
+                                        <span th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd/MM/yyyy')}"></span>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <span id="then" th:attr="data-date=${patient.dateOfBirth}"></span>
                                         <span th:if="${patient.birthdateEstimated}" class="badge">Est.</span>
                                     </td>
                                 </tr>
@@ -137,5 +137,20 @@
         </div>
     </div>
 </section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../js/moment.js" th:src="@{/resources/js/moment.js}"></script>
+    <script>
+        $(document).ready(function(){
+            var then = $('#then'),
+                    date = moment(new Date(then.attr('data-date'))),
+                    update = function(){
+                        then.html(date.fromNow(true));
+                    };
+            update();
+            setInterval(update, 60000);
+        });
+    </script>
+</div>
 </body>
 </html>
