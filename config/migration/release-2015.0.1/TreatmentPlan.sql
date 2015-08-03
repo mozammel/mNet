@@ -1,0 +1,1 @@
+ALTER TABLE mnet.treatment_plan ADD type_of_conservative_treatment VARCHAR(512) NULL;

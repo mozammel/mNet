@@ -19,9 +19,10 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">New Treatment plan</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method='POST' th:object="${treatmentPlan}"
-                          th:action="@{/treatmentplan/create}">
+
+                <form class="form-horizontal" method='POST' th:object="${treatmentPlan}"
+                      th:action="@{/treatmentplan/create}">
+                    <div class="panel-body">
 
                         <fieldset>
 
@@ -47,7 +48,22 @@
                                         <span th:errors="*{treatmentPlanType}">Required</span>
                                     </p>
                                 </div>
+                            </div>
 
+                            <div id="typeOfConservativeTreatment">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Type of Conservative Treatment </label>
+
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control"
+                                               th:field="*{typeOfConservativeTreatment}"/>
+
+                                        <p class="text-danger"
+                                           th:if="${#fields.hasErrors('typeOfConservativeTreatment')}">
+                                            <span th:errors="*{typeOfConservativeTreatment}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div id="treatmentPlanDiv">
@@ -167,7 +183,8 @@
                                     <label class="col-sm-2 control-label"> Comments </label>
 
                                     <div class="col-sm-3">
-                                    <textarea type="text" class="form-control" rows="3" th:field="*{comment}"></textarea>
+                                        <textarea type="text" class="form-control" rows="3"
+                                                  th:field="*{comment}"></textarea>
 
                                         <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
                                             <span th:errors="*{comment}">Required</span>
@@ -175,17 +192,17 @@
                                     </div>
                                 </div>
                             </div>
+
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger" th:href="@{/treatmentplan/cancel/__${treatmentPlan.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span> </a>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/treatmentplan/cancel/__${treatmentPlan.register.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -196,14 +213,7 @@
         initialize();
 
         function initialize() {
-            var selectedItem = jQuery("select[id='treatmentPlanType'] option:selected").val();
-
-            if (selectedItem === 'OPERATIVE') {
-                enableOperativeBox(true, "treatmentPlanDiv");
-            }else{
-                enableOperativeBox(false, "treatmentPlanDiv")
-            }
-
+            enableOperativeBoxIfOperative('treatmentPlanType', 'treatmentPlanDiv');
             addDropdownChangeEvent("treatmentPlanType", "treatmentPlanDiv");
         }
 
@@ -218,14 +228,21 @@
 
             var others = jQuery("select[id='" + selectId + "'] option:selected").val();
 
-            if (others.toUpperCase() === 'OPERATIVE') {
-                enableOperativeBox(true, commentId)
+            if (others != "") {
+                if (others == "OPERATIVE") {
+                    enableDiv(true, commentId);
+                    enableDiv(false, "typeOfConservativeTreatment");
+                } else if (others == "CONSERVATIVE") {
+                    enableDiv(false, commentId);
+                    enableDiv(true, "typeOfConservativeTreatment");
+                }
             } else {
-                enableOperativeBox(false, commentId)
+                enableDiv(false, commentId);
+                enableDiv(false, "typeOfConservativeTreatment");
             }
         }
 
-        function enableOperativeBox(enable, commentId) {
+        function enableDiv(enable, commentId) {
 
             if (enable) {
                 jQuery("#" + commentId).show();

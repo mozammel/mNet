@@ -22,6 +22,10 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
     @Column(length = 16)
     @Enumerated(EnumType.STRING)
     private TreatmentPlanType treatmentPlanType;
+
+    @Size(max = 500)
+    private String typeOfConservativeTreatment;
+
     private Boolean stsgOrFtsg;
     private Boolean flapPedicled;
     private Boolean freeFlap;
@@ -51,6 +55,15 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
 
     public void setTreatmentPlanType(TreatmentPlanType treatmentPlanType) {
         this.treatmentPlanType = treatmentPlanType;
+    }
+
+    public String getTypeOfConservativeTreatment() {
+        return typeOfConservativeTreatment;
+    }
+
+    public TreatmentPlan setTypeOfConservativeTreatment(String typeOfConservativeTreatment) {
+        this.typeOfConservativeTreatment = typeOfConservativeTreatment;
+        return this;
     }
 
     public Boolean getStsgOrFtsg() {

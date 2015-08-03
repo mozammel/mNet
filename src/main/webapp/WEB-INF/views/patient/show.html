@@ -583,6 +583,13 @@
                                             <td th:text="${register.treatmentPlan.treatmentPlanType} ? ${register.treatmentPlan.treatmentPlanType.label}"></td>
                                         </tr>
 
+                                        <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'CONSERVATIVE'}">
+                                            <tr>
+                                                <td>Type of Conservative Treatment </td>
+                                                <td th:text="${register.treatmentPlan.typeOfConservativeTreatment}"></td>
+                                            </tr>
+                                        </div>
+
                                         <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'OPERATIVE'}">
                                             <tr>
                                                 <td>STSG/FTSG</td>
