@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>New Plan Of Rx</title>
 </head>
 <body>
 
@@ -47,6 +47,21 @@
                                     <p class="text-danger" th:if="${#fields.hasErrors('treatmentPlanType')}">
                                         <span th:errors="*{treatmentPlanType}">Required</span>
                                     </p>
+                                </div>
+                            </div>
+
+                            <div id="otherTreatmentPlanType" style="display: none;">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"> Other Plan </label>
+
+                                    <div class="col-sm-3">
+                                        <textarea type="text" class="form-control" rows="2"
+                                                  th:field="*{otherTreatmentPlanType}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('otherTreatmentPlanType')}">
+                                            <span th:errors="*{otherTreatmentPlanType}">Required</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -146,7 +161,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"
                                            th:text="#{label.treatment.plan.implantInsertion}">
@@ -232,13 +246,20 @@
                 if (others == "OPERATIVE") {
                     enableDiv(true, commentId);
                     enableDiv(false, "typeOfConservativeTreatment");
+                    $("#otherTreatmentPlanType").css("display", "none");
                 } else if (others == "CONSERVATIVE") {
                     enableDiv(false, commentId);
                     enableDiv(true, "typeOfConservativeTreatment");
+                    $("#otherTreatmentPlanType").css("display", "none");
+                }else if(others == "OTHER"){
+                    enableDiv(false, commentId);
+                    enableDiv(false, "typeOfConservativeTreatment");
+                    $("#otherTreatmentPlanType").css("display", "block");
                 }
             } else {
                 enableDiv(false, commentId);
                 enableDiv(false, "typeOfConservativeTreatment");
+                $("#otherTreatmentPlanType").css("display", "none");
             }
         }
 

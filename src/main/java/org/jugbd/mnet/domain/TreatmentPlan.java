@@ -24,6 +24,9 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
     private TreatmentPlanType treatmentPlanType;
 
     @Size(max = 500)
+    private String otherTreatmentPlanType;
+
+    @Size(max = 500)
     private String typeOfConservativeTreatment;
 
     private Boolean stsgOrFtsg;
@@ -55,6 +58,14 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
 
     public void setTreatmentPlanType(TreatmentPlanType treatmentPlanType) {
         this.treatmentPlanType = treatmentPlanType;
+    }
+
+    public String getOtherTreatmentPlanType() {
+        return otherTreatmentPlanType;
+    }
+
+    public void setOtherTreatmentPlanType(String otherTreatmentPlanType) {
+        this.otherTreatmentPlanType = otherTreatmentPlanType;
     }
 
     public String getTypeOfConservativeTreatment() {

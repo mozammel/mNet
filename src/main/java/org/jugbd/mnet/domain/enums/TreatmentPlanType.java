@@ -5,7 +5,7 @@ package org.jugbd.mnet.domain.enums;
  * @date 12/25/14.
  */
 public enum TreatmentPlanType {
-    CONSERVATIVE("Conservative"), OPERATIVE("Operative");
+    CONSERVATIVE("Conservative"), OPERATIVE("Operative"), OTHER("Other");
 
     private String label;
 

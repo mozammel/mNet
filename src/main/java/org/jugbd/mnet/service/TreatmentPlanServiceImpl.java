@@ -37,6 +37,7 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
             TreatmentPlan treatmentPlanFromDb = treatmentPlanDao.findOne(treatmentPlan.getId());
 
             treatmentPlanFromDb.setTreatmentPlanType(treatmentPlan.getTreatmentPlanType());
+            treatmentPlanFromDb.setOtherTreatmentPlanType(treatmentPlan.getOtherTreatmentPlanType());
             treatmentPlanFromDb.setTypeOfConservativeTreatment(treatmentPlan.getTypeOfConservativeTreatment());
             treatmentPlanFromDb.setStsgOrFtsg(treatmentPlan.getStsgOrFtsg());
             treatmentPlanFromDb.setFlapPedicled(treatmentPlan.getFreeFlap());

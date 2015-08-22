@@ -14,7 +14,7 @@
         </rollingPolicy>
 
         <encoder>
-            <pattern>%date %level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} [%file:%line] %msg%n</pattern>
+            <pattern>%date %level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} [%file:%line] %msg%n %ex{full, DISPLAY_EX_EVAL}</pattern>
         </encoder>
     </appender>
 
@@ -26,7 +26,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %class.%method\(%file:%line\) - %msg %n %ex{full, DISPLAY_EX_EVAL}</pattern>
         </encoder>
     </appender>
 
@@ -41,7 +41,7 @@
         <subject>mNet App Alert %m</subject>
 
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%date{ISO8601} %-5level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} %class.%method\(%file:%line\) - %msg %n</Pattern>
+            <Pattern>%date{ISO8601} %-5level [%thread] S:%X{sid} U:%X{user} IP:%X{ipAddress} %class.%method\(%file:%line\) - %msg %n %ex{full, DISPLAY_EX_EVAL}</Pattern>
         </layout>
 
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -52,7 +52,7 @@
     <root level="ERROR">
         <appender-ref ref="ASYNC"/>
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="EMAIL"/>
+        <!--<appender-ref ref="EMAIL"/>-->
     </root>
 
 </configuration>
