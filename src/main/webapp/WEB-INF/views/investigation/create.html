@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Create Investigation</title>
 
     <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 
@@ -433,13 +433,13 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateSerumAlbumin}"/>
+                                            <input type="text" class="form-control date" th:field="*{dateSerumCreatinine}"/>
                                         </div>
-
-                                        <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
-                                            <span th:errors="*{dateSerumAlbumin}">Required</span>
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSerumCreatinine')}">
+                                            <span th:errors="*{dateSerumCreatinine}">Required</span>
                                         </p>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -455,13 +455,15 @@
                                             <span th:errors="*{serumAlbumin}">Required</span>
                                         </p>
                                     </div>
+
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateSerumCreatinine}"/>
+                                            <input type="text" class="form-control date" th:field="*{dateSerumAlbumin}"/>
                                         </div>
-                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSerumCreatinine')}">
-                                            <span th:errors="*{dateSerumCreatinine}">Required</span>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('dateSerumAlbumin')}">
+                                            <span th:errors="*{dateSerumAlbumin}">Required</span>
                                         </p>
                                     </div>
                                 </div>
