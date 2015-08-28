@@ -11,3 +11,4 @@ classes/
 src/main/resources/rebel.xml
 .classpath
 .project
+/generated

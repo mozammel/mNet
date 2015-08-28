@@ -12,17 +12,17 @@ import java.util.List;
  */
 public interface PatientService {
 
-    public Patient create(Patient patient);
+    Patient create(Patient patient);
 
-    public Patient findOne(Long id);
+    Patient findOne(Long id);
 
-    public List<Patient> findAll();
+    List<Patient> findAll();
 
-    public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable);
+    Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable);
 
     Page<Patient> findAll(Pageable pageable);
 
-    public long count();
+    long count();
 
-    public void update(Patient patient);
+    void update(Patient patient);
 }

@@ -40,7 +40,7 @@
                         Id: </label>
 
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="healthId" th:field="*{healthId}"/>
+                        <input type="text" class="form-control input" id="healthId" th:field="*{healthId}"/>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                         Number</label>
 
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="phoneNumber" th:field="*{phoneNumber}"/>
+                        <input type="text" class="form-control input" id="phoneNumber" th:field="*{phoneNumber}"/>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                         Name</label>
 
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="name" th:field="*{name}"/>
+                        <input type="text" class="form-control input" id="name" th:field="*{name}"/>
                     </div>
                 </div>
 
@@ -66,7 +66,15 @@
                     <label for="name" class="col-sm-2 control-label" th:text="#{label.register.id}">Register ID</label>
 
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="registerId" th:field="*{registerId}"/>
+                        <input type="text" class="form-control input" id="registerId" th:field="*{registerId}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Diagnosis</label>
+
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control input" id="diagnosis" th:field="*{diagnosis}"/>
                     </div>
                 </div>
 

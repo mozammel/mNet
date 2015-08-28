@@ -1,8 +1,11 @@
 package org.jugbd.mnet.service;
 
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.jpa.JPQLQuery;
+import com.mysema.query.jpa.impl.JPAQuery;
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.enums.Condition;
 import org.jugbd.mnet.utils.PatientIdGenerator;
 import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.controller.PatientSearchCmd;
@@ -10,13 +13,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.criteria.*;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.jugbd.mnet.domain.QDiagnosis.diagnosis;
+import static org.jugbd.mnet.domain.QDiagnosisData.diagnosisData;
+import static org.jugbd.mnet.domain.QPatient.patient;
+import static org.jugbd.mnet.domain.QRegister.register;
 
 /**
  * @author ronygomes
@@ -30,6 +41,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientDao patientDao;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public Patient create(Patient patient) {
@@ -92,58 +106,68 @@ public class PatientServiceImpl implements PatientService {
         patientDao.save(patientFromDb);
     }
 
-    /*
-    * SELECT patient0_
-    *
-    *FROM patient patient0_
-    *WHERE upper(patient0_.health_id) LIKE ? OR patient0_.contact_number = ? OR lower(patient0_.name) LIKE ? OR
-    *  patient0_.id = (SELECT patient2_.id
-    *                  FROM register register1_ INNER JOIN patient patient2_ ON register1_.patient = patient2_.id
-    *                  WHERE register1_.registration_id = ?)
-    *LIMIT ?
-    */
     public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
-        LOGGER.debug("finding patient information with info : {}", searchCmd);
+        BooleanBuilder predicate = new BooleanBuilder();
 
-        return patientDao.findAll((patientRoot, query, cb) -> {
+        if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
+            predicate.or(patient.healthId.like(getLikePattern(searchCmd.getHealthId().trim())));
+        }
 
-            Predicate predicate = cb.disjunction();
+        if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
+            predicate.or(patient.contactNumber.like(getLikePattern(searchCmd.getPhoneNumber().trim())));
+            predicate.or(register.patientContact.emergencyContactNumber.like(getLikePattern(searchCmd.getPhoneNumber().trim())));
+        }
 
-            if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
-                predicate
-                        .getExpressions()
-                        .add(cb.or(cb.like(cb.upper(patientRoot.<String>get("healthId")),
-                                getLikePattern(searchCmd.getHealthId()
-                                        .trim()
-                                        .toUpperCase()))));
+        if (StringUtils.isNotEmpty(searchCmd.getRegisterId())) {
+            predicate.or(register.registrationId.eq(searchCmd.getRegisterId().trim()));
+        }
+
+        if (StringUtils.isNotEmpty(searchCmd.getName())) {
+            predicate.or(patient.name.like(getLikePattern(searchCmd.getName())));
+        }
+
+        if (StringUtils.isNotEmpty(searchCmd.getDiagnosis())) {
+            predicate.or(diagnosis.congenitalAnomaly.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.neoplastic.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.postInfective.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.traumatic.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.aesthetic.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.comment.like(getLikePattern(searchCmd.getDiagnosis())));
+            predicate.or(diagnosis.icd10.like(getLikePattern(searchCmd.getDiagnosis())));
+            Condition condition = getCondition(searchCmd.getDiagnosis());
+            if (condition != null) {
+                predicate.or(diagnosis.burns.conditions.eq(condition));
             }
+        }
 
-            if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())) {
-                predicate
-                        .getExpressions()
-                        .add(cb.or(cb.equal(patientRoot.get("contactNumber"), searchCmd.getPhoneNumber().trim())));
-            }
+        JPAQuery from = new JPAQuery(em)
+                .from(patient)
+                .join(patient.registers, register)
+                .join(register.diagnosis, diagnosis)
+                .join(diagnosis.burns, diagnosisData);
 
-            if (StringUtils.isNotEmpty(searchCmd.getName())) {
-                predicate
-                        .getExpressions()
-                        .add(cb.or(cb.like(cb.lower(patientRoot.<String>get("name")),
-                                getLikePattern(searchCmd.getName()
-                                        .trim()
-                                        .toLowerCase()))));
-            }
+        long count = from.distinct().where(predicate).count();
+        List<Patient> patients = applyPagination(from, pageable)
+                .orderBy(patient.name.asc())
+                .distinct()
+                .list(patient);
 
-            if (StringUtils.isNotEmpty(searchCmd.getRegisterId())){
+        return count > 0 ? new PageImpl<>(patients, pageable, count) : new PageImpl<>(new ArrayList<>(), pageable, 0);
+    }
 
-                Subquery<Patient> sq = query.subquery(Patient.class);
-                Root<Register> project = sq.from(Register.class);
-                Join<Register, Patient> sqEmp = project.join("patient");
-                sq.select(sqEmp).where(cb.equal(project.get("registrationId"), searchCmd.getRegisterId()));
-                predicate.getExpressions().add(cb.or (cb.equal((patientRoot.get("id")), sq)));
-            }
+    protected JPQLQuery applyPagination(JPQLQuery query, Pageable pageable) {
 
-            return predicate;
-        }, pageable);
+        return pageable != null ? query.offset(pageable.getOffset()).limit(pageable.getPageSize()) : query;
+    }
+
+    private Condition getCondition(String value) {
+
+        return Arrays.asList(Condition.values())
+                .stream()
+                .filter(condition -> condition.getLabel().toLowerCase().contains(value.toLowerCase()))
+                .findFirst()
+                .map(condition -> condition)
+                .orElse(null);
     }
 
     private String getLikePattern(String searchTerm) {

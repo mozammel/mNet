@@ -9,6 +9,7 @@ import org.jugbd.mnet.domain.enums.Status;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.utils.PageWrapper;
+import org.jugbd.mnet.utils.StringUtils;
 import org.jugbd.mnet.web.editor.GenderEditor;
 import org.jugbd.mnet.web.editor.RelationshipEditor;
 import org.slf4j.Logger;
@@ -173,16 +174,17 @@ public class PatientController {
         if (isEmpty(patientSearchCmd.getHealthId())
                 && isEmpty(patientSearchCmd.getPhoneNumber())
                 && isEmpty(patientSearchCmd.getName())
-                && isEmpty(patientSearchCmd.getRegisterId())) {
+                && isEmpty(patientSearchCmd.getRegisterId())
+                && isEmpty(patientSearchCmd.getDiagnosis())) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
-            uiModel.addAttribute("error", "Please enter Health Id or Phone Number or Register Id");
+            uiModel.addAttribute("error", "You can't leave these fields empty");
 
             return "patient/search";
         }
 
         Page patients = patientService.findPatientBySearchCmd(patientSearchCmd, pageable);
-        
+
         if (patients.getTotalElements() == 0) {
 
             uiModel.addAttribute("patientSearchCmd", patientSearchCmd);
@@ -191,14 +193,53 @@ public class PatientController {
             return "patient/search";
         }
 
-        PageWrapper<Patient> page = new PageWrapper<>(patients, "/patient/display?" + request.getQueryString());
+        PageWrapper<Patient> page = new PageWrapper<>(patients, "/patient/display" + getQueryString(patientSearchCmd));
+        log.info("size: {}, getOffset: {}, pageNumber:{}", page.getContent().size(), pageable.getOffset(), pageable.getPageNumber());
+
+
         uiModel.addAttribute("page", page);
 
         return "patient/index";
     }
 
+    private String getQueryString(@ModelAttribute("patientSearchCmd") PatientSearchCmd patientSearchCmd) {
+        String queryString = "";
+
+        if (StringUtils.isNotEmpty(patientSearchCmd.getHealthId())) {
+            queryString += "?healthId=" + patientSearchCmd.getHealthId();
+        } else {
+            queryString += "?healthId=";
+        }
+
+        if (StringUtils.isNotEmpty(patientSearchCmd.getPhoneNumber())) {
+            queryString += "&phoneNumber=" + patientSearchCmd.getPhoneNumber();
+        } else {
+            queryString += "&phoneNumber=";
+        }
+
+        if (StringUtils.isNotEmpty(patientSearchCmd.getName())) {
+            queryString += "&name=" + patientSearchCmd.getName();
+        } else {
+            queryString += "&name=";
+        }
+
+        if (StringUtils.isNotEmpty(patientSearchCmd.getRegisterId())) {
+            queryString += "&registerId=" + patientSearchCmd.getRegisterId();
+        } else {
+            queryString += "&registerId=";
+        }
+
+        if (StringUtils.isNotEmpty(patientSearchCmd.getDiagnosis())) {
+            queryString += "&diagnosis=" + patientSearchCmd.getDiagnosis();
+        } else {
+            queryString += "&diagnosis=";
+        }
+
+        return queryString;
+    }
+
     private Vital getLastVital(Register activeRegister) {
-        
+
         return activeRegister
                 .getVitals()
                 .stream().filter(vital -> vital.getStatus() == Status.ACTIVE)

@@ -8,6 +8,7 @@ public class PatientSearchCmd {
     private String phoneNumber;
     private String name;
     private String registerId;
+    private String diagnosis;
 
     public String getHealthId() {
         return healthId;
@@ -39,6 +40,14 @@ public class PatientSearchCmd {
 
     public void setRegisterId(String registerId) {
         this.registerId = registerId;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
     }
 
     @Override
