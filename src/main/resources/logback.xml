@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration debug="true" scan="true" scanPeriod="5 seconds">
+<configuration scan="true" scanPeriod="5 seconds">
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/tmp/mNet.log</file>
@@ -48,6 +48,17 @@
             <level>WARN</level>
         </filter>
     </appender>
+
+    <logger name="org.jugbd.mnet" level="INFO"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.thymeleaf" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
 
     <root level="INFO">
         <appender-ref ref="ASYNC"/>
