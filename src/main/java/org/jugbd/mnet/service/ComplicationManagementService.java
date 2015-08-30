@@ -13,4 +13,6 @@ public interface ComplicationManagementService {
     ComplicationManagement save(ComplicationManagement complicationManagement);
 
     ComplicationManagement findOne(Long id);
+
+    void delete(ComplicationManagement one);
 }

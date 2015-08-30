@@ -98,7 +98,7 @@ public class Register extends PersistentObject {
     @JoinColumn(name = "treatment_plan_id")
     private TreatmentPlan treatmentPlan;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = false)
     @JoinColumn(name = "complication_management")
     private ComplicationManagement complicationManagement;
 

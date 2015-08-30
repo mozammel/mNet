@@ -1,5 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.domain.ComplicationManagement;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.service.ComplicationManagementService;
@@ -29,6 +30,9 @@ public class ComplicationManagementController {
 
     @Autowired
     private RegisterService registerService;
+
+    @Autowired
+    private RegisterDao registerDao;
 
     @RequestMapping(value = "create/{registerId}", method = RequestMethod.GET)
     public String create(@PathVariable Long registerId, ComplicationManagement complicationManagement) {
@@ -76,6 +80,16 @@ public class ComplicationManagementController {
 
         redirectAttributes.addFlashAttribute("message", "Complication Management successfully updated");
         return "redirect:/patient/show/" + saveMedicalHistory.getRegister().getPatient().getId();
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable Long id) {
+        ComplicationManagement one = complicationManagementService.findOne(id);
+        Long patientId = one.getRegister().getPatient().getId();
+
+        complicationManagementService.delete(one);
+
+        return "redirect:/patient/show/" + patientId;
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)

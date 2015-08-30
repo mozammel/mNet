@@ -585,14 +585,14 @@
 
                                         <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'CONSERVATIVE'}">
                                             <tr>
-                                                <td>Type of Conservative Treatment </td>
+                                                <td>Type of Conservative Treatment</td>
                                                 <td th:text="${register.treatmentPlan.typeOfConservativeTreatment}"></td>
                                             </tr>
                                         </div>
 
                                         <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'OTHER'}">
                                             <tr>
-                                                <td>Other Treatment Plan </td>
+                                                <td>Other Treatment Plan</td>
                                                 <td th:text="${register.treatmentPlan.otherTreatmentPlanType}"></td>
                                             </tr>
                                         </div>
@@ -753,7 +753,24 @@
                                         <a href="#" class="btn btn-sm btn-info pull-right"
                                            th:href="@{/complicationmanagement/edit/__${register.complicationManagement.id}__}"> <span
                                                 class="glyphicon glyphicon-edit"></span> Edit </a>
+
+                                        <a href="#" class="btn btn-sm btn-danger pull-left"
+                                           onclick="deleteComplicationManagement()"> <span
+                                                class="glyphicon glyphicon-edit"></span> Delete </a>
                                     </div>
+
+                                    <form style="visibility: hidden"
+                                          id="delete-complication-management" method="post"
+                                          th:action="@{/complicationmanagement/delete/__${register.complicationManagement.id}__}">
+                                    </form>
+
+                                    <script>
+                                        function deleteComplicationManagement(formId) {
+                                            if (confirm("Are you sure? This can not be undone! ")) {
+                                                $("#delete-complication-management").submit();
+                                            }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -919,10 +936,10 @@
 <div layout:fragment="custom-scripts">
     <script src="../../../js/moment.js" th:src="@{/resources/js/moment.js}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var then = $('#then'),
                     date = moment(new Date(then.attr('data-date'))),
-                    update = function(){
+                    update = function () {
                         then.html(date.fromNow(true));
                     };
             update();

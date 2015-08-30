@@ -47,6 +47,10 @@ public class ComplicationManagement extends PersistentObject implements Auditabl
     @OneToOne(mappedBy = "complicationManagement")
     private Register register;
 
+    //backLink, in case this is removed
+    @Column(name = "register_id_bklink")
+    private Long registerId;
+
     @Override
     public Long getId() {
         return id;
@@ -118,5 +122,14 @@ public class ComplicationManagement extends PersistentObject implements Auditabl
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public Long getRegisterId() {
+        return registerId;
+    }
+
+    public ComplicationManagement setRegisterId(Long registerId) {
+        this.registerId = registerId;
+        return this;
     }
 }

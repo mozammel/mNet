@@ -1,11 +1,11 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.dao.ComplicationManagementDao;
+import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.domain.ComplicationManagement;
 import org.jugbd.mnet.domain.Register;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -18,6 +18,9 @@ public class ComplicationManagementServiceImpl implements ComplicationManagement
 
     @Autowired
     private RegisterService registerService;
+
+    @Autowired
+    private RegisterDao registerDao;
 
     @Autowired
     private ComplicationManagementDao complicationManagementDao;
@@ -51,5 +54,17 @@ public class ComplicationManagementServiceImpl implements ComplicationManagement
     @Override
     public ComplicationManagement findOne(Long id) {
         return complicationManagementDao.findOne(id);
+    }
+
+    @Override
+    public void delete(ComplicationManagement one) {
+        ComplicationManagement complicationManagement = complicationManagementDao.findOne(one.getId());
+
+        Register register = complicationManagement.getRegister();
+        register.setComplicationManagement(null);
+        registerDao.save(register);
+
+        complicationManagement.setRegisterId(register.getId());
+        complicationManagementDao.save(complicationManagement);
     }
 }
