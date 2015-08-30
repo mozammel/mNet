@@ -1,5 +1,7 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.dao.AttachmentDao;
+import org.jugbd.mnet.domain.Attachment;
 import org.jugbd.mnet.domain.PictureInformation;
 import org.jugbd.mnet.domain.enums.PictureInformationType;
 import org.jugbd.mnet.service.PictureInformationService;
@@ -37,6 +39,9 @@ public class PictureInformationController {
     @Autowired
     private PictureInformationService pictureInformationService;
 
+    @Autowired
+    private AttachmentDao attachmentDao;
+
     @RequestMapping(value = "picture/{registerId}", method = RequestMethod.GET)
     public String show(@PathVariable Long registerId, Model uiModel) {
         log.info("show() registerId={}", registerId);
@@ -70,6 +75,17 @@ public class PictureInformationController {
 
         pictureInformationService.upload(registerId, file, pictureInformationType, fileName, comment);
         redirectAttributes.addFlashAttribute("message", "File successfully uploaded");
+
+        return "redirect:/picture/" + registerId;
+    }
+
+    @RequestMapping(value = "picture/delete/{registerId}/{attachmentId}", method = RequestMethod.POST)
+    public String remove(@PathVariable Long registerId, @PathVariable Long attachmentId) {
+
+        Attachment attachment = attachmentDao.findOne(attachmentId);
+        attachment.setDeleted(true);
+
+        attachmentDao.save(attachment);
 
         return "redirect:/picture/" + registerId;
     }

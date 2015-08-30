@@ -27,6 +27,7 @@ public class Attachment extends PersistentObject {
 
     @Column(length = 3000)
     private String comment;
+    private boolean deleted;
 
     public Long getId() {
         return id;
@@ -66,5 +67,14 @@ public class Attachment extends PersistentObject {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public Attachment setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
     }
 }

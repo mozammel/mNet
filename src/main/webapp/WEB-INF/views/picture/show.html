@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Picture Information</title>
 
     <link href="../../../resources/css/lightbox-2.7.1.css" th:href="@{/resources/css/lightbox-2.7.1.css}"
           rel="stylesheet"/>
@@ -20,6 +20,41 @@
 
         .help-block, .help-block ul {
             margin-bottom: 0;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        a, figure {
+            display: inline-block;
+        }
+
+        figcaption {
+            margin: 10px 0 0 0;
+            font-variant: traditional;
+            font-family: Arial, serif;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        figure {
+            padding: 5px;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+        }
+
+        img {
+            transition: transform 0.2s;
+            -webkit-transition: -webkit-transform 0.2s;
+            -moz-transition: -moz-transform 0.2s;
+            -o-transition: -o-transform 0.2s;
         }
     </style>
 </head>
@@ -64,7 +99,7 @@
                                            class="form-control input-sm"
                                            style="float: left"
                                            required="required" maxlength="3145728"
-                                           filetypes="jpg,jpeg,png,png,doc,docx"
+                                           filetypes="jpg,jpeg,png,pdf,doc,docx"
                                            data-maxlength-error="Photo size exceeded maximum size of 3 MB"
                                            data-filetypes-error="Please upload a valid File (JPG / PNG / PDF / DOC / DOCX)"/>
 
@@ -119,9 +154,7 @@
                                     <button type="submit" class="btn btn-primary">Upload File</button>
                                 </div>
                             </div>
-
                         </form>
-
                     </fieldset>
 
                     <hr/>
@@ -129,36 +162,55 @@
                     <fieldset>
                         <legend>Day One</legend>
                         <div th:if="${pictureInformation.getDayOneAttachments().size() > 0}">
-                            <table class="table table-condensed table-bordered">
+                            <table class="table table-condensed">
                                 <tr>
 
                                     <div th:each="item: ${pictureInformation.getDayOneAttachments()}">
-
                                         <td>
                                             <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
                                                  id="image_div" class="col-md-3 col-lg-3" align="center">
-                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"
-                                                       data-lightbox="photo" th:data-title="${item.fileName}">
-
-                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
-                                                             style="max-height: 160px; max-width: 160px"/>
-                                                    </a>
+                                                <div id="container"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" data-lightbox="photo"
+                                                           th:data-title="${item.fileName}">
+                                                            <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                                 style="max-height: 160px; max-width: 160px"/>
+                                                        </a>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>&nbsp;&nbsp;
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
-                                                <span th:text="${item.comment} ? ${item.comment}"></span>
                                             </div>
 
                                             <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
 
-                                                <div align="center"
-                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"><span
-                                                            th:text="${item.fileName}"></span>
-                                                    </a><br/>
-                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                <div align="center" style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
 
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" target="_blank"><span
+                                                                th:text="${item.fileName}"></span>
+                                                        </a><br/>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
                                             </div>
+
+                                            <form style="visibility: hidden"
+                                                  th:id="'delete-picture-'+${item.id}" method="post" action="#"
+                                                  th:action="@{/picture/delete/__${register.id}__/__${item.id}__}">
+                                            </form>
                                         </td>
                                     </div>
                                 </tr>
@@ -180,28 +232,48 @@
                                         <td>
                                             <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
                                                  id="image_div" class="col-md-3 col-lg-3" align="center">
-                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"
-                                                       data-lightbox="photo" th:data-title="${item.fileName}">
-
-                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
-                                                             style="max-height: 160px; max-width: 160px"/>
-                                                    </a>
+                                                <div id="container"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" data-lightbox="photo"
+                                                           th:data-title="${item.fileName}">
+                                                            <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                                 style="max-height: 160px; max-width: 160px"/>
+                                                        </a>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>&nbsp;&nbsp;
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
-                                                <span th:text="${item.comment} ? ${item.comment}"></span>
                                             </div>
 
                                             <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
 
-                                                <div align="center"
-                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"><span
-                                                            th:text="${item.fileName}"></span>
-                                                    </a><br/>
-                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                <div align="center" style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
 
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" target="_blank"><span
+                                                                th:text="${item.fileName}"></span>
+                                                        </a><br/>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
                                             </div>
+
+                                            <form style="visibility: hidden"
+                                                  th:id="'delete-picture-'+${item.id}" method="post" action="#"
+                                                  th:action="@{/picture/delete/__${register.id}__/__${item.id}__}">
+                                            </form>
                                         </td>
                                     </div>
                                 </tr>
@@ -221,28 +293,48 @@
                                         <td>
                                             <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
                                                  id="image_div" class="col-md-3 col-lg-3" align="center">
-                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"
-                                                       data-lightbox="photo" th:data-title="${item.fileName}">
-
-                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
-                                                             style="max-height: 160px; max-width: 160px"/>
-                                                    </a>
+                                                <div id="container"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" data-lightbox="photo"
+                                                           th:data-title="${item.fileName}">
+                                                            <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                                 style="max-height: 160px; max-width: 160px"/>
+                                                        </a>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>&nbsp;&nbsp;
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
-                                                <span th:text="${item.comment} ? ${item.comment}"></span>
                                             </div>
 
                                             <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
 
-                                                <div align="center"
-                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"><span
-                                                            th:text="${item.fileName}"></span>
-                                                    </a><br/>
-                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                <div align="center" style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
 
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" target="_blank"><span
+                                                                th:text="${item.fileName}"></span>
+                                                        </a><br/>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
                                             </div>
+
+                                            <form style="visibility: hidden"
+                                                  th:id="'delete-picture-'+${item.id}" method="post" action="#"
+                                                  th:action="@{/picture/delete/__${register.id}__/__${item.id}__}">
+                                            </form>
                                         </td>
                                     </div>
                                 </tr>
@@ -262,28 +354,48 @@
                                         <td>
                                             <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
                                                  id="image_div" class="col-md-3 col-lg-3" align="center">
-                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"
-                                                       data-lightbox="photo" th:data-title="${item.fileName}">
-
-                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
-                                                             style="max-height: 160px; max-width: 160px"/>
-                                                    </a>
+                                                <div id="container"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" data-lightbox="photo"
+                                                           th:data-title="${item.fileName}">
+                                                            <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                                 style="max-height: 160px; max-width: 160px"/>
+                                                        </a>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>&nbsp;&nbsp;
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
-                                                <span th:text="${item.comment} ? ${item.comment}"></span>
                                             </div>
 
                                             <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
 
-                                                <div align="center"
-                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"><span
-                                                            th:text="${item.fileName}"></span>
-                                                    </a><br/>
-                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                <div align="center" style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
 
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" target="_blank"><span
+                                                                th:text="${item.fileName}"></span>
+                                                        </a><br/>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
                                             </div>
+
+                                            <form style="visibility: hidden"
+                                                  th:id="'delete-picture-'+${item.id}" method="post" action="#"
+                                                  th:action="@{/picture/delete/__${register.id}__/__${item.id}__}">
+                                            </form>
                                         </td>
                                     </div>
                                 </tr>
@@ -303,28 +415,48 @@
                                         <td>
                                             <div th:if="${item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png')}"
                                                  id="image_div" class="col-md-3 col-lg-3" align="center">
-                                                <div style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"
-                                                       data-lightbox="photo" th:data-title="${item.fileName}">
-
-                                                        <img class="img-box" th:src="@{/file/__${item.id}__}"
-                                                             style="max-height: 160px; max-width: 160px"/>
-                                                    </a>
+                                                <div id="container"
+                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" data-lightbox="photo"
+                                                           th:data-title="${item.fileName}">
+                                                            <img class="img-box" th:src="@{/file/__${item.id}__}"
+                                                                 style="max-height: 160px; max-width: 160px"/>
+                                                        </a>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>&nbsp;&nbsp;
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
-                                                <span th:text="${item.comment} ? ${item.comment}"></span>
                                             </div>
 
                                             <div th:if="${!(item.mimeType.equalsIgnoreCase('image/jpeg') || item.mimeType.equalsIgnoreCase('image/png'))}">
 
-                                                <div align="center"
-                                                     style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
-                                                    <a th:href="@{/file/__${item.id}__}"><span
-                                                            th:text="${item.fileName}"></span>
-                                                    </a><br/>
-                                                    <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                <div align="center" style="padding: 10px; margin-top: -10px; margin-left: -15px; margin-right: 8px">
 
+                                                    <figure>
+                                                        <a th:href="@{/file/__${item.id}__}" target="_blank"><span
+                                                                th:text="${item.fileName}"></span>
+                                                        </a><br/>
+                                                        <figcaption>
+                                                            <span th:text="${item.comment} ? ${item.comment}"></span>
+                                                            <a th:href="@{#}"
+                                                               th:onclick="'javascript:deletePicture(\'' + ${item.id} + '\');'">
+                                                                Delete
+                                                            </a>
+                                                        </figcaption>
+                                                    </figure>
                                                 </div>
                                             </div>
+
+                                            <form style="visibility: hidden"
+                                                  th:id="'delete-picture-'+${item.id}" method="post" action="#"
+                                                  th:action="@{/picture/delete/__${register.id}__/__${item.id}__}">
+                                            </form>
                                         </td>
                                     </div>
                                 </tr>
@@ -334,10 +466,8 @@
 
                     <hr/>
 
-
                     <a href="#" class="btn btn-info" th:href="@{/cancel/__${register.id}__}"> <span
                             th:text="#{label.back}">Back</span> </a>
-
 
                 </div>
             </div>
@@ -354,6 +484,12 @@
     <script type="text/javascript">
 
         //<![CDATA[
+
+        function deletePicture(formId) {
+            if (confirm("Are you sure? This can not be undone! ")) {
+                $("#delete-picture-" + formId).submit();
+            }
+        }
 
         function upload(form) {
             uploadFile('photo', form);

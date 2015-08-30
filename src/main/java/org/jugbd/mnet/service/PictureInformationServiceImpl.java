@@ -83,6 +83,13 @@ public class PictureInformationServiceImpl implements PictureInformationService 
             pictureInformation.setRegister(register);
         }
 
+        //TODO need to revisit this later, quick fix for now
+        pictureInformation.getDayOneAttachments().removeIf(Attachment::isDeleted);
+        pictureInformation.getOnDischargeAttachments().removeIf(Attachment::isDeleted);
+        pictureInformation.getPostOperativeAttachments().removeIf(Attachment::isDeleted);
+        pictureInformation.getPreOperationAttachments().removeIf(Attachment::isDeleted);
+        pictureInformation.getPreOperativeAttachments().removeIf(Attachment::isDeleted);
+
         return pictureInformation;
     }
 
