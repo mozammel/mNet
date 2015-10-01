@@ -29,6 +29,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static org.jugbd.mnet.utils.StringUtils.isEmpty;
@@ -65,10 +69,6 @@ public class PatientController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String save(@Valid Patient patient, BindingResult result, RedirectAttributes redirectAttributes) {
 
-        if (patient.getAge() == null && patient.getBirthdateEstimated()) {
-            patient.setBirthdateFromAge(patient.getAgeEstimated(), null);
-        }
-
         validatePatient(patient, result);
 
         if (result.hasErrors()) {
@@ -77,7 +77,7 @@ public class PatientController {
         }
 
         patientService.create(patient);
-        redirectAttributes.addFlashAttribute("message", String.format("Patient successfully created"));
+        redirectAttributes.addFlashAttribute("message", "Patient successfully created");
 
         return "redirect:/patient/show/" + patient.getId().toString();
     }
@@ -249,8 +249,11 @@ public class PatientController {
     }
 
     private void validatePatient(Patient patient, BindingResult result) {
-        if (patient.getAge() == null) {
-            result.rejectValue("ageEstimated", "error.patient.age", "Enter date of birth or an approximate age");
-        }
+        if (patient.getDateOfBirth() == null
+                && patient.getDay() == null
+                && patient.getMonth() == null
+                && patient.getYear() == null)
+
+            result.rejectValue("dateOfBirth", "error.patient.age", "Enter date of birth or an approximate age");
     }
 }

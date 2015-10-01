@@ -30,7 +30,9 @@
                                         th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
                                     <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
                                     <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd/MM/yyyy')}"></small>
-                                    <small id="then" th:attr="data-date=${patient.dateOfBirth}"></small>
+                                    <strong>
+                                        <small id="then" th:attr="data-date=${patient.dateOfBirth}"></small>
+                                    </strong>
                                     <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
                                     <small><a sec:authorize="hasRole('ROLE_ADMIN')"
                                               th:href="@{/patient/edit/__${patient.id}__}">Edit</a>

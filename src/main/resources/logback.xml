@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration scan="true" scanPeriod="5 seconds">
+<configuration debug="true" scan="true" scanPeriod="5 seconds">
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/tmp/mNet.log</file>
@@ -60,9 +60,9 @@
     <logger name="org.thymeleaf" level="WARN"/>
     <logger name="ch.qos.logback" level="WARN"/>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="ASYNC"/>
-        <!--<appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="EMAIL"/>
     </root>
 
