@@ -135,6 +135,9 @@ public class PatientServiceImpl implements PatientService {
     public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
         BooleanBuilder predicate = new BooleanBuilder();
 
+        JPAQuery from = new JPAQuery(em)
+                .from(patient);
+
         if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
             predicate.or(patient.healthId.like(getLikePattern(searchCmd.getHealthId().trim())));
         }
@@ -166,11 +169,16 @@ public class PatientServiceImpl implements PatientService {
             }
         }
 
-        JPAQuery from = new JPAQuery(em)
-                .from(patient)
-                .join(patient.registers, register)
-                .join(register.diagnosis, diagnosis)
-                .join(diagnosis.burns, diagnosisData);
+        if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())
+                || StringUtils.isNotEmpty(searchCmd.getRegisterId())
+                || StringUtils.isNotEmpty(searchCmd.getDiagnosis())) {
+            from = from.leftJoin(patient.registers, register);
+
+            if (StringUtils.isNotEmpty(searchCmd.getDiagnosis())) {
+                from = from.join(register.diagnosis, diagnosis)
+                        .join(diagnosis.burns, diagnosisData);
+            }
+        }
 
         long count = from.distinct().where(predicate).count();
         List<Patient> patients = applyPagination(from, pageable)
