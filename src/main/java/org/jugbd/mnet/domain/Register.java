@@ -29,10 +29,10 @@ public class Register extends PersistentObject {
     private Long version;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Register id can not be empty")
     private String registrationId;
 
-    @NotNull
+    @NotNull(message = "Admission date can not be empty")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date admissionDate;

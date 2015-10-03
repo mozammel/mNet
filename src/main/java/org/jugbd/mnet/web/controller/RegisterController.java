@@ -1,9 +1,11 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
+import org.jugbd.mnet.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -57,6 +56,43 @@ public class RegisterController {
         return "register/create";
     }
 
+
+    @RequestMapping(value = "opd/{patientId}/new", method = RequestMethod.GET)
+    public String createOutPatient(@PathVariable(value = "patientId") Long patientId, Model uiModel) {
+        log.debug("create() -> patientId ={}", patientId);
+
+        Patient patient = patientService.findOne(patientId);
+
+        OutdoorRegister outdoorRegister = new OutdoorRegister();
+        outdoorRegister.setPatient(patient);
+        uiModel.addAttribute("outdoorRegister", outdoorRegister);
+
+        return "register/opd";
+    }
+
+    @RequestMapping(value = "opd/save", method = RequestMethod.POST)
+    public String saveOpd(@Valid OutdoorRegister outdoorRegister,
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+
+            return "register/opd";
+        }
+
+        registerService.save(outdoorRegister);
+
+        return "redirect:/register/opd/" + outdoorRegister.getId();
+    }
+
+    @RequestMapping(value = "opd/{id}", method = RequestMethod.GET)
+    public String openOpdRegistration(@PathVariable Long id, Model uiModel) {
+        OutdoorRegister outdoorRegister = registerService.findOpdRegister(id);
+        uiModel.addAttribute("register", outdoorRegister);
+
+        return "register/opd-registration";
+    }
+
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@Valid Register register,
                        BindingResult result,
@@ -90,12 +126,37 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/edit/{registrationId}", method = RequestMethod.GET)
-    public String editRegistration(@PathVariable Long registrationId, Model uiModel) {
-        Register register = registerService.findOne(registrationId);
+    public String editRegistration(@PathVariable Long registrationId,
+                                   @RequestParam(value = "type") String type,
+                                   Model uiModel) {
 
-        uiModel.addAttribute("register", register);
+        if (StringUtils.isNotEmpty(type) && type.equalsIgnoreCase("opd")) {
+            OutdoorRegister outdoorRegister = registerService.findOpdRegister(registrationId);
+            uiModel.addAttribute("outdoorRegister", outdoorRegister);
 
-        return "register/edit";
+            return "register/opd-edit";
+        } else {
+            Register register = registerService.findOne(registrationId);
+
+            uiModel.addAttribute("register", register);
+
+            return "register/edit";
+        }
+    }
+
+    @RequestMapping(value = "opd/update", method = RequestMethod.POST)
+    public String updateOpd(@Valid OutdoorRegister outdoorRegister,
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+
+            return "register/opd-edit";
+        }
+
+        registerService.save(outdoorRegister);
+
+        return "redirect:/register/opd/" + outdoorRegister.getId();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Outdoor Patient Register</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header">Outdoor Patient Registration</h2>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div class="" style="margin-top: 0">
+                    <div class="list-group">
+
+                        <a href="#" class="list-group-item active">
+                            <span class="text-uppercase">Registration </span>
+                            <span class="pull-right" id="slide-submenu"> </span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Diagnosis<span class="fa arrow"></span>
+                        </a>
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Visit<span class="fa arrow"></span>
+                        </a>
+
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Outcome<span class="fa arrow"></span>
+                        </a>
+                        <a class="list-group-item" th:href="@{#}">
+                            <i class="fa fa-info fa-fw"></i>Remarks<span class="fa arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Outdoor Patient Registration</div>
+                    <div class="panel-body">
+
+                        <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}"
+                            class="text-primary">
+                            Active since -
+                            <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                        </h4>
+
+                        <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}"
+                            class="text-danger">
+                            Closed on -
+                            <span th:text="${register.stopDatetime} ? ${#dates.format(register.stopDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                        </h4>
+
+                        <table class="table table-condensed">
+
+                            <tr>
+                                <td>Registration No. :</td>
+                                <td><span th:if="${register}">Registration No : </span><span
+                                        th:if="${register}"> <strong
+                                        class="badge" th:text="${register.registrationId}"></strong> </span></td>
+                            </tr>
+                            <tr>
+                                <td>Contact Person</td>
+                                <td th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Relationship</td>
+                                <td th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"></td>
+                                <td th:text="${register.patientContact.comments} ? ${register.patientContact.comments}"></td>
+                            </tr>
+                            <tr>
+                                <td>Contact Number</td>
+                                <td th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></td>
+                            </tr>
+                        </table>
+                        <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+                            <a href="#" class="btn btn-sm btn-info pull-right"
+                               th:href="@{/register/edit/__${register.id}__?type=opd}"> <span
+                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+    <script>
+
+    </script>
+</div>
+</body>
+</html>

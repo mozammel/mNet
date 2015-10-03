@@ -22,12 +22,13 @@ public class OutdoorRegister extends PersistentObject {
     private Long id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Register id can not be empty")
     private String registrationId;
 
     @ManyToOne
     private Patient patient;
 
+    @NotNull(message = "Registration can not be empty")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDatetime;
 

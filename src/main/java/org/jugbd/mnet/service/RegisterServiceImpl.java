@@ -1,8 +1,10 @@
 package org.jugbd.mnet.service;
 
+import org.jugbd.mnet.dao.OutdoorRegisterRepository;
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.dao.VitalDao;
+import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.PatientContact;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
@@ -11,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private PatientDao patientDao;
+
+    @Autowired
+    private OutdoorRegisterRepository outdoorRegisterRepository;
 
     @Autowired
     private VitalDao vitalDao;
@@ -117,5 +122,34 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public void addVital(Vital vital, Long registerId) {
 
+    }
+
+    @Override
+    public OutdoorRegister save(OutdoorRegister register) {
+        if (register.getId() != null) {
+            OutdoorRegister registerFromDb = outdoorRegisterRepository.findOne(register.getId());
+
+            PatientContact patientContact = registerFromDb.getPatientContact();
+            patientContact.setContactPerson(register.getPatientContact().getContactPerson());
+            patientContact.setEmergencyContactNumber(register.getPatientContact().getEmergencyContactNumber());
+            patientContact.setRelationship(register.getPatientContact().getRelationship());
+            patientContact.setComments(register.getPatientContact().getComments());
+            registerFromDb.setRegistrationId(register.getRegistrationId());
+
+            return outdoorRegisterRepository.save(registerFromDb);
+        } else {
+
+            register.setPatient(patientDao.findOne(register.getPatient().getId()));
+            register.setStartDatetime(new Date());
+            register.setStatus(Status.ACTIVE);
+
+            return outdoorRegisterRepository.save(register);
+        }
+    }
+
+    @Override
+    public OutdoorRegister findOpdRegister(Long id) {
+
+        return outdoorRegisterRepository.findOne(id);
     }
 }

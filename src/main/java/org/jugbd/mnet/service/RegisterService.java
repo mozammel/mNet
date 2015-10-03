@@ -1,5 +1,6 @@
 package org.jugbd.mnet.service;
 
+import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
 import org.springframework.stereotype.Component;
@@ -26,4 +27,7 @@ public interface RegisterService {
 
     void addVital(Vital vital, Long registerId);
 
+    OutdoorRegister save(OutdoorRegister register);
+
+    OutdoorRegister findOpdRegister(Long id);
 }

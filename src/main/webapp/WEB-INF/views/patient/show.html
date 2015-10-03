@@ -923,13 +923,23 @@
                         <div class="panel-heading">Register</div>
                         <div class="panel-body">
                             <h3 class="text-primary">This patient has not any active registration</h3>
-                            <a class="btn btn-primary btn-success pull-right"
-                               th:href="@{/register/patient/__${patient.id}__}">
-                                <span class="glyphicon glyphicon-plus"></span> Add Register</a>
+
+                            <div class="pull-right">
+                                <a class="btn btn-primary btn-primary"
+                                   th:href="@{/register/opd/__${patient.id}__/new}">
+                                    <span class="glyphicon glyphicon-plus"></span> Outdoor Patient Register
+                                </a>
+                                &nbsp;&nbsp;
+                                <a class="btn btn-primary btn-info"
+                                   th:href="@{/register/patient/__${patient.id}__}">
+                                    Indoor Patient Register <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
