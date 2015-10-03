@@ -1,8 +1,10 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.Diagnosis;
 import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.utils.StringUtils;
@@ -146,8 +148,8 @@ public class RegisterController {
 
     @RequestMapping(value = "opd/update", method = RequestMethod.POST)
     public String updateOpd(@Valid OutdoorRegister outdoorRegister,
-                          BindingResult result,
-                          RedirectAttributes redirectAttributes) {
+                            BindingResult result,
+                            RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
 
@@ -164,6 +166,21 @@ public class RegisterController {
         Register savedRegister = registerService.save(register);
 
         return "redirect:/patient/show/" + savedRegister.getPatient().getId();
+    }
+
+    //Diagnosis
+
+    @RequestMapping(value = "/diagnosis/{registerId}", method = RequestMethod.GET)
+    public String diagnosis(@PathVariable Long registerId,
+                            @RequestParam RegistrationType registrationType,
+                            Model uiModel) {
+
+        Diagnosis diagnosis = registerService.findDiagnosis(registerId, registrationType);
+        uiModel.addAttribute("diagnosis", diagnosis);
+        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
+        uiModel.addAttribute("registrationType", registrationType);
+
+        return "register/diagnosis";
     }
 }
 

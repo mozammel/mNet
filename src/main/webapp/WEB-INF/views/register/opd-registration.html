@@ -21,45 +21,7 @@
         <div class="row clearfix">
 
             <div class="col-lg-3 col-md-4">
-                <div class="" style="margin-top: 0">
-                    <div class="list-group">
-
-                        <a href="#" class="list-group-item active">
-                            <span class="text-uppercase">Registration </span>
-                            <span class="pull-right" id="slide-submenu"> </span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Diagnosis<span class="fa arrow"></span>
-                        </a>
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Visit<span class="fa arrow"></span>
-                        </a>
-
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Outcome<span class="fa arrow"></span>
-                        </a>
-                        <a class="list-group-item" th:href="@{#}">
-                            <i class="fa fa-info fa-fw"></i>Remarks<span class="fa arrow"></span>
-                        </a>
-                    </div>
-                </div>
+                <div layout:include="layout/common-fragment :: opd-register"></div>
             </div>
 
             <div class="col-lg-9 col-md-8">

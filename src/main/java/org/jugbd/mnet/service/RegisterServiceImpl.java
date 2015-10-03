@@ -4,10 +4,8 @@ import org.jugbd.mnet.dao.OutdoorRegisterRepository;
 import org.jugbd.mnet.dao.PatientDao;
 import org.jugbd.mnet.dao.RegisterDao;
 import org.jugbd.mnet.dao.VitalDao;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.PatientContact;
-import org.jugbd.mnet.domain.Register;
-import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.domain.*;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.domain.enums.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,5 +149,33 @@ public class RegisterServiceImpl implements RegisterService {
     public OutdoorRegister findOpdRegister(Long id) {
 
         return outdoorRegisterRepository.findOne(id);
+    }
+
+    @Override
+    public Diagnosis findDiagnosis(Long registerId, RegistrationType registrationType) {
+        if (registrationType == RegistrationType.OUTDOOR) {
+            OutdoorRegister outdoorRegister = outdoorRegisterRepository.findOne(registerId);
+
+            return outdoorRegister.getDiagnosis();
+        } else if (registrationType == RegistrationType.INDOOR) {
+            Register indoorRegister = registerDao.findOne(registerId);
+
+            return indoorRegister.getDiagnosis();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object findRegister(Long registerId, RegistrationType registrationType) {
+        if (registrationType == RegistrationType.OUTDOOR) {
+            return outdoorRegisterRepository.findOne(registerId);
+
+        } else if (registrationType == RegistrationType.INDOOR) {
+
+            return registerDao.findOne(registerId);
+        }
+
+        return null;
     }
 }

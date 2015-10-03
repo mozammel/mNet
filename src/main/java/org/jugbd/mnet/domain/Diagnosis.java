@@ -46,6 +46,10 @@ public class Diagnosis extends PersistentObject implements Auditable {
     @OneToOne(mappedBy = "diagnosis")
     private Register register;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "diagnosis")
+    private OutdoorRegister outdoorRegister;
+
     public Long getId() {
         return id;
     }
@@ -132,5 +136,14 @@ public class Diagnosis extends PersistentObject implements Auditable {
 
     public void setIcd10(String icd10) {
         this.icd10 = icd10;
+    }
+
+    public OutdoorRegister getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public Diagnosis setOutdoorRegister(OutdoorRegister outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
     }
 }

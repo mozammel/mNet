@@ -52,6 +52,49 @@
     </div>
 </div>
 
+<div layout:fragment="opd-register">
+
+    <div class="" style="margin-top: 0">
+        <div class="list-group">
+
+            <a href="#" class="list-group-item active" th:href="@{/register/opd/__${register.id}__}">
+                <span class="text-uppercase">Registration </span>
+                <span class="pull-right" id="slide-submenu"> </span>
+            </a>
+
+            <a class="list-group-item" th:href="@{/register/diagnosis/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-user-md fa-fw"></i>Diagnosis<span class="fa arrow"></span>
+            </a>
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Visit<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Outcome<span class="fa arrow"></span>
+            </a>
+            <a class="list-group-item" th:href="@{#}">
+                <i class="fa fa-info fa-fw"></i>Remarks<span class="fa arrow"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

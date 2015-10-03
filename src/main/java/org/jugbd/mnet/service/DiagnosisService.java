@@ -1,6 +1,7 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.Diagnosis;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,4 +13,5 @@ public interface DiagnosisService {
 
     Diagnosis findOne(Long id);
 
+    Diagnosis save(Diagnosis diagnosis, RegistrationType registrationType);
 }

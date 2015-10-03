@@ -21,6 +21,9 @@ public class OutdoorRegister extends PersistentObject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Long version;
+
     @NotNull
     @NotEmpty(message = "Register id can not be empty")
     private String registrationId;
@@ -77,6 +80,15 @@ public class OutdoorRegister extends PersistentObject {
 
     @Lob
     private String followUpAdvice;
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public OutdoorRegister setVersion(Long version) {
+        this.version = version;
+        return this;
+    }
 
     public String getRegistrationId() {
         return registrationId;
