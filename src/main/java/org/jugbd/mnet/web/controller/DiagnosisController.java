@@ -81,15 +81,6 @@ public class DiagnosisController {
         return "redirect:/patient/show/" + diagnosisFromDb.getRegister().getPatient().getId();
     }
 
-//    @RequestMapping(value = "/edit/{diagnosisId}", method = RequestMethod.GET)
-//    public String edit(@PathVariable("diagnosisId") Long diagnosisId, Model uiModel) {
-//
-//        Diagnosis diagnosis = diagnosisService.findOne(diagnosisId);
-//        uiModel.addAttribute("diagnosis", diagnosis);
-//
-//        return "diagnosis/edit";
-//    }
-
     @RequestMapping(value = "/edit/{diagnosisId}", method = RequestMethod.GET)
     public String editDiagnosis(@PathVariable("diagnosisId") Long diagnosisId,
                                 @RequestParam RegistrationType registrationType,
@@ -109,9 +100,6 @@ public class DiagnosisController {
                          BindingResult result,
                          Model uiModel,
                          RedirectAttributes redirectAttributes) {
-
-        log.info("update () 0< registrationType: {}", registrationType);
-        System.out.println(registrationType);
 
         if (result.hasErrors()) {
             uiModel.addAttribute("registrationType", registrationType);

@@ -1,9 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.*;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
@@ -182,5 +179,20 @@ public class RegisterController {
 
         return "register/diagnosis";
     }
+
+    //Plan of Rx
+
+    @RequestMapping(value = "/treatmentplan/{registerId}", method = RequestMethod.GET)
+    public String treatmentPlan(@PathVariable Long registerId,
+                            @RequestParam RegistrationType registrationType,
+                            Model uiModel) {
+
+        uiModel.addAttribute("treatmentPlan", registerService.findTreatmentPlan(registerId, registrationType));
+        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
+        uiModel.addAttribute("registrationType", registrationType);
+
+        return "register/treatmentplan";
+    }
+
 }
 

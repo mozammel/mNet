@@ -44,6 +44,10 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
     @OneToOne(mappedBy = "treatmentPlan")
     private Register register;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "treatmentPlan")
+    private OutdoorRegister outdoorRegister;
+
     public Long getId() {
         return id;
     }
@@ -147,5 +151,14 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public OutdoorRegister getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public TreatmentPlan setOutdoorRegister(OutdoorRegister outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
     }
 }

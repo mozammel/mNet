@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Edit Plan Of Rx</title>
+    <title>Edit Plan Of Rx </title>
 </head>
 <body>
 
@@ -12,19 +12,33 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Edit Plan Rx</h2>
+                <h2 class="page-header">Edit Plan Rx
+                    (
+                    <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}">
+                        Outdoor Patient
+                    </span>
+                    <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}">
+                        Indoor Patient
+                    </span>
+                    )</h2>
             </div>
         </div>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Edit Treatment Plan</div>
                 <form class="form-horizontal" method='POST' th:object="${treatmentPlan}"
-                      th:action="@{/treatmentplan/edit}">
+                      th:action="@{/treatmentplan/edit?registrationType=}+ ${registrationType}">
                     <div class="panel-body">
 
                         <fieldset>
                             <input type="hidden" th:field="*{id}"/>
-                            <input type="hidden" th:field="*{register.id}"/>
+
+                            <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}">
+                                <input type="hidden" th:field="*{outdoorRegister.id}"/>
+                            </span>
+                            <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}">
+                                <input type="hidden" th:field="*{register.id}"/>
+                            </span>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" th:text="#{label.treatment.plan.plan}">
@@ -211,10 +225,19 @@
                     </div>
 
                     <div class="panel-footer clearfix">
-                        <a href="#" class="btn btn-danger"
-                           th:href="@{/treatmentplan/cancel/__${treatmentPlan.register.id}__}"> <span
-                                th:text="#{label.cancel}">Cancel</span> </a>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/treatmentplan/cancel/__${diagnosis.register.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/register/opd/__${treatmentPlan.outdoorRegister.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes</button>
                     </div>
                 </form>
             </div>

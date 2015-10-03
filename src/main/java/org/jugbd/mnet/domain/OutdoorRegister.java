@@ -48,7 +48,7 @@ public class OutdoorRegister extends PersistentObject {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "chief_complaint_id")
     private ChiefComplaint chiefComplaint;
 

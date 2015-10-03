@@ -57,7 +57,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
                     Diagnosis savedDiagnosis = diagnosisDao.save(diagnosis);
 
                     register.setDiagnosis(savedDiagnosis);
-                    registerService.save(register);
+                    registerService.update(register);
 
                     return savedDiagnosis;
                 } else {

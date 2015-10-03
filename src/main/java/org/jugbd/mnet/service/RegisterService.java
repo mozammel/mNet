@@ -1,9 +1,6 @@
 package org.jugbd.mnet.service;
 
-import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Register;
-import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.domain.*;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.springframework.stereotype.Component;
 
@@ -36,4 +33,8 @@ public interface RegisterService {
     Diagnosis findDiagnosis(Long registerId, RegistrationType registrationType);
 
     Object findRegister(Long registerId, RegistrationType registrationType);
+
+    TreatmentPlan findTreatmentPlan(Long registerId, RegistrationType registrationType);
+
+    void update(OutdoorRegister register);
 }
