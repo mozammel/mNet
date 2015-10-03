@@ -90,13 +90,12 @@
                                 </tr>
 
                             </table>
-
-                            <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
-                                <a href="#" class="btn btn-sm btn-info pull-right"
-                                   th:href="@{/diagnosis/edit/__${register.diagnosis.id}__?registrationType=} +${registrationType}"> <span
-                                        class="glyphicon glyphicon-edit"></span> Edit </a>
-                            </div>
                         </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <a href="#" class="btn btn-sm btn-info pull-right"
+                           th:href="@{/diagnosis/edit/__${register.diagnosis.id}__?registrationType=} +${registrationType}"> <span
+                                class="glyphicon glyphicon-edit"></span> Edit </a>
                     </div>
                 </div>
             </div>
