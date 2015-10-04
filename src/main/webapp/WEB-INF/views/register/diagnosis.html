@@ -97,7 +97,7 @@
 
                         <div th:if="${register.diagnosis == null}">
                             <a class="btn btn-sm btn-info pull-right"
-                               th:href="@{/diagnosis/create/__${register.id}__?registrationType}+ ${registrationType}"><span
+                               th:href="@{/diagnosis/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
                                     class="glyphicon glyphicon-plus"></span> Add New</a>
                         </div>
 

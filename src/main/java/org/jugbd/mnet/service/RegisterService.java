@@ -37,4 +37,6 @@ public interface RegisterService {
     TreatmentPlan findTreatmentPlan(Long registerId, RegistrationType registrationType);
 
     void update(OutdoorRegister register);
+
+    Examination findExamination(Long registerId, RegistrationType registrationType);
 }

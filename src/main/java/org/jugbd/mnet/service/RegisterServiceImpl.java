@@ -199,4 +199,21 @@ public class RegisterServiceImpl implements RegisterService {
 
         outdoorRegisterRepository.save(register);
     }
+
+    @Override
+    public Examination findExamination(Long registerId, RegistrationType registrationType) {
+
+        if (registrationType == RegistrationType.OUTDOOR) {
+            OutdoorRegister outdoorRegister = outdoorRegisterRepository.findOne(registerId);
+
+            return outdoorRegister.getExamination();
+        } else if (registrationType == RegistrationType.INDOOR) {
+            Register indoorRegister = registerDao.findOne(registerId);
+
+            return indoorRegister.getExamination();
+        }
+
+        return null;
+    }
+
 }

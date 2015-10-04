@@ -194,5 +194,19 @@ public class RegisterController {
         return "register/treatmentplan";
     }
 
+    //Examination
+
+    @RequestMapping(value = "/examination/{registerId}", method = RequestMethod.GET)
+    public String examination(@PathVariable Long registerId,
+                                @RequestParam RegistrationType registrationType,
+                                Model uiModel) {
+
+        uiModel.addAttribute("examination", registerService.findExamination(registerId, registrationType));
+        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
+        uiModel.addAttribute("registrationType", registrationType);
+
+        return "register/examination";
+    }
+
 }
 

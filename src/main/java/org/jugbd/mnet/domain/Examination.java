@@ -52,6 +52,10 @@ public class Examination extends PersistentObject implements Auditable {
     @OneToOne(mappedBy = "examination")
     private Register register;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "examination")
+    private OutdoorRegister outdoorRegister;
+
     @Size(max = 1000)
     private String comments;
 
@@ -189,5 +193,14 @@ public class Examination extends PersistentObject implements Auditable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public OutdoorRegister getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public Examination setOutdoorRegister(OutdoorRegister outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
     }
 }
