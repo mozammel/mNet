@@ -88,23 +88,28 @@
     <div class="" style="margin-top: 0">
         <div class="list-group">
 
-            <a href="#" class="list-group-item active" th:href="@{/register/opd/__${register.id}__}">
-                <span class="text-uppercase">Registration </span>
+            <a href="#" class="list-group-item" th:classappend="${page == 'registration' ? 'active' : ''}"
+               th:href="@{/register/opd/__${register.id}__}">
+                <i class="fa fa-user-md fa-fw"></i> <span class="">Registration </span><span class="fa arrow"></span>
                 <span class="pull-right" id="slide-submenu"> </span>
             </a>
 
-            <a class="list-group-item" th:href="@{/register/diagnosis/__${register.id}__?registrationType=OUTDOOR}">
+            <a class="list-group-item" th:classappend="${page == 'diagnosis' ? 'active' : ''}"
+               th:href="@{/register/diagnosis/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-user-md fa-fw"></i>Diagnosis<span class="fa arrow"></span>
             </a>
-            <a class="list-group-item" th:href="@{/register/treatmentplan/__${register.id}__?registrationType=OUTDOOR}">
+            <a class="list-group-item" th:classappend="${page == 'treatmentplan' ? 'active' : ''}"
+               th:href="@{/register/treatmentplan/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
             </a>
 
-            <a class="list-group-item" th:href="@{/register/examination/__${register.id}__?registrationType=OUTDOOR}">
+            <a class="list-group-item" th:classappend="${page == 'examination' ? 'active' : ''}"
+               th:href="@{/register/examination/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
             </a>
 
-            <a class="list-group-item" th:href="@{/register/chiefcomplaints/__${register.id}__?registrationType=OUTDOOR}">
+            <a class="list-group-item" th:classappend="${page == 'chiefcomplaints' ? 'active' : ''}"
+               th:href="@{/register/chiefcomplaints/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
             </a>
 
