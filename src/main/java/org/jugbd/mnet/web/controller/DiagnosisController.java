@@ -44,18 +44,8 @@ public class DiagnosisController {
                          Model uiModel) {
 
         uiModel.addAttribute("registrationType", registrationType);
-
-        switch (registrationType) {
-            case OUTDOOR:
-                OutdoorRegister outdoorRegister = registerService.findOpdRegister(registerId);
-                diagnosis.setOutdoorRegister(outdoorRegister);
-                break;
-
-            case INDOOR:
-                Register register = registerService.findOne(registerId);
-                diagnosis.setRegister(register);
-                break;
-        }
+        registerService.findRegisterEither(registerId, registrationType)
+                .map(diagnosis::setRegister, diagnosis::setOutdoorRegister);
 
         return "diagnosis/create";
     }

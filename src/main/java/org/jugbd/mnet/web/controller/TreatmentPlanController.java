@@ -41,18 +41,8 @@ public class TreatmentPlanController {
                          Model uiModel) {
 
         uiModel.addAttribute("registrationType", registrationType);
-
-        switch (registrationType) {
-            case OUTDOOR:
-                OutdoorRegister outdoorRegister = registerService.findOpdRegister(registerId);
-                treatmentPlan.setOutdoorRegister(outdoorRegister);
-                break;
-
-            case INDOOR:
-                Register register = registerService.findOne(registerId);
-                treatmentPlan.setRegister(register);
-                break;
-        }
+        registerService.findRegisterEither(registerId, registrationType)
+                .map(treatmentPlan::setRegister, treatmentPlan::setOutdoorRegister);
 
         return "treatmentplan/create";
     }

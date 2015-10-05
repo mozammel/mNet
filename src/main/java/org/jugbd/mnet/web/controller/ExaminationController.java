@@ -41,15 +41,8 @@ public class ExaminationController {
                          Model uiModel) {
 
         uiModel.addAttribute("registrationType", registrationType);
-
-        if (registrationType == RegistrationType.OUTDOOR) {
-            OutdoorRegister outdoorRegister = registerService.findOpdRegister(registerId);
-            examination.setOutdoorRegister(outdoorRegister);
-
-        } else if (registrationType == RegistrationType.INDOOR) {
-            Register register = registerService.findOne(registerId);
-            examination.setRegister(register);
-        }
+        registerService.findRegisterEither(registerId, registrationType)
+                .map(examination::setRegister, examination::setOutdoorRegister);
 
         return "examination/create";
     }

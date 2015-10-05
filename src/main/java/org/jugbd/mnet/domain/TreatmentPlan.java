@@ -149,8 +149,9 @@ public class TreatmentPlan extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public TreatmentPlan setRegister(Register register) {
         this.register = register;
+        return this;
     }
 
     public OutdoorRegister getOutdoorRegister() {

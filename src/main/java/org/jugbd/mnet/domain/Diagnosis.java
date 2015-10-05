@@ -118,8 +118,9 @@ public class Diagnosis extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public Diagnosis setRegister(Register register) {
         this.register = register;
+        return this;
     }
 
     public String getComment() {

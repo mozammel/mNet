@@ -183,8 +183,9 @@ public class Examination extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public Examination setRegister(Register register) {
         this.register = register;
+        return this;
     }
 
     public String getComments() {
