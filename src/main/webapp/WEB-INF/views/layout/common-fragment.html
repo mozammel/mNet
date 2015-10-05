@@ -52,6 +52,37 @@
     </div>
 </div>
 
+<div layout:fragment="patient-info">
+    <div class="col-sm-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-sm-8 col-md-8">
+                    <h3 class="text-primary"><a th:href="@{/patient/details/__${patient.id}__}"> <span
+                            th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
+                        <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
+                        <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd/MM/yyyy')}"></small>
+                        <strong>
+                            <small id="then" th:attr="data-date=${patient.dateOfBirth}"></small>
+                        </strong>
+                        <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
+                        <small><a sec:authorize="hasRole('ROLE_ADMIN')"
+                                  th:href="@{/patient/edit/__${patient.id}__}">Edit</a>
+                        </small>
+                    </h3>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <p class="text-right">
+                        <i>Health ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong>
+                        <br/>
+                        <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong
+                            class="badge" th:text="${register.registrationId}"></strong> </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div layout:fragment="opd-register">
 
     <div class="" style="margin-top: 0">

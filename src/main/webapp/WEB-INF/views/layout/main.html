@@ -10,8 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <link rel="shortcut icon" href="../../../resources/images/favicon.ico" th:href="@{/resources/images/favicon.ico}" type="image/x-icon"/>
-    <link rel="icon" href="../../../resources/images/favicon.ico" th:href="@{/resources/images/favicon.ico}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../../../resources/images/favicon.ico" th:href="@{/resources/images/favicon.ico}"
+          type="image/x-icon"/>
+    <link rel="icon" href="../../../resources/images/favicon.ico" th:href="@{/resources/images/favicon.ico}"
+          type="image/x-icon"/>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}"
@@ -118,7 +120,7 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu" sec:authorize="isAuthenticated()">
                     <li><a href="#" th:href="@{/admin/index}"><i class="fa fa-home fa-fw"></i> Home<span
-                        class="fa arrow"></span></a></li>
+                            class="fa arrow"></span></a></li>
 
                     <li><a href="#" th:href="@{/patient/search}"><i class="fa fa-search fa-fw"></i> Search Patient<span
                             class="fa arrow"></span></a></li>
@@ -154,6 +156,22 @@
 
 <script type="text/javascript" src="../../../resources/js/validator-0.3.0.js"
         th:src="@{/resources/js/validator-0.3.0.js}"></script>
+
+<script src="../../../resources/js/moment.js" th:src="@{/resources/js/moment.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        var then = $('#then');
+        if (then !== 'undefined') {
+            var date = moment(new Date(then.attr('data-date'))),
+                    update = function () {
+                        then.html(date.fromNow(true));
+                    };
+            update();
+            setInterval(update, 60000);
+        }
+    });
+</script>
 
 <div layout:fragment="custom-scripts">
     <!--Custom page specific scripts goes here-->
