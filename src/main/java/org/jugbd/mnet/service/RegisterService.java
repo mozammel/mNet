@@ -2,6 +2,7 @@ package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.*;
 import org.jugbd.mnet.domain.enums.RegistrationType;
+import org.jugbd.mnet.utils.Either;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public interface RegisterService {
     Diagnosis findDiagnosis(Long registerId, RegistrationType registrationType);
 
     Object findRegister(Long registerId, RegistrationType registrationType);
+
+    Either<Register, OutdoorRegister> findRegisterEither(Long registerId, RegistrationType registrationType);
 
     TreatmentPlan findTreatmentPlan(Long registerId, RegistrationType registrationType);
 

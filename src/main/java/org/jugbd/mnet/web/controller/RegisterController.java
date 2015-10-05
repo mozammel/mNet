@@ -1,6 +1,5 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.Diagnosis;
 import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
@@ -89,8 +88,7 @@ public class RegisterController {
 
     @RequestMapping(value = "opd/{id}", method = RequestMethod.GET)
     public String openOpdRegistration(@PathVariable Long id, Model uiModel) {
-        OutdoorRegister outdoorRegister = registerService.findOpdRegister(id);
-        uiModel.addAttribute("register", outdoorRegister);
+        prepareData(id, RegistrationType.OUTDOOR, uiModel);
 
         return "register/opd-registration";
     }
@@ -104,7 +102,6 @@ public class RegisterController {
 
             return "register/create";
         }
-
 
         registerService.save(register);
 
@@ -175,10 +172,8 @@ public class RegisterController {
                             @RequestParam RegistrationType registrationType,
                             Model uiModel) {
 
-        Diagnosis diagnosis = registerService.findDiagnosis(registerId, registrationType);
-        uiModel.addAttribute("diagnosis", diagnosis);
-        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
-        uiModel.addAttribute("registrationType", registrationType);
+        uiModel.addAttribute("diagnosis", registerService.findDiagnosis(registerId, registrationType));
+        prepareData(registerId, registrationType, uiModel);
 
         return "register/diagnosis";
     }
@@ -191,8 +186,7 @@ public class RegisterController {
                                 Model uiModel) {
 
         uiModel.addAttribute("treatmentPlan", registerService.findTreatmentPlan(registerId, registrationType));
-        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
-        uiModel.addAttribute("registrationType", registrationType);
+        prepareData(registerId, registrationType, uiModel);
 
         return "register/treatmentplan";
     }
@@ -205,8 +199,7 @@ public class RegisterController {
                               Model uiModel) {
 
         uiModel.addAttribute("examination", registerService.findExamination(registerId, registrationType));
-        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
-        uiModel.addAttribute("registrationType", registrationType);
+        prepareData(registerId, registrationType, uiModel);
 
         return "register/examination";
     }
@@ -217,19 +210,20 @@ public class RegisterController {
                                   @RequestParam RegistrationType registrationType,
                                   Model uiModel) {
 
-        Object register = registerService.findRegister(registerId, registrationType);
-
         uiModel.addAttribute("chiefcomplaints", registerService.findChiefcomplaints(registerId, registrationType));
+        prepareData(registerId, registrationType, uiModel);
+
+        return "register/chiefcomplaints";
+    }
+
+    private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
         uiModel.addAttribute("registrationType", registrationType);
 
-        if (register instanceof OutdoorRegister) {
-            uiModel.addAttribute("patient", ((OutdoorRegister) register).getPatient());
-        } else {
-            uiModel.addAttribute("patient", ((Register) register).getPatient());
-        }
+        Patient patient = registerService.findRegisterEither(registerId, registrationType)
+                .fold(Register::getPatient, OutdoorRegister::getPatient);
 
-        return "register/chiefcomplaints";
+        uiModel.addAttribute("patient", patient);
     }
 }
 

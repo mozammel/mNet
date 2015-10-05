@@ -7,6 +7,7 @@ import org.jugbd.mnet.dao.VitalDao;
 import org.jugbd.mnet.domain.*;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.domain.enums.Status;
+import org.jugbd.mnet.utils.Either;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +178,13 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         return null;
+    }
+
+    @Override
+    public Either<Register, OutdoorRegister> findRegisterEither(Long registerId, RegistrationType registrationType) {
+
+        return registrationType == RegistrationType.OUTDOOR ?
+                Either.right(outdoorRegisterRepository.findOne(registerId)) : Either.left(registerDao.findOne(registerId));
     }
 
     @Override
