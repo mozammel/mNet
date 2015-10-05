@@ -31,7 +31,66 @@
                     <div class="panel-heading">Chief Complaint :: <span th:text="${registrationType.label}"/></div>
 
                     <div class="panel-body">
+                        <div th:if="${register.chiefComplaint == null}">
+                            <h3 class="text-primary">No Chief Complaint found</h3>
+                        </div>
+                        <div th:if="${register.chiefComplaint != null}">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>H/O Burn</td>
+                                    <td th:if="${register.chiefComplaint.daysOfBurns}"
+                                        th:text="${register.chiefComplaint.daysOfBurns + ' day(s)'}"></td>
+                                    <td th:if="${register.chiefComplaint.hoursOfBurn}"
+                                        th:text="${register.chiefComplaint.hoursOfBurn + ' hour(s)'}"></td>
+                                </tr>
 
+                                <tr>
+                                    <td>Child Born With</td>
+                                    <td th:text="${register.chiefComplaint.childBornWith} ? ${register.chiefComplaint.childBornWith.label}"></td>
+                                    <td th:text="${register.chiefComplaint.childBornWithOther} ? ${register.chiefComplaint.childBornWithOther}"></td>
+                                </tr>
+                                <tr>
+                                    <td>H/O Trauma</td>
+                                    <td th:if="${register.chiefComplaint.daysOfTrauma}"
+                                        th:text="${register.chiefComplaint.daysOfTrauma + ' day(s)'}"></td>
+                                    <td th:if="${register.chiefComplaint.hoursOfTrauma}"
+                                        th:text="${register.chiefComplaint.hoursOfTrauma + ' hour(s)'}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>H/O Infection</td>
+                                    <td th:if="${register.chiefComplaint.daysOfInfection}"
+                                        th:text="${register.chiefComplaint.daysOfInfection + ' day(s)'}"></td>
+                                    <td th:if="${register.chiefComplaint.hoursOfInfection}"
+                                        th:text="${register.chiefComplaint.hoursOfInfection + ' hour(s)'}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Presented with ulcer or swelling for</td>
+                                    <td th:if="${register.chiefComplaint.yearsOfUlcerOrSwellingFor}"
+                                        th:text="${register.chiefComplaint.yearsOfUlcerOrSwellingFor + ' year(s)'}"></td>
+                                    <td th:if="${register.chiefComplaint.monthOfUlcerOrSwellingFor}"
+                                        th:text="${register.chiefComplaint.monthOfUlcerOrSwellingFor + ' month(s)'}"></td>
+                                    <td th:if="${register.chiefComplaint.daysOfUlcerOrSwellingFor}"
+                                        th:text="${register.chiefComplaint.daysOfUlcerOrSwellingFor + ' day(s)'}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Breast Related Complaint</td>
+                                    <td th:text="${register.chiefComplaint.breastRelatedComplaint} ? ${register.chiefComplaint.breastRelatedComplaint }"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Present Illness</td>
+                                    <td th:text="${register.chiefComplaint.presentIllness} ? ${register.chiefComplaint.presentIllness }"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Comments</td>
+                                    <td th:text="${register.chiefComplaint.comments} ? ${register.chiefComplaint.comments}"></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="panel-footer clearfix">

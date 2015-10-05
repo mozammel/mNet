@@ -169,8 +169,9 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public ChiefComplaint setRegister(Register register) {
         this.register = register;
+        return this;
     }
 
     public OutdoorRegister getOutdoorRegister() {

@@ -16,16 +16,21 @@
                 <h2 class="page-header">Chief Complaints</h2>
             </div>
         </div>
+
         <!-- /.row -->
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Edit Chief Complaint</div>
-                <div class="panel-body">
+                <div class="panel-heading">New Chief Complaints</div>
+                <form class="form-horizontal" method='POST' th:object="${chiefComplaint}"
+                      th:action="@{/chiefcomplaints/edit?registrationType=}+ ${registrationType}">
+                    <div class="panel-body">
 
-                    <form class="form-horizontal" method='POST' th:object="${chiefComplaint}"
-                          th:action="@{/chiefcomplaints/edit}">
-
-                        <input type="hidden" th:field="*{register.id}"/>
+                        <div th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}">
+                            <input type="hidden" th:field="*{outdoorRegister.id}"/>
+                        </div>
+                        <div th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}">
+                            <input type="hidden" th:field="*{register.id}"/>
+                        </div>
                         <input type="hidden" th:field="*{id}"/>
 
                         <fieldset>
@@ -34,7 +39,6 @@
                                        th:text="#{label.chief.complaint.ho.burn}">
                                     H/O Burn
                                 </label>
-
 
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -79,7 +83,7 @@
                                     </select>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('childBornWith')}">
-                                        <span th:errors="*{pastMedicalHistory}">Required</span>
+                                        <span th:errors="*{childBornWith}">Required</span>
                                     </p>
                                 </div>
                             </div>
@@ -264,20 +268,26 @@
                             </div>
 
                         </fieldset>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger"
-                                   th:href="@{/chiefcomplaints/cancel/__${chiefComplaint.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span>
-                                </a>
-                                <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
-                                    Changes
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="panel-footer">
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/chiefcomplaints/cancel/__${chiefComplaint.register.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/register/opd/__${chiefComplaint.outdoorRegister.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <button type="submit" class="btn btn-primary pull-right" th:text="#{label.save.changes}">Save
+                            Changes
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
