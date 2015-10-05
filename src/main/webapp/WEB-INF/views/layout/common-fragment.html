@@ -117,8 +117,9 @@
                 <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
             </a>
 
-            <a class="list-group-item" th:href="@{#}">
-                <i class="fa fa-info fa-fw"></i>Visit<span class="fa arrow"></span>
+            <a class="list-group-item" th:classappend="${page == 'vital' ? 'active' : ''}"
+               th:href="@{/register/vitals/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Vital<span class="fa arrow"></span>
             </a>
 
             <a class="list-group-item" th:href="@{#}">

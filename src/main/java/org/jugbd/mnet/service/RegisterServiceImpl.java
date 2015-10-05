@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -240,4 +241,21 @@ public class RegisterServiceImpl implements RegisterService {
         return null;
     }
 
+    @Override
+    public Vital getLastVital(Long registerId, RegistrationType registrationType) {
+        log.info("getLastVital() registerId:{}, registrationType : {}", registerId, registrationType);
+
+        return findRegisterEither(registerId, registrationType)
+                .fold(register -> getVital(register.getVitals()),
+                        outdoorRegister -> getVital(outdoorRegister.getVitals()));
+    }
+
+    private Vital getVital(Set<Vital> vitals) {
+
+        return vitals.stream()
+                .filter(vital -> vital.getStatus() == Status.ACTIVE)
+                .sorted((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()))
+                .findFirst()
+                .orElse(null);
+    }
 }

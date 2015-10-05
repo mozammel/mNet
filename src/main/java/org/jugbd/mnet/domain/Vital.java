@@ -42,6 +42,9 @@ public class Vital extends PersistentObject implements Auditable {
     @ManyToOne
     private Register register;
 
+    @ManyToOne
+    private OutdoorRegister outdoorRegister;
+
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -139,8 +142,9 @@ public class Vital extends PersistentObject implements Auditable {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public Vital setPatient(Patient patient) {
         this.patient = patient;
+        return this;
     }
 
     public Status getStatus() {
@@ -155,7 +159,39 @@ public class Vital extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public Vital setRegister(Register register) {
         this.register = register;
+        return this;
+    }
+
+    public OutdoorRegister getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public Vital setOutdoorRegister(OutdoorRegister outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Vital{");
+        sb.append("id=").append(id);
+        sb.append(", version=").append(version);
+        sb.append(", height=").append(height);
+        sb.append(", weight=").append(weight);
+        sb.append(", bmi=").append(bmi);
+        sb.append(", temperature=").append(temperature);
+        sb.append(", pulse=").append(pulse);
+        sb.append(", respiratoryRate=").append(respiratoryRate);
+        sb.append(", systolic=").append(systolic);
+        sb.append(", diastolic=").append(diastolic);
+        sb.append(", bloodOxygenSaturation=").append(bloodOxygenSaturation);
+        sb.append(", patient=").append(patient);
+        sb.append(", register=").append(register);
+        sb.append(", outdoorRegister=").append(outdoorRegister);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
     }
 }

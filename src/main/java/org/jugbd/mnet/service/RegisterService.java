@@ -44,4 +44,6 @@ public interface RegisterService {
     Examination findExamination(Long registerId, RegistrationType registrationType);
 
     ChiefComplaint findChiefcomplaints(Long registerId, RegistrationType registrationType);
+
+    Vital getLastVital(Long registerId, RegistrationType registrationType);
 }

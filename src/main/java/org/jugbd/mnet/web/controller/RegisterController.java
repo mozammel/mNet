@@ -3,6 +3,7 @@ package org.jugbd.mnet.web.controller;
 import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.Vital;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
@@ -214,6 +215,18 @@ public class RegisterController {
         prepareData(registerId, registrationType, uiModel);
 
         return "register/chiefcomplaints";
+    }
+
+    //vitals
+    @RequestMapping(value = "/vitals/{registerId}", method = RequestMethod.GET)
+    public String vital(@PathVariable Long registerId,
+                        @RequestParam RegistrationType registrationType,
+                        Model uiModel) {
+
+        uiModel.addAttribute("lastVital", registerService.getLastVital(registerId, registrationType));
+        prepareData(registerId, registrationType, uiModel);
+
+        return "register/vital";
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

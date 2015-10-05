@@ -38,7 +38,7 @@ public class OutdoorRegister extends PersistentObject {
     @Temporal(TemporalType.TIMESTAMP)
     private Date stopDatetime;
 
-    @OneToMany(mappedBy = "register")
+    @OneToMany(mappedBy = "outdoorRegister")
     private Set<Vital> vitals = new HashSet<>();
 
     @OneToMany

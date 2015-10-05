@@ -74,17 +74,18 @@
                 </div>
                 <div class="panel-footer clearfix">
                     <a href="#" class="btn btn-primary btn-sm pull-left"
-                       th:href="@{/vital/index/__${vital.register.id}__}"> <span
+                       th:href="@{/register/vitals/__${register.id}__?registrationType=} + ${registrationType}"> <span
                             class="glyphicon glyphicon-arrow-left"></span> Back </a>
 
                     <div class="btn-group inline pull-right" style="margin-right: 10px">
-                        <a href="#" class="btn btn-sm btn-info"
-                           th:href="@{/vital/edit/__${vital.id}__}">
-                            <span class="glyphicon glyphicon-edit"> Edit</span>
-                        </a>
+                        <!--<a href="#" class="btn btn-sm btn-info"-->
+                        <!--th:href="@{/vital/edit/__${vital.id}__}">-->
+                        <!--<span class="glyphicon glyphicon-edit"> Edit</span>-->
+                        <!--</a>-->
 
                         <a href="#" class="btn btn-sm btn-danger"
-                           th:href="@{#}" onclick="deleteVital();"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                           th:href="@{#}" onclick="deleteVital();"><span class="glyphicon glyphicon-remove"></span>
+                            Delete</a>
 
                         <script type="text/javascript">
                             function deleteVital() {
@@ -95,7 +96,7 @@
                         </script>
 
                         <form style="visibility: hidden" th:id="delete-vital" method="post" action="#"
-                              th:action="@{/vital/delete/__${vital.id}__}">
+                              th:action="@{/vital/delete/__${vital.id}__?registrationType=}+${registrationType}">
                         </form>
 
                     </div>

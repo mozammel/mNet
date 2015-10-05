@@ -1,7 +1,7 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.VitalService;
 import org.slf4j.Logger;
@@ -36,15 +36,23 @@ public class VitalController {
     private RegisterService registerService;
 
     @RequestMapping(value = "/create/{registerId}", method = RequestMethod.GET)
-    public String create(@PathVariable Long registerId, Vital vital, Model uiModel) {
+    public String create(@PathVariable Long registerId,
+                         @RequestParam(required = true) RegistrationType registrationType,
+                         Vital vital,
+                         Model uiModel) {
 
         uiModel.addAttribute("registerId", registerId);
+        uiModel.addAttribute("registrationType", registrationType);
 
         return "vital/create";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String save(@Valid Vital vital, BindingResult result, Long registerId, Model uiModel) {
+    public String save(@RequestParam(required = true) RegistrationType registrationType,
+                       @Valid Vital vital,
+                       BindingResult result,
+                       Long registerId,
+                       Model uiModel) {
 
         if (registerId == null) {
             throw new RuntimeException("Unable to find Register Id");
@@ -56,42 +64,51 @@ public class VitalController {
             return "vital/create";
         }
 
-        Vital savedVital = vitalService.saveByRegisterId(vital, registerId);
+        Vital savedVital = vitalService.saveByRegisterId(vital, registerId, registrationType);
 
-        return "redirect:/vital/show/" + savedVital.getId();
+        return "redirect:/vital/show/" + savedVital.getId() + "?registrationType=" + registrationType;
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String show(@PathVariable Long id, Model uiModel) {
+    public String show(@PathVariable Long id,
+                       @RequestParam(required = true) RegistrationType registrationType,
+                       Model uiModel) {
 
         Vital vital = vitalService.findOne(id);
         uiModel.addAttribute("vital", vital);
+        uiModel.addAttribute("registrationType", registrationType);
+        uiModel.addAttribute("register", registrationType == RegistrationType.OUTDOOR ? vital.getOutdoorRegister() : vital.getRegister());
 
         return "vital/show";
     }
 
     @RequestMapping(value = "/index/{registerId}", method = RequestMethod.GET)
-    public String index(@PathVariable Long registerId, Model uiModel) {
+    public String index(@PathVariable Long registerId,
+                        @RequestParam(required = true) RegistrationType registrationType,
+                        Model uiModel) {
 
-        List<Vital> vitals = vitalService.findByRegisterId(registerId);
+        List<Vital> vitals = vitalService.findByRegisterId(registerId, registrationType);
         uiModel.addAttribute("vitals", vitals);
         uiModel.addAttribute("registerId", registerId);
+        uiModel.addAttribute("registrationType", registrationType);
 
         return "vital/index";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable Long id) {
-        Long registrationId = vitalService.delete(id);
+    public String delete(@PathVariable Long id,
+                         @RequestParam(required = true) RegistrationType registrationType) {
+        Long registrationId = vitalService.delete(id, registrationType);
 
-        return "redirect:/vital/index/" + registrationId;
+        return "redirect:/vital/index/" + registrationId + "?registrationType=" + registrationType.name();
     }
 
     @RequestMapping(value = "back", method = RequestMethod.GET)
-    public String backToPatientShowPage(@RequestParam Long registerId) {
-        log.debug("back() registerId={}", registerId);
-        Register register = registerService.findOne(registerId);
+    public String backToPatientShowPage(@RequestParam(required = true) Long registerId,
+                                        @RequestParam(required = true) RegistrationType registrationType) {
 
-        return "redirect:/patient/show/" + register.getPatient().getId();
+        return "redirect:" + registerService.findRegisterEither(registerId, registrationType)
+                .fold(register -> "/patient/show/" + register.getPatient().getId(),
+                        outdoorRegister -> "/register/vitals/" + outdoorRegister.getId() + "?registrationType=" + registrationType.name());
     }
 }
