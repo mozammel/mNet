@@ -1,6 +1,9 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.*;
+import org.jugbd.mnet.domain.Diagnosis;
+import org.jugbd.mnet.domain.OutdoorRegister;
+import org.jugbd.mnet.domain.Patient;
+import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
@@ -184,8 +187,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/treatmentplan/{registerId}", method = RequestMethod.GET)
     public String treatmentPlan(@PathVariable Long registerId,
-                            @RequestParam RegistrationType registrationType,
-                            Model uiModel) {
+                                @RequestParam RegistrationType registrationType,
+                                Model uiModel) {
 
         uiModel.addAttribute("treatmentPlan", registerService.findTreatmentPlan(registerId, registrationType));
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
@@ -198,8 +201,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/examination/{registerId}", method = RequestMethod.GET)
     public String examination(@PathVariable Long registerId,
-                                @RequestParam RegistrationType registrationType,
-                                Model uiModel) {
+                              @RequestParam RegistrationType registrationType,
+                              Model uiModel) {
 
         uiModel.addAttribute("examination", registerService.findExamination(registerId, registrationType));
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
@@ -208,5 +211,25 @@ public class RegisterController {
         return "register/examination";
     }
 
+    //Cheif Complaints
+    @RequestMapping(value = "/chiefcomplaints/{registerId}", method = RequestMethod.GET)
+    public String chiefcomplaints(@PathVariable Long registerId,
+                                  @RequestParam RegistrationType registrationType,
+                                  Model uiModel) {
+
+        Object register = registerService.findRegister(registerId, registrationType);
+
+        uiModel.addAttribute("chiefcomplaints", registerService.findChiefcomplaints(registerId, registrationType));
+        uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
+        uiModel.addAttribute("registrationType", registrationType);
+
+        if (register instanceof OutdoorRegister) {
+            uiModel.addAttribute("patient", ((OutdoorRegister) register).getPatient());
+        } else {
+            uiModel.addAttribute("patient", ((Register) register).getPatient());
+        }
+
+        return "register/chiefcomplaints";
+    }
 }
 

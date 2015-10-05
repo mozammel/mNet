@@ -216,4 +216,20 @@ public class RegisterServiceImpl implements RegisterService {
         return null;
     }
 
+    @Override
+    public ChiefComplaint findChiefcomplaints(Long registerId, RegistrationType registrationType) {
+
+        if (registrationType == RegistrationType.OUTDOOR) {
+            OutdoorRegister outdoorRegister = outdoorRegisterRepository.findOne(registerId);
+
+            return outdoorRegister.getChiefComplaint();
+        } else if (registrationType == RegistrationType.INDOOR) {
+            Register indoorRegister = registerDao.findOne(registerId);
+
+            return indoorRegister.getChiefComplaint();
+        }
+
+        return null;
+    }
+
 }

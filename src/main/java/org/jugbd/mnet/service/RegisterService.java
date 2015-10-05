@@ -39,4 +39,6 @@ public interface RegisterService {
     void update(OutdoorRegister register);
 
     Examination findExamination(Long registerId, RegistrationType registrationType);
+
+    ChiefComplaint findChiefcomplaints(Long registerId, RegistrationType registrationType);
 }
