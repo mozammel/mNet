@@ -37,6 +37,7 @@
                             class="text-primary">
                             Active since -
                             <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                            (<span id="register-date" th:attr="data-date=${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>)
                         </h4>
 
                         <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}"
@@ -83,7 +84,21 @@
 <div layout:fragment="custom-scripts">
     <script src="../../../resources/js/bootstrap-datepicker.js"
             th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
-    <script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var registerDate = $('#register-date');
+            if (registerDate !== 'undefined') {
+                var date = moment(Date.parse(registerDate.attr('data-date'))),
+                        update = function () {
+                            registerDate.html(date.fromNow());
+                        };
+                update();
+                setInterval(update, 60000);
+
+                console.log(Date.parse(registerDate.attr('data-date')));
+            }
+        });
 
     </script>
 </div>
