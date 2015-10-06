@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -248,6 +249,18 @@ public class RegisterServiceImpl implements RegisterService {
         return findRegisterEither(registerId, registrationType)
                 .fold(register -> getVital(register.getVitals()),
                         outdoorRegister -> getVital(outdoorRegister.getVitals()));
+    }
+
+    @Override
+    public List<Visit> getVisits(Long registerId, RegistrationType registrationType) {
+
+        return findRegisterEither(registerId, registrationType)
+                .fold(register -> (register.getVisits()),
+                        outdoorRegister -> (outdoorRegister.getVisits()))
+                .stream()
+                .filter(visit -> visit.getStatus() == Status.ACTIVE)
+                .sorted((o1, o2) -> o2.getCreatedDate().compareTo(o1.getCreatedDate()))
+                .collect(Collectors.toList());
     }
 
     private Vital getVital(Set<Vital> vitals) {

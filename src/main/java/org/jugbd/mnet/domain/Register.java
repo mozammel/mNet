@@ -71,7 +71,7 @@ public class Register extends PersistentObject {
     @OneToMany(mappedBy = "register")
     private Set<OperationalDetail> operationalDetails = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "register")
     private Set<Visit> visits;
 
     @Column(length = 6)

@@ -46,4 +46,6 @@ public interface RegisterService {
     ChiefComplaint findChiefcomplaints(Long registerId, RegistrationType registrationType);
 
     Vital getLastVital(Long registerId, RegistrationType registrationType);
+
+    List<Visit> getVisits(Long registerId, RegistrationType registrationType);
 }

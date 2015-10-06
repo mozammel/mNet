@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Visit Note :: <span th:text="${registrationType.label}"/> Registration</title>
+    <link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'/>
+    <!--<link href='../../../resources/css/sticky.css' th:href="@{/resources/css/sticky.css}" rel='stylesheet' type='text/css'/>-->
+
+    <style>
+        .sticky {
+            /* General */
+            margin: 0;
+            /* Padding: Top/Bottom Left/Right */
+            padding: 8px 24px;
+            /* Width: Adjust to your purpose */
+            width: 250px;
+            /* Uncomment the following line if you'd like to maintain a square  shape */
+            /*height: 300px;*/
+            /* Font: After importing font, put font's name in single quotes */
+            font-family: 'Nothing You Could Do', Arial;
+            font-size: 1.4em;
+            /* Border */
+            border: 1px #E8Ds47 solid;
+            /* Shadow */
+            -moz-box-shadow: 0px 0px 6px 1px #333333;
+            -webkit-box-shadow: 0px 0px 6px 1px #333333;
+            box-shadow: 0px 0px 6px 1px #333333;
+            /* Background */
+            background: #fefdca; /* Old browsers */
+            background: -moz-linear-gradient(top, #fefdca 0%, #f7f381 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefdca), color-stop(100%, #f7f381)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #fefdca 0%, #f7f381 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #fefdca 0%, #f7f381 100%); /* Opera11.10+ */
+            background: -ms-linear-gradient(top, #fefdca 0%, #f7f381 100%); /* IE10+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefdca', endColorstr='#f7f381', GradientType=0); /* IE6-9 */
+            background: linear-gradient(top, #fefdca 0%, #f7f381 100%); /* W3C; A catch-all for everything else */
+        }
+
+        .sticky p {
+            /* Text-Align: align the heading to the center */
+            text-align: center;
+        }
+
+        .sticky ul, li {
+            list-style: none;
+        }
+
+        /*.sticky ul li {*/
+            /*margin: 1em;*/
+            /*float: left;*/
+        /*}*/
+
+        .sticky ul li:nth-child(3n) a {
+            -o-transform: rotate(-3deg);
+            -webkit-transform: rotate(-3deg);
+            -moz-transform: rotate(-3deg);
+            position: relative;
+            top: -5px;
+            background: #ccf;
+        }
+    </style>
+</head>
+<body th:with="page='visit'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"/> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: opd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Visit Notes :: <span th:text="${registrationType.label}"/></div>
+
+                    <div class="panel-body">
+                        <div th:if="${#lists.size(visits) == 0}">
+                            <h3 class="text-primary">No visit note found</h3>
+                        </div>
+
+                        <div th:if="${#lists.size(visits) > 0}">
+                            <ul style="float: left">
+                                <li class="sticky" style="margin: 5px; float: left;" th:each="visit : ${visits}">
+                                    <p th:text="${visit.comment}"></p>
+
+                                    <br/>
+
+                                    <p><strong><span th:text="'By ' + ${visit.doctorsName}"></span></strong>
+                                    </p>
+                                    <a th:onclick="'javascript:deleteNote(\'' + ${visit.id} + '\');'"
+                                       class="btn pull-right" title="Remove"><i class="fa fa-trash-o"></i> </a>
+
+                                    <form style="visibility: hidden" th:id="'delete-note-' +${visit.id}"
+                                          method="post" action="#"
+                                          th:action="@{/visit/delete/__${visit.id}__?registrationType=} +${registrationType}">
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="panel-footer clearfix">
+
+                        <a class="btn btn-sm btn-info pull-right"
+                           th:href="@{/visit/new/__${register.id}__?registrationType=} +${registrationType}"><span
+                                class="glyphicon glyphicon-plus"></span> Add New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="text/javascript">
+        function deleteNote(formId) {
+            if (confirm("Are you sure? ")) {
+                $("#delete-note-" + formId).submit();
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>

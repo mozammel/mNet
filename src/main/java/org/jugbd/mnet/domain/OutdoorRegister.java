@@ -41,7 +41,7 @@ public class OutdoorRegister extends PersistentObject {
     @OneToMany(mappedBy = "outdoorRegister")
     private Set<Vital> vitals = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "outdoorRegister")
     private Set<Visit> visits = new HashSet<>();
 
     @Column(length = 6)
