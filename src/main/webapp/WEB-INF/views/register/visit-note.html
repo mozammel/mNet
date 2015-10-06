@@ -5,8 +5,10 @@
       layout:decorator="layout/main">
 <head>
     <title>Visit Note :: <span th:text="${registrationType.label}"/> Registration</title>
-    <link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'/>
+    <!--<link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'/>-->
     <!--<link href='../../../resources/css/sticky.css' th:href="@{/resources/css/sticky.css}" rel='stylesheet' type='text/css'/>-->
+    <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Handlee"/>
 
     <style>
         .sticky {
@@ -19,8 +21,8 @@
             /* Uncomment the following line if you'd like to maintain a square  shape */
             /*height: 300px;*/
             /* Font: After importing font, put font's name in single quotes */
-            font-family: 'Nothing You Could Do', Arial;
-            font-size: 1.4em;
+            font-family: 'Handlee', Helvetica, sans-serif;
+            font-size: 1.2em;
             /* Border */
             border: 1px #E8Ds47 solid;
             /* Shadow */
@@ -48,8 +50,8 @@
         }
 
         /*.sticky ul li {*/
-            /*margin: 1em;*/
-            /*float: left;*/
+        /*margin: 1em;*/
+        /*float: left;*/
         /*}*/
 
         .sticky ul li:nth-child(3n) a {
@@ -94,14 +96,20 @@
                         <div th:if="${#lists.size(visits) > 0}">
                             <ul style="float: left">
                                 <li class="sticky" style="margin: 5px; float: left;" th:each="visit : ${visits}">
-                                    <p th:text="${visit.comment}"></p>
+                                    <p style="font-family: 'FontAwesome', serif" th:text="${visit.comment}"></p>
 
                                     <br/>
 
-                                    <p><strong><span th:text="'By ' + ${visit.doctorsName}"></span></strong>
+                                    <p><strong><span th:text="'By ' + ${visit.doctorsName}"></span></strong><br/>
+                                        (
+                                        <small style="font-family: 'FontAwesome', serif"
+                                               th:text="${#dates.format(visit.getVisitTime(), 'dd/MMM/yyyy HH:mm a')}"></small>
+                                        )
                                     </p>
+
                                     <a th:onclick="'javascript:deleteNote(\'' + ${visit.id} + '\');'"
-                                       class="btn pull-right" title="Remove"><i class="fa fa-trash-o"></i> </a>
+                                       class="btn pull-right" style="float: right" title="Remove"><span
+                                            aria-hidden="true"><i class="fa fa-trash-o"></i></span> </a>
 
                                     <form style="visibility: hidden" th:id="'delete-note-' +${visit.id}"
                                           method="post" action="#"
