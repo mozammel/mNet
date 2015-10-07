@@ -37,7 +37,8 @@
                             class="text-primary">
                             Active since -
                             <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
-                            (<span id="register-date" th:attr="data-date=${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>)
+                            (<span id="register-date"
+                                   th:attr="data-date=${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>)
                         </h4>
 
                         <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}"
@@ -71,9 +72,20 @@
                         </table>
                     </div>
                     <div class="panel-footer clearfix">
-                        <a href="#" class="btn btn-sm btn-info pull-right"
-                           th:href="@{/register/edit/__${register.id}__?type=opd}"> <span
-                                class="glyphicon glyphicon-edit"></span> Edit </a>
+
+                        <a href="#" class="btn btn-sm btn-danger pull-left"
+                           th:href="@{/register/close/__${register.id}__?type=opd}"> <span
+                                class="glyphicon glyphicon-edit"></span> Close </a>
+
+                        <div class="btn-group pull-right">
+                            <a href="#" class="btn btn-sm btn-primary"
+                               th:href="@{/register/convert/__${register.id}__?type=opd}"> <span
+                                    class="glyphicon glyphicon-transfer"></span> Convert To Inpatient </a>
+
+                            <a href="#" class="btn btn-sm btn-info"
+                               th:href="@{/register/edit/__${register.id}__?type=opd}"> <span
+                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                        </div>
                     </div>
                 </div>
             </div>
