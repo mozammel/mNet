@@ -47,7 +47,6 @@ public class RegisterController {
 
     @RequestMapping(value = "patient/{patientId}", method = RequestMethod.GET)
     public String create(@PathVariable(value = "patientId") Long patientId, Model uiModel) {
-        log.debug("create() -> patientId ={}", patientId);
 
         Patient patient = patientService.findOne(patientId);
         Register register = new Register();
@@ -56,7 +55,6 @@ public class RegisterController {
 
         return "register/create";
     }
-
 
     @RequestMapping(value = "opd/{patientId}/new", method = RequestMethod.GET)
     public String createOutPatient(@PathVariable(value = "patientId") Long patientId, Model uiModel) {
@@ -302,6 +300,42 @@ public class RegisterController {
         registerService.saveRemarks(remarks, registerId, registrationType);
 
         return "redirect:/register/remarks/" + registerId + "?registrationType=" + registrationType;
+    }
+
+    // Convert OPD to IPD
+
+    @RequestMapping(value = "/convert-to-ipd/{registerId}", method = RequestMethod.GET)
+    public String convert(@PathVariable Long registerId,
+                          @RequestParam RegistrationType registrationType,
+                          Model uiModel) {
+
+        OutdoorRegister outdoorRegister = registerService.findOpdRegister(registerId);
+
+        Register register = new Register();
+        register.setRegistrationId(outdoorRegister.getRegistrationId());
+        register.setPatientContact(outdoorRegister.getPatientContact());
+        register.setPatient(outdoorRegister.getPatient());
+
+        uiModel.addAttribute("register", register);
+        uiModel.addAttribute("registerId", registerId);
+
+        return "register/convert";
+    }
+
+    @RequestMapping(value = "/convert-to-ipd/{registerId}", method = RequestMethod.POST)
+    public String completeConversion(@PathVariable Long registerId,
+                                     @Valid Register register,
+                                     BindingResult result,
+                                     Model uiModel) {
+        if (result.hasErrors()) {
+            uiModel.addAttribute("registerId", registerId);
+
+            return "register/convert";
+        }
+
+        Register savedRegister = registerService.convertOutdoorRegisterToIndoorRegister(registerId, register);
+
+        return "redirect:/patient/show/" + savedRegister.getPatient().getId();
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

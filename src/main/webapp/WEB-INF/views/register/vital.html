@@ -94,9 +94,12 @@
                         <a class="btn btn-sm btn-info pull-left"
                            th:href="@{/vital/index/__${register.id}__?registrationType=} +${registrationType}"><span
                                 class="glyphicon glyphicon-th-list"></span>View all</a>
-                        <a class="btn btn-sm btn-info pull-right"
-                           th:href="@{/vital/create/__${register.id}__?registrationType=} +${registrationType}"><span
-                                class="glyphicon glyphicon-plus"></span> Add New</a>
+
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <a class="btn btn-sm btn-info pull-right"
+                               th:href="@{/vital/create/__${register.id}__?registrationType=} +${registrationType}"><span
+                                    class="glyphicon glyphicon-plus"></span> Add New</a>
+                        </div>
                     </div>
                 </div>
             </div>

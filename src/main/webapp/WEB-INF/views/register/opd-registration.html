@@ -73,18 +73,20 @@
                     </div>
                     <div class="panel-footer clearfix">
 
-                        <a href="#" class="btn btn-sm btn-danger pull-left"
-                           th:href="@{/register/close/__${register.id}__?type=opd}"> <span
-                                class="glyphicon glyphicon-edit"></span> Close </a>
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <a href="#" class="btn btn-sm btn-danger pull-left"
+                               th:href="@{/register/close/__${register.id}__?type=opd}"> <span
+                                    class="glyphicon glyphicon-edit"></span> Close </a>
 
-                        <div class="btn-group pull-right">
-                            <a href="#" class="btn btn-sm btn-primary"
-                               th:href="@{/register/convert/__${register.id}__?type=opd}"> <span
-                                    class="glyphicon glyphicon-transfer"></span> Convert To Inpatient </a>
+                            <div class="btn-group pull-right">
+                                <a href="#" class="btn btn-sm btn-primary"
+                                   th:href="@{/register/convert-to-ipd/__${register.id}__?registrationType=OUTDOOR}"> <span
+                                        class="glyphicon glyphicon-transfer"></span> Convert To Inpatient </a>
 
-                            <a href="#" class="btn btn-sm btn-info"
-                               th:href="@{/register/edit/__${register.id}__?type=opd}"> <span
-                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                                <a href="#" class="btn btn-sm btn-info"
+                                   th:href="@{/register/edit/__${register.id}__?type=opd}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
                         </div>
                     </div>
                 </div>

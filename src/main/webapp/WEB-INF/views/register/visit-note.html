@@ -107,14 +107,16 @@
                                         )
                                     </p>
 
-                                    <a th:onclick="'javascript:deleteNote(\'' + ${visit.id} + '\');'"
-                                       class="btn pull-right" style="float: right" title="Remove"><span
-                                            aria-hidden="true"><i class="fa fa-trash-o"></i></span> </a>
+                                    <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                                        <a th:onclick="'javascript:deleteNote(\'' + ${visit.id} + '\');'"
+                                           class="btn pull-right" style="float: right" title="Remove"><span
+                                                aria-hidden="true"><i class="fa fa-trash-o"></i></span> </a>
 
-                                    <form style="visibility: hidden" th:id="'delete-note-' +${visit.id}"
-                                          method="post" action="#"
-                                          th:action="@{/visit/delete/__${visit.id}__?registrationType=} +${registrationType}">
-                                    </form>
+                                        <form style="visibility: hidden" th:id="'delete-note-' +${visit.id}"
+                                              method="post" action="#"
+                                              th:action="@{/visit/delete/__${visit.id}__?registrationType=} +${registrationType}">
+                                        </form>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -122,10 +124,11 @@
                     </div>
 
                     <div class="panel-footer clearfix">
-
-                        <a class="btn btn-sm btn-info pull-right"
-                           th:href="@{/visit/new/__${register.id}__?registrationType=} +${registrationType}"><span
-                                class="glyphicon glyphicon-plus"></span> Add New</a>
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <a class="btn btn-sm btn-info pull-right"
+                               th:href="@{/visit/new/__${register.id}__?registrationType=} +${registrationType}"><span
+                                    class="glyphicon glyphicon-plus"></span> Add New</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -63,25 +63,26 @@
                     </div>
 
                     <div class="panel-footer clearfix">
-
-                        <div th:if="${edit == true}">
-                            <a class="btn btn-sm btn-info pull-right"
-                               th:onclick="'javascript:saveOutcome();'">
-                                <span class="glyphicon glyphicon-plus"></span> Save</a>
-                        </div>
-
-                        <div th:unless="${edit}">
-
-                            <div th:if="${#strings.isEmpty(register.outcome)}">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${edit == true}">
                                 <a class="btn btn-sm btn-info pull-right"
-                                   th:href="@{/register/edit-outcome/__${register.id}__?registrationType=}+ ${registrationType}"><span
-                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                                   th:onclick="'javascript:saveOutcome();'">
+                                    <span class="glyphicon glyphicon-plus"></span> Save</a>
                             </div>
 
-                            <div th:unless="${#strings.isEmpty(register.outcome)}">
-                                <a href="#" class="btn btn-sm btn-info pull-right"
-                                   th:href="@{/register/edit-outcome/__${register.id}__?registrationType=} +${registrationType}"> <span
-                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            <div th:unless="${edit}">
+
+                                <div th:if="${#strings.isEmpty(register.outcome)}">
+                                    <a class="btn btn-sm btn-info pull-right"
+                                       th:href="@{/register/edit-outcome/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+
+                                <div th:unless="${#strings.isEmpty(register.outcome)}">
+                                    <a href="#" class="btn btn-sm btn-info pull-right"
+                                       th:href="@{/register/edit-outcome/__${register.id}__?registrationType=} +${registrationType}"> <span
+                                            class="glyphicon glyphicon-edit"></span> Edit </a>
+                                </div>
                             </div>
                         </div>
                     </div>

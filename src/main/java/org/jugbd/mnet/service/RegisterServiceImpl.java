@@ -281,6 +281,43 @@ public class RegisterServiceImpl implements RegisterService {
         }
     }
 
+    @Override
+    public Register convertOutdoorRegisterToIndoorRegister(Long registerId, Register register) {
+        OutdoorRegister outdoorRegister = outdoorRegisterRepository.findOne(registerId);
+
+        //TODO have to ask if there is any need to copy all these
+//        Diagnosis diagnosis = outdoorRegister.getDiagnosis();
+//        Utils.copyBeanProperties(diagnosis, register.getDiagnosis(),
+//                new String[]{"burns", "congenitalAnomaly", "neoplastic", "postInfective", "traumatic", "aesthetic",
+//                        "comment", "icd10"});
+//        TreatmentPlan treatmentPlan = outdoorRegister.getTreatmentPlan();
+//        Utils.copyBeanProperties(treatmentPlan, register.getTreatmentPlan(), new String[]{"treatmentPlanType", "otherTreatmentPlanType", "typeOfConservativeTreatment", "stsgOrFtsg", "flapPedicled", "freeFlap", "tissueExpansion", "fasciotomyOrEscharotomy", "implantInsertion", "comment"});
+//
+//        ChiefComplaint chiefComplaint = outdoorRegister.getChiefComplaint();
+//        Utils.copyBeanProperties(chiefComplaint, register.getChiefComplaint(), new String[]{""});
+//
+//        Set<Vital> vitals = outdoorRegister.getVitals().stream().map(vital -> {
+//            Vital newVital = new Vital();
+//            Utils.copyBeanProperties(newVital, newVital, new String[]{""});
+//
+//            return newVital;
+//        }).collect(Collectors.toSet());
+//
+//        register.setVitals(vitals);
+
+        register.setPatient(patientDao.findOne(register.getPatient().getId()));
+        register.setStartDatetime(new Date());
+        register.setStatus(Status.ACTIVE);
+        registerDao.save(register);
+
+        outdoorRegister.setStatus(Status.CLOSED);
+        outdoorRegister.setStopDatetime(new Date());
+
+        outdoorRegisterRepository.save(outdoorRegister);
+
+        return registerDao.save(register);
+    }
+
     private Vital getVital(Set<Vital> vitals) {
 
         return vitals.stream()

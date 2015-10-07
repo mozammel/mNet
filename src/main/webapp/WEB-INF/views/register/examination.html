@@ -138,17 +138,18 @@
                     </div>
 
                     <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.examination == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/examination/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
 
-                        <div th:if="${register.examination == null}">
-                            <a class="btn btn-sm btn-info pull-right"
-                               th:href="@{/examination/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
-                                    class="glyphicon glyphicon-plus"></span> Add New</a>
-                        </div>
-
-                        <div th:unless="${register.examination == null}">
-                            <a href="#" class="btn btn-sm btn-info pull-right"
-                               th:href="@{/examination/edit/__${register.examination.id}__?registrationType=} +${registrationType}"> <span
-                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                            <div th:unless="${register.examination == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/examination/edit/__${register.examination.id}__?registrationType=} +${registrationType}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
                         </div>
                     </div>
                 </div>

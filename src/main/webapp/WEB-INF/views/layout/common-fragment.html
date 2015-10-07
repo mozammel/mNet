@@ -113,9 +113,10 @@
                 <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
             </a>
 
-            <a class="list-group-item" th:href="@{#}">
-                <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
-            </a>
+            <!--TODO: add picture-->
+            <!--<a class="list-group-item" th:href="@{#}">-->
+            <!--<i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>-->
+            <!--</a>-->
 
             <a class="list-group-item" th:classappend="${page == 'vital' ? 'active' : ''}"
                th:href="@{/register/vitals/__${register.id}__?registrationType=OUTDOOR}">

@@ -94,17 +94,18 @@
                     </div>
 
                     <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.chiefComplaint == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/chiefcomplaints/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
 
-                        <div th:if="${register.chiefComplaint == null}">
-                            <a class="btn btn-sm btn-info pull-right"
-                               th:href="@{/chiefcomplaints/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
-                                    class="glyphicon glyphicon-plus"></span> Add New</a>
-                        </div>
-
-                        <div th:unless="${register.chiefComplaint == null}">
-                            <a href="#" class="btn btn-sm btn-info pull-right"
-                               th:href="@{/chiefcomplaints/edit/__${register.chiefComplaint.id}__?registrationType=} +${registrationType}"> <span
-                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                            <div th:unless="${register.chiefComplaint == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/chiefcomplaints/edit/__${register.chiefComplaint.id}__?registrationType=} +${registrationType}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
                         </div>
                     </div>
                 </div>

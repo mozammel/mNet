@@ -1,14 +1,12 @@
 package org.jugbd.mnet.utils;
 
-import org.jugbd.mnet.domain.Address;
-import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 /**
@@ -71,5 +69,16 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void copyBeanProperties(final Object source, final Object target, final String[] properties) {
+
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        final BeanWrapper trg = new BeanWrapperImpl(target);
+
+        for (final String propertyName : properties) {
+            trg.setPropertyValue(propertyName, src.getPropertyValue(propertyName));
+        }
+
     }
 }
