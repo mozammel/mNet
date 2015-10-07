@@ -43,7 +43,9 @@
                                               name="outcome"
                                               th:inline="text"
                                               data-bv-notempty="true">
-                                        [[${register.outcome}]]
+                                        <span th:unless="${#strings.isEmpty(register.outcome)}">
+                                                [[${register.outcome}]]
+                                        </span>
                                     </textarea>
 
                                     </div>
