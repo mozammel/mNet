@@ -72,10 +72,10 @@ public class OutdoorRegister extends PersistentObject {
     @Embedded
     private PatientContact patientContact;
 
-    @Lob
+    @Column(columnDefinition = "TEXT" )
     private String outcome;
 
-    @Lob
+    @Column(columnDefinition = "TEXT" )
     private String remarks;
 
     @Lob

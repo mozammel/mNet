@@ -263,6 +263,15 @@ public class RegisterServiceImpl implements RegisterService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void saveOutcome(String outcome, Long registerId, RegistrationType registrationType) {
+        if (registrationType == RegistrationType.OUTDOOR) {
+            OutdoorRegister outdoorRegister = outdoorRegisterRepository.findOne(registerId);
+            outdoorRegister.setOutcome(outcome);
+            outdoorRegisterRepository.save(outdoorRegister);
+        }
+    }
+
     private Vital getVital(Set<Vital> vitals) {
 
         return vitals.stream()

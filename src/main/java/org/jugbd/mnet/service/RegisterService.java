@@ -48,4 +48,6 @@ public interface RegisterService {
     Vital getLastVital(Long registerId, RegistrationType registrationType);
 
     List<Visit> getVisits(Long registerId, RegistrationType registrationType);
+
+    void saveOutcome(String outcome, Long registerId, RegistrationType registrationType);
 }

@@ -240,6 +240,37 @@ public class RegisterController {
         return "register/visit-note";
     }
 
+    @RequestMapping(value = "/outcome/{registerId}", method = RequestMethod.GET)
+    public String outcome(@PathVariable Long registerId,
+                          @RequestParam RegistrationType registrationType,
+                          Model uiModel) {
+        prepareData(registerId, registrationType, uiModel);
+
+        return "register/outcome";
+    }
+
+    @RequestMapping(value = "/edit-outcome/{registerId}", method = RequestMethod.GET)
+    public String editOutcome(@PathVariable Long registerId,
+                              @RequestParam RegistrationType registrationType,
+                              Model uiModel) {
+        prepareData(registerId, registrationType, uiModel);
+        uiModel.addAttribute("edit", true);
+        uiModel.addAttribute("registerId", registerId);
+
+        return "register/outcome";
+    }
+
+    @RequestMapping(value = "/edit-outcome/{registerId}", method = RequestMethod.POST)
+    public String saveOutcome(@PathVariable Long registerId,
+                              @RequestParam RegistrationType registrationType,
+                              String outcome,
+                              Model uiModel) {
+
+        registerService.saveOutcome(outcome, registerId, registrationType);
+
+        return "redirect:/register/outcome/" + registerId + "?registrationType=" + registrationType;
+    }
+
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
         uiModel.addAttribute("registrationType", registrationType);
