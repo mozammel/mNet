@@ -240,6 +240,7 @@ public class RegisterController {
         return "register/visit-note";
     }
 
+    //outcome
     @RequestMapping(value = "/outcome/{registerId}", method = RequestMethod.GET)
     public String outcome(@PathVariable Long registerId,
                           @RequestParam RegistrationType registrationType,
@@ -269,6 +270,38 @@ public class RegisterController {
         registerService.saveOutcome(outcome, registerId, registrationType);
 
         return "redirect:/register/outcome/" + registerId + "?registrationType=" + registrationType;
+    }
+
+    //Remarks
+    @RequestMapping(value = "/remarks/{registerId}", method = RequestMethod.GET)
+    public String remarks(@PathVariable Long registerId,
+                          @RequestParam RegistrationType registrationType,
+                          Model uiModel) {
+        prepareData(registerId, registrationType, uiModel);
+
+        return "register/remarks";
+    }
+
+    @RequestMapping(value = "/edit-remarks/{registerId}", method = RequestMethod.GET)
+    public String editRemarks(@PathVariable Long registerId,
+                              @RequestParam RegistrationType registrationType,
+                              Model uiModel) {
+        prepareData(registerId, registrationType, uiModel);
+        uiModel.addAttribute("edit", true);
+        uiModel.addAttribute("registerId", registerId);
+
+        return "register/remarks";
+    }
+
+    @RequestMapping(value = "/edit-remarks/{registerId}", method = RequestMethod.POST)
+    public String saveRemarks(@PathVariable Long registerId,
+                              @RequestParam RegistrationType registrationType,
+                              String remarks,
+                              Model uiModel) {
+
+        registerService.saveRemarks(remarks, registerId, registrationType);
+
+        return "redirect:/register/remarks/" + registerId + "?registrationType=" + registrationType;
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

@@ -131,7 +131,9 @@
                th:href="@{/register/outcome/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-info fa-fw"></i>Outcome<span class="fa arrow"></span>
             </a>
-            <a class="list-group-item" th:href="@{#}">
+
+            <a class="list-group-item" th:classappend="${page == 'remarks' ? 'active' : ''}"
+               th:href="@{/register/remarks/__${register.id}__?registrationType=OUTDOOR}">
                 <i class="fa fa-info fa-fw"></i>Remarks<span class="fa arrow"></span>
             </a>
         </div>

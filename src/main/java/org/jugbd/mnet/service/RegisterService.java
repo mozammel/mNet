@@ -50,4 +50,6 @@ public interface RegisterService {
     List<Visit> getVisits(Long registerId, RegistrationType registrationType);
 
     void saveOutcome(String outcome, Long registerId, RegistrationType registrationType);
+
+    void saveRemarks(String remark, Long registerId, RegistrationType registrationType);
 }
