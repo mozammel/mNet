@@ -1,5 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.MedicalHistory;
 import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
@@ -365,6 +366,13 @@ public class RegisterController {
         Register savedRegister = registerService.convertOutdoorRegisterToIndoorRegister(registerId, register);
 
         return "redirect:/patient/show/" + savedRegister.getPatient().getId();
+    }
+
+    @RequestMapping(value = "/medicalhistory/{registerId}", method = RequestMethod.GET)
+    public String pastMedicalHistory(@PathVariable Long registerId, Model uiModel) {
+        prepareData(registerId, RegistrationType.INDOOR, uiModel);
+
+        return "register/medical-history";
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

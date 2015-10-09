@@ -318,6 +318,12 @@ public class RegisterServiceImpl implements RegisterService {
         return registerDao.save(register);
     }
 
+    @Override
+    public MedicalHistory findMedicalHistory(Long registerId) {
+
+        return registerDao.findOne(registerId).getMedicalHistory();
+    }
+
     private Vital getVital(Set<Vital> vitals) {
 
         return vitals.stream()

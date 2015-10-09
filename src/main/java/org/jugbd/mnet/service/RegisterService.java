@@ -54,4 +54,6 @@ public interface RegisterService {
     void saveRemarks(String remark, Long registerId, RegistrationType registrationType);
 
     Register convertOutdoorRegisterToIndoorRegister(Long registerId, Register register);
+
+    MedicalHistory findMedicalHistory(Long registerId);
 }
