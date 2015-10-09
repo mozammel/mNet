@@ -1,8 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Diagnosis;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.DiagnosisService;
 import org.jugbd.mnet.service.RegisterService;
@@ -63,12 +61,7 @@ public class DiagnosisController {
         Diagnosis diagnosisFromDb = diagnosisService.save(diagnosis, registrationType);
         redirectAttrs.addFlashAttribute("message", "Diagnosis successfully created!");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/diagnosis/" + diagnosisFromDb.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + diagnosisFromDb.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, diagnosisFromDb);
     }
 
     @RequestMapping(value = "/edit/{diagnosisId}", method = RequestMethod.GET)
@@ -100,11 +93,16 @@ public class DiagnosisController {
         Diagnosis diagnosisFromDb = diagnosisService.save(diagnosis, registrationType);
         redirectAttributes.addFlashAttribute("message", "Diagnosis successfully updated!");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
+        return getRedirectUrl(registrationType, diagnosisFromDb);
+    }
 
-            return "redirect:/register/diagnosis/" + diagnosisFromDb.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
 
-        return "redirect:/patient/show/" + diagnosisFromDb.getRegister().getPatient().getId();
+    private String getRedirectUrl(RegistrationType registrationType, Diagnosis diagnosis) {
+        String redirectUrl = "redirect:/register/diagnosis/";
+        String appender = "?registrationType=" + registrationType;
+
+        return (registrationType == RegistrationType.OUTDOOR)
+                ? (String.format("%s%d%s", redirectUrl, diagnosis.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", redirectUrl, diagnosis.getRegister().getId(), appender));
     }
 }

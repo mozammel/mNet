@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Diagnosis :: OPD Register</title>
+    <title>Diagnosis</title>
     <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 
 </head>
@@ -14,7 +14,7 @@
     <div id="page-wrapper">
         <div class="row clearfix">
             <div class="col-lg-12">
-                <h2 class="page-header">Outdoor Patient Registration</h2>
+                <h2 class="page-header"><span th:text="${registrationType.label}"></span> Registration</h2>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
 
             <div class="col-lg-9 col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Diagnosis :: OPD</div>
+                    <div class="panel-heading">Diagnosis :: <span th:text="${registrationType.label}"></span></div>
                     <div class="panel-body">
 
                         <div th:if="${register.diagnosis == null}">
