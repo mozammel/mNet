@@ -1,8 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.Examination;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.ExaminationService;
 import org.jugbd.mnet.service.RegisterService;
@@ -61,12 +59,7 @@ public class ExaminationController {
         Examination examinationFromDb = examinationService.save(examination, registrationType);
         redirectAttributes.addFlashAttribute("message", "Diagnosis successfully created!");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/examination/" + examinationFromDb.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + examination.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, examinationFromDb);
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
@@ -95,17 +88,22 @@ public class ExaminationController {
         Examination examinationFromDb = examinationService.save(examination, registrationType);
         redirectAttributes.addFlashAttribute("message", "Examination successfully updated");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/examination/" + examinationFromDb.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + examinationFromDb.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, examinationFromDb);
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
         return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+    }
+
+
+    private String getRedirectUrl(RegistrationType registrationType, Examination examination) {
+        String redirectUrl = "redirect:/register/examination/";
+        String appender = "?registrationType=" + registrationType;
+
+        return (registrationType == RegistrationType.OUTDOOR)
+                ? (String.format("%s%d%s", redirectUrl, examination.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", redirectUrl, examination.getRegister().getId(), appender));
     }
 }
