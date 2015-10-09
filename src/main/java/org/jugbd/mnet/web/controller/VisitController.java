@@ -55,12 +55,7 @@ public class VisitController {
 
         visitService.save(visit, registerId, registrationType);
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/visits/" + registerId + "?registrationType=" + registrationType;
-        }
-
-        return "visit/create";
+        return "redirect:/register/visits/" + registerId + "?registrationType=" + registrationType;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
