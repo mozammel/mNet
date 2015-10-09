@@ -23,7 +23,12 @@
         <div class="row clearfix">
 
             <div class="col-lg-3 col-md-4">
-                <div layout:include="layout/common-fragment :: opd-register"></div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'INDOOR'}">
+                    <div layout:include="layout/common-fragment :: ipd-register"></div>
+                </div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'OUTDOOR'}">
+                    <div layout:include="layout/common-fragment :: opd-register"></div>
+                </div>
             </div>
 
             <div class="col-lg-9 col-md-8">

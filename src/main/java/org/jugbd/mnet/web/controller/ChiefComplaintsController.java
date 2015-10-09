@@ -59,12 +59,7 @@ public class ChiefComplaintsController {
         ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint, registrationType);
         redirectAttributes.addFlashAttribute("message", "Chief Complaint successfully created");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/chiefcomplaints/" + savedChiefComplaint.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + savedChiefComplaint.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, savedChiefComplaint);
     }
 
 
@@ -91,21 +86,24 @@ public class ChiefComplaintsController {
         }
 
         ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint, registrationType);
-
         redirectAttributes.addFlashAttribute("message", "Chief Complaints successfully updated");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/chiefcomplaints/" + savedChiefComplaint.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + savedChiefComplaint.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, savedChiefComplaint);
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
         return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+    }
+
+    private String getRedirectUrl(RegistrationType registrationType, ChiefComplaint chiefComplaint) {
+        String redirectUrl = "redirect:/register/chiefcomplaints/";
+        String appender = "?registrationType=" + registrationType;
+
+        return (registrationType == RegistrationType.OUTDOOR)
+                ? (String.format("%s%d%s", redirectUrl, chiefComplaint.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", redirectUrl, chiefComplaint.getRegister().getId(), appender));
     }
 
 }
