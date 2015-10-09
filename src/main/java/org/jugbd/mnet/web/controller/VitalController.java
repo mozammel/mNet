@@ -104,11 +104,11 @@ public class VitalController {
     }
 
     @RequestMapping(value = "back", method = RequestMethod.GET)
-    public String backToPatientShowPage(@RequestParam(required = true) Long registerId,
-                                        @RequestParam(required = true) RegistrationType registrationType) {
+    public String backToRegistrationPage(@RequestParam(required = true) Long registerId,
+                                         @RequestParam(required = true) RegistrationType registrationType) {
 
         return "redirect:" + registerService.findRegisterEither(registerId, registrationType)
-                .fold(register -> "/patient/show/" + register.getPatient().getId(),
+                .fold(register -> "/register/vitals/" + register.getPatient().getId() + "?registrationType=" + registrationType.name(),
                         outdoorRegister -> "/register/vitals/" + outdoorRegister.getId() + "?registrationType=" + registrationType.name());
     }
 }
