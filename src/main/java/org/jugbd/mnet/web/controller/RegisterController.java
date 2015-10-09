@@ -58,8 +58,6 @@ public class RegisterController {
 
     @RequestMapping(value = "opd/{patientId}/new", method = RequestMethod.GET)
     public String createOutPatient(@PathVariable(value = "patientId") Long patientId, Model uiModel) {
-        log.debug("create() -> patientId ={}", patientId);
-
         Patient patient = patientService.findOne(patientId);
 
         OutdoorRegister outdoorRegister = new OutdoorRegister();
@@ -84,11 +82,43 @@ public class RegisterController {
         return "redirect:/register/opd/" + outdoorRegister.getId();
     }
 
+    @RequestMapping(value = "ipd/{patientId}/new", method = RequestMethod.GET)
+    public String createInpatient(@PathVariable(value = "patientId") Long patientId, Model uiModel) {
+        Patient patient = patientService.findOne(patientId);
+        Register register = new Register();
+        register.setPatient(patient);
+        uiModel.addAttribute("register", register);
+
+        return "register/ipd";
+    }
+
+    @RequestMapping(value = "ipd/save", method = RequestMethod.POST)
+    public String saveInpatient(@Valid Register register,
+                                BindingResult result,
+                                RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+
+            return "register/ipd";
+        }
+
+        registerService.save(register);
+
+        return "redirect:/register/ipd/" + register.getId();
+    }
+
     @RequestMapping(value = "opd/{id}", method = RequestMethod.GET)
     public String openOpdRegistration(@PathVariable Long id, Model uiModel) {
         prepareData(id, RegistrationType.OUTDOOR, uiModel);
 
         return "register/opd-registration";
+    }
+
+    @RequestMapping(value = "ipd/{id}", method = RequestMethod.GET)
+    public String openIpdRegistration(@PathVariable Long id, Model uiModel) {
+        prepareData(id, RegistrationType.INDOOR, uiModel);
+
+        return "register/ipd-registration";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
@@ -108,7 +138,6 @@ public class RegisterController {
 
     @RequestMapping(value = "close/{registerId}", method = RequestMethod.POST)
     public String close(@PathVariable(value = "registerId") Long registerId) {
-        log.debug("close() -> registerId ={}", registerId);
 
         registerService.closeRegister(registerId);
 
@@ -137,7 +166,7 @@ public class RegisterController {
 
             uiModel.addAttribute("register", register);
 
-            return "register/edit";
+            return "register/ipd-edit";
         }
     }
 
@@ -156,11 +185,11 @@ public class RegisterController {
         return "redirect:/register/opd/" + outdoorRegister.getId();
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "ipd/update", method = RequestMethod.POST)
     public String updateRegistration(@Valid Register register) {
         Register savedRegister = registerService.save(register);
 
-        return "redirect:/patient/show/" + savedRegister.getPatient().getId();
+        return "redirect:/register/ipd/" + savedRegister.getId();
     }
 
     //Diagnosis

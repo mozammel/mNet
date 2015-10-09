@@ -12,13 +12,16 @@ public class RegistrationTypeEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) {
-        for (RegistrationType gender : RegistrationType.values()) {
-            if (gender.name().equalsIgnoreCase(text)) {
+        for (RegistrationType registrationType : RegistrationType.values()) {
+            if (registrationType.name().equalsIgnoreCase(text)) {
 
-                setValue(gender);
+                setValue(registrationType);
                 break;
             }
         }
+
+        if (text.equalsIgnoreCase("opd")) setValue(RegistrationType.OUTDOOR);
+        else if (text.equalsIgnoreCase("ipd")) setValue(RegistrationType.INDOOR);
     }
 
     @Override

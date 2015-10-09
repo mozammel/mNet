@@ -25,7 +25,12 @@
         <div class="row clearfix">
 
             <div class="col-lg-3 col-md-4">
-                <div layout:include="layout/common-fragment :: opd-register"></div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'INDOOR'}">
+                    <div layout:include="layout/common-fragment :: ipd-register"></div>
+                </div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'OUTDOOR'}">
+                    <div layout:include="layout/common-fragment :: opd-register"></div>
+                </div>
             </div>
 
             <div class="col-lg-9 col-md-8">
@@ -35,9 +40,6 @@
 
                         <div th:if="${register.diagnosis == null}">
                             <h3 class="text-primary">No Diagnosis found</h3>
-                            <a class="btn btn-sm btn-info pull-right"
-                               th:href="@{/diagnosis/create/__${register.id}__}"><span
-                                    class="glyphicon glyphicon-plus"></span> Add New</a>
                         </div>
 
                         <div th:if="${register.diagnosis != null}">

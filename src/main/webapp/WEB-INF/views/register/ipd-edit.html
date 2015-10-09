@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Indoor Patient Register</title>
     <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Edit Register</div>
-                <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/update}">
+                <form class="form-horizontal" method='POST' th:object="${register}" th:action="@{/register/ipd/update}">
                     <div class="panel-body">
                         <fieldset>
                             <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
