@@ -225,7 +225,7 @@
 
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/treatmentplan/cancel/__${diagnosis.register.id}__}"> <span
+                           th:href="@{/register/ipd/__${treatmentPlan.register.id}__}"> <span
                                 th:text="#{label.cancel}">Cancel</span>
                         </a>
 

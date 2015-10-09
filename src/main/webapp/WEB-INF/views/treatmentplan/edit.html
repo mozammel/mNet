@@ -227,8 +227,8 @@
                     <div class="panel-footer clearfix">
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/treatmentplan/cancel/__${diagnosis.register.id}__}"> <span
-                                th:text="#{label.cancel}">Cancel</span>
+                           th:href="@{/register/opd/__${treatmentPlan.register.id}__}"> <span
+                                    th:text="#{label.cancel}">Cancel</span>
                         </a>
 
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"

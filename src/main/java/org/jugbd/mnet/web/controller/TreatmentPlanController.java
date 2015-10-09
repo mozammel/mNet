@@ -1,11 +1,11 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.TreatmentPlan;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.RegisterService;
 import org.jugbd.mnet.service.TreatmentPlanService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -27,6 +27,7 @@ import javax.validation.Valid;
 @Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping(value = "treatmentplan")
 public class TreatmentPlanController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TreatmentPlanController.class);
 
     @Autowired
     private RegisterService registerService;
@@ -61,12 +62,7 @@ public class TreatmentPlanController {
         TreatmentPlan treatmentPlanSaved = treatmentPlanService.save(treatmentPlan, registrationType);
         redirectAttributes.addFlashAttribute("message", "Diagnosis successfully created!");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/treatmentplan/" + treatmentPlanSaved.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + treatmentPlanSaved.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, treatmentPlanSaved);
     }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
@@ -93,19 +89,23 @@ public class TreatmentPlanController {
         }
 
         TreatmentPlan treatmentPlanSaved = treatmentPlanService.save(treatmentPlan, registrationType);
-        redirectAttributes.addFlashAttribute("message", "Diagnosis successfully created!");
+        redirectAttributes.addFlashAttribute("message", "Treatment Plan successfully updated!");
 
-        if (registrationType == RegistrationType.OUTDOOR) {
-
-            return "redirect:/register/treatmentplan/" + treatmentPlanSaved.getOutdoorRegister().getId() + "?registrationType=" + registrationType;
-        }
-
-        return "redirect:/patient/show/" + treatmentPlanSaved.getRegister().getPatient().getId();
+        return getRedirectUrl(registrationType, treatmentPlanSaved);
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
         return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+    }
+
+    private String getRedirectUrl(RegistrationType registrationType, TreatmentPlan treatmentPlan) {
+        String redirectUrl = "redirect:/register/treatmentplan/";
+        String appender = "?registrationType=" + registrationType;
+
+        return (registrationType == RegistrationType.OUTDOOR)
+                ? (String.format("%s%d%s", redirectUrl, treatmentPlan.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", redirectUrl, treatmentPlan.getRegister().getId(), appender));
     }
 }
