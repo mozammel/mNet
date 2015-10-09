@@ -324,6 +324,15 @@ public class RegisterServiceImpl implements RegisterService {
         return registerDao.findOne(registerId).getMedicalHistory();
     }
 
+    @Override
+    public Set<OperationalDetail> findOperationalDetailList(Long registerId) {
+
+        Register register = registerDao.findOne(registerId);
+        register.getOperationalDetails().size();
+
+        return register.getOperationalDetails();
+    }
+
     private Vital getVital(Set<Vital> vitals) {
 
         return vitals.stream()

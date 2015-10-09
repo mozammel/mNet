@@ -1,6 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.MedicalHistory;
+import org.jugbd.mnet.domain.OperationalDetail;
 import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -373,6 +374,16 @@ public class RegisterController {
         prepareData(registerId, RegistrationType.INDOOR, uiModel);
 
         return "register/medical-history";
+    }
+
+    @RequestMapping(value = "/operationaldetail/{registerId}", method = RequestMethod.GET)
+    public String operationalDetails(@PathVariable Long registerId, Model uiModel) {
+        prepareData(registerId, RegistrationType.INDOOR, uiModel);
+        Set<OperationalDetail> detailList = registerService.findOperationalDetailList(registerId);
+
+        uiModel.addAttribute("operationaldetails", detailList);
+
+        return "register/operational-detail";
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

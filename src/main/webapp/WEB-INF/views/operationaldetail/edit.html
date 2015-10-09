@@ -4,8 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
-    <link href="../../../resources/css/bootstrap-datetimepicker.css" th:href="@{/resources/css/bootstrap-datetimepicker.css}" rel="stylesheet"/>
+    <title>Edit Operational Detail</title>
+    <link href="../../../resources/css/bootstrap-datetimepicker.css"
+          th:href="@{/resources/css/bootstrap-datetimepicker.css}" rel="stylesheet"/>
 </head>
 <body>
 
@@ -19,24 +20,23 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Operational Details</div>
-                <div class="panel-body">
-
-                    <form class="form-horizontal" method='POST' th:object="${operationalDetail}"
-                          th:action="@{/operationaldetail/edit}">
-
+                <form class="form-horizontal" method='POST' th:object="${operationalDetail}"
+                      th:action="@{/operationaldetail/edit}">
+                    <div class="panel-body">
                         <fieldset>
 
                             <input type="hidden" th:field="*{register.id}"/>
                             <input type="hidden" th:field="*{id}"/>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Date And Time </label>
 
                                 <div class="col-sm-3">
 
                                     <div class='input-group date' id='datetimepicker1'>
                                         <input type='text' class="form-control" th:field="*{dateTime}"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
 
@@ -46,11 +46,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Anaesthesia </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control"  th:field="*{anaesthesia}"></textarea>
+                                    <textarea type="text" class="form-control" th:field="*{anaesthesia}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('anaesthesia')}">
                                         <span th:errors="*{anaesthesia}">Required</span>
@@ -58,11 +58,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Name Of Operation </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control"  th:field="*{nameOfOperation}"></textarea>
+                                    <textarea type="text" class="form-control" th:field="*{nameOfOperation}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('nameOfOperation')}">
                                         <span th:errors="*{nameOfOperation}">Required</span>
@@ -74,7 +74,7 @@
                                 <label class="col-sm-2 control-label"> Indication </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control"  th:field="*{indication}"></textarea>
+                                    <textarea type="text" class="form-control" th:field="*{indication}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('indication')}">
                                         <span th:errors="*{indication}">Required</span>
@@ -82,11 +82,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Name Of Surgeon </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control"  th:field="*{nameOfSurgeon}"></textarea>
+                                    <textarea type="text" class="form-control" th:field="*{nameOfSurgeon}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('nameOfSurgeon')}">
                                         <span th:errors="*{nameOfSurgeon}">Required</span>
@@ -94,11 +94,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Name Of Anaesthetist</label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control" th:field="*{nameOfAnaesthetist}"></textarea>
+                                    <textarea type="text" class="form-control"
+                                              th:field="*{nameOfAnaesthetist}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('nameOfAnaesthetist')}">
                                         <span th:errors="*{nameOfAnaesthetist}">Required</span>
@@ -167,14 +168,15 @@
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Blood Transfusion</label>
 
                                 <div class="col-sm-3">
 
-                                    <div th:each="item : ${T(org.jugbd.mnet.domain.enums.RequiredNotRequired).values()}" class="radio">
-                                        <input type="radio" th:value="${item}" th:field="*{bloodTransfusion}" />
-                                        <label  th:text="${item.label}">Required</label>
+                                    <div th:each="item : ${T(org.jugbd.mnet.domain.enums.RequiredNotRequired).values()}"
+                                         class="radio">
+                                        <input type="radio" th:value="${item}" th:field="*{bloodTransfusion}"/>
+                                        <label th:text="${item.label}">Required</label>
                                     </div>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('bloodTransfusion')}">
@@ -183,13 +185,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label"> Drain</label>
 
                                 <div class="col-sm-3">
 
-                                    <div  th:each="item : ${T(org.jugbd.mnet.domain.enums.YesNo).values()}" class="radio">
-                                        <input type="radio" th:value="${item}" th:field="*{drain}" />
+                                    <div th:each="item : ${T(org.jugbd.mnet.domain.enums.YesNo).values()}"
+                                         class="radio">
+                                        <input type="radio" th:value="${item}" th:field="*{drain}"/>
                                         <label th:text="${item.label}">Required</label>
                                     </div>
 
@@ -204,7 +207,8 @@
                                 <label class="col-sm-2 control-label"> Comments </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control" rows="3" th:field="*{comment}"></textarea>
+                                    <textarea type="text" class="form-control" rows="3"
+                                              th:field="*{comment}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
                                         <span th:errors="*{comment}">Required</span>
@@ -214,15 +218,14 @@
 
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger" th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span> </a>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/operationaldetail/cancel/__${operationalDetail.register.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

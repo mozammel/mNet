@@ -6,6 +6,7 @@ import org.jugbd.mnet.utils.Either;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Bazlur Rahman Rokon
@@ -56,4 +57,6 @@ public interface RegisterService {
     Register convertOutdoorRegisterToIndoorRegister(Long registerId, Register register);
 
     MedicalHistory findMedicalHistory(Long registerId);
+
+    Set<OperationalDetail> findOperationalDetailList(Long registerId);
 }

@@ -177,8 +177,8 @@
                 <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
             </a>
 
-            <a class="list-group-item" th:classappend="${page == 'operational-details' ? 'active' : ''}"
-               th:href="@{/register/treatmentplan/__${register.id}__?registrationType=INDOOR}">
+            <a class="list-group-item" th:classappend="${page == 'operational-detail' ? 'active' : ''}"
+               th:href="@{/register/operationaldetail/__${register.id}__}">
                 <i class="fa fa-info fa-fw"></i>Operational Details<span class="fa arrow"></span>
             </a>
 
