@@ -107,11 +107,18 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public void closeRegister(Long registerId) {
-        Register register = registerDao.findOne(registerId);
-        register.setStatus(Status.CLOSED);
-        register.setStopDatetime(new Date());
-        registerDao.save(register);
+    public void closeRegister(Long registerId, RegistrationType registrationType) {
+        if (registrationType == RegistrationType.OUTDOOR) {
+            OutdoorRegister register = outdoorRegisterRepository.findOne(registerId);
+            register.setStatus(Status.CLOSED);
+            register.setStopDatetime(new Date());
+            outdoorRegisterRepository.save(register);
+        } else if (registrationType == RegistrationType.INDOOR) {
+            Register register = registerDao.findOne(registerId);
+            register.setStatus(Status.CLOSED);
+            register.setStopDatetime(new Date());
+            registerDao.save(register);
+        }
     }
 
     @Override
@@ -339,6 +346,12 @@ public class RegisterServiceImpl implements RegisterService {
         register.getInvestigation().size();
 
         return register.getInvestigation();
+    }
+
+    @Override
+    public List<OutdoorRegister> findAllOutdoorRegisterByPatientId(Long patientId) {
+
+        return registerDao.findAllOutdoorRegisterByPatient_Id(patientId);
     }
 
     private Vital getVital(Set<Vital> vitals) {

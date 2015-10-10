@@ -136,12 +136,18 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "close/{registerId}", method = RequestMethod.POST)
-    public String close(@PathVariable(value = "registerId") Long registerId) {
+    public String close(@PathVariable(value = "registerId") Long registerId,
+                        @RequestParam RegistrationType registrationType,
+                        RedirectAttributes redirectAttributes) {
 
-        registerService.closeRegister(registerId);
+        registerService.closeRegister(registerId, registrationType);
+        redirectAttributes.addFlashAttribute("message", "Registration has been closed!");
+        Patient patient = registerService.findRegisterEither(registerId, registrationType)
+                .fold(Register::getPatient, OutdoorRegister::getPatient);
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/patient/show/" + patient.getId();
     }
+
 
     @RequestMapping(value = "cancel/{patientId}", method = RequestMethod.GET)
     public String cancel(@PathVariable(value = "patientId") Long patientId) {
@@ -402,14 +408,14 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/lifestyle/{registerId}", method = RequestMethod.GET)
-    public String lifeStyle(@PathVariable Long registerId, Model uiModel){
+    public String lifeStyle(@PathVariable Long registerId, Model uiModel) {
         prepareData(registerId, RegistrationType.INDOOR, uiModel);
 
         return "register/life-style";
     }
 
     @RequestMapping(value = "/picture/{registerId}", method = RequestMethod.GET)
-    public String pictureInformation(@PathVariable Long registerId, Model uiModel){
+    public String pictureInformation(@PathVariable Long registerId, Model uiModel) {
         prepareData(registerId, RegistrationType.INDOOR, uiModel);
 
         return "register/picture";

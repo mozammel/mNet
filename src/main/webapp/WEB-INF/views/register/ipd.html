@@ -217,7 +217,10 @@
             });
         });
 
+        enableCommentBox(false, "wardOtherComment");
         enableCommentBox(false, "relationShipOtherComment");
+
+        addDropdownChangeEvent("ward", "wardOtherComment");
         addDropdownChangeEvent("patientContact\\.relationship", "relationShipOtherComment");
 
         function addDropdownChangeEvent(selectId, commentDiv) {
@@ -245,6 +248,7 @@
                 jQuery("#" + commentId).hide();
             }
         }
+
     </script>
 </div>
 </body>

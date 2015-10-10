@@ -74,9 +74,12 @@
                     <div class="panel-footer clearfix">
 
                         <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
-                            <a href="#" class="btn btn-sm btn-danger pull-left"
-                               th:href="@{/register/close/__${register.id}__?type=opd}"> <span
-                                    class="glyphicon glyphicon-edit"></span> Close </a>
+                            <button class="btn btn-sm btn-danger pull-left" onclick="closeRegister();"> <span
+                                    class="glyphicon glyphicon-remove"></span> Close </button>
+
+                            <form style="visibility: hidden" th:id="close-register" method="post"
+                                  th:action="@{/register/close/__${register.id}__?registrationType=OUTDOOR}">
+                            </form>
 
                             <div class="btn-group pull-right">
                                 <a href="#" class="btn btn-sm btn-primary"
@@ -113,6 +116,13 @@
                 console.log(Date.parse(registerDate.attr('data-date')));
             }
         });
+
+        function closeRegister() {
+            console.log("close register");
+            if (confirm("Are you sure? ")) {
+                $("#close-register").submit();
+            }
+        }
 
     </script>
 </div>

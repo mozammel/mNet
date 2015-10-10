@@ -1,5 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
+import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Patient;
 import org.jugbd.mnet.domain.Register;
 import org.jugbd.mnet.domain.Vital;
@@ -29,11 +30,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static org.jugbd.mnet.utils.StringUtils.isEmpty;
 
@@ -123,21 +122,27 @@ public class PatientController {
                        Model uiModel) {
 
         Patient patient = patientService.findOne(id);
+        List<Register> allRegisterByPatientId = registerService.findAllRegisterByPatientId(patient.getId());
+        List<OutdoorRegister> allOutdoorRegisterByPatientId = registerService.findAllOutdoorRegisterByPatientId(patient.getId());
+
+        boolean hasActiveRegister = allRegisterByPatientId.stream().anyMatch(register -> register.getStatus() == Status.ACTIVE);
+        boolean hasActiveOutdoorRegister = allOutdoorRegisterByPatientId.stream().anyMatch(outdoorRegister -> outdoorRegister.getStatus() == Status.ACTIVE);
+
+        if (hasActiveRegister) {
+            Optional<Register> first = allRegisterByPatientId.stream().filter(register -> register.getStatus() == Status.ACTIVE).findFirst();
+            first.ifPresent(register -> uiModel.addAttribute("activeIndoor", register));
+        }
+
+        if (hasActiveOutdoorRegister) {
+            Optional<OutdoorRegister> first = allOutdoorRegisterByPatientId.stream().filter(register -> register.getStatus() == Status.ACTIVE).findFirst();
+            first.ifPresent(register -> uiModel.addAttribute("activeOutdoor", register));
+        }
+
         uiModel.addAttribute("patient", patient);
-        uiModel.addAttribute("registers", registerService.findAllRegisterByPatientId(patient.getId()));
-
-        Register activeRegister;
-
-        if (registerId != null) {
-            activeRegister = registerService.findOne(registerId);
-        } else {
-            activeRegister = registerService.findActiveRegisterByPatientId(id);
-        }
-
-        if (activeRegister != null) {
-            uiModel.addAttribute("register", activeRegister);
-            uiModel.addAttribute("lastVital", getLastVital(activeRegister));
-        }
+        uiModel.addAttribute("registers", allRegisterByPatientId);
+        uiModel.addAttribute("outdoorRegisters", allOutdoorRegisterByPatientId);
+        uiModel.addAttribute("hasActiveIndoor", hasActiveRegister);
+        uiModel.addAttribute("hasActiveOutdoor", hasActiveOutdoorRegister);
 
         return "patient/show";
     }

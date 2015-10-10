@@ -22,7 +22,7 @@ public interface RegisterService {
 
     List<Register> findAllRegisterByPatientId(Long patientId);
 
-    void closeRegister(Long registerId);
+    void closeRegister(Long registerId, RegistrationType registrationType);
 
     void update(Register register);
 
@@ -61,4 +61,6 @@ public interface RegisterService {
     Set<OperationalDetail> findOperationalDetailList(Long registerId);
 
     Set<Investigation> findInvestigations(Long registerId);
+
+    List<OutdoorRegister> findAllOutdoorRegisterByPatientId(Long patientId);
 }

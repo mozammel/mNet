@@ -87,21 +87,23 @@
                                 <td>Unit</td>
                                 <td th:text="${register.unit} ? ${register.unit}"></td>
                             </tr>
-
-
                         </table>
                     </div>
                     <div class="panel-footer clearfix">
 
                         <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
-                            <a href="#" class="btn btn-sm btn-danger pull-left"
-                               th:href="@{/register/close/__${register.id}__?type=opd}"> <span
-                                    class="glyphicon glyphicon-edit"></span> Close </a>
+                            <a href="#" class="btn btn-sm btn-danger pull-left" onclick="closeRegister();"> <span
+                                    class="glyphicon glyphicon-remove"></span> Close </a>
 
                             <a href="#" class="btn btn-sm btn-info pull-right"
                                th:href="@{/register/edit/__${register.id}__?type=ipd}"> <span
                                     class="glyphicon glyphicon-edit"></span> Edit </a>
                         </div>
+
+                        <form style="visibility: hidden" th:id="close-register" method="post"
+                              th:action="@{/register/close/__${register.id}__?registrationType=INDOOR}">
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -127,6 +129,12 @@
                 console.log(Date.parse(registerDate.attr('data-date')));
             }
         });
+
+        function closeRegister() {
+            if (confirm("Are you sure? ")) {
+                $("#close-register").submit();
+            }
+        }
 
     </script>
 </div>

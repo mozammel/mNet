@@ -117,6 +117,10 @@ public class Patient extends PersistentObject implements Auditable {
     @OneToMany(mappedBy = "patient")
     private Set<Register> registers = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient")
+    private Set<OutdoorRegister> outdoorRegisters = new HashSet<>();
+
     public Patient() {
     }
 
@@ -222,6 +226,15 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setRegisters(Set<Register> registers) {
         this.registers = registers;
+    }
+
+    public Set<OutdoorRegister> getOutdoorRegisters() {
+        return outdoorRegisters;
+    }
+
+    public Patient setOutdoorRegisters(Set<OutdoorRegister> outdoorRegisters) {
+        this.outdoorRegisters = outdoorRegisters;
+        return this;
     }
 
     public Long getVersion() {
@@ -349,7 +362,6 @@ public class Patient extends PersistentObject implements Auditable {
         this.month = month;
         return this;
     }
-
 
     public Integer getDay() {
         return day;
