@@ -19,17 +19,16 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">Edit Investigation</div>
-                <div class="panel-body">
 
-
-                    <form class="form-horizontal" method='POST' th:object="${investigation}"
-                          th:action="@{/investigation/create}">
+                <form class="form-horizontal" method='POST' th:object="${investigation}"
+                      th:action="@{/investigation/create}">
+                    <div class="panel-body">
 
                         <input type="hidden" th:field="*{register.id}"/>
                         <input type="hidden" th:field="*{id}"/>
 
-                        <fieldset>
-                            <legend>Blood CBC</legend>
+                        <fieldset class="border">
+                            <legend class="border">Blood CBC</legend>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> Date </label>
@@ -119,8 +118,8 @@
 
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Blood C/S</legend>
+                        <fieldset class="border">
+                            <legend class="border">Blood C/S</legend>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> Date </label>
@@ -175,8 +174,8 @@
 
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Wound C/S</legend>
+                        <fieldset class="border">
+                            <legend class="border">Wound C/S</legend>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> Date </label>
@@ -231,8 +230,8 @@
 
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Electrolyte</legend>
+                        <fieldset class="border">
+                            <legend class="border">Electrolyte</legend>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> Date </label>
@@ -323,8 +322,8 @@
 
                         </fieldset>
 
-                        <fieldset>
-                            <legend>PT</legend>
+                        <fieldset class="border">
+                            <legend class="border">PT</legend>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> Date </label>
@@ -389,8 +388,8 @@
 
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Others</legend>
+                        <fieldset class="border">
+                            <legend class="border">Others</legend>
                             <div class="form-group">
                                 <label class="col-md-3 control-label required-field"> RBS</label>
 
@@ -406,7 +405,7 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text"  class="form-control date"
+                                            <input type="text" class="form-control date"
                                                    th:field="*{dateRbs}"/>
                                         </div>
 
@@ -432,7 +431,8 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateSerumCreatinine}"/>
+                                            <input type="text" class="form-control date"
+                                                   th:field="*{dateSerumCreatinine}"/>
                                         </div>
                                         <p class="text-danger" th:if="${#fields.hasErrors('dateSerumCreatinine')}">
                                             <span th:errors="*{dateSerumCreatinine}">Required</span>
@@ -457,7 +457,8 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateSerumAlbumin}"/>
+                                            <input type="text" class="form-control date"
+                                                   th:field="*{dateSerumAlbumin}"/>
                                         </div>
 
                                         <p class="text-danger" th:if="${#fields.hasErrors('serumCreatinine')}">
@@ -482,7 +483,8 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateSTotalProtein}"/>
+                                            <input type="text" class="form-control date"
+                                                   th:field="*{dateSTotalProtein}"/>
                                         </div>
                                         <p class="text-danger" th:if="${#fields.hasErrors('dateSTotalProtein')}">
                                             <span th:errors="*{dateSTotalProtein}">Required</span>
@@ -506,7 +508,8 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateAlbuminGlobulinRatio}"/>
+                                            <input type="text" class="form-control date"
+                                                   th:field="*{dateAlbuminGlobulinRatio}"/>
                                         </div>
                                         <p class="text-danger"
                                            th:if="${#fields.hasErrors('dateAlbuminGlobulinRatio')}">
@@ -656,7 +659,8 @@
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">Date</span>
-                                            <input type="text" class="form-control date" th:field="*{dateCReactiveProtein}"/>
+                                            <input type="text" class="form-control date"
+                                                   th:field="*{dateCReactiveProtein}"/>
                                         </div>
                                         <p class="text-danger" th:if="${#fields.hasErrors('dateCReactiveProtein')}">
                                             <span th:errors="*{dateCReactiveProtein}">Required</span>
@@ -791,16 +795,15 @@
 
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger"
-                                   th:href="@{/investigation/cancel/__${investigation.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span> </a>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/investigation/cancel/__${investigation.register.id}__}"> <span
+                                th:text="#{label.back}">Back</span> </a>
+                        <button type="submit" class="btn btn-primary pull-right">  Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

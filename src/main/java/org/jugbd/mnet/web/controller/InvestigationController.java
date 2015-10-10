@@ -105,8 +105,8 @@ public class InvestigationController {
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
-    public String cancel(@PathVariable Long registerId) {
+    public String back(@PathVariable Long registerId) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/register/investigation/" + registerService.findOne(registerId).getId();
     }
 }

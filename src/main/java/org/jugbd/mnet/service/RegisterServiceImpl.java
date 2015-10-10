@@ -333,6 +333,14 @@ public class RegisterServiceImpl implements RegisterService {
         return register.getOperationalDetails();
     }
 
+    @Override
+    public Set<Investigation> findInvestigations(Long registerId) {
+        Register register = registerDao.findOne(registerId);
+        register.getInvestigation().size();
+
+        return register.getInvestigation();
+    }
+
     private Vital getVital(Set<Vital> vitals) {
 
         return vitals.stream()

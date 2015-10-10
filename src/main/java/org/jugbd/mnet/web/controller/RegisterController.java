@@ -1,9 +1,6 @@
 package org.jugbd.mnet.web.controller;
 
-import org.jugbd.mnet.domain.OperationalDetail;
-import org.jugbd.mnet.domain.OutdoorRegister;
-import org.jugbd.mnet.domain.Patient;
-import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.*;
 import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.PatientService;
 import org.jugbd.mnet.service.RegisterService;
@@ -384,6 +381,16 @@ public class RegisterController {
         uiModel.addAttribute("operationaldetails", detailList);
 
         return "register/operational-detail";
+    }
+
+    @RequestMapping(value = "/investigation/{registerId}", method = RequestMethod.GET)
+    public String investigation(@PathVariable Long registerId, Model uiModel) {
+        prepareData(registerId, RegistrationType.INDOOR, uiModel);
+        Set<Investigation> investigations = registerService.findInvestigations(registerId);
+
+        uiModel.addAttribute("investigations", investigations);
+
+        return "register/investigation";
     }
 
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {

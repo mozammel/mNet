@@ -59,4 +59,6 @@ public interface RegisterService {
     MedicalHistory findMedicalHistory(Long registerId);
 
     Set<OperationalDetail> findOperationalDetailList(Long registerId);
+
+    Set<Investigation> findInvestigations(Long registerId);
 }
