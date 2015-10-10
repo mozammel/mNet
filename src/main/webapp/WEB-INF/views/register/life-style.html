@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Life Style :: <span th:text="${registrationType.label}"/> Registration</title>
+</head>
+<body th:with="page='lifestyle'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"/> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Life Style :: <span th:text="${registrationType.label}"/></div>
+
+                    <div class="panel-body">
+                        <div th:if="${register.lifeStyle == null}">
+                            <h3 class="text-primary">No Life style found</h3>
+                        </div>
+                        <div th:if="${register.lifeStyle != null}">
+
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>Economical Status</td>
+                                    <td th:text="${register.lifeStyle.economicalStatus}?${register.lifeStyle.economicalStatus}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Habit</td>
+                                    <td>
+                                        <span th:text="${register.lifeStyle.habit}?${register.lifeStyle.habit.label}"></span>
+                                                <span th:if="${#strings.toString(register.lifeStyle.habit) == 'OTHER' }"
+                                                      th:text="${register.lifeStyle.otherHabit}? ' - ' + ${register.lifeStyle.otherHabit}"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Comment</td>
+                                    <td th:text="${register.lifeStyle.comment}?${register.lifeStyle.comment}"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.lifeStyle == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/lifestyle/create/__${register.id}__}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.lifeStyle == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/lifestyle/edit/__${register.lifeStyle.id}__}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+</div>
+
+</body>
+</html>

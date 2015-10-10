@@ -401,6 +401,13 @@ public class RegisterController {
         return "register/complicationmanagement";
     }
 
+    @RequestMapping(value = "/lifestyle/{registerId}", method = RequestMethod.GET)
+    public String lifeStyle(@PathVariable Long registerId, Model uiModel){
+        prepareData(registerId, RegistrationType.INDOOR, uiModel);
+
+        return "register/life-style";
+    }
+
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
         uiModel.addAttribute("registrationType", registrationType);
