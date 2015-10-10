@@ -187,6 +187,11 @@
                 <i class="fa fa-info fa-fw"></i>Investigation<span class="fa arrow"></span>
             </a>
 
+            <a class="list-group-item" th:classappend="${page == 'complicationmanagement' ? 'active' : ''}"
+               th:href="@{/register/complicationmanagement/__${register.id}__}">
+                <i class="fa fa-info fa-fw"></i>Complication Management<span class="fa arrow"></span>
+            </a>
+
             <a class="list-group-item" th:classappend="${page == 'lifestype' ? 'active' : ''}"
                th:href="@{/register/treatmentplan/__${register.id}__?registrationType=INDOOR}">
                 <i class="fa fa-info fa-fw"></i>Life Style<span class="fa arrow"></span>

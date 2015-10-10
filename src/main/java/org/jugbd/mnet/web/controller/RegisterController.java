@@ -393,6 +393,14 @@ public class RegisterController {
         return "register/investigation";
     }
 
+    //complicationmanagement
+    @RequestMapping(value = "/complicationmanagement/{registerId}", method = RequestMethod.GET)
+    public String complicationmanagement(@PathVariable Long registerId, Model uiModel) {
+        prepareData(registerId, RegistrationType.INDOOR, uiModel);
+
+        return "register/complicationmanagement";
+    }
+
     private void prepareData(@PathVariable Long registerId, RegistrationType registrationType, Model uiModel) {
         uiModel.addAttribute("register", registerService.findRegister(registerId, registrationType));
         uiModel.addAttribute("registrationType", registrationType);
