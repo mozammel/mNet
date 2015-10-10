@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Picture Information :: Register</title>
+
+</head>
+<body th:with="page='picture'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"> </span> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Picture Information :: <span th:text="${registrationType.label}"> </span>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div th:if="${register.pictureInformation == null}">
+                            <h3 class="text-primary">No picture information found</h3>
+                        </div>
+                        <div th:if="${register.pictureInformation != null}">
+                            <h3 class="text-primary">Picture Information record has been added.</h3>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.pictureInformation == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/picture/__${register.id}__}">
+                                    <span class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.pictureInformation == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/picture/__${register.id}__}">
+                                    <span class="glyphicon glyphicon-edit"></span> Show Details / Add New</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+
+</div>
+
+</body>
+</html>

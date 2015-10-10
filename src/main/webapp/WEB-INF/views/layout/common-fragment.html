@@ -197,8 +197,8 @@
                 <i class="fa fa-info fa-fw"></i>Life Style<span class="fa arrow"></span>
             </a>
 
-            <!--TODO: add picture-->
-            <a class="list-group-item" th:href="@{#}">
+            <a class="list-group-item" th:classappend="${page == 'picture' ? 'active' : ''}"
+               th:href="@{/register/picture/__${register.id}__}">
                 <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
             </a>
 
