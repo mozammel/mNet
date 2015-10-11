@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Plan of Rx :: Register</title>
+</head>
+<body th:with="page='complicationmanagement'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"/> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Complication of Management :: <span th:text="${registrationType.label}"></span></div>
+
+                    <div class="panel-body">
+                        <div th:if="${register.complicationManagement == null}">
+                            <h3 class="text-primary">No Complication of Management found</h3>
+                        </div>
+                        <div th:if="${register.complicationManagement != null}">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>Post Operative Complication</td>
+                                    <td th:text="${register.complicationManagement.postOperativeComplication}?${register.complicationManagement.postOperativeComplication}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Management of Complication</td>
+                                    <td th:text="${register.complicationManagement.managementOfComplication}?${register.complicationManagement.managementOfComplication}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Outcome</td>
+                                    <td>
+                                        <span th:text="${register.complicationManagement.outcome}?${register.complicationManagement.outcome.label}"></span>
+                                                <span th:if="${#strings.toString(register.complicationManagement.outcome) == 'OTHER' }"
+                                                      th:text="${register.complicationManagement.comment}? ' - ' + ${register.complicationManagement.comment}"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Hospital Stays</td>
+                                    <td th:text="${register.complicationManagement.hospitalStays}?${register.complicationManagement.hospitalStays}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Case summery</td>
+                                    <td th:text="${register.complicationManagement.caseSummery}?${register.complicationManagement.caseSummery}"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.complicationManagement == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/complicationmanagement/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.complicationManagement == null}">
+
+                                <a href="#" class="btn btn-sm btn-danger pull-left"
+                                   onclick="deleteComplicationManagement()"> <span
+                                        class="glyphicon glyphicon-edit"></span> Delete </a>
+
+                                <form style="visibility: hidden"
+                                      id="delete-complication-management" method="post"
+                                      th:action="@{/complicationmanagement/delete/__${register.complicationManagement.id}__}">
+                                </form>
+
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/complicationmanagement/edit/__${register.complicationManagement.id}__?registrationType=} +${registrationType}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script>
+        function deleteComplicationManagement(formId) {
+            if (confirm("Are you sure? This can not be undone! ")) {
+                $("#delete-complication-management").submit();
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>

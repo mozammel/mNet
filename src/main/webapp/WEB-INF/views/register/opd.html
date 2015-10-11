@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Outdoor Patient Register</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Outdoor Patient Registration</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">New Register Entry</div>
+                <form class="form-horizontal" method='POST' th:object="${outdoorRegister}" th:action="@{/register/opd/save}">
+                    <div class="panel-body">
+
+                        <fieldset>
+                            <legend th:text="#{heading.patient.emergency.contact}">Register Info</legend>
+                            <input type="hidden" th:field="*{patient.id}"/>
+
+                            <div class="form-group">
+                                <label for="patient-contact-name" class="col-sm-2 control-label">
+                                    Contact Name
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="patient-contact-name"
+                                           th:field="*{patientContact.contactPerson}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('patientContact.contactPerson')}">
+                                        <span th:errors="*{patientContact.contactPerson}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency-contact-name" class="col-sm-2 control-label"
+                                       th:text="#{label.emergy.contact.no}">
+                                    Emergency Contact Number
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="emergency-contact-name"
+                                           th:field="*{patientContact.emergencyContactNumber}"/>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('patientContact.emergencyContactNumber')}">
+                                        <span th:errors="*{patientContact.emergencyContactNumber}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       th:text="#{label.relationship}">
+                                    Relationship
+                                </label>
+
+                                <div class="col-sm-3">
+                                    <select class="form-control"
+                                            th:field="*{patientContact.relationship}">
+                                        <option value="" th:text="#{common.select.prompt}"></option>
+                                        <option th:each="relationship : ${T(org.jugbd.mnet.domain.enums.Relationship).values()}"
+                                                th:value="${relationship}"
+                                                th:text="${relationship.label}"
+                                                th:selected="${relationship == outdoorRegister.patientContact.relationship}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('patientContact.relationship')}">
+                                        <span th:errors="*{patientContact.relationship}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div id="relationShipOtherComment">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" th:text="#{label.relationship.comment}">Comment </label>
+
+                                    <div class="col-sm-3">
+                                        <textarea type="text" class="form-control input-sm"
+                                               th:field="*{patientContact.comments}"></textarea>
+
+                                        <p class="text-danger" th:if="${#fields.hasErrors('patientContact.comments')}">
+                                            <span th:errors="*{patientContact.comments}">Required</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" th:text="#{label.registration.number}">
+                                    Registration Number </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{registrationId}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('registrationId')}">
+                                        <span th:errors="*{registrationId}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"> Registration Date </label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" th:field="*{startDatetime}"/>
+
+                                    <p class="text-danger" th:if="${#fields.hasErrors('startDatetime')}">
+                                        <span th:errors="*{startDatetime}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                    </div>
+                    <div class="panel-footer clearfix">
+
+                        <a href="#" class="btn btn-danger pull-left"
+                           th:href="@{/register/cancel/} + *{patient.id}"> <span
+                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes <span
+                                class="glyphicon glyphicon-ok-circle"></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#startDatetime').datepicker({
+                todayBtn: true,
+                keyboardNavigation: false,
+                calendarWeeks: true,
+                autoclose: true,
+                startView: 2,
+                todayHighlight: true
+            });
+        });
+
+        enableCommentBox(false, "relationShipOtherComment");
+        addDropdownChangeEvent("patientContact\\.relationship", "relationShipOtherComment");
+
+        function addDropdownChangeEvent(selectId, commentDiv) {
+            jQuery("#" + selectId).change(function () {
+                enableCommentBoxIfOther(selectId, commentDiv);
+            });
+        }
+
+        function enableCommentBoxIfOther(selectId, commentId) {
+
+            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+            if (others.toUpperCase() === 'OTHER') {
+                enableCommentBox(true, commentId)
+            } else {
+                enableCommentBox(false, commentId)
+            }
+        }
+
+        function enableCommentBox(enable, commentId) {
+
+            if (enable) {
+                jQuery("#" + commentId).show();
+            } else {
+                jQuery("#" + commentId).hide();
+            }
+        }
+
+    </script>
+</div>
+</body>
+</html>

@@ -44,7 +44,7 @@
                     <tbody>
                     <tr th:each="vital : ${vitals}">
                         <td>
-                            <a href="#" class="btn btn-sm btn-info" th:href="@{/vital/show/__${vital.id}__}">
+                            <a href="#" class="btn btn-sm btn-info" th:href="@{/vital/show/__${vital.id}__?registrationType=}+ ${registrationType}">
                                 <span class="glyphicon glyphicon-edit">Open</span>
                             </a>
                         </td>
@@ -65,9 +65,9 @@
                 </table>
             </div>
             <div class="panel-footer">
-                <a href="#" class="btn btn-primary btn-sm" th:href="@{/vital/back?registerId=__${registerId}__}"> <span
-                        class="glyphicon glyphicon-arrow-left"></span>
-                    <span th:text="#{label.back}">Back</span> </a>
+                <a href="#" class="btn btn-primary btn-sm"
+                   th:href="@{/vital/back?registerId=__${registerId}__} + '&amp;registrationType=' + ${registrationType}">
+                    <span class="glyphicon glyphicon-arrow-left"></span> <span th:text="#{label.back}">Back</span> </a>
             </div>
         </div>
     </div>

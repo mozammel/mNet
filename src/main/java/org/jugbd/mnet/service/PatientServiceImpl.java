@@ -20,8 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.jugbd.mnet.domain.QDiagnosis.diagnosis;
@@ -52,10 +55,25 @@ public class PatientServiceImpl implements PatientService {
         patient.setHealthId(PatientIdGenerator.generate(patient.getAddress()));
 
         if (patient.getDateOfBirth() == null) {
-            patient.setBirthdateFromAge(patient.getAge(), null);
+            setEstimatedDateOfBirth(patient);
         }
 
         return patientDao.save(patient);
+    }
+
+    private void setEstimatedDateOfBirth(Patient patient) {
+        int day = patient.getDay() != null ? patient.getDay() : 0;
+        int month = patient.getMonth() != null ? patient.getMonth() : 0;
+        int year = patient.getYear() != null ? patient.getYear() : 0;
+
+        LocalDate localDate = LocalDate
+                .now()
+                .minusDays(day)
+                .minusMonths(month)
+                .minusYears(year);
+        Date dateOfBirth = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        patient.setDateOfBirth(dateOfBirth);
+        patient.setBirthdateEstimated(true);
     }
 
     @Override
@@ -103,11 +121,22 @@ public class PatientServiceImpl implements PatientService {
         patientFromDb.setEducationLevel(patient.getEducationLevel());
         patientFromDb.setBirthdateEstimated(patient.getBirthdateEstimated());
 
+        if (patient.getDay() != null || patient.getMonth() != null || patient.getYear() != null) {
+            patientFromDb.setDay(patient.getDay());
+            patientFromDb.setMonth(patient.getMonth());
+            patientFromDb.setYear(patient.getYear());
+
+            setEstimatedDateOfBirth(patientFromDb);
+        }
+
         patientDao.save(patientFromDb);
     }
 
     public Page findPatientBySearchCmd(final PatientSearchCmd searchCmd, Pageable pageable) {
         BooleanBuilder predicate = new BooleanBuilder();
+
+        JPAQuery from = new JPAQuery(em)
+                .from(patient);
 
         if (StringUtils.isNotEmpty(searchCmd.getHealthId())) {
             predicate.or(patient.healthId.like(getLikePattern(searchCmd.getHealthId().trim())));
@@ -140,11 +169,16 @@ public class PatientServiceImpl implements PatientService {
             }
         }
 
-        JPAQuery from = new JPAQuery(em)
-                .from(patient)
-                .join(patient.registers, register)
-                .join(register.diagnosis, diagnosis)
-                .join(diagnosis.burns, diagnosisData);
+        if (StringUtils.isNotEmpty(searchCmd.getPhoneNumber())
+                || StringUtils.isNotEmpty(searchCmd.getRegisterId())
+                || StringUtils.isNotEmpty(searchCmd.getDiagnosis())) {
+            from = from.leftJoin(patient.registers, register);
+
+            if (StringUtils.isNotEmpty(searchCmd.getDiagnosis())) {
+                from = from.join(register.diagnosis, diagnosis)
+                        .join(diagnosis.burns, diagnosisData);
+            }
+        }
 
         long count = from.distinct().where(predicate).count();
         List<Patient> patients = applyPagination(from, pageable)

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Investigation :: Register</title>
+</head>
+<body th:with="page='investigation'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"> </span> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Investigation :: <span th:text="${registrationType.label}"> </span>
+                    </div>
+
+                    <div class="panel-body">
+                        <div th:if="${investigations.size() == 0}">
+                            <h3 class="text-primary">No investigations found</h3>
+                        </div>
+                        <div th:if="${investigations.size() > 0}">
+
+                            <table class="table table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Created On</th>
+                                    <th>Details</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="investigation, row : ${investigations}">
+
+                                    <td th:text="${'#' + row.index + 1}"></td>
+                                    <td th:text="${#dates.format(investigation.createdDate,'dd-MMM-yyyy')}"></td>
+
+                                    <td><a th:href="@{/investigation/show/__${investigation.id}__}">Open</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group" style="margin-top: 13px; margin-bottom: 10px">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <a class="btn btn-sm btn-info pull-right"
+                               th:href="@{/investigation/create/__${register.id}__}"><span
+                                    class="glyphicon glyphicon-plus"></span> Add New</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+
+</div>
+
+</body>
+</html>

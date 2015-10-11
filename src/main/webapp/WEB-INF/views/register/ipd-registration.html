@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Indoor Patient Register</title>
+    <link href="../../../resources/css/datepicker3.css" th:href="@{/resources/css/datepicker3.css}" rel="stylesheet"/>
+
+</head>
+<body th:with="page='registration'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header">Indoor Patient Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Outdoor Patient Registration</div>
+                    <div class="panel-body">
+
+                        <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}"
+                            class="text-primary">
+                            Active since -
+                            <span th:text="${register.startDatetime} ? ${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                            (<span id="register-date"
+                                   th:attr="data-date=${#dates.format(register.startDatetime,'dd MMMM yyyy h:mm a')}"></span>)
+                        </h4>
+
+                        <h4 th:if="${#strings.toString(register.status).toUpperCase() == 'CLOSED'}"
+                            class="text-danger">
+                            Closed on -
+                            <span th:text="${register.stopDatetime} ? ${#dates.format(register.stopDatetime,'dd MMMM yyyy h:mm a')}"></span>
+                        </h4>
+
+                        <table class="table table-condensed">
+
+                            <tr>
+                                <td>Registration No. :</td>
+                                <td><span th:if="${register}">Registration No : </span><span
+                                        th:if="${register}"> <strong
+                                        class="badge" th:text="${register.registrationId}"></strong> </span></td>
+                            </tr>
+                            <tr>
+                                <td>Contact Person</td>
+                                <td th:text="${register.patientContact.contactPerson} ? ${register.patientContact.contactPerson}"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Relationship</td>
+                                <td th:text="${register.patientContact.relationship} ? ${register.patientContact.relationship.label}"></td>
+                                <td th:text="${register.patientContact.comments} ? ${register.patientContact.comments}"></td>
+                            </tr>
+                            <tr>
+                                <td>Contact Number</td>
+                                <td th:text="${register.patientContact.emergencyContactNumber} ? ${register.patientContact.emergencyContactNumber}"></td>
+                            </tr>
+
+                            <tr>
+                                <td>Admission Date</td>
+                                <td th:text="${register.admissionDate} ? ${#dates.format(register.admissionDate,'dd MMMM yyyy')}"></td>
+                            </tr>
+                            <tr>
+                                <td>Ward</td>
+                                <td th:text="${register.ward} ? ${register.ward.label}"></td>
+                                <td th:if="${register.wardOther}" th:text="${register.wardOther}"></td>
+                            </tr>
+                            <tr>
+                                <td>Bed Number</td>
+                                <td th:text="${register.bedNumber} ? ${register.bedNumber}"></td>
+                            </tr>
+                            <tr>
+                                <td>Unit</td>
+                                <td th:text="${register.unit} ? ${register.unit}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="panel-footer clearfix">
+
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <a href="#" class="btn btn-sm btn-danger pull-left" onclick="closeRegister();"> <span
+                                    class="glyphicon glyphicon-remove"></span> Close </a>
+
+                            <a href="#" class="btn btn-sm btn-info pull-right"
+                               th:href="@{/register/edit/__${register.id}__?type=ipd}"> <span
+                                    class="glyphicon glyphicon-edit"></span> Edit </a>
+                        </div>
+
+                        <form style="visibility: hidden" th:id="close-register" method="post"
+                              th:action="@{/register/close/__${register.id}__?registrationType=INDOOR}">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="../../../resources/js/bootstrap-datepicker.js"
+            th:src="@{/resources/js/bootstrap-datepicker.js}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var registerDate = $('#register-date');
+            if (registerDate !== 'undefined') {
+                var date = moment(Date.parse(registerDate.attr('data-date'))),
+                        update = function () {
+                            registerDate.html(date.fromNow());
+                        };
+                update();
+                setInterval(update, 60000);
+
+                console.log(Date.parse(registerDate.attr('data-date')));
+            }
+        });
+
+        function closeRegister() {
+            if (confirm("Are you sure? ")) {
+                $("#close-register").submit();
+            }
+        }
+
+    </script>
+</div>
+</body>
+</html>

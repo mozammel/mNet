@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Examination :: Register</title>
+
+</head>
+<body th:with="page='examination'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"> </span> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'INDOOR'}">
+                    <div layout:include="layout/common-fragment :: ipd-register"></div>
+                </div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'OUTDOOR'}">
+                    <div layout:include="layout/common-fragment :: opd-register"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Examination :: <span th:text="${registrationType.label}"> </span></div>
+
+                    <div class="panel-body">
+                        <div th:if="${register.examination == null}">
+                            <h3 class="text-primary">No Examination found</h3>
+                        </div>
+
+                        <div th:unless="${register.examination == null}">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><strong>Anaemia</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.anaemia}"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Jaundice</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.jaundice}"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Accessible Lymph Node</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.accessibleLymphNode}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Dehydration</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.dehydration}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oelema</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.oelema}"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Neck Vein</strong></td>
+                                    <td><input type="checkbox" class="form-control checkbox large input-sm"
+                                               disabled="disabled"
+                                               th:checked="${register.examination.neckVein}"/></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Generel Examination Comments</strong></td>
+                                    <td th:text="${register.examination.gExaminationComments} ? ${register.examination.gExaminationComments}"></td>
+                                </tr>
+                                <hr/>
+                                <tr>
+                                    <td><strong>Local Examination</strong></td>
+                                    <td th:text="${register.examination.listeningExamination} ? ${register.examination.listeningExamination}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Respiratory System</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.respiratorySystem)}"
+                                        th:text="${register.examination.respiratorySystem}"></td>
+                                    <td th:if="${#strings.isEmpty(register.examination.respiratorySystem)}"
+                                        th:text="'No Abnormality Detected'"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>GI System</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.gISystem)}"
+                                        th:text="${register.examination.gISystem}"></td>
+                                    <td th:if="${#strings.isEmpty(register.examination.gISystem)}"
+                                        th:text="'No Abnormality Detected'"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Cardiovascular System</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.cardiovascularSystem)}"
+                                        th:text="${register.examination.cardiovascularSystem}"></td>
+                                    <td th:if="${#strings.isEmpty(register.examination.cardiovascularSystem)}"
+                                        th:text="'No Abnormality Detected'"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Urogenital System</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.urogenitalSystem)}"
+                                        th:text="${register.examination.urogenitalSystem}"></td>
+                                    <td th:if="${#strings.isEmpty(register.examination.urogenitalSystem)}"
+                                        th:text="'No Abnormality Detected'"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Nervous System</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.nervousSystem)}"
+                                        th:text="${register.examination.nervousSystem}"></td>
+                                    <td th:if="${#strings.isEmpty(register.examination.nervousSystem)}"
+                                        th:text="'No Abnormality Detected'"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Comments</strong></td>
+                                    <td th:if="${!#strings.isEmpty(register.examination.comments)}"
+                                        th:text="${register.examination.comments}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.examination == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/examination/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.examination == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/examination/edit/__${register.examination.id}__?registrationType=} +${registrationType}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+
+</div>
+
+</body>
+</html>

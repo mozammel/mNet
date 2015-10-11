@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Plan of Rx :: Register</title>
+</head>
+<body th:with="page='treatmentplan'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"/> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-4">
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'INDOOR'}">
+                    <div layout:include="layout/common-fragment :: ipd-register"></div>
+                </div>
+                <div th:if="${#strings.toString(registrationType).toUpperCase() == 'OUTDOOR'}">
+                    <div layout:include="layout/common-fragment :: opd-register"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Plan Of Rx :: <span th:text="${registrationType.label}"></span></div>
+                    <div class="panel-body">
+                        <div th:if="${register.treatmentPlan == null}">
+                            <h3 class="text-primary">No Plan Of Rx found</h3>
+                        </div>
+                        <div th:if="${register.treatmentPlan != null}">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td>Treatment Plan</td>
+                                    <td th:text="${register.treatmentPlan.treatmentPlanType} ? ${register.treatmentPlan.treatmentPlanType.label}"></td>
+                                </tr>
+
+                                <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'CONSERVATIVE'}">
+                                    <tr>
+                                        <td>Type of Conservative Treatment</td>
+                                        <td th:text="${register.treatmentPlan.typeOfConservativeTreatment}"></td>
+                                    </tr>
+                                </div>
+
+                                <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'OTHER'}">
+                                    <tr>
+                                        <td>Other Treatment Plan</td>
+                                        <td th:text="${register.treatmentPlan.otherTreatmentPlanType}"></td>
+                                    </tr>
+                                </div>
+
+                                <div th:if="${#strings.toString(register.treatmentPlan.treatmentPlanType) == 'OPERATIVE'}">
+                                    <tr>
+                                        <td>STSG/FTSG</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.stsgOrFtsg}"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Flap-Pedicled</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.flapPedicled}"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Free-Flapd</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.freeFlap}"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Tissue Expansion</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.tissueExpansion}"/></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Fasciotomy/Escharotomy</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.fasciotomyOrEscharotomy}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Implant Insertion</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.implantInsertion}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Repair/ Reconstruction of Part</td>
+                                        <td><input type="checkbox" class="form-control checkbox input-sm"
+                                                   disabled="disabled"
+                                                   th:checked="${register.treatmentPlan.repairReconstructionPart}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Comments</td>
+                                        <td th:text="${register.treatmentPlan.comment}"></td>
+                                    </tr>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.treatmentPlan == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/treatmentplan/create/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.treatmentPlan == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/treatmentplan/edit/__${register.treatmentPlan.id}__?registrationType=} +${registrationType}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

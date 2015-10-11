@@ -45,6 +45,10 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
     @OneToOne(mappedBy = "chiefComplaint")
     private Register register;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "chiefComplaint")
+    private OutdoorRegister outdoorRegister;
+
     @Size(max = 1000)
     private String comments;
 
@@ -165,8 +169,18 @@ public class ChiefComplaint extends PersistentObject implements Auditable {
         return register;
     }
 
-    public void setRegister(Register register) {
+    public ChiefComplaint setRegister(Register register) {
         this.register = register;
+        return this;
+    }
+
+    public OutdoorRegister getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public ChiefComplaint setOutdoorRegister(OutdoorRegister outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
     }
 
     public String getComments() {

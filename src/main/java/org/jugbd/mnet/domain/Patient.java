@@ -52,6 +52,24 @@ public class Patient extends PersistentObject implements Auditable {
     @Digits(integer = 3, fraction = 0)
     private Integer age;
 
+    @Max(31)
+    @Min(0)
+    @Transient
+    @Digits(integer = 2, fraction = 0)
+    private Integer day;
+
+    @Max(11)
+    @Min(0)
+    @Transient
+    @Digits(integer = 2, fraction = 0)
+    private Integer month;
+
+    @Max(150)
+    @Min(0)
+    @Transient
+    @Digits(integer = 3, fraction = 0)
+    private Integer year;
+
     @NotNull
     @Column(length = 6)
     @Enumerated(EnumType.STRING)
@@ -98,6 +116,10 @@ public class Patient extends PersistentObject implements Auditable {
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private Set<Register> registers = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient")
+    private Set<OutdoorRegister> outdoorRegisters = new HashSet<>();
 
     public Patient() {
     }
@@ -204,6 +226,15 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setRegisters(Set<Register> registers) {
         this.registers = registers;
+    }
+
+    public Set<OutdoorRegister> getOutdoorRegisters() {
+        return outdoorRegisters;
+    }
+
+    public Patient setOutdoorRegisters(Set<OutdoorRegister> outdoorRegisters) {
+        this.outdoorRegisters = outdoorRegisters;
+        return this;
     }
 
     public Long getVersion() {
@@ -321,6 +352,33 @@ public class Patient extends PersistentObject implements Auditable {
 
     public void setNid(String nid) {
         this.nid = nid;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public Patient setMonth(Integer month) {
+        this.month = month;
+        return this;
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public Patient setDay(Integer day) {
+        this.day = day;
+        return this;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public Patient setYear(Integer year) {
+        this.year = year;
+        return this;
     }
 
     @Override

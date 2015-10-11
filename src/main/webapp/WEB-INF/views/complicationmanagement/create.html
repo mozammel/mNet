@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>New Complication of Management</title>
 </head>
 <body>
 
@@ -18,13 +18,15 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">New Complication of Management</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method='POST' th:object="${complicationManagement}"
-                          th:action="@{/complicationmanagement/create}">
+
+                <form class="form-horizontal" method='POST' th:object="${complicationManagement}"
+                      th:action="@{/complicationmanagement/create}">
+                    <div class="panel-body">
+
                         <fieldset>
                             <input type="hidden" th:field="*{register.id}"/>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label required-field"
                                        th:text="#{label.complication.management.postOperativeComplication}">
                                     Outcome
@@ -54,7 +56,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label required-field"
                                        th:text="#{label.complication.management.outcome}">
                                     Outcome
@@ -84,7 +86,7 @@
                                     </label>
 
                                     <div class="col-sm-3">
-                                        <textarea type="number" class="form-control" th:field="*{comment}"></textarea>
+                                        <textarea type="text" class="form-control" th:field="*{comment}"></textarea>
 
                                         <p class="text-danger" th:if="${#fields.hasErrors('comment')}">
                                             <span th:errors="*{comment}">Required</span>
@@ -93,14 +95,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label class="col-sm-2 control-label required-field"
                                        th:text="#{label.complication.management.hospitalStays}">
                                     Outcome
                                 </label>
 
                                 <div class="col-sm-3">
-                                    <input type="number" class="form-control" th:field="*{hospitalStays}"/>
+                                    <input type="number" min="0" class="form-control" th:field="*{hospitalStays}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('hospitalStays')}">
                                         <span th:errors="*{hospitalStays}">Required</span>
@@ -126,15 +128,14 @@
 
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger" th:href="@{/complicationmanagement/cancel/__${complicationManagement.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span> </a>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <a href="#" class="btn btn-danger"
+                           th:href="@{/complicationmanagement/cancel/__${complicationManagement.register.id}__}"> <span
+                                th:text="#{label.cancel}">Cancel</span> </a>
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -149,38 +150,39 @@
 
         function initialize() {
             var selectedItem = jQuery("select[id='outcome'] option:selected").val();
-            if (!(selectedItem !== condition)) {{
-                enableOperativeBox(false, "commentDiv");
+            if (!(selectedItem !== condition)) {
+                {
+                    enableOperativeBox(false, "commentDiv");
+                }
+
+                addDropdownChangeEvent("outcome", "commentDiv");
             }
 
-            addDropdownChangeEvent("outcome", "commentDiv");
-        }
-
-        function addDropdownChangeEvent(selectId, commentDiv) {
-            jQuery("#" + selectId).change(function () {
-                enableCommentBoxIfOutcomeOther(selectId, commentDiv);
-            });
-        }
-
-        function enableCommentBoxIfOutcomeOther(selectId, commentId) {
-
-            var others = jQuery("select[id='" + selectId + "'] option:selected").val();
-
-            if (others.toUpperCase() === condition) {
-                enableOperativeBox(true, commentId)
-            } else {
-                enableOperativeBox(false, commentId)
+            function addDropdownChangeEvent(selectId, commentDiv) {
+                jQuery("#" + selectId).change(function () {
+                    enableCommentBoxIfOutcomeOther(selectId, commentDiv);
+                });
             }
-        }
 
-        function enableOperativeBox(enable, commentId) {
+            function enableCommentBoxIfOutcomeOther(selectId, commentId) {
 
-            if (enable) {
-                jQuery("#" + commentId).show();
-            } else {
-                jQuery("#" + commentId).hide();
+                var others = jQuery("select[id='" + selectId + "'] option:selected").val();
+
+                if (others.toUpperCase() === condition) {
+                    enableOperativeBox(true, commentId)
+                } else {
+                    enableOperativeBox(false, commentId)
+                }
             }
-        }
+
+            function enableOperativeBox(enable, commentId) {
+
+                if (enable) {
+                    jQuery("#" + commentId).show();
+                } else {
+                    jQuery("#" + commentId).hide();
+                }
+            }
     </script>
 </div>
 

@@ -1,5 +1,6 @@
 package org.jugbd.mnet.dao;
 
+import org.jugbd.mnet.domain.OutdoorRegister;
 import org.jugbd.mnet.domain.Register;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,7 @@ public interface RegisterDao extends JpaRepository<Register, Long> {
 
     @Query("select o from Register o where o.patient.id=:patientId")
     List<Register> findAllRegisterByPatientId(@Param("patientId") Long patientId);
+
+    @Query("select o from OutdoorRegister o where o.patient.id=:patientId")
+    List<OutdoorRegister> findAllOutdoorRegisterByPatient_Id(@Param("patientId") Long patientId);
 }

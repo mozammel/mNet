@@ -29,10 +29,10 @@ public class Register extends PersistentObject {
     private Long version;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Register id can not be empty")
     private String registrationId;
 
-    @NotNull
+    @NotNull(message = "Admission date can not be empty")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date admissionDate;
@@ -71,7 +71,7 @@ public class Register extends PersistentObject {
     @OneToMany(mappedBy = "register")
     private Set<OperationalDetail> operationalDetails = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "register")
     private Set<Visit> visits;
 
     @Column(length = 6)

@@ -1,6 +1,7 @@
 package org.jugbd.mnet.service;
 
 import org.jugbd.mnet.domain.Vital;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -21,4 +22,10 @@ public interface VitalService {
     List<Vital> findByRegisterId(Long registerId);
 
     Long delete(Long id);
+
+    Vital saveByRegisterId(Vital vital, Long registerId, RegistrationType registrationType);
+
+    List<Vital> findByRegisterId(Long registerId, RegistrationType registrationType);
+
+    Long delete(Long id, RegistrationType registrationType);
 }

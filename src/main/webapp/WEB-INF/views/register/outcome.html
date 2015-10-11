@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Outcome :: <span th:text="${registrationType.label}"/> Registration</title>
+</head>
+<body th:with="page='outcome'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"/> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: opd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Outcome :: <span th:text="${registrationType.label}"/></div>
+
+                    <div class="panel-body">
+                        <div th:if="${edit == true}">
+                            <form id="outcome-from" class="form-horizontal" method='POST'
+                                  th:action="@{/register/edit-outcome/__${registerId}__?registrationType=}+${registrationType}">
+                                <div class="form-group required">
+                                    <div style="margin: 15px">
+                                    <textarea type="text" class="form-control"
+                                              style="text-align: justify; white-space: normal;"
+                                              required="required"
+                                              id="outcome"
+                                              name="outcome"
+                                              th:inline="text"
+                                              data-bv-notempty="true">
+                                        <span th:unless="${#strings.isEmpty(register.outcome)}">
+                                                [[${register.outcome}]]
+                                        </span>
+                                    </textarea>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div th:unless="${edit}">
+                            <div th:if="${#strings.isEmpty(register.outcome)}">
+                                <h3 class="text-primary">No outcome found</h3>
+                            </div>
+                            <div th:unless="${#strings.isEmpty(register.outcome)}">
+                                <p th:text="${register.outcome}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${edit == true}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:onclick="'javascript:saveOutcome();'">
+                                    <span class="glyphicon glyphicon-plus"></span> Save</a>
+                            </div>
+
+                            <div th:unless="${edit}">
+
+                                <div th:if="${#strings.isEmpty(register.outcome)}">
+                                    <a class="btn btn-sm btn-info pull-right"
+                                       th:href="@{/register/edit-outcome/__${register.id}__?registrationType=}+ ${registrationType}"><span
+                                            class="glyphicon glyphicon-plus"></span> Add New</a>
+                                </div>
+
+                                <div th:unless="${#strings.isEmpty(register.outcome)}">
+                                    <a href="#" class="btn btn-sm btn-info pull-right"
+                                       th:href="@{/register/edit-outcome/__${register.id}__?registrationType=} +${registrationType}"> <span
+                                            class="glyphicon glyphicon-edit"></span> Edit </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div layout:fragment="custom-scripts">
+    <script type="text/javascript">
+        function saveOutcome() {
+            console.log("outcome");
+            $("#outcome-from").submit();
+        }
+    </script>
+</div>
+
+</body>
+</html>

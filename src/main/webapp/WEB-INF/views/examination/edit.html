@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/main">
 <head>
-    <title>Home Page :: mNetServices</title>
+    <title>Edit Examination</title>
 
 </head>
 
@@ -13,22 +13,35 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Examination</h2>
+                <h2 class="page-header">Edit Examination (
+                    <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}">
+                        Outdoor Patient
+                    </span>
+                    <span th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}">
+                        Indoor Patient
+                    </span>)</h2>
             </div>
         </div>
         <!-- /.row -->
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Edit Examination</div>
-                <div class="panel-body">
+                <div class="panel-heading">New Examination</div>
 
-                    <form class="form-horizontal" method='POST' th:object="${examination}"
-                          th:action="@{/examination/edit}">
+                <form class="form-horizontal" method='POST' th:object="${examination}"
+                      th:action="@{/examination/edit?registrationType=}+ ${registrationType}">
 
-                        <fieldset>
-                            <legend> Edit Examination</legend>
+                    <div class="panel-body">
 
-                            <input type="hidden" th:field="*{register.id}"/>
+                        <fieldset class="border">
+                            <legend class="border"> General Examination</legend>
+
+                            <div th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}">
+                                <input type="hidden" th:field="*{outdoorRegister.id}"/>
+                            </div>
+                            <div th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}">
+                                <input type="hidden" th:field="*{register.id}"/>
+                            </div>
+
                             <input type="hidden" th:field="*{id}"/>
 
                             <div class="form-group">
@@ -128,17 +141,19 @@
                                 </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control" rows="3" th:field="*{gExaminationComments}"></textarea>
+                                    <textarea type="text" class="form-control" rows="3"
+                                              th:field="*{gExaminationComments}"></textarea>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('gExaminationComments')}">
                                         <span th:errors="*{gExaminationComments}">Required</span>
                                     </p>
                                 </div>
                             </div>
+
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Local Examination</legend>
+                        <fieldset class="border">
+                            <legend class="border">Local Examination</legend>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"
@@ -157,8 +172,8 @@
                             </div>
                         </fieldset>
 
-                        <fieldset>
-                            <legend>Systemic Examination</legend>
+                        <fieldset class="border">
+                            <legend class="border">Systemic Examination</legend>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"
@@ -245,7 +260,9 @@
                                 <label class="col-sm-2 control-label"> Comments </label>
 
                                 <div class="col-sm-3">
-                                    <textarea type="text" class="form-control" rows="3" th:field="*{comments}"></textarea>
+                                    <textarea type="text" class="form-control" rows="3"
+                                              th:field="*{comments}"></textarea>
+
                                     <p class="text-danger" th:if="${#fields.hasErrors('comments')}">
                                         <span th:errors="*{comments}">Required</span>
                                     </p>
@@ -254,23 +271,31 @@
 
                         </fieldset>
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a href="#" class="btn btn-danger" th:href="@{/examination/cancel/__${examination.register.id}__}"> <span
-                                        th:text="#{label.cancel}">Cancel</span>
-                                </a>
-                                <button type="submit" class="btn btn-primary" th:text="#{label.save.changes}">Save
-                                    Changes
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="panel-footer clearfix">
+
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/examination/cancel/__${examination.register.id}__}">
+                            <span th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"
+                           class="btn btn-danger"
+                           th:href="@{/register/examination/__${examination.outdoorRegister.id}__?registrationType=} + ${registrationType}"> <span
+                                th:text="#{label.cancel}">Cancel</span>
+                        </a>
+
+                        <button type="submit" class="btn btn-primary pull-right" th:text="#{label.save.changes}">Save
+                            Changes
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
-
 
 </body>
 </html>

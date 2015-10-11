@@ -52,6 +52,168 @@
     </div>
 </div>
 
+<div layout:fragment="patient-info">
+    <div class="col-sm-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-sm-8 col-md-8">
+                    <h3 class="text-primary"><a th:href="@{/patient/details/__${patient.id}__}"> <span
+                            th:text="${patient.name}">Bazlur Rahman Rokon</span></a>
+                        <small th:if="${patient.gender}" th:text="${patient.gender.label}">Male</small>
+                        <small th:text="${patient.dateOfBirth} ? ${#dates.format(patient.dateOfBirth,'dd/MM/yyyy')}"></small>
+                        <strong>
+                            <small id="then" th:attr="data-date=${patient.dateOfBirth}"></small>
+                        </strong>
+                        <small th:if="${patient.birthdateEstimated}" class="badge">Est.</small>
+                        <small><a sec:authorize="hasRole('ROLE_ADMIN')"
+                                  th:href="@{/patient/edit/__${patient.id}__}">Edit</a>
+                        </small>
+                    </h3>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <p class="text-right">
+                        <i>Health ID</i> : <strong class="badge" th:text="${patient.healthId}"></strong>
+                        <br/>
+                        <i th:if="${register}">Registration No : </i><span th:if="${register}"> <strong
+                            class="badge" th:text="${register.registrationId}"></strong> </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="opd-register">
+
+    <div class="" style="margin-top: 0">
+        <div class="list-group">
+
+            <a href="#" class="list-group-item" th:classappend="${page == 'registration' ? 'active' : ''}"
+               th:href="@{/register/opd/__${register.id}__}">
+                <i class="fa fa-user-md fa-fw"></i> <span class="">Registration </span><span class="fa arrow"></span>
+                <span class="pull-right" id="slide-submenu"> </span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'diagnosis' ? 'active' : ''}"
+               th:href="@{/register/diagnosis/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-user-md fa-fw"></i>Diagnosis<span class="fa arrow"></span>
+            </a>
+            <a class="list-group-item" th:classappend="${page == 'treatmentplan' ? 'active' : ''}"
+               th:href="@{/register/treatmentplan/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'examination' ? 'active' : ''}"
+               th:href="@{/register/examination/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'chiefcomplaints' ? 'active' : ''}"
+               th:href="@{/register/chiefcomplaints/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
+            </a>
+
+            <!--TODO: add picture-->
+            <!--<a class="list-group-item" th:href="@{#}">-->
+            <!--<i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>-->
+            <!--</a>-->
+
+            <a class="list-group-item" th:classappend="${page == 'vital' ? 'active' : ''}"
+               th:href="@{/register/vitals/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-stethoscope fa-fw"></i>Vital<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'visit' ? 'active' : ''}"
+               th:href="@{/register/visits/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-stethoscope fa-fw"></i>Visit Notes<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'outcome' ? 'active' : ''}"
+               th:href="@{/register/outcome/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Outcome<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'remarks' ? 'active' : ''}"
+               th:href="@{/register/remarks/__${register.id}__?registrationType=OUTDOOR}">
+                <i class="fa fa-info fa-fw"></i>Remarks<span class="fa arrow"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="ipd-register">
+
+    <div class="" style="margin-top: 0">
+        <div class="list-group">
+
+            <a href="#" class="list-group-item" th:classappend="${page == 'registration' ? 'active' : ''}"
+               th:href="@{/register/ipd/__${register.id}__}">
+                <i class="fa fa-user-md fa-fw"></i> <span class="">Registration </span><span class="fa arrow"></span>
+                <span class="pull-right" id="slide-submenu"> </span>
+            </a>
+
+            <a href="#" class="list-group-item" th:classappend="${page == 'medical-history' ? 'active' : ''}"
+               th:href="@{/register/medicalhistory/__${register.id}__}">
+                <i class="fa fa-user-md fa-fw"></i> <span class="">Past Medical History </span><span class="fa arrow"></span>
+                <span class="pull-right" id="slide-submenu"> </span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'examination' ? 'active' : ''}"
+               th:href="@{/register/examination/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-info fa-fw"></i>Examination<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'chiefcomplaints' ? 'active' : ''}"
+               th:href="@{/register/chiefcomplaints/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-info fa-fw"></i>Chief Complaint<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'diagnosis' ? 'active' : ''}"
+               th:href="@{/register/diagnosis/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-user-md fa-fw"></i>Diagnosis<span class="fa arrow"></span>
+            </a>
+            <a class="list-group-item" th:classappend="${page == 'treatmentplan' ? 'active' : ''}"
+               th:href="@{/register/treatmentplan/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-info fa-fw"></i>Plan of RX<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'operational-detail' ? 'active' : ''}"
+               th:href="@{/register/operationaldetail/__${register.id}__}">
+                <i class="fa fa-info fa-fw"></i>Operational Details<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'investigation' ? 'active' : ''}"
+               th:href="@{/register/investigation/__${register.id}__}">
+                <i class="fa fa-info fa-fw"></i>Investigation<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'complicationmanagement' ? 'active' : ''}"
+               th:href="@{/register/complicationmanagement/__${register.id}__}">
+                <i class="fa fa-info fa-fw"></i>Complication Management<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'lifestyle' ? 'active' : ''}"
+               th:href="@{/register/lifestyle/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-info fa-fw"></i>Life Style<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'picture' ? 'active' : ''}"
+               th:href="@{/register/picture/__${register.id}__}">
+                <i class="fa fa-info fa-fw"></i>Picture Information<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'vital' ? 'active' : ''}"
+               th:href="@{/register/vitals/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-stethoscope fa-fw"></i>Vital<span class="fa arrow"></span>
+            </a>
+
+            <a class="list-group-item" th:classappend="${page == 'visit' ? 'active' : ''}"
+               th:href="@{/register/visits/__${register.id}__?registrationType=INDOOR}">
+                <i class="fa fa-stethoscope fa-fw"></i>Visit Notes<span class="fa arrow"></span>
+            </a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

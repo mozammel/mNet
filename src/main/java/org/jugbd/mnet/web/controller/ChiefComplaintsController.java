@@ -1,7 +1,7 @@
 package org.jugbd.mnet.web.controller;
 
 import org.jugbd.mnet.domain.ChiefComplaint;
-import org.jugbd.mnet.domain.Register;
+import org.jugbd.mnet.domain.enums.RegistrationType;
 import org.jugbd.mnet.service.ChiefComplaintService;
 import org.jugbd.mnet.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,43 +33,51 @@ public class ChiefComplaintsController {
     private ChiefComplaintService chiefComplaintService;
 
     @RequestMapping(value = "create/{registerId}", method = RequestMethod.GET)
-    public String create(@PathVariable Long registerId, ChiefComplaint chiefComplaint) {
-        Register register = registerService.findOne(registerId);
+    public String create(@PathVariable Long registerId,
+                         @RequestParam(required = true) RegistrationType registrationType,
+                         ChiefComplaint chiefComplaint,
+                         Model uiModel) {
 
-        if (register.getChiefComplaint() != null) {
-            throw new RuntimeException("chief complaints has been recorded already ");
-        }
+        uiModel.addAttribute("registrationType", registrationType);
+        registerService.findRegisterEither(registerId, registrationType)
+                .map(chiefComplaint::setRegister, chiefComplaint::setOutdoorRegister);
 
-        chiefComplaint.setRegister(register);
         return "chiefcomplaints/create";
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String save(@Valid ChiefComplaint chiefComplaint, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String save(@RequestParam(required = true) RegistrationType registrationType,
+                       @Valid ChiefComplaint chiefComplaint,
+                       BindingResult result,
+                       RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
 
             return "chiefcomplaints/create";
         }
 
-        ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint);
-
+        ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint, registrationType);
         redirectAttributes.addFlashAttribute("message", "Chief Complaint successfully created");
-        return "redirect:/patient/show/" + savedChiefComplaint.getRegister().getPatient().getId();
+
+        return getRedirectUrl(registrationType, savedChiefComplaint);
     }
 
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable Long id, Model uiModel) {
+    public String edit(@PathVariable Long id,
+                       @RequestParam RegistrationType registrationType,
+                       Model uiModel) {
         ChiefComplaint chiefComplaint = chiefComplaintService.findOne(id);
 
         uiModel.addAttribute("chiefComplaint", chiefComplaint);
+        uiModel.addAttribute("registrationType", registrationType);
 
         return "chiefcomplaints/edit";
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String update(@Valid ChiefComplaint chiefComplaint,
+    public String update(@RequestParam RegistrationType registrationType,
+                         @Valid ChiefComplaint chiefComplaint,
                          BindingResult result,
                          RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -76,16 +85,25 @@ public class ChiefComplaintsController {
             return "chiefcomplaints/edit";
         }
 
-        ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint);
-
+        ChiefComplaint savedChiefComplaint = chiefComplaintService.save(chiefComplaint, registrationType);
         redirectAttributes.addFlashAttribute("message", "Chief Complaints successfully updated");
-        return "redirect:/patient/show/" + savedChiefComplaint.getRegister().getPatient().getId();
+
+        return getRedirectUrl(registrationType, savedChiefComplaint);
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
         return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+    }
+
+    private String getRedirectUrl(RegistrationType registrationType, ChiefComplaint chiefComplaint) {
+        String redirectUrl = "redirect:/register/chiefcomplaints/";
+        String appender = "?registrationType=" + registrationType;
+
+        return (registrationType == RegistrationType.OUTDOOR)
+                ? (String.format("%s%d%s", redirectUrl, chiefComplaint.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", redirectUrl, chiefComplaint.getRegister().getId(), appender));
     }
 
 }

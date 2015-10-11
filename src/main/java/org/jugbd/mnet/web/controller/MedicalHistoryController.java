@@ -59,9 +59,9 @@ public class MedicalHistoryController {
         }
 
         MedicalHistory saveMedicalHistory = medicalHistoryService.save(medicalHistory);
-
         redirectAttributes.addFlashAttribute("message", "Medical History successfully created");
-        return "redirect:/patient/show/" + saveMedicalHistory.getRegister().getPatient().getId();
+
+        return "redirect:/register/medicalhistory/" + saveMedicalHistory.getRegister().getId();
     }
 
     @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
@@ -95,9 +95,9 @@ public class MedicalHistoryController {
         }
 
         MedicalHistory saveMedicalHistory = medicalHistoryService.save(medicalHistory);
-
         redirectAttributes.addFlashAttribute("message", "Medical History successfully updated");
-        return "redirect:/patient/show/" + saveMedicalHistory.getRegister().getPatient().getId();
+
+        return "redirect:/register/medicalhistory/" + saveMedicalHistory.getRegister().getId();
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)

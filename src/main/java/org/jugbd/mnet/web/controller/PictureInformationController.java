@@ -44,7 +44,6 @@ public class PictureInformationController {
 
     @RequestMapping(value = "picture/{registerId}", method = RequestMethod.GET)
     public String show(@PathVariable Long registerId, Model uiModel) {
-        log.info("show() registerId={}", registerId);
 
         PictureInformation pictureInformation = pictureInformationService.findPictureInformationByRegistrationId(registerId);
 
@@ -53,7 +52,6 @@ public class PictureInformationController {
 
         return "picture/show";
     }
-
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String uploadPhoto(@RequestParam("file") MultipartFile file,
@@ -109,7 +107,6 @@ public class PictureInformationController {
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/register/picture/" + registerId;
     }
-
 }

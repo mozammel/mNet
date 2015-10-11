@@ -54,7 +54,7 @@ public class ComplicationManagementController {
         ComplicationManagement complicationManagementSaved = complicationManagementService.save(complicationManagement);
 
         redirectAttributes.addFlashAttribute("message", "Complication Management successfully created");
-        return "redirect:/patient/show/" + complicationManagementSaved.getRegister().getPatient().getId();
+        return "redirect:/register/complicationmanagement/" + complicationManagementSaved.getRegister().getId();
     }
 
 
@@ -76,26 +76,26 @@ public class ComplicationManagementController {
             return "complicationmanagement/edit";
         }
 
-        ComplicationManagement saveMedicalHistory = complicationManagementService.save(complicationManagement);
+        ComplicationManagement complicationManagementSaved = complicationManagementService.save(complicationManagement);
 
         redirectAttributes.addFlashAttribute("message", "Complication Management successfully updated");
-        return "redirect:/patient/show/" + saveMedicalHistory.getRegister().getPatient().getId();
+        return "redirect:/register/complicationmanagement/" + complicationManagementSaved.getRegister().getId();
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable Long id) {
         ComplicationManagement one = complicationManagementService.findOne(id);
-        Long patientId = one.getRegister().getPatient().getId();
+        Long registerId = one.getRegister().getId();
 
         complicationManagementService.delete(one);
 
-        return "redirect:/patient/show/" + patientId;
+        return "redirect:/register/complicationmanagement/" + registerId;
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/register/complicationmanagement/" + registerDao.findOne(registerId).getId();
     }
 
 }

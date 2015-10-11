@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head>
+    <title>Past Medical History</title>
+</head>
+<body th:with="page='medical-history'">
+
+<section layout:fragment="content">
+    <div id="page-wrapper">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <h2 class="page-header"><span th:text="${registrationType.label}"></span> Registration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div layout:include="layout/common-fragment :: patient-info"></div>
+        </div>
+
+        <div class="row clearfix">
+
+            <div class="col-lg-3 col-md-4">
+                <div layout:include="layout/common-fragment :: ipd-register"></div>
+            </div>
+
+            <div class="col-lg-9 col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Past Medical History :: <span th:text="${registrationType.label}"></span></div>
+                    <div class="panel-body">
+                        <div th:if="${register.medicalHistory == null}">
+                            <h3 class="text-primary">No Medical History found</h3>
+                        </div>
+
+                        <div th:if="${register.medicalHistory != null}">
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><strong>Past Medical History</strong></td>
+                                    <td th:text="${register.medicalHistory.pastMedicalHistory}"></td>
+                                </tr>
+                                <tr th:if="${#strings.toString(register.patient.gender).toUpperCase() == 'FEMALE'}">
+                                    <td>Menstrual History</td>
+                                    <td th:text="${register.medicalHistory.period} ? 'Period: ' +${register.medicalHistory.period}"></td>
+                                    <td th:text="${register.medicalHistory.days} ? 'Days: ' + ${register.medicalHistory.days}"></td>
+                                    <td th:text="${register.medicalHistory.menstrualCycle} ? 'Cycle: ' +${register.medicalHistory.menstrualCycle.label}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong> Past Surgical History</strong></td>
+                                    <td th:text="${register.medicalHistory.pastSurgicalHistory}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Drug History</strong></td>
+                                    <td th:text="${register.medicalHistory.drugHistory}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Family History</strong></td>
+                                    <td th:text="${register.medicalHistory.familyHistory}"></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>Similar Diseases In Family</strong></td>
+                                            <span th:if="${register.medicalHistory.similarDiseasesInFamily}">
+                                                <td>Yes</td>
+                                            </span>
+                                            <span th:unless="${register.medicalHistory.similarDiseasesInFamily}">
+                                                <td>No</td>
+                                            </span>
+                                </tr>
+                                <tr>
+                                    <td>Comments</td>
+                                    <td th:text="${register.medicalHistory.comments} ? ${register.medicalHistory.comments}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <div th:if="${#strings.toString(register.status).toUpperCase() == 'ACTIVE'}">
+                            <div th:if="${register.medicalHistory == null}">
+                                <a class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/medicalhistory/create/__${register.id}__}"><span
+                                        class="glyphicon glyphicon-plus"></span> Add New</a>
+                            </div>
+
+                            <div th:unless="${register.medicalHistory == null}">
+                                <a href="#" class="btn btn-sm btn-info pull-right"
+                                   th:href="@{/medicalhistory/edit/__${register.medicalHistory.id}__}"> <span
+                                        class="glyphicon glyphicon-edit"></span> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

@@ -50,9 +50,9 @@ public class LifeStyleController {
         }
 
         LifeStyle lifeStyleSaved = lifeStyleService.save(lifeStyle);
-
         redirectAttributes.addFlashAttribute("message", "Life Style successfully created");
-        return "redirect:/patient/show/" + lifeStyleSaved.getRegister().getPatient().getId();
+
+        return "redirect:/register/lifestyle/" + lifeStyleSaved.getRegister().getId();
     }
 
 
@@ -75,14 +75,14 @@ public class LifeStyleController {
         }
 
         LifeStyle savedLifeStyle = lifeStyleService.save(lifeStyle);
-
         redirectAttributes.addFlashAttribute("message", "Life Style successfully updated");
-        return "redirect:/patient/show/" + savedLifeStyle.getRegister().getPatient().getId();
+
+        return "redirect:/register/lifestyle/" + savedLifeStyle.getRegister().getId();
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
     public String cancel(@PathVariable Long registerId) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/register/lifestyle/" + registerService.findOne(registerId).getId();
     }
 }
