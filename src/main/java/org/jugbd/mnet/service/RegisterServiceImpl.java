@@ -315,6 +315,7 @@ public class RegisterServiceImpl implements RegisterService {
         register.setPatient(patientDao.findOne(register.getPatient().getId()));
         register.setStartDatetime(new Date());
         register.setStatus(Status.ACTIVE);
+        register.setOutdoorRegister(outdoorRegister.getId());
         registerDao.save(register);
 
         outdoorRegister.setStatus(Status.CLOSED);

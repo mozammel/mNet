@@ -19,7 +19,7 @@ public class StringUtils {
     public static String generateRandomString(int stringLength) {
 
         char[] chars = elegibleChars.toCharArray();
-        final StringBuffer finalString = new StringBuffer();
+        final StringBuilder finalString = new StringBuilder();
 
         for (int i = 0; i < stringLength; i++) {
             double randomValue = Math.random();

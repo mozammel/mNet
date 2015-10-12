@@ -117,6 +117,9 @@ public class Register extends PersistentObject {
     @Embedded
     private PatientContact patientContact;
 
+    @Column(name = "outdoor_register_blnk", nullable = true)
+    private Long outdoorRegister; //back reference
+
     public Long getId() {
         return id;
     }
@@ -315,6 +318,15 @@ public class Register extends PersistentObject {
 
     public void setPictureInformation(PictureInformation pictureInformation) {
         this.pictureInformation = pictureInformation;
+    }
+
+    public Long getOutdoorRegister() {
+        return outdoorRegister;
+    }
+
+    public Register setOutdoorRegister(Long outdoorRegister) {
+        this.outdoorRegister = outdoorRegister;
+        return this;
     }
 
     @Override
