@@ -212,18 +212,17 @@
                     <div class="panel-footer">
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/diagnosis/cancel/__${diagnosis.register.id}__}"> <span
-                                th:text="#{label.cancel}">Cancel</span>
+                           th:href="@{/diagnosis/back/__${diagnosis.register.id}__?registrationType=}+${registrationType}">
+                            <i class="fa fa-arrow-left"></i> <span th:text="#{label.back}">Back</span>
                         </a>
 
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/register/opd/__${diagnosis.outdoorRegister.id}__}"> <span
-                                th:text="#{label.cancel}">Cancel</span>
+                           th:href="@{/diagnosis/back/__${diagnosis.outdoorRegister.id}__?registrationType=}+${registrationType}">
+                            <i class="fa fa-arrow-left"></i> <span th:text="#{label.back}">Back</span>
                         </a>
 
-                        <button type="submit" class="btn btn-primary pull-right" th:text="#{label.save.changes}">Save
-                            Changes
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes <i class="fa fa-floppy-o"></i>
                         </button>
                     </div>
                 </form>

@@ -28,6 +28,7 @@ import javax.validation.Valid;
 public class DiagnosisController {
 
     private static final Logger log = LoggerFactory.getLogger(DiagnosisController.class);
+    public static final String REDIRECT_REGISTER_DIAGNOSIS = "redirect:/register/diagnosis/";
 
     @Autowired
     private DiagnosisService diagnosisService;
@@ -96,13 +97,17 @@ public class DiagnosisController {
         return getRedirectUrl(registrationType, diagnosisFromDb);
     }
 
+    @RequestMapping(value = "/back/{registerId}", method = RequestMethod.GET)
+    public String back(@PathVariable Long registerId, @RequestParam RegistrationType registrationType) {
+
+        return REDIRECT_REGISTER_DIAGNOSIS + registerId + "?registrationType=" + registrationType;
+    }
 
     private String getRedirectUrl(RegistrationType registrationType, Diagnosis diagnosis) {
-        String redirectUrl = "redirect:/register/diagnosis/";
         String appender = "?registrationType=" + registrationType;
 
         return (registrationType == RegistrationType.OUTDOOR)
-                ? (String.format("%s%d%s", redirectUrl, diagnosis.getOutdoorRegister().getId(), appender))
-                : (String.format("%s%d%s", redirectUrl, diagnosis.getRegister().getId(), appender));
+                ? (String.format("%s%d%s", REDIRECT_REGISTER_DIAGNOSIS, diagnosis.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", REDIRECT_REGISTER_DIAGNOSIS, diagnosis.getRegister().getId(), appender));
     }
 }

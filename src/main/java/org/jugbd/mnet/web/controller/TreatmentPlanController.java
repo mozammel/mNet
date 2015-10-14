@@ -28,6 +28,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "treatmentplan")
 public class TreatmentPlanController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TreatmentPlanController.class);
+    public static final String REDIRECT_REGISTER_TREATMENTPLAN = "redirect:/register/treatmentplan/";
 
     @Autowired
     private RegisterService registerService;
@@ -94,18 +95,17 @@ public class TreatmentPlanController {
         return getRedirectUrl(registrationType, treatmentPlanSaved);
     }
 
-    @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
-    public String cancel(@PathVariable Long registerId) {
+    @RequestMapping(value = "back/{registerId}", method = RequestMethod.GET)
+    public String back(@PathVariable Long registerId, @RequestParam RegistrationType registrationType) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return REDIRECT_REGISTER_TREATMENTPLAN + registerId + "?registrationType=" + registrationType;
     }
 
     private String getRedirectUrl(RegistrationType registrationType, TreatmentPlan treatmentPlan) {
-        String redirectUrl = "redirect:/register/treatmentplan/";
         String appender = "?registrationType=" + registrationType;
 
         return (registrationType == RegistrationType.OUTDOOR)
-                ? (String.format("%s%d%s", redirectUrl, treatmentPlan.getOutdoorRegister().getId(), appender))
-                : (String.format("%s%d%s", redirectUrl, treatmentPlan.getRegister().getId(), appender));
+                ? (String.format("%s%d%s", REDIRECT_REGISTER_TREATMENTPLAN, treatmentPlan.getOutdoorRegister().getId(), appender))
+                : (String.format("%s%d%s", REDIRECT_REGISTER_TREATMENTPLAN, treatmentPlan.getRegister().getId(), appender));
     }
 }

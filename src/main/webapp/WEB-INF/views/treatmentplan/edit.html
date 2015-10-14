@@ -225,19 +225,20 @@
                     </div>
 
                     <div class="panel-footer clearfix">
+
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).INDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/register/opd/__${treatmentPlan.register.id}__}"> <span
-                                    th:text="#{label.cancel}">Cancel</span>
+                           th:href="@{/treatmentplan/back/__${treatmentPlan.register.id}__?registrationType=}+${registrationType}">
+                            <i class="fa fa-arrow-left"></i> <span th:text="#{label.back}">Back</span>
                         </a>
 
                         <a th:if="${registrationType == T(org.jugbd.mnet.domain.enums.RegistrationType).OUTDOOR}"
                            class="btn btn-danger"
-                           th:href="@{/register/opd/__${treatmentPlan.outdoorRegister.id}__}"> <span
-                                th:text="#{label.cancel}">Cancel</span>
+                           th:href="@{/treatmentplan/back/__${treatmentPlan.outdoorRegister.id}__?registrationType=}+${registrationType}">
+                            <i class="fa fa-arrow-left"></i> <span th:text="#{label.back}">Back</span>
                         </a>
 
-                        <button type="submit" class="btn btn-primary pull-right">Save Changes</button>
+                        <button type="submit" class="btn btn-primary pull-right">Save Changes <i class="fa fa-floppy-o"></i></button>
                     </div>
                 </form>
             </div>
