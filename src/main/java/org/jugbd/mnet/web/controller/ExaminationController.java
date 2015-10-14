@@ -92,11 +92,10 @@ public class ExaminationController {
     }
 
     @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
-    public String cancel(@PathVariable Long registerId) {
+    public String cancel(@PathVariable Long registerId, @RequestParam RegistrationType registrationType) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        return "redirect:/register/examination/" + registerService.findOne(registerId).getId() + "?registrationType=" + registrationType;
     }
-
 
     private String getRedirectUrl(RegistrationType registrationType, Examination examination) {
         String redirectUrl = "redirect:/register/examination/";

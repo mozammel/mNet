@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.jugbd.mnet.domain.enums.Status;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,15 +25,18 @@ public class Vital extends PersistentObject implements Auditable {
     private Double weight;  //Weight (kg)
     private Double bmi;     //(Calculated) BMI
 
-    @NotNull
+    @NotNull(message = "Temperature is required")
+    @Digits(integer = 3, fraction = 2)
     private Double temperature;     //Temperature (F)
     private Integer pulse;          //Pulse per minute
     private Integer respiratoryRate; //Respiratory rate per minute
 
-    @NotNull
+    @NotNull(message = "Systolic pressure is required")
+    @Digits(integer = 3, fraction = 0)
     private Integer systolic;  //Blood Pressure
 
-    @NotNull
+    @NotNull(message = "Diastolic pressure is required")
+    @Digits(integer = 3, fraction = 0)
     private Integer diastolic;
     private Double bloodOxygenSaturation;//Blood oxygen saturation
 

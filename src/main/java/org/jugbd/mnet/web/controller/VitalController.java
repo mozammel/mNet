@@ -60,6 +60,7 @@ public class VitalController {
 
         if (result.hasErrors()) {
             uiModel.addAttribute("registerId", registerId);
+            uiModel.addAttribute("registrationType", registrationType);
 
             return "vital/create";
         }

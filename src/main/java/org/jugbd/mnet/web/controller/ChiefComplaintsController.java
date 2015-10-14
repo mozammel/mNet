@@ -26,6 +26,7 @@ import javax.validation.Valid;
 @RequestMapping("chiefcomplaints")
 public class ChiefComplaintsController {
 
+    public static final String REDIRECT_REGISTER_CHIEFCOMPLAINTS = "redirect:/register/chiefcomplaints/";
     @Autowired
     private RegisterService registerService;
 
@@ -91,19 +92,21 @@ public class ChiefComplaintsController {
         return getRedirectUrl(registrationType, savedChiefComplaint);
     }
 
-    @RequestMapping(value = "cancel/{registerId}", method = RequestMethod.GET)
-    public String cancel(@PathVariable Long registerId) {
+    @RequestMapping(value = "back/{registerId}", method = RequestMethod.GET)
+    public String back(@PathVariable Long registerId, @RequestParam RegistrationType registrationType) {
 
-        return "redirect:/patient/show/" + registerService.findOne(registerId).getPatient().getId();
+        String redirectUrl = REDIRECT_REGISTER_CHIEFCOMPLAINTS;
+        String appender = "?registrationType=" + registrationType;
+
+        return redirectUrl + registerId + appender;
     }
 
     private String getRedirectUrl(RegistrationType registrationType, ChiefComplaint chiefComplaint) {
-        String redirectUrl = "redirect:/register/chiefcomplaints/";
+        String redirectUrl = REDIRECT_REGISTER_CHIEFCOMPLAINTS;
         String appender = "?registrationType=" + registrationType;
 
         return (registrationType == RegistrationType.OUTDOOR)
                 ? (String.format("%s%d%s", redirectUrl, chiefComplaint.getOutdoorRegister().getId(), appender))
                 : (String.format("%s%d%s", redirectUrl, chiefComplaint.getRegister().getId(), appender));
     }
-
 }
