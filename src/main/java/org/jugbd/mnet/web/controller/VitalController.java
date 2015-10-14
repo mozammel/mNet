@@ -108,7 +108,7 @@ public class VitalController {
                                          @RequestParam(required = true) RegistrationType registrationType) {
 
         return "redirect:" + registerService.findRegisterEither(registerId, registrationType)
-                .fold(register -> "/register/vitals/" + register.getPatient().getId() + "?registrationType=" + registrationType.name(),
+                .fold(register -> "/register/vitals/" + register.getId() + "?registrationType=" + registrationType.name(),
                         outdoorRegister -> "/register/vitals/" + outdoorRegister.getId() + "?registrationType=" + registrationType.name());
     }
 }
