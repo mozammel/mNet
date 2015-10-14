@@ -31,7 +31,7 @@ public class OutdoorRegister extends PersistentObject {
     @ManyToOne
     private Patient patient;
 
-    @NotNull(message = "Registration can not be empty")
+    @NotNull(message = "Registration Date can not be empty")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDatetime;
 
