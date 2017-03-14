@@ -42,11 +42,15 @@ public class PatientServiceImpl implements PatientService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PatientServiceImpl.class);
 
-    @Autowired
-    private PatientDao patientDao;
+    private final PatientDao patientDao;
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    public PatientServiceImpl(PatientDao patientDao) {
+        this.patientDao = patientDao;
+    }
 
     @Override
     public Patient create(Patient patient) {
@@ -196,8 +200,7 @@ public class PatientServiceImpl implements PatientService {
 
     private Condition getCondition(String value) {
 
-        return Arrays.asList(Condition.values())
-                .stream()
+        return Arrays.stream(Condition.values())
                 .filter(condition -> condition.getLabel().toLowerCase().contains(value.toLowerCase()))
                 .findFirst()
                 .map(condition -> condition)

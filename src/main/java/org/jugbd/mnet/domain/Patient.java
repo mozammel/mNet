@@ -79,10 +79,10 @@ public class Patient extends PersistentObject implements Auditable {
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
 
-    @NotEmpty
+    //@NotEmpty
     @Size(max = 32)
-    @Column(length = 32)
-    @Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$", message = "Phone number must be valid ba")
+    @Column(length = 32, nullable = true)
+    //@Pattern(regexp = "^01(1|5|6|7|8|9)\\d{8}$", message = "Phone number must be valid")
     private String contactNumber;
 
     @Size(max = 20)

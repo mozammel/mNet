@@ -1,0 +1,1 @@
+ALTER TABLE `patient` CHANGE `contact_number` `contact_number` VARCHAR( 32 );

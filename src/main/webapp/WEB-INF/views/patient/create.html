@@ -61,16 +61,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group required">
-                                <label for="patient-contact-no" class="col-sm-2 control-label required-field"
+                            <div class="form-group">
+                                <label for="patient-contact-no" class="col-sm-2 control-label"
                                        th:text="#{label.contact.no}">
                                     Contact Number
                                 </label>
 
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control input-sm" id="patient-contact-no"
-                                           pattern="^01(1|5|6|7|8|9)\d{8}$"
-                                           th:field="*{contactNumber}"/>
+                                    <input type="text" class="form-control input-sm" th:field="*{contactNumber}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('contactNumber')}">
                                         <span th:errors="*{contactNumber}">Required</span>
@@ -121,47 +119,44 @@
                                     <small>(Estimated age)</small>
                                 </label>
 
-
-                                <div class="row">
-                                    <div class="col-xs-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">D</div>
-                                            <input type="text" class="form-control input-sm"
-                                                   th:field="*{day}"
-                                                   placeholder="Day"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('day')}">
-                                            <span th:errors="*{day}">Required</span>
-                                        </p>
-
+                                <div class="col-md-1">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">D</div>
+                                        <input type="text" class="form-control input-sm"
+                                               th:field="*{day}"
+                                               placeholder="Day"/>
                                     </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('day')}">
+                                        <span th:errors="*{day}">Required</span>
+                                    </p>
 
-                                    <div class="col-xs-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">M</div>
-                                            <input type="text" class="form-control input-sm"
-                                                   th:field="*{month}"
-                                                   placeholder="Month"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('month')}">
-                                            <span th:errors="*{month}">Required</span>
-                                        </p>
-                                    </div>
+                                </div>
 
-                                    <div class="col-xs-2">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">Y</div>
-                                            <input type="text" class="form-control input-sm"
-                                                   th:field="*{year}"
-                                                   placeholder="Year"/>
-                                        </div>
-                                        <p class="text-danger"
-                                           th:if="${#fields.hasErrors('year')}">
-                                            <span th:errors="*{year}">Required</span>
-                                        </p>
+                                <div class="col-md-1">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">M</div>
+                                        <input type="text" class="form-control input-sm"
+                                               th:field="*{month}"
+                                               placeholder="Month"/>
                                     </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('month')}">
+                                        <span th:errors="*{month}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Y</div>
+                                        <input type="text" class="form-control input-sm"
+                                               th:field="*{year}"
+                                               placeholder="Year"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('year')}">
+                                        <span th:errors="*{year}">Required</span>
+                                    </p>
                                 </div>
 
                             </div>
@@ -234,7 +229,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group required">
+                            <div class="form-group">
                                 <label for="patient-address" class="col-sm-2 control-label" th:text="#{label.address}">
                                     Address
                                 </label>
@@ -249,7 +244,7 @@
                                 </p>
 
                             </div>
-                            <div class="form-group required">
+                            <div class="form-group">
                                 <label for="patient-po" class="col-sm-2 control-label"
                                        th:text="#{label.address.post.office}">
                                     Post Office
@@ -263,7 +258,7 @@
                                     <span th:errors="*{address.postOffice}">Required</span>
                                 </p>
                             </div>
-                            <div class="form-group required">
+                            <div class="form-group">
                                 <label for="patient-ps" class="col-sm-2 control-label"
                                        th:text="#{label.address.police.station}">
                                     Police Station
@@ -312,6 +307,7 @@
                                         <option value="Barisal">Barisal</option>
                                         <option value="Chittagong">Chittagong</option>
                                         <option value="Dhaka">Dhaka</option>
+                                        <option value="Mymensingh">Mymensingh</option>
                                         <option value="Khulna">Khulna</option>
                                         <option value="Rajshahi">Rajshahi</option>
                                         <option value="Rangpur">Rangpur</option>
