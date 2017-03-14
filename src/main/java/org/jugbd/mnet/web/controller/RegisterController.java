@@ -96,6 +96,8 @@ public class RegisterController {
                                 BindingResult result,
                                 RedirectAttributes redirectAttributes) {
 
+        log.info("patient getAdmissionDate: {}", register.getAdmissionDate());
+
         if (result.hasErrors()) {
 
             return "register/ipd";

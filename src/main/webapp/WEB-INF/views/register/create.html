@@ -207,11 +207,13 @@
         jQuery(document).ready(function () {
             jQuery('#admissionDate').datepicker({
                 todayBtn: true,
+                format: 'mm/dd/yyyy',
                 keyboardNavigation: false,
                 calendarWeeks: true,
                 autoclose: true,
                 startView: 2,
-                todayHighlight: true
+                todayHighlight: true,
+                startDate: '-3d'
             });
         });
 

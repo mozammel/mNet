@@ -177,7 +177,7 @@
                                     Admission Date </label>
 
                                 <div class="col-sm-3">
-                                    <input type="date" class="form-control input-sm" th:field="*{admissionDate}"/>
+                                    <input type="text" class="form-control input-sm" th:field="*{admissionDate}"/>
 
                                     <p class="text-danger" th:if="${#fields.hasErrors('admissionDate')}">
                                         <span th:errors="*{admissionDate}">Required</span>
@@ -213,6 +213,7 @@
                 calendarWeeks: true,
                 autoclose: true,
                 startView: 2,
+                format: 'dd/mm/yyyy',
                 todayHighlight: true
             });
         });
